@@ -1,0 +1,91 @@
+--Generated from "logicalView.face" at 2018-03-29T15:02:31.883
+package logicalView_data_model
+public
+	with FACE;
+	
+	data Query1_Conceptual
+		properties
+			FACE::Realization_Tier => conceptual;
+	end Query1_Conceptual;
+	
+	data Query2_Conceptual
+		properties
+			FACE::Realization_Tier => conceptual;
+	end Query2_Conceptual;
+	
+	data CompositeQuery1_Conceptual
+		properties
+			FACE::Realization_Tier => conceptual;
+	end CompositeQuery1_Conceptual;
+	
+	data implementation CompositeQuery1_Conceptual.impl
+		subcomponents
+			QueryComposition1: data Query1_Conceptual;
+			QueryComposition2: data Query2_Conceptual;
+	end CompositeQuery1_Conceptual.impl;
+	
+	data Query3_Logical
+		properties
+			FACE::Realization_Tier => logical;
+	end Query3_Logical;
+	
+	data Query4_Logical
+		properties
+			FACE::Realization_Tier => logical;
+	end Query4_Logical;
+	
+	data CompositeQuery2_Logical
+		properties
+			FACE::Realization_Tier => logical;
+	end CompositeQuery2_Logical;
+	
+	data implementation CompositeQuery2_Logical.impl
+		subcomponents
+			QueryComposition3: data Query3_Logical;
+			QueryComposition4: data Query4_Logical;
+	end CompositeQuery2_Logical.impl;
+	
+	data CompositeQuery3_Logical
+		properties
+			FACE::Is_Union => true;
+			FACE::Realization_Tier => logical;
+	end CompositeQuery3_Logical;
+	
+	data implementation CompositeQuery3_Logical.impl
+		subcomponents
+			QueryComposition5: data Query3_Logical;
+			QueryComposition6: data Query4_Logical;
+	end CompositeQuery3_Logical.impl;
+	
+	data CompositeQuery4_Logical
+		properties
+			FACE::Realization_Tier => logical;
+	end CompositeQuery4_Logical;
+	
+	data implementation CompositeQuery4_Logical.impl
+		subcomponents
+			QueryComposition7: data CompositeQuery2_Logical.impl;
+			QueryComposition8: data CompositeQuery3_Logical.impl;
+	end CompositeQuery4_Logical.impl;
+	
+	data Query5_Logical extends Query1_Conceptual
+		properties
+			FACE::Realization_Tier => logical;
+	end Query5_Logical;
+	
+	data Query6_Logical extends Query2_Conceptual
+		properties
+			FACE::Realization_Tier => logical;
+	end Query6_Logical;
+	
+	data CompositeQuery5_Logical extends CompositeQuery1_Conceptual
+		properties
+			FACE::Realization_Tier => logical;
+	end CompositeQuery5_Logical;
+	
+	data implementation CompositeQuery5_Logical.impl
+		subcomponents
+			QueryComposition9: data Query5_Logical;
+			QueryComposition10: data Query6_Logical;
+	end CompositeQuery5_Logical.impl;
+end logicalView_data_model;

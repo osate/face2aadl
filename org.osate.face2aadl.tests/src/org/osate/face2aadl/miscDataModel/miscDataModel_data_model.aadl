@@ -1,0 +1,36 @@
+--Generated from "miscDataModel.face" at 2018-03-29T15:02:31.883
+package miscDataModel_data_model
+public
+	with FACE;
+	
+	--Description1
+	data UniqueIdentifier_Conceptual
+		properties
+			FACE::Realization_Tier => conceptual;
+	end UniqueIdentifier_Conceptual;
+	
+	data Entity1_Conceptual
+		properties
+			FACE::Realization_Tier => conceptual;
+	end Entity1_Conceptual;
+	
+	data Entity2_Logical extends Entity1_Conceptual
+		properties
+			FACE::Realization_Tier => logical;
+	end Entity2_Logical;
+	
+	data Boolean1_Platform
+		properties
+			FACE::Realization_Tier => platform;
+	end Boolean1_Platform;
+	
+	data Entity3_Platform extends Entity2_Logical
+		properties
+			FACE::Realization_Tier => platform;
+	end Entity3_Platform;
+	
+	data Template1_Platform
+		properties
+			FACE::Realization_Tier => platform;
+	end Template1_Platform;
+end miscDataModel_data_model;

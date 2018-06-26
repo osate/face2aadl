@@ -1,0 +1,51 @@
+--Generated from "uuid.face" at 2018-03-29T15:02:31.883
+package uuid_integration_model
+public
+	with FACE;
+	with uuid_data_model;
+	with uuid_PCS;
+	
+	system IntegrationModel1
+		properties
+			FACE::UUID => "_oaS0gGRPEeiJQvh_fVqImg";
+	end IntegrationModel1;
+	
+	system implementation IntegrationModel1.impl
+		subcomponents
+			PortableComponentInstance: process uuid_PCS::PortableComponent1_process.impl {
+				FACE::UUID => "_P1XbQGRREeiJQvh_fVqImg";
+			};
+			Channel1: virtual bus {
+				FACE::UUID => "_a_JzIGRREeiJQvh_fVqImg";
+			};
+			ViewSource1: abstract ViewSource1;
+			ViewSink1: abstract ViewSink1;
+		connections
+			connection0: feature ViewSource1.output -> PortableComponentInstance.Input {
+				FACE::UUID => "_jZKyEGRREeiJQvh_fVqImg";
+			};
+			connection1: feature PortableComponentInstance.Output -> ViewSink1.input0 {
+				FACE::UUID => "_ltPtgGRREeiJQvh_fVqImg";
+			};
+	end IntegrationModel1.impl;
+	
+	abstract ViewSource1
+		features
+			output: out feature uuid_data_model::CompositeTemplate1_Platform.impl {
+				FACE::UUID => "_es4pIGRREeiJQvh_fVqImg";
+			};
+		properties
+			FACE::Segment => TSS;
+			FACE::UUID => "_dZ7zgGRREeiJQvh_fVqImg";
+	end ViewSource1;
+	
+	abstract ViewSink1
+		features
+			input0: in feature uuid_data_model::CompositeTemplate1_Platform.impl {
+				FACE::UUID => "_hzChwGRREeiJQvh_fVqImg";
+			};
+		properties
+			FACE::Segment => TSS;
+			FACE::UUID => "_gOuPUGRREeiJQvh_fVqImg";
+	end ViewSink1;
+end uuid_integration_model;

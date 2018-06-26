@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature id="org.osate.face2aadl.feature">
+      <category name="osate.face2aadl"/>
+   </feature>
+   <category-def name="osate.face2aadl" label="FACE 3.0 Data Model to AADL 2.2 Translator"/>
+</site>

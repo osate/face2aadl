@@ -1,0 +1,50 @@
+--Generated from "connectedServer.face" at 2018-03-29T15:02:31.883
+package connectedServer_PSSS
+public
+	with connectedServer_data_model;
+	with FACE;
+	
+	thread group PlatformSpecificComponent1
+		features
+			conn1_request: in event data port connectedServer_data_model::Template1_Platform {
+				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+			};
+			conn1_response: out event data port connectedServer_data_model::Template1_Platform {
+				Output_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+			};
+		properties
+			FACE::Profile => general;
+			FACE::Segment => PSSS;
+	end PlatformSpecificComponent1;
+	
+	thread group implementation PlatformSpecificComponent1.impl
+		subcomponents
+			thread0: thread {
+				Period => 0 sec;
+			};
+	end PlatformSpecificComponent1.impl;
+	
+	process PlatformSpecificComponent1_process
+		features
+			conn1_request: in event data port connectedServer_data_model::Template1_Platform {
+				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+			};
+			conn1_response: out event data port connectedServer_data_model::Template1_Platform {
+				Output_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+			};
+		flows
+			conn1_request_sink: flow sink conn1_request;
+			conn1_response_source: flow source conn1_response;
+	end PlatformSpecificComponent1_process;
+	
+	process implementation PlatformSpecificComponent1_process.impl
+		subcomponents
+			PlatformSpecificComponent1: thread group PlatformSpecificComponent1.impl;
+		connections
+			conn1_request_connection: port conn1_request -> PlatformSpecificComponent1.conn1_request;
+			conn1_response_connection: port PlatformSpecificComponent1.conn1_response -> conn1_response;
+		flows
+			conn1_request_sink: flow sink conn1_request -> conn1_request_connection -> PlatformSpecificComponent1;
+			conn1_response_source: flow source PlatformSpecificComponent1 -> conn1_response_connection -> conn1_response;
+	end PlatformSpecificComponent1_process.impl;
+end connectedServer_PSSS;

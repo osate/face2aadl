@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<face:ArchitectureModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:face="http://www.opengroup.us/face/3.0" name="ArchitectureModel1">
+  <im name="IntegrationModel1"/>
+</face:ArchitectureModel>

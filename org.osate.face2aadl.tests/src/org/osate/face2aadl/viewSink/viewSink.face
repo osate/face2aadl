@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<face:ArchitectureModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:face="http://www.opengroup.us/face/3.0" xmlns:integration="http://www.opengroup.us/face/integration/3.0" xmlns:platform="http://www.opengroup.us/face/datamodel/platform/3.0" xmlns:uop="http://www.opengroup.us/face/uop/3.0" name="ArchitectureModel1">
+  <dm name="DataModel1">
+    <pdm name="PlatformDataModel1">
+      <element xsi:type="platform:Template" name="Template1" specification="specification" boundQuery="//@dm.0/@pdm.0/@element.1"/>
+      <element xsi:type="platform:Query" name="Query1" specification="specification"/>
+    </pdm>
+  </dm>
+  <um name="UoPModel1">
+    <element xsi:type="uop:PlatformSpecificComponent" name="PlatformSpecificComponent1">
+      <thread/>
+      <memoryRequirements/>
+      <connection xsi:type="uop:SingleInstanceMessageConnection" name="conn1" messageType="//@dm.0/@pdm.0/@element.0" messageExchangeType="OutboundMessage"/>
+    </element>
+  </um>
+  <im name="IntegrationModel1">
+    <element xsi:type="integration:IntegrationContext" name="IntegrationContext1">
+      <connection source="//@im.0/@element.1/@output.0" destination="//@im.0/@element.0/@node.0/@inPort.0"/>
+      <node xsi:type="integration:ViewSink" name="ViewSink1">
+        <inPort view="//@dm.0/@pdm.0/@element.0"/>
+      </node>
+    </element>
+    <element xsi:type="integration:UoPInstance" name="UoPInstance1" realizes="//@um.0/@element.0">
+      <output connection="//@um.0/@element.0/@connection.0"/>
+    </element>
+  </im>
+</face:ArchitectureModel>

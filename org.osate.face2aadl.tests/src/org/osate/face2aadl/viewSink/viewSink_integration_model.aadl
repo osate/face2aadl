@@ -1,0 +1,25 @@
+--Generated from "viewSink.face" at 2018-03-29T15:02:31.883
+package viewSink_integration_model
+public
+	with FACE;
+	with viewSink_data_model;
+	with viewSink_PSSS;
+	
+	system IntegrationModel1
+	end IntegrationModel1;
+	
+	system implementation IntegrationModel1.impl
+		subcomponents
+			UoPInstance1: process viewSink_PSSS::PlatformSpecificComponent1_process.impl;
+			ViewSink1: abstract ViewSink1;
+		connections
+			connection0: feature UoPInstance1.conn1 -> ViewSink1.input0;
+	end IntegrationModel1.impl;
+	
+	abstract ViewSink1
+		features
+			input0: in feature viewSink_data_model::Template1_Platform;
+		properties
+			FACE::Segment => TSS;
+	end ViewSink1;
+end viewSink_integration_model;

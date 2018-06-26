@@ -1,0 +1,55 @@
+--Generated from "uuid.face" at 2018-03-29T15:02:31.883
+package uuid_PCS
+public
+	with FACE;
+	with uuid_data_model;
+	
+	thread group PortableComponent1
+		features
+			Input: in data port uuid_data_model::CompositeTemplate1_Platform.impl {
+				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+				FACE::UUID => "_Gf6u0GRREeiJQvh_fVqImg";
+			};
+			Output: out data port uuid_data_model::CompositeTemplate1_Platform.impl {
+				Output_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+				FACE::UUID => "_K594QGRREeiJQvh_fVqImg";
+			};
+		properties
+			FACE::Profile => general;
+			FACE::Segment => PCS;
+			FACE::UUID => "_AluBQGRREeiJQvh_fVqImg";
+	end PortableComponent1;
+	
+	thread group implementation PortableComponent1.impl
+		subcomponents
+			thread0: thread {
+				Period => 0 sec;
+			};
+	end PortableComponent1.impl;
+	
+	process PortableComponent1_process
+		features
+			Input: in data port uuid_data_model::CompositeTemplate1_Platform.impl {
+				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+				FACE::UUID => "_Gf6u0GRREeiJQvh_fVqImg";
+			};
+			Output: out data port uuid_data_model::CompositeTemplate1_Platform.impl {
+				Output_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+				FACE::UUID => "_K594QGRREeiJQvh_fVqImg";
+			};
+		flows
+			Input_sink: flow sink Input;
+			Output_source: flow source Output;
+	end PortableComponent1_process;
+	
+	process implementation PortableComponent1_process.impl
+		subcomponents
+			PortableComponent1: thread group PortableComponent1.impl;
+		connections
+			Input_connection: port Input -> PortableComponent1.Input;
+			Output_connection: port PortableComponent1.Output -> Output;
+		flows
+			Input_sink: flow sink Input -> Input_connection -> PortableComponent1;
+			Output_source: flow source PortableComponent1 -> Output_connection -> Output;
+	end PortableComponent1_process.impl;
+end uuid_PCS;

@@ -1,0 +1,47 @@
+--Generated from "42.sanitize.face" at 2018-03-29T15:02:31.883
+package N_42_sanitize_data_model
+public
+	with FACE;
+	
+	--description1
+	data U_Observable1_Conceptual
+		properties
+			FACE::Realization_Tier => conceptual;
+	end U_Observable1_Conceptual;
+	
+	--description1
+	data Observable2_U_Conceptual
+		properties
+			FACE::Realization_Tier => conceptual;
+	end Observable2_U_Conceptual;
+	
+	--description1
+	data U_Observable3_U_Conceptual
+		properties
+			FACE::Realization_Tier => conceptual;
+	end U_Observable3_U_Conceptual;
+	
+	--description1
+	data Observable_4_Conceptual
+		properties
+			FACE::Realization_Tier => conceptual;
+	end Observable_4_Conceptual;
+	
+	--description1
+	data Observable_U_5_Conceptual
+		properties
+			FACE::Realization_Tier => conceptual;
+	end Observable_U_5_Conceptual;
+	
+	--description1
+	data Observable_U_U_6_Conceptual
+		properties
+			FACE::Realization_Tier => conceptual;
+	end Observable_U_U_6_Conceptual;
+	
+	--description1
+	data Observable_U_U_U_7_Conceptual
+		properties
+			FACE::Realization_Tier => conceptual;
+	end Observable_U_U_U_7_Conceptual;
+end N_42_sanitize_data_model;

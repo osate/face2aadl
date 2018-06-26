@@ -1,0 +1,10 @@
+--Generated from "connectedServer.face" at 2018-03-29T15:02:31.883
+package connectedServer_data_model
+public
+	with FACE;
+	
+	data Template1_Platform
+		properties
+			FACE::Realization_Tier => platform;
+	end Template1_Platform;
+end connectedServer_data_model;

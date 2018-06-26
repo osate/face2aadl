@@ -1,0 +1,59 @@
+--Generated from "threads.face" at 2018-03-29T15:02:31.883
+package threads_PCS
+public
+	with FACE;
+	with threads_data_model;
+	
+	thread group PortableComponent1
+		features
+			conn1: in data port threads_data_model::Template1_Platform {
+				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+			};
+		properties
+			FACE::Profile => general;
+			FACE::Segment => PCS;
+	end PortableComponent1;
+	
+	thread group implementation PortableComponent1.impl
+		subcomponents
+			thread0: thread {
+				Period => 1000 sec;
+			};
+			thread1: thread {
+				Period => 1 sec;
+			};
+			thread2: thread {
+				Period => 0 sec;
+			};
+			thread3: thread {
+				Period => 500 ms;
+			};
+			thread4: thread {
+				Period => 62500 us;
+			};
+			thread5: thread {
+				Period => 7812500 ns;
+			};
+			thread6: thread {
+				Period => 976562500 ps;
+			};
+	end PortableComponent1.impl;
+	
+	process PortableComponent1_process
+		features
+			conn1: in data port threads_data_model::Template1_Platform {
+				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+			};
+		flows
+			conn1_sink: flow sink conn1;
+	end PortableComponent1_process;
+	
+	process implementation PortableComponent1_process.impl
+		subcomponents
+			PortableComponent1: thread group PortableComponent1.impl;
+		connections
+			conn1_connection: port conn1 -> PortableComponent1.conn1;
+		flows
+			conn1_sink: flow sink conn1 -> conn1_connection -> PortableComponent1;
+	end PortableComponent1_process.impl;
+end threads_PCS;

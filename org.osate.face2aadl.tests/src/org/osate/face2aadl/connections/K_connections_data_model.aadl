@@ -1,0 +1,45 @@
+--Generated from "connections.face" at 2018-03-29T15:02:31.883
+package K_connections_data_model
+public
+	with FACE;
+	
+	data view1_Platform
+		properties
+			FACE::Realization_Tier => platform;
+	end view1_Platform;
+	
+	data view2_Platform
+		properties
+			FACE::Realization_Tier => platform;
+	end view2_Platform;
+	
+	data view3_Platform
+		properties
+			FACE::Realization_Tier => platform;
+	end view3_Platform;
+	
+	data view4_Platform
+		properties
+			FACE::Realization_Tier => platform;
+	end view4_Platform;
+	
+	data view5_Platform
+		properties
+			FACE::Realization_Tier => platform;
+	end view5_Platform;
+	
+	data view6_Platform
+		properties
+			FACE::Realization_Tier => platform;
+	end view6_Platform;
+	
+	data view7_Platform
+		properties
+			FACE::Realization_Tier => platform;
+	end view7_Platform;
+	
+	data view8_Platform
+		properties
+			FACE::Realization_Tier => platform;
+	end view8_Platform;
+end K_connections_data_model;

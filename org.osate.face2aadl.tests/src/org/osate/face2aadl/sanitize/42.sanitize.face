@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<face:ArchitectureModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:conceptual="http://www.opengroup.us/face/datamodel/conceptual/3.0" xmlns:face="http://www.opengroup.us/face/3.0" name="ArchitectureModel1">
+  <dm name="DataModel1">
+    <cdm name="ConceptualDataModel1">
+      <element xsi:type="conceptual:Observable" name="_Observable1" description="description1"/>
+      <element xsi:type="conceptual:Observable" name="Observable2_" description="description1"/>
+      <element xsi:type="conceptual:Observable" name="_Observable3_" description="description1"/>
+      <element xsi:type="conceptual:Observable" name="Observable_4" description="description1"/>
+      <element xsi:type="conceptual:Observable" name="Observable__5" description="description1"/>
+      <element xsi:type="conceptual:Observable" name="Observable___6" description="description1"/>
+      <element xsi:type="conceptual:Observable" name="Observable____7" description="description1"/>
+    </cdm>
+  </dm>
+</face:ArchitectureModel>

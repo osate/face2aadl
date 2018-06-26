@@ -1,0 +1,41 @@
+--Generated from "viewSink.face" at 2018-03-29T15:02:31.883
+package viewSink_PSSS
+public
+	with FACE;
+	with viewSink_data_model;
+	
+	thread group PlatformSpecificComponent1
+		features
+			conn1: out data port viewSink_data_model::Template1_Platform {
+				Output_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+			};
+		properties
+			FACE::Profile => general;
+			FACE::Segment => PSSS;
+	end PlatformSpecificComponent1;
+	
+	thread group implementation PlatformSpecificComponent1.impl
+		subcomponents
+			thread0: thread {
+				Period => 0 sec;
+			};
+	end PlatformSpecificComponent1.impl;
+	
+	process PlatformSpecificComponent1_process
+		features
+			conn1: out data port viewSink_data_model::Template1_Platform {
+				Output_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+			};
+		flows
+			conn1_source: flow source conn1;
+	end PlatformSpecificComponent1_process;
+	
+	process implementation PlatformSpecificComponent1_process.impl
+		subcomponents
+			PlatformSpecificComponent1: thread group PlatformSpecificComponent1.impl;
+		connections
+			conn1_connection: port PlatformSpecificComponent1.conn1 -> conn1;
+		flows
+			conn1_source: flow source PlatformSpecificComponent1 -> conn1_connection -> conn1;
+	end PlatformSpecificComponent1_process.impl;
+end viewSink_PSSS;

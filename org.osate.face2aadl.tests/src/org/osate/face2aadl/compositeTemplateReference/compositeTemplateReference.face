@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<face:ArchitectureModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:face="http://www.opengroup.us/face/3.0" xmlns:platform="http://www.opengroup.us/face/datamodel/platform/3.0" xmlns:uop="http://www.opengroup.us/face/uop/3.0" name="ArchitectureModel1">
+  <dm name="DataModel1">
+    <pdm name="PlatformDataModel1">
+      <element xsi:type="platform:Query" name="Query1" specification=""/>
+      <element xsi:type="platform:Template" name="Template1" specification="specification" boundQuery="//@dm.0/@pdm.0/@element.0"/>
+      <element xsi:type="platform:Query" name="Query2" specification="specification"/>
+      <element xsi:type="platform:Template" name="Template2" specification="specification" boundQuery="//@dm.0/@pdm.0/@element.2"/>
+      <element xsi:type="platform:CompositeTemplate" name="CompositeTemplate1">
+        <composition rolename="TemplateComposition1" type="//@dm.0/@pdm.0/@element.1"/>
+        <composition rolename="TemplateComposition2" type="//@dm.0/@pdm.0/@element.3"/>
+      </element>
+    </pdm>
+  </dm>
+  <um name="UoPModel1">
+    <element xsi:type="uop:PlatformSpecificComponent" name="PlatformSpecificComponent1">
+      <thread/>
+      <memoryRequirements/>
+      <connection xsi:type="uop:SingleInstanceMessageConnection" name="conn1" messageType="//@dm.0/@pdm.0/@element.4"/>
+    </element>
+  </um>
+</face:ArchitectureModel>

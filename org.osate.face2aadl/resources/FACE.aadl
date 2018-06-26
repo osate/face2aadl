@@ -1,0 +1,21 @@
+-- Properties used when modeling FACE concepts in AADL.
+property set FACE is
+	-- Properties for all elements:
+	
+	-- The UUID is used to maintain traceability from elements in the FACE model to elements in the AADL model.
+	UUID: aadlstring applies to (all);
+	
+	
+	-- Properties for data model elements:
+	
+	Realization_Tier: enumeration (conceptual, logical, platform) applies to (data);
+	-- For data components that correspond to a composite query or a composite template, Is_Union indicates if the
+	-- subcomponents should be considered to form a union or a struct.
+	Is_Union: aadlboolean => false applies to (data);
+	
+	
+	-- Properties for UoPs:
+	
+	Profile: enumeration (security, safety_extended, safety, general) applies to (all);
+	Segment: enumeration (PSSS, PCS, IOSS, OSS, TSS) applies to (all);
+end FACE;

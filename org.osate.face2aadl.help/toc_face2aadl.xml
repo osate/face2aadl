@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    FACE Data Model to AADL Translator
+    
+    Copyright 2018 Carnegie Mellon University. All Rights Reserved.
+    
+    NO WARRANTY. THIS CARNEGIE MELLON UNIVERSITY AND SOFTWARE ENGINEERING INSTITUTE MATERIAL IS FURNISHED ON
+    AN "AS-IS" BASIS. CARNEGIE MELLON UNIVERSITY MAKES NO WARRANTIES OF ANY KIND, EITHER EXPRESSED OR IMPLIED,
+    AS TO ANY MATTER INCLUDING, BUT NOT LIMITED TO, WARRANTY OF FITNESS FOR PURPOSE OR MERCHANTABILITY,
+    EXCLUSIVITY, OR RESULTS OBTAINED FROM USE OF THE MATERIAL. CARNEGIE MELLON UNIVERSITY DOES NOT MAKE ANY
+    WARRANTY OF ANY KIND WITH RESPECT TO FREEDOM FROM PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.
+    
+    Released under an Eclipse Public License - v1.0-style license, please see license.txt or contact
+    permission@sei.cmu.edu for full terms.
+    
+    [DISTRIBUTION STATEMENT A] This material has been approved for public release and unlimited distribution.
+    Please see Copyright notice for non-US Government use and distribution.
+    
+    DM18-0762
+ -->
+<toc label="FACE Data Model to AADL Translator Documentation">
+	<topic href="html/Translator.html#introduction" label="Introduction"/>
+	<topic href="html/Translator.html#how-to-use" label="How to use"/>
+	<topic href="html/Translator.html#translation-details" label="Translation details">
+		<topic href="html/Translator.html#data-model-translation" label="Data model translation">
+			<topic href="html/Translator.html#facedatamodelconceptualcomposableelement" label="face.datamodel.conceptual.ComposableElement"/>
+			<topic href="html/Translator.html#facedatamodelconceptualquery" label="face.datamodel.conceptual.Query"/>
+			<topic href="html/Translator.html#facedatamodelconceptualcompositequery" label="face.datamodel.conceptual.CompositeQuery"/>
+			<topic href="html/Translator.html#facedatamodellogicalentity" label="face.datamodel.logical.Entity"/>
+			<topic href="html/Translator.html#facedatamodellogicalquery" label="face.datamodel.logical.Query"/>
+			<topic href="html/Translator.html#facedatamodellogicalcompositequery" label="face.datamodel.logical.CompositeQuery"/>
+			<topic href="html/Translator.html#facedatamodelplatformphysicaldatatype" label="face.datamodel.platform.PhysicalDataType"/>
+			<topic href="html/Translator.html#facedatamodelplatformentity" label="face.datamodel.platform.Entity"/>
+			<topic href="html/Translator.html#facedatamodelplatformtemplate" label="face.datamodel.platform.Template"/>
+			<topic href="html/Translator.html#facedatamodelplatformcompositetemplate" label="face.datamodel.platform.CompositeTemplate"/>
+			<topic href="html/Translator.html#example-data-model" label="Example data model"/>
+		</topic>
+		<topic href="html/Translator.html#uop-model-translation" label="UoP model translation">
+			<topic href="html/Translator.html#faceuopunitofportability" label="face.uop.UnitOfPortability"/>
+			<topic href="html/Translator.html#example-uop-model" label="Example UoP model"/>
+		</topic>
+		<topic href="html/Translator.html#integration-model-translation" label="Integration model translation">
+			<topic href="html/Translator.html#faceintegrationintegrationmodel" label="face.integration.IntegrationModel"/>
+			<topic href="html/Translator.html#faceintegrationtransportnode" label="face.integration.TransportNode"/>
+			<topic href="html/Translator.html#example-integration-model" label="Example integration model"/>
+		</topic>
+	</topic>
+	<topic href="html/Translator.html#extending-the-generated-aadl-model" label="Extending the generated AADL model"/>
+</toc>

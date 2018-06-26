@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<face:ArchitectureModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:conceptual="http://www.opengroup.us/face/datamodel/conceptual/3.0" xmlns:face="http://www.opengroup.us/face/3.0" xmlns:logical="http://www.opengroup.us/face/datamodel/logical/3.0" name="ArchitectureModel1">
+  <dm name="DataModel1">
+    <cdm name="ConceptualDataModel1">
+      <element xsi:type="conceptual:Query" name="Query1" specification="specification"/>
+      <element xsi:type="conceptual:Query" name="Query2" specification="specification"/>
+      <element xsi:type="conceptual:CompositeQuery" name="CompositeQuery1">
+        <composition rolename="QueryComposition1" type="//@dm.0/@cdm.0/@element.0"/>
+        <composition rolename="QueryComposition2" type="//@dm.0/@cdm.0/@element.1"/>
+      </element>
+    </cdm>
+    <ldm name="LogicalDataModel1">
+      <element xsi:type="logical:Query" name="Query3" specification="specification"/>
+      <element xsi:type="logical:Query" name="Query4" specification="specification"/>
+      <element xsi:type="logical:CompositeQuery" name="CompositeQuery2">
+        <composition rolename="QueryComposition3" type="//@dm.0/@ldm.0/@element.0"/>
+        <composition rolename="QueryComposition4" type="//@dm.0/@ldm.0/@element.1"/>
+      </element>
+      <element xsi:type="logical:CompositeQuery" name="CompositeQuery3" isUnion="true">
+        <composition rolename="QueryComposition5" type="//@dm.0/@ldm.0/@element.0"/>
+        <composition rolename="QueryComposition6" type="//@dm.0/@ldm.0/@element.1"/>
+      </element>
+      <element xsi:type="logical:CompositeQuery" name="CompositeQuery4">
+        <composition rolename="QueryComposition7" type="//@dm.0/@ldm.0/@element.2"/>
+        <composition rolename="QueryComposition8" type="//@dm.0/@ldm.0/@element.3"/>
+      </element>
+      <element xsi:type="logical:Query" name="Query5" realizes="//@dm.0/@cdm.0/@element.0" specification="specification"/>
+      <element xsi:type="logical:Query" name="Query6" realizes="//@dm.0/@cdm.0/@element.1" specification="specification"/>
+      <element xsi:type="logical:CompositeQuery" name="CompositeQuery5" realizes="//@dm.0/@cdm.0/@element.2">
+        <composition realizes="//@dm.0/@cdm.0/@element.2/@composition.0" rolename="QueryComposition9" type="//@dm.0/@ldm.0/@element.5"/>
+        <composition realizes="//@dm.0/@cdm.0/@element.2/@composition.1" rolename="QueryComposition10" type="//@dm.0/@ldm.0/@element.6"/>
+      </element>
+    </ldm>
+  </dm>
+</face:ArchitectureModel>
