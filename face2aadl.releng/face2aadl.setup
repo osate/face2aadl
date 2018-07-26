@@ -40,14 +40,6 @@
     <description>Install the tools needed in the IDE to work with the source code for ${scope.project.label}</description>
   </setupTask>
   <setupTask
-      xsi:type="git:GitCloneTask"
-      id="git.clone.face2aadl"
-      filter=""
-      remoteURI="osate/face2aadl"
-      pushURI="">
-    <description>Clone face2aadl git repository</description>
-  </setupTask>
-  <setupTask
       xsi:type="projects:ProjectsImportTask">
     <sourceLocator
         rootFolder="${git.clone.face2aadl.location}"/>
@@ -105,6 +97,29 @@
       </predicate>
     </workingSet>
     <description>The dynamic working sets for ${scope.project.label}</description>
+  </setupTask>
+  <setupTask
+      xsi:type="git:GitCloneTask"
+      id="git.clone.face2aadl"
+      filter=""
+      remoteURI="osate/face2aadl"
+      pushURI="">
+    <annotation
+        source="http://www.eclipse.org/oomph/setup/InducedChoices">
+      <detail
+          key="inherit">
+        <value>github.remoteURIs</value>
+      </detail>
+      <detail
+          key="label">
+        <value>FACE 2 AADL Github repository</value>
+      </detail>
+      <detail
+          key="target">
+        <value>remoteURI</value>
+      </detail>
+    </annotation>
+    <description>Clone FACE 2 AADL Repository</description>
   </setupTask>
   <stream name="master"
       label="Master"/>
