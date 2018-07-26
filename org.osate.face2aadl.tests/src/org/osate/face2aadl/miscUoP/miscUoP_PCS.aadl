@@ -18,7 +18,9 @@ public
 	thread group implementation PortableComponent1.impl
 		subcomponents
 			thread0: thread {
+				Compute_Execution_Time => 0 sec .. 0 sec;
 				Period => 0 sec;
+				Priority => 0;
 			};
 	end PortableComponent1.impl;
 	
@@ -54,7 +56,9 @@ public
 	thread group implementation PortableComponent2.impl
 		subcomponents
 			thread0: thread {
+				Compute_Execution_Time => 0 sec .. 0 sec;
 				Period => 0 sec;
+				Priority => 0;
 			};
 	end PortableComponent2.impl;
 	
@@ -89,7 +93,9 @@ public
 	thread group implementation PortableComponent3.impl
 		subcomponents
 			thread0: thread {
+				Compute_Execution_Time => 0 sec .. 0 sec;
 				Period => 0 sec;
+				Priority => 0;
 			};
 	end PortableComponent3.impl;
 	

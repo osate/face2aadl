@@ -17,25 +17,39 @@ public
 	thread group implementation PortableComponent1.impl
 		subcomponents
 			thread0: thread {
+				Compute_Execution_Time => 0 sec .. 0 sec;
 				Period => 1000 sec;
+				Priority => 0;
 			};
 			thread1: thread {
+				Compute_Execution_Time => 0 sec .. 0 sec;
 				Period => 1 sec;
+				Priority => 0;
 			};
 			thread2: thread {
+				Compute_Execution_Time => 0 sec .. 0 sec;
 				Period => 0 sec;
+				Priority => 0;
 			};
 			thread3: thread {
+				Compute_Execution_Time => 0 sec .. 0 sec;
 				Period => 500 ms;
+				Priority => 0;
 			};
 			thread4: thread {
+				Compute_Execution_Time => 0 sec .. 0 sec;
 				Period => 62500 us;
+				Priority => 0;
 			};
 			thread5: thread {
+				Compute_Execution_Time => 0 sec .. 0 sec;
 				Period => 7812500 ns;
+				Priority => 0;
 			};
 			thread6: thread {
+				Compute_Execution_Time => 0 sec .. 0 sec;
 				Period => 976562500 ps;
+				Priority => 0;
 			};
 	end PortableComponent1.impl;
 	

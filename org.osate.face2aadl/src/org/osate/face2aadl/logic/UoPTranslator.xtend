@@ -110,7 +110,10 @@ class UoPTranslator implements ModelTranslator {
 				subcomponents
 					«FOR thread : component.thread.indexed»
 					thread«thread.key»: thread {
+						«val executionTime = translateThreadPeriod(thread.value.timeCapacity)»
+						Compute_Execution_Time => «executionTime» .. «executionTime»;
 						Period => «translateThreadPeriod(thread.value.period)»;
+						Priority => «thread.value.relativePriority»;
 					};
 					«ENDFOR»
 				«ENDIF»

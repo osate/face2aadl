@@ -18,7 +18,9 @@ public
 	thread group implementation Altitude_Sensor.impl
 		subcomponents
 			thread0: thread {
+				Compute_Execution_Time => 0 sec .. 0 sec;
 				Period => 125 ms;
+				Priority => 0;
 			};
 	end Altitude_Sensor.impl;
 	
@@ -55,7 +57,9 @@ public
 	thread group implementation Autopilot.impl
 		subcomponents
 			thread0: thread {
+				Compute_Execution_Time => 0 sec .. 0 sec;
 				Period => 125 ms;
+				Priority => 0;
 			};
 	end Autopilot.impl;
 	
