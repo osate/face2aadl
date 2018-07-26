@@ -21,6 +21,16 @@
     <description>Define the JRE needed to compile and run the Java projects of ${scope.project.label}</description>
   </setupTask>
   <setupTask
+      xsi:type="setup:EclipseIniTask"
+      option="-Doomph.redirection.face2aadl"
+      value="=https://raw.githubusercontent.com/osate/face2aadl/master/face2aadl.releng/face2aadl.setup->${git.clone.face2aadl.location|uri}/face2aadl.releng/face2aadl.setup"
+      vm="true">
+    <description>
+      Set an Oomph redirection system property to redirect the logical location of this setup to its physical location in the Git clone.
+      Before enabling this task, replace '...' with the repository path of this setup's containing project.
+    </description>
+  </setupTask>
+  <setupTask
       xsi:type="setup:VariableTask"
       name="eclipse.target.platform"
       defaultValue="Oxygen"
@@ -33,7 +43,7 @@
       xsi:type="git:GitCloneTask"
       id="git.clone.face2aadl"
       filter=""
-      remoteURI="git@gitr.ssdlab.sei.cmu.edu:aadl/face2aadl"
+      remoteURI="osate/face2aadl"
       pushURI="">
     <description>Clone face2aadl git repository</description>
   </setupTask>
