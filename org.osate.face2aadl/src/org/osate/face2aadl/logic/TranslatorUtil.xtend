@@ -70,7 +70,12 @@ class TranslatorUtil {
 	}
 	
 	def package static String translateDescription(Element element) {
-		'''«IF !element.description.empty»--«element.description»«ENDIF»'''
+		if (element.description.empty) {
+			""
+		} else {
+			//Makes each line a comment. Also converts newlines to System newlines.
+			"--" + element.description.replace("\r", "").replace("\n", System.lineSeparator + "--")
+		}
 	}
 	
 	def package static String translateUUID(EObject object) {
