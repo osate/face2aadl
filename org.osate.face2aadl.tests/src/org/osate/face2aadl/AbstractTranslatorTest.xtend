@@ -4,6 +4,7 @@ import face.ArchitectureModel
 import face.FacePackage
 import face.uop.PlatformSpecificComponent
 import face.uop.PortableComponent
+import java.nio.charset.Charset
 import java.time.LocalDateTime
 import org.apache.commons.io.IOUtils
 import org.eclipse.emf.common.util.URI
@@ -83,7 +84,7 @@ abstract class AbstractTranslatorTest {
 		val expected = class.getResourceAsStream(packageName + ".aadl")
 		val actual = translator.translate(root)
 		if (actual.present) {
-			IOUtils.toString(expected).assertEquals(actual.get.replace("\r", ""))
+			IOUtils.toString(expected, Charset.defaultCharset).assertEquals(actual.get.replace("\r", ""))
 		} else {
 			expected.assertNull
 		}
