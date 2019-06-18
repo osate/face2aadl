@@ -4,6 +4,6 @@ import org.osate.face2aadl.AbstractTranslatorTest
 
 class ThreadsTest extends AbstractTranslatorTest {
 	new() {
-		super("threads")
+		super("threads", false)
 	}
 }

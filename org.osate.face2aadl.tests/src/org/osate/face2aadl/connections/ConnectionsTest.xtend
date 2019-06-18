@@ -4,6 +4,6 @@ import org.osate.face2aadl.AbstractTranslatorTest
 
 class ConnectionsTest extends AbstractTranslatorTest {
 	new() {
-		super("connections")
+		super("connections", false)
 	}
 }

@@ -29,17 +29,19 @@ abstract class AbstractTranslatorTest {
 	val String psssName
 	val String pcsName
 	val String integrationModelName
+	val boolean platformOnly
 	val time = LocalDateTime.of(2018, 3, 29, 15, 02, 31, 883_000_000).toString
 	
 	ArchitectureModel root
 	
-	new(String baseName) {
+	new(String baseName, boolean platformOnly) {
 		faceFileName = baseName + ".face"
 		val aadlName = sanitizeID(baseName)
 		dataModelName = aadlName + "_data_model"
 		psssName = aadlName + "_PSSS"
 		pcsName = aadlName + "_PCS"
 		integrationModelName = aadlName + "_integration_model"
+		this.platformOnly = platformOnly
 	}
 	
 	@Before
@@ -54,7 +56,7 @@ abstract class AbstractTranslatorTest {
 	
 	@Test
 	def void testDataModel() {
-		val translator = new DataModelTranslator(faceFileName, dataModelName, time)
+		val translator = new DataModelTranslator(faceFileName, dataModelName, time, platformOnly)
 		testModel(translator, dataModelName)
 	}
 	

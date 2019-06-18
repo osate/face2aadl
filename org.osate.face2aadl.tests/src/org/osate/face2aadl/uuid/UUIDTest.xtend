@@ -4,6 +4,6 @@ import org.osate.face2aadl.AbstractTranslatorTest
 
 class UUIDTest extends AbstractTranslatorTest {
 	new() {
-		super("uuid")
+		super("uuid", false)
 	}
 }

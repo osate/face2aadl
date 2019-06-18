@@ -1,0 +1,20 @@
+--Generated from "miscDataModelPlatformOnly.face" at 2018-03-29T15:02:31.883
+package miscDataModelPlatformOnly_data_model
+public
+	with FACE;
+	
+	data Boolean1_Platform
+		properties
+			FACE::Realization_Tier => platform;
+	end Boolean1_Platform;
+	
+	data Entity3_Platform --extension of Entity2_Logical not translated
+		properties
+			FACE::Realization_Tier => platform;
+	end Entity3_Platform;
+	
+	data Template1_Platform
+		properties
+			FACE::Realization_Tier => platform;
+	end Template1_Platform;
+end miscDataModelPlatformOnly_data_model;

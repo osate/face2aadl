@@ -27,6 +27,7 @@ import face.datamodel.conceptual.QueryComposition
 import face.datamodel.conceptual.View
 import face.datamodel.logical.Entity
 import face.datamodel.platform.CompositeTemplate
+import face.datamodel.platform.Element
 import face.datamodel.platform.PhysicalDataType
 import face.datamodel.platform.Template
 import face.datamodel.platform.TemplateComposition
@@ -44,10 +45,16 @@ class DataModelTranslator implements ModelTranslator {
 	val String faceFileName
 	val String packageName
 	val String timestamp
+	val boolean platformOnly
 	
 	override translate(ArchitectureModel model) {
 		val dataModelObjects = model.dm.map[it.eAllContents.toIterable].flatten
-		val classifiers = dataModelObjects.map[translateDataModelObject(it)].filterNull
+		val filtered = if (platformOnly) {
+			dataModelObjects.filter(Element)
+		} else {
+			dataModelObjects
+		}
+		val classifiers = filtered.map[translateDataModelObject(it)].filterNull
 		val classifiersString = classifiers.join(System.lineSeparator)
 		
 		if (classifiersString.empty) {
@@ -172,7 +179,7 @@ class DataModelTranslator implements ModelTranslator {
 				val name = translateName(object)
 				'''
 					«translateDescription(object)»
-					data «name» extends «translateName(object.realizes)»
+					data «name» «translateExtends(object.realizes)»
 						properties
 							FACE::Realization_Tier => platform;
 							«translateUUID(object)»
@@ -181,9 +188,10 @@ class DataModelTranslator implements ModelTranslator {
 			}
 			Template: {
 				val name = translateName(object)
+				val realizes = object.boundQuery?.realizes
 				'''
 					«translateDescription(object)»
-					data «name»«IF object.boundQuery?.realizes !== null» extends «translateName(object.boundQuery.realizes)»«ENDIF»
+					data «name»«IF realizes !== null» «translateExtends(realizes)»«ENDIF»
 						properties
 							FACE::Realization_Tier => platform;
 							«translateUUID(object)»
@@ -194,7 +202,7 @@ class DataModelTranslator implements ModelTranslator {
 				val name = translateName(object)
 				'''
 					«translateDescription(object)»
-					data «name»«IF object.realizes !== null» extends «translateName(object.realizes)»«ENDIF»
+					data «name»«IF object.realizes !== null» «translateExtends(object.realizes)»«ENDIF»
 						properties
 							«IF object.isUnion»
 							FACE::Is_Union => true;
@@ -242,6 +250,15 @@ class DataModelTranslator implements ModelTranslator {
 			«sanitizeID(composition.rolename)»: data «viewReference»«IF !uuid.empty» {
 				«uuid»
 			}«ENDIF»;'''
+	}
+	
+	def private String translateExtends(face.datamodel.logical.Element extendedElement) {
+		val name = translateName(extendedElement)
+		if (platformOnly) {
+			'''--extension of «name» not translated'''
+		} else {
+			"extends " + name
+		}
 	}
 	
 	def private String translateViewReference(View view) {

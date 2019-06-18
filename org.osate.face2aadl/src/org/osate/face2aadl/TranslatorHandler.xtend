@@ -71,7 +71,7 @@ class TranslatorHandler extends AbstractHandler {
 			val timestamp = LocalDateTime.now.toString
 			
 			val dataModelPackageName = baseFileName + "_data_model"
-			val dataModelTranslator = new DataModelTranslator(faceFile.name, dataModelPackageName, timestamp)
+			val dataModelTranslator = new DataModelTranslator(faceFile.name, dataModelPackageName, timestamp, false)
 			translateModel(dataModelTranslator, root, dataModelPackageName, modelGenDirectory,
 				subMonitor.split(1)
 			)
