@@ -72,9 +72,7 @@ class TranslatorHandler extends AbstractHandler {
 			
 			val dataModelPackageName = baseFileName + "_data_model"
 			val dataModelTranslator = new DataModelTranslator(faceFile.name, dataModelPackageName, timestamp, false)
-			translateModel(dataModelTranslator, root, dataModelPackageName, modelGenDirectory,
-				subMonitor.split(1)
-			)
+			translateModel(dataModelTranslator, root, dataModelPackageName, modelGenDirectory, subMonitor.split(1))
 			
 			val psssPackageName = baseFileName + "_PSSS"
 			val psssTranslator = new UoPTranslator(PlatformSpecificComponent, faceFile.name, psssPackageName,
@@ -89,8 +87,8 @@ class TranslatorHandler extends AbstractHandler {
 			translateModel(pcsTranslator, root, pcsPackageName, modelGenDirectory, subMonitor.split(1))
 			
 			val integrationModelPackageName = baseFileName + "_integration_model"
-			val integrationModelTranslator = new IntegrationModelTranslator(faceFile.name,
-				integrationModelPackageName, dataModelPackageName, psssPackageName, pcsPackageName, timestamp
+			val integrationModelTranslator = new IntegrationModelTranslator(faceFile.name, integrationModelPackageName,
+				dataModelPackageName, psssPackageName, pcsPackageName, timestamp
 			)
 			translateModel(integrationModelTranslator, root, integrationModelPackageName, modelGenDirectory,
 				subMonitor.split(1)
