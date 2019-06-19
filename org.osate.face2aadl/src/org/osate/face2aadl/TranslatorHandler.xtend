@@ -38,6 +38,7 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.common.util.WrappedException
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.emf.ecore.xmi.PackageNotFoundException
+import org.eclipse.jface.window.Window
 import org.eclipse.ui.actions.WorkspaceModifyOperation
 import org.eclipse.ui.statushandlers.StatusManager
 import org.osate.face2aadl.logic.DataModelTranslator
@@ -47,6 +48,7 @@ import org.osate.face2aadl.logic.UoPTranslator
 
 import static org.osate.face2aadl.logic.TranslatorUtil.sanitizeID
 
+import static extension org.eclipse.ui.handlers.HandlerUtil.getActiveShell
 import static extension org.eclipse.ui.handlers.HandlerUtil.getActiveWorkbenchWindow
 import static extension org.eclipse.ui.handlers.HandlerUtil.getCurrentStructuredSelection
 
@@ -54,67 +56,70 @@ class TranslatorHandler extends AbstractHandler {
 	override execute(ExecutionEvent event) throws ExecutionException {
 		val faceFile = event.currentStructuredSelection.firstElement as IFile
 		
-		val WorkspaceModifyOperation operation = [monitor |
-			val subMonitor = SubMonitor.convert(monitor, 5)
-			
-			val modelGenDirectory = faceFile.project.getFolder("model-gen")
-			if (!modelGenDirectory.exists) {
-				modelGenDirectory.create(false, true, subMonitor.split(1))
-			}
-			subMonitor.workRemaining = 4
-			
-			val baseFileName = sanitizeID(faceFile.fullPath.removeFileExtension.lastSegment)
-			val resourceSet = new ResourceSetImpl
-			val faceURI = URI.createPlatformResourceURI(faceFile.fullPath.toString, true)
-			val faceResource = resourceSet.getResource(faceURI, true)
-			val root = faceResource.contents.head as ArchitectureModel
-			val timestamp = LocalDateTime.now.toString
-			
-			val dataModelPackageName = baseFileName + "_data_model"
-			val dataModelTranslator = new DataModelTranslator(faceFile.name, dataModelPackageName, timestamp)
-			translateModel(dataModelTranslator, root, dataModelPackageName, modelGenDirectory,
-				subMonitor.split(1)
-			)
-			
-			val psssPackageName = baseFileName + "_PSSS"
-			val psssTranslator = new UoPTranslator(PlatformSpecificComponent, faceFile.name, psssPackageName,
-				dataModelPackageName, timestamp
-			)
-			translateModel(psssTranslator, root, psssPackageName, modelGenDirectory, subMonitor.split(1))
-			
-			val pcsPackageName = baseFileName + "_PCS"
-			val pcsTranslator = new UoPTranslator(PortableComponent, faceFile.name, pcsPackageName,
-				dataModelPackageName, timestamp
-			)
-			translateModel(pcsTranslator, root, pcsPackageName, modelGenDirectory, subMonitor.split(1))
-			
-			val integrationModelPackageName = baseFileName + "_integration_model"
-			val integrationModelTranslator = new IntegrationModelTranslator(faceFile.name,
-				integrationModelPackageName, dataModelPackageName, psssPackageName, pcsPackageName, timestamp
-			)
-			translateModel(integrationModelTranslator, root, integrationModelPackageName, modelGenDirectory,
-				subMonitor.split(1)
-			)
-		]
-		try {
-			event.activeWorkbenchWindow.run(true, true, operation)
-		} catch (InvocationTargetException e) {
-			val target = e.targetException
-			
-			if (target instanceof WrappedException && target.cause instanceof PackageNotFoundException) {
-				val message = '''"«faceFile.name»" is not a FACE 3.0 Data Model.'''
+		val configDialog = new ConfigDialog(event.activeShell)
+		if (configDialog.open == Window.OK) {
+			val WorkspaceModifyOperation operation = [monitor |
+				val subMonitor = SubMonitor.convert(monitor, 5)
 				
-				val logStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID, message, target)
-				StatusManager.manager.handle(logStatus, StatusManager.LOG)
+				val modelGenDirectory = faceFile.project.getFolder("model-gen")
+				if (!modelGenDirectory.exists) {
+					modelGenDirectory.create(false, true, subMonitor.split(1))
+				}
+				subMonitor.workRemaining = 4
 				
-				val dialogStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID, message)
-				StatusManager.manager.handle(dialogStatus, StatusManager.SHOW)
-			} else {
-				val status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Error while translating.", target)
-				StatusManager.manager.handle(status, StatusManager.LOG.bitwiseOr(StatusManager.SHOW))
+				val baseFileName = sanitizeID(faceFile.fullPath.removeFileExtension.lastSegment)
+				val resourceSet = new ResourceSetImpl
+				val faceURI = URI.createPlatformResourceURI(faceFile.fullPath.toString, true)
+				val faceResource = resourceSet.getResource(faceURI, true)
+				val root = faceResource.contents.head as ArchitectureModel
+				val timestamp = LocalDateTime.now.toString
+				
+				val dataModelPackageName = baseFileName + "_data_model"
+				val dataModelTranslator = new DataModelTranslator(faceFile.name, dataModelPackageName, timestamp,
+					configDialog.platformOnly
+				)
+				translateModel(dataModelTranslator, root, dataModelPackageName, modelGenDirectory, subMonitor.split(1))
+				
+				val psssPackageName = baseFileName + "_PSSS"
+				val psssTranslator = new UoPTranslator(PlatformSpecificComponent, faceFile.name, psssPackageName,
+					dataModelPackageName, timestamp
+				)
+				translateModel(psssTranslator, root, psssPackageName, modelGenDirectory, subMonitor.split(1))
+				
+				val pcsPackageName = baseFileName + "_PCS"
+				val pcsTranslator = new UoPTranslator(PortableComponent, faceFile.name, pcsPackageName,
+					dataModelPackageName, timestamp
+				)
+				translateModel(pcsTranslator, root, pcsPackageName, modelGenDirectory, subMonitor.split(1))
+				
+				val integrationModelPackageName = baseFileName + "_integration_model"
+				val integrationModelTranslator = new IntegrationModelTranslator(faceFile.name,
+					integrationModelPackageName, dataModelPackageName, psssPackageName, pcsPackageName, timestamp
+				)
+				translateModel(integrationModelTranslator, root, integrationModelPackageName, modelGenDirectory,
+					subMonitor.split(1)
+				)
+			]
+			try {
+				event.activeWorkbenchWindow.run(true, true, operation)
+			} catch (InvocationTargetException e) {
+				val target = e.targetException
+				
+				if (target instanceof WrappedException && target.cause instanceof PackageNotFoundException) {
+					val message = '''"«faceFile.name»" is not a FACE 3.0 Data Model.'''
+					
+					val logStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID, message, target)
+					StatusManager.manager.handle(logStatus, StatusManager.LOG)
+					
+					val dialogStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID, message)
+					StatusManager.manager.handle(dialogStatus, StatusManager.SHOW)
+				} else {
+					val status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Error while translating.", target)
+					StatusManager.manager.handle(status, StatusManager.LOG.bitwiseOr(StatusManager.SHOW))
+				}
+			} catch (InterruptedException e) {
+				//Do nothing.
 			}
-		} catch (InterruptedException e) {
-			//Do nothing.
 		}
 		
 		null

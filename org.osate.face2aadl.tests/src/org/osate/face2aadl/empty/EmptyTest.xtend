@@ -4,6 +4,6 @@ import org.osate.face2aadl.AbstractTranslatorTest
 
 class EmptyTest extends AbstractTranslatorTest {
 	new() {
-		super("empty")
+		super("empty", false)
 	}
 }

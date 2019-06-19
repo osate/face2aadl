@@ -4,6 +4,7 @@ import face.ArchitectureModel
 import face.FacePackage
 import face.uop.PlatformSpecificComponent
 import face.uop.PortableComponent
+import java.nio.charset.Charset
 import java.time.LocalDateTime
 import org.apache.commons.io.IOUtils
 import org.eclipse.emf.common.util.URI
@@ -28,17 +29,19 @@ abstract class AbstractTranslatorTest {
 	val String psssName
 	val String pcsName
 	val String integrationModelName
+	val boolean platformOnly
 	val time = LocalDateTime.of(2018, 3, 29, 15, 02, 31, 883_000_000).toString
 	
 	ArchitectureModel root
 	
-	new(String baseName) {
+	new(String baseName, boolean platformOnly) {
 		faceFileName = baseName + ".face"
 		val aadlName = sanitizeID(baseName)
 		dataModelName = aadlName + "_data_model"
 		psssName = aadlName + "_PSSS"
 		pcsName = aadlName + "_PCS"
 		integrationModelName = aadlName + "_integration_model"
+		this.platformOnly = platformOnly
 	}
 	
 	@Before
@@ -53,7 +56,7 @@ abstract class AbstractTranslatorTest {
 	
 	@Test
 	def void testDataModel() {
-		val translator = new DataModelTranslator(faceFileName, dataModelName, time)
+		val translator = new DataModelTranslator(faceFileName, dataModelName, time, platformOnly)
 		testModel(translator, dataModelName)
 	}
 	
@@ -83,7 +86,7 @@ abstract class AbstractTranslatorTest {
 		val expected = class.getResourceAsStream(packageName + ".aadl")
 		val actual = translator.translate(root)
 		if (actual.present) {
-			IOUtils.toString(expected).assertEquals(actual.get.replace("\r", ""))
+			IOUtils.toString(expected, Charset.defaultCharset).assertEquals(actual.get.replace("\r", ""))
 		} else {
 			expected.assertNull
 		}
