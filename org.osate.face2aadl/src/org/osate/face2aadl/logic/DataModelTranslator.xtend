@@ -60,7 +60,7 @@ class DataModelTranslator implements ModelTranslator {
 		if (classifiersString.empty) {
 			Optional.empty
 		} else {
-			Optional.of(	'''
+			Optional.of('''
 				--Generated from "«faceFileName»" at «timestamp»
 				package «packageName»
 				public
@@ -74,17 +74,7 @@ class DataModelTranslator implements ModelTranslator {
 	def private String translateDataModelObject(EObject object) {
 		switch object {
 			//Conceptual
-			ComposableElement: {
-				val name = translateName(object)
-				'''
-					«translateDescription(object)»
-					data «name»
-						properties
-							FACE::Realization_Tier => conceptual;
-							«translateUUID(object)»
-					end «name»;
-				'''
-			}
+			ComposableElement,
 			Query: {
 				val name = translateName(object)
 				'''
