@@ -3,7 +3,6 @@ package org.osate.face2aadl
 import face.ArchitectureModel
 import face.FacePackage
 import java.time.LocalDateTime
-import java.util.Optional
 import org.apache.commons.io.IOUtils
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
@@ -11,6 +10,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
 import org.junit.Before
 import org.junit.Test
 import org.osate.face2aadl.logic.ArchitectureModelTranslator
+import org.osate.face2aadl.logic.ArchitectureModelTranslator.TranslatedPackage
 
 import static extension org.junit.Assert.assertEquals
 import static extension org.junit.Assert.assertNotNull
@@ -41,28 +41,28 @@ abstract class AbstractTranslatorTest {
 	
 	@Test
 	def void testDataModel() {
-		testModel(translator.dataModelPackageName, translator.translateDataModel)
+		testModel(translator.translateDataModel)
 	}
 	
 	@Test
 	def void testPSSS() {
-		testModel(translator.psssPackageName, translator.translatePSSS)
+		testModel(translator.translatePSSS)
 	}
 	
 	@Test
 	def void testPCS() {
-		testModel(translator.pcsPackageName, translator.translatePCS)
+		testModel(translator.translatePCS)
 	}
 	
 	@Test
 	def void testIntegrationModel() {
-		testModel(translator.integrationModelPackageName, translator.translateIntegrationModel)
+		testModel(translator.translateIntegrationModel)
 	}
 	
-	def private void testModel(String expectedPackageName, Optional<String> actual) {
-		val expected = class.getResourceAsStream(expectedPackageName + ".aadl")
-		if (actual.present) {
-			IOUtils.toString(expected).assertEquals(actual.get.replace("\r", ""))
+	def private void testModel(TranslatedPackage translated) {
+		val expected = class.getResourceAsStream(translated.name + ".aadl")
+		if (translated.contents.present) {
+			IOUtils.toString(expected).assertEquals(translated.contents.get.replace("\r", ""))
 		} else {
 			expected.assertNull
 		}

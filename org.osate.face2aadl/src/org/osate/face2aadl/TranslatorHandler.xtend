@@ -23,7 +23,6 @@ import face.ArchitectureModel
 import java.io.ByteArrayInputStream
 import java.lang.reflect.InvocationTargetException
 import java.time.LocalDateTime
-import java.util.Optional
 import org.eclipse.core.commands.AbstractHandler
 import org.eclipse.core.commands.ExecutionEvent
 import org.eclipse.core.commands.ExecutionException
@@ -41,6 +40,7 @@ import org.eclipse.jface.window.Window
 import org.eclipse.ui.actions.WorkspaceModifyOperation
 import org.eclipse.ui.statushandlers.StatusManager
 import org.osate.face2aadl.logic.ArchitectureModelTranslator
+import org.osate.face2aadl.logic.ArchitectureModelTranslator.TranslatedPackage
 
 import static extension org.eclipse.ui.handlers.HandlerUtil.getActiveShell
 import static extension org.eclipse.ui.handlers.HandlerUtil.getActiveWorkbenchWindow
@@ -71,14 +71,10 @@ class TranslatorHandler extends AbstractHandler {
 					configDialog.platformOnly
 				)
 				
-				translateModel(translator.translateDataModel, translator.dataModelPackageName, modelGenDirectory,
-					monitor
-				)
-				translateModel(translator.translatePSSS, translator.psssPackageName, modelGenDirectory, monitor)
-				translateModel(translator.translatePCS, translator.pcsPackageName, modelGenDirectory, monitor)
-				translateModel(translator.translateIntegrationModel, translator.integrationModelPackageName,
-					modelGenDirectory, monitor
-				)
+				translateModel(translator.translateDataModel, modelGenDirectory, monitor)
+				translateModel(translator.translatePSSS, modelGenDirectory, monitor)
+				translateModel(translator.translatePCS, modelGenDirectory, monitor)
+				translateModel(translator.translateIntegrationModel, modelGenDirectory, monitor)
 			]
 			try {
 				event.activeWorkbenchWindow.run(true, true, operation)
@@ -105,12 +101,10 @@ class TranslatorHandler extends AbstractHandler {
 		null
 	}
 	
-	def private void translateModel(Optional<String> translationResult, String packageName, IFolder modelGenDirectory,
-		IProgressMonitor monitor
-	) {
-		translationResult.ifPresent[packageContents |
+	def private void translateModel(TranslatedPackage translated, IFolder modelGenDirectory, IProgressMonitor monitor) {
+		translated.contents.ifPresent[packageContents |
 			val packageStream = new ByteArrayInputStream(packageContents.bytes)
-			val packageFile = modelGenDirectory.getFile(packageName + ".aadl")
+			val packageFile = modelGenDirectory.getFile(translated.name + ".aadl")
 			if (packageFile.exists) {
 				packageFile.setContents(packageStream, false, true, monitor)
 			} else {

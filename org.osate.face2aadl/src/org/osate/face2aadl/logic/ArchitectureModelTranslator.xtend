@@ -15,13 +15,9 @@ class ArchitectureModelTranslator {
 	val String timestamp
 	val boolean platformOnly
 	
-	@Accessors
 	val String dataModelPackageName
-	@Accessors
 	val String psssPackageName
-	@Accessors
 	val String pcsPackageName
-	@Accessors
 	val String integrationModelPackageName
 	
 	new(ArchitectureModel model, String faceFileName, String timestamp, boolean platformOnly) {
@@ -37,29 +33,35 @@ class ArchitectureModelTranslator {
 		integrationModelPackageName = baseFileName + "_integration_model"
 	}
 	
-	def Optional<String> translateDataModel() {
+	def TranslatedPackage translateDataModel() {
 		val dataModelTranslator = new DataModelTranslator(faceFileName, dataModelPackageName, timestamp, platformOnly)
-		dataModelTranslator.translate(model)
+		new TranslatedPackage(dataModelPackageName, dataModelTranslator.translate(model))
 	}
 	
-	def Optional<String> translatePSSS() {
+	def TranslatedPackage translatePSSS() {
 		val psssTranslator = new UoPTranslator(PlatformSpecificComponent, faceFileName, psssPackageName,
 			dataModelPackageName, timestamp
 		)
-		psssTranslator.translate(model)
+		new TranslatedPackage(psssPackageName, psssTranslator.translate(model))
 	}
 	
-	def Optional<String> translatePCS() {
+	def TranslatedPackage translatePCS() {
 		val pcsTranslator = new UoPTranslator(PortableComponent, faceFileName, pcsPackageName, dataModelPackageName,
 			timestamp
 		)
-		pcsTranslator.translate(model)
+		new TranslatedPackage(pcsPackageName, pcsTranslator.translate(model))
 	}
 	
-	def Optional<String> translateIntegrationModel() {
+	def TranslatedPackage translateIntegrationModel() {
 		val integrationModelTranslator = new IntegrationModelTranslator(faceFileName, integrationModelPackageName,
 			dataModelPackageName, psssPackageName, pcsPackageName, timestamp
 		)
-		integrationModelTranslator.translate(model)
+		new TranslatedPackage(integrationModelPackageName, integrationModelTranslator.translate(model))
+	}
+	
+	@Accessors
+	static class TranslatedPackage {
+		val String name
+		val Optional<String> contents
 	}
 }
