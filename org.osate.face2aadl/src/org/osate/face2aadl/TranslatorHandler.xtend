@@ -20,11 +20,10 @@
 package org.osate.face2aadl
 
 import face.ArchitectureModel
-import face.uop.PlatformSpecificComponent
-import face.uop.PortableComponent
 import java.io.ByteArrayInputStream
 import java.lang.reflect.InvocationTargetException
 import java.time.LocalDateTime
+import java.util.Optional
 import org.eclipse.core.commands.AbstractHandler
 import org.eclipse.core.commands.ExecutionEvent
 import org.eclipse.core.commands.ExecutionException
@@ -41,12 +40,7 @@ import org.eclipse.emf.ecore.xmi.PackageNotFoundException
 import org.eclipse.jface.window.Window
 import org.eclipse.ui.actions.WorkspaceModifyOperation
 import org.eclipse.ui.statushandlers.StatusManager
-import org.osate.face2aadl.logic.DataModelTranslator
-import org.osate.face2aadl.logic.IntegrationModelTranslator
-import org.osate.face2aadl.logic.ModelTranslator
-import org.osate.face2aadl.logic.UoPTranslator
-
-import static org.osate.face2aadl.logic.TranslatorUtil.sanitizeID
+import org.osate.face2aadl.logic.ArchitectureModelTranslator
 
 import static extension org.eclipse.ui.handlers.HandlerUtil.getActiveShell
 import static extension org.eclipse.ui.handlers.HandlerUtil.getActiveWorkbenchWindow
@@ -67,37 +61,23 @@ class TranslatorHandler extends AbstractHandler {
 				}
 				subMonitor.workRemaining = 4
 				
-				val baseFileName = sanitizeID(faceFile.fullPath.removeFileExtension.lastSegment)
 				val resourceSet = new ResourceSetImpl
 				val faceURI = URI.createPlatformResourceURI(faceFile.fullPath.toString, true)
 				val faceResource = resourceSet.getResource(faceURI, true)
 				val root = faceResource.contents.head as ArchitectureModel
 				val timestamp = LocalDateTime.now.toString
 				
-				val dataModelPackageName = baseFileName + "_data_model"
-				val dataModelTranslator = new DataModelTranslator(faceFile.name, dataModelPackageName, timestamp,
+				val translator = new ArchitectureModelTranslator(root, faceFile.name, timestamp,
 					configDialog.platformOnly
 				)
-				translateModel(dataModelTranslator, root, dataModelPackageName, modelGenDirectory, subMonitor.split(1))
 				
-				val psssPackageName = baseFileName + "_PSSS"
-				val psssTranslator = new UoPTranslator(PlatformSpecificComponent, faceFile.name, psssPackageName,
-					dataModelPackageName, timestamp
+				translateModel(translator.translateDataModel, translator.dataModelPackageName, modelGenDirectory,
+					monitor
 				)
-				translateModel(psssTranslator, root, psssPackageName, modelGenDirectory, subMonitor.split(1))
-				
-				val pcsPackageName = baseFileName + "_PCS"
-				val pcsTranslator = new UoPTranslator(PortableComponent, faceFile.name, pcsPackageName,
-					dataModelPackageName, timestamp
-				)
-				translateModel(pcsTranslator, root, pcsPackageName, modelGenDirectory, subMonitor.split(1))
-				
-				val integrationModelPackageName = baseFileName + "_integration_model"
-				val integrationModelTranslator = new IntegrationModelTranslator(faceFile.name,
-					integrationModelPackageName, dataModelPackageName, psssPackageName, pcsPackageName, timestamp
-				)
-				translateModel(integrationModelTranslator, root, integrationModelPackageName, modelGenDirectory,
-					subMonitor.split(1)
+				translateModel(translator.translatePSSS, translator.psssPackageName, modelGenDirectory, monitor)
+				translateModel(translator.translatePCS, translator.pcsPackageName, modelGenDirectory, monitor)
+				translateModel(translator.translateIntegrationModel, translator.integrationModelPackageName,
+					modelGenDirectory, monitor
 				)
 			]
 			try {
@@ -125,10 +105,10 @@ class TranslatorHandler extends AbstractHandler {
 		null
 	}
 	
-	def private void translateModel(ModelTranslator translator, ArchitectureModel model, String packageName,
-		IFolder modelGenDirectory, IProgressMonitor monitor
+	def private void translateModel(Optional<String> translationResult, String packageName, IFolder modelGenDirectory,
+		IProgressMonitor monitor
 	) {
-		translator.translate(model).ifPresent[packageContents |
+		translationResult.ifPresent[packageContents |
 			val packageStream = new ByteArrayInputStream(packageContents.bytes)
 			val packageFile = modelGenDirectory.getFile(packageName + ".aadl")
 			if (packageFile.exists) {

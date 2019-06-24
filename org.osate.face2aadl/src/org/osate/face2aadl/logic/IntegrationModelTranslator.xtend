@@ -50,7 +50,7 @@ import static extension org.eclipse.xtext.EcoreUtil2.eAll
 import static extension org.eclipse.xtext.EcoreUtil2.getContainerOfType
 
 @FinalFieldsConstructor
-class IntegrationModelTranslator implements ModelTranslator {
+package class IntegrationModelTranslator {
 	val String faceFileName
 	val String packageName
 	val String dataModelPackageName
@@ -58,7 +58,7 @@ class IntegrationModelTranslator implements ModelTranslator {
 	val String pcsPackageName
 	val String timestamp
 	
-	override translate(ArchitectureModel model) {
+	def package Optional<String> translate(ArchitectureModel model) {
 		val integrationModels = model.im.map[it.eAll.toIterable].flatten.filter(IntegrationModel)
 		val classifiers = integrationModels.map[translateIntegrationModel(it)]
 		val classifiersString = classifiers.join(System.lineSeparator)

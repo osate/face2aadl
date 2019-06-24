@@ -41,13 +41,13 @@ import static org.osate.face2aadl.logic.TranslatorUtil.translateName
 import static org.osate.face2aadl.logic.TranslatorUtil.translateUUID
 
 @FinalFieldsConstructor
-class DataModelTranslator implements ModelTranslator {
+package class DataModelTranslator {
 	val String faceFileName
 	val String packageName
 	val String timestamp
 	val boolean platformOnly
 	
-	override translate(ArchitectureModel model) {
+	def package Optional<String> translate(ArchitectureModel model) {
 		val dataModelObjects = model.dm.map[it.eAllContents.toIterable].flatten
 		val filtered = if (platformOnly) {
 			dataModelObjects.filter(Element)

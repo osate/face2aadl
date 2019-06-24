@@ -39,14 +39,14 @@ import static org.osate.face2aadl.logic.TranslatorUtil.translateUUID
 import static org.osate.face2aadl.logic.TranslatorUtil.translateViewReference
 
 @FinalFieldsConstructor
-class UoPTranslator implements ModelTranslator {
+package class UoPTranslator {
 	val Class<? extends UnitOfPortability> segmentType
 	val String faceFileName
 	val String packageName
 	val String dataModelPackageName
 	val String timestamp
 	
-	override translate(ArchitectureModel model) {
+	def package Optional<String> translate(ArchitectureModel model) {
 		val components = model.um.map[it.eAllContents.toIterable].flatten.filter(segmentType)
 		val classifiers = components.map[translateUoP(it)]
 		val classifiersString = classifiers.join(System.lineSeparator)
