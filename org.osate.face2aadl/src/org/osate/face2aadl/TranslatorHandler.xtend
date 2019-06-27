@@ -20,6 +20,8 @@
 package org.osate.face2aadl
 
 import face.ArchitectureModel
+import face.integration.IntegrationModel
+import face.uop.UnitOfPortability
 import java.io.ByteArrayInputStream
 import java.lang.reflect.InvocationTargetException
 import java.time.LocalDateTime
@@ -45,12 +47,21 @@ import org.osate.face2aadl.logic.ArchitectureModelTranslator.TranslatedPackage
 import static extension org.eclipse.ui.handlers.HandlerUtil.getActiveShell
 import static extension org.eclipse.ui.handlers.HandlerUtil.getActiveWorkbenchWindow
 import static extension org.eclipse.ui.handlers.HandlerUtil.getCurrentStructuredSelection
+import static extension org.eclipse.xtext.EcoreUtil2.eAllOfType
+import static extension org.eclipse.xtext.EcoreUtil2.getAllContentsOfType
 
 class TranslatorHandler extends AbstractHandler {
 	override execute(ExecutionEvent event) throws ExecutionException {
 		val faceFile = event.currentStructuredSelection.firstElement as IFile
 		
-		val configDialog = new ConfigDialog(event.activeShell)
+		val resourceSet = new ResourceSetImpl
+		val faceURI = URI.createPlatformResourceURI(faceFile.fullPath.toString, true)
+		val faceResource = resourceSet.getResource(faceURI, true)
+		val root = faceResource.contents.head as ArchitectureModel
+		
+		val uops = root.um.map[it.getAllContentsOfType(UnitOfPortability)].flatten
+		val integrationModels = root.im.map[it.eAllOfType(IntegrationModel)].flatten
+		val configDialog = new ConfigDialog(event.activeShell, (uops + integrationModels).sortBy[it.name])
 		if (configDialog.open == Window.OK) {
 			val WorkspaceModifyOperation operation = [monitor |
 				val subMonitor = SubMonitor.convert(monitor, 5)
@@ -61,20 +72,15 @@ class TranslatorHandler extends AbstractHandler {
 				}
 				subMonitor.workRemaining = 4
 				
-				val resourceSet = new ResourceSetImpl
-				val faceURI = URI.createPlatformResourceURI(faceFile.fullPath.toString, true)
-				val faceResource = resourceSet.getResource(faceURI, true)
-				val root = faceResource.contents.head as ArchitectureModel
 				val timestamp = LocalDateTime.now.toString
-				
 				val translator = new ArchitectureModelTranslator(root, faceFile.name, timestamp,
 					configDialog.platformOnly
 				)
 				
-				translateModel(translator.translateDataModel, modelGenDirectory, monitor)
-				translateModel(translator.translatePSSS, modelGenDirectory, monitor)
-				translateModel(translator.translatePCS, modelGenDirectory, monitor)
-				translateModel(translator.translateIntegrationModel, modelGenDirectory, monitor)
+				translateModel(translator.translateDataModel, modelGenDirectory, subMonitor.split(1))
+				translateModel(translator.translatePSSS, modelGenDirectory, subMonitor.split(1))
+				translateModel(translator.translatePCS, modelGenDirectory, subMonitor.split(1))
+				translateModel(translator.translateIntegrationModel, modelGenDirectory, subMonitor.split(1))
 			]
 			try {
 				event.activeWorkbenchWindow.run(true, true, operation)
