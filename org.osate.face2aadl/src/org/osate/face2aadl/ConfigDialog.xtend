@@ -26,10 +26,14 @@ import static extension org.eclipse.jface.dialogs.DialogSettings.getOrCreateSect
 
 class ConfigDialog extends TitleAreaDialog {
 	val static PLATFORM_ONLY_SETTING = "PLATFORM_ONLY_SETTING"
+	val static FILTER_SETTING = "FILTER_SETTING"
+	val static CHECKED_ELEMENTS_SETTING = "CHECKED_ELEMENTS_SETTING"
 	
 	val List<Element> uopsAndIntegrationModels
 	
 	val dialogSettings = Activator.^default.dialogSettings.getOrCreateSection(class.name)
+	
+	Button allLevelsButton
 	Button platformOnlyButton
 	Button filterButton
 	CheckboxTableViewer tableViewer
@@ -68,6 +72,8 @@ class ConfigDialog extends TitleAreaDialog {
 	override create() {
 		super.create
 		title = "Configure Translation Options"
+		loadFromSettings
+		addListeners
 	}
 	
 	override protected createDialogArea(Composite parent) {
@@ -81,7 +87,7 @@ class ConfigDialog extends TitleAreaDialog {
 					label.text = "Select data model levels to translate:"
 					label.layoutData = new GridData(SWT.LEFT, SWT.CENTER, false, false)
 				]
-				val allLevelsButton = new Button(levelComposite, SWT.RADIO) => [button |
+				allLevelsButton = new Button(levelComposite, SWT.RADIO) => [button |
 					button.text = "Conceptual, logical, and platform"
 					button.layoutData = new GridData(SWT.LEFT, SWT.CENTER, false, false)
 				]
@@ -89,12 +95,6 @@ class ConfigDialog extends TitleAreaDialog {
 					button.text = "Platform only"
 					button.layoutData = new GridData(SWT.LEFT, SWT.CENTER, false, false)
 				]
-				
-				if (dialogSettings.getBoolean(PLATFORM_ONLY_SETTING)) {
-					platformOnlyButton.selection = true
-				} else {
-					allLevelsButton.selection = true
-				}
 			]
 			new Label(composite, SWT.SEPARATOR.bitwiseOr(SWT.HORIZONTAL)) => [label |
 				label.layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false)
@@ -111,19 +111,9 @@ class ConfigDialog extends TitleAreaDialog {
 				filterButton = new Button(filteringComposite, SWT.CHECK) => [button |
 					button.text = "Only translate elements required for the selected UoPs and Integration Models:"
 					button.layoutData = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1)
-					button.addSelectionListener(new SelectionAdapter {
-						override widgetSelected(SelectionEvent e) {
-							val enable = button.selection
-							tableViewer.table.enabled = enable
-							selectAllButton.enabled = enable
-							deselectAllButton.enabled = enable
-							validate
-						}
-					})
 				]
 				tableViewer = CheckboxTableViewer.newCheckList(filteringComposite, SWT.BORDER) => [tableViewer |
 					tableViewer.table.layoutData = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 2)
-					tableViewer.table.enabled = false
 					tableViewer.contentProvider = ArrayContentProvider.instance
 					tableViewer.labelProvider = new LabelProvider {
 						override getText(Object element) {
@@ -135,30 +125,14 @@ class ConfigDialog extends TitleAreaDialog {
 						}
 					}
 					tableViewer.input = uopsAndIntegrationModels
-					tableViewer.allChecked = true
-					tableViewer.addCheckStateListener[validate]
 				]
 				selectAllButton = new Button(filteringComposite, SWT.PUSH) => [button |
 					button.text = "Select All"
 					button.layoutData = new GridData(SWT.FILL, SWT.TOP, false, false)
-					button.enabled = false
-					button.addSelectionListener(new SelectionAdapter {
-						override widgetSelected(SelectionEvent e) {
-							tableViewer.allChecked = true
-							validate
-						}
-					})
 				]
 				deselectAllButton = new Button(filteringComposite, SWT.PUSH) => [button |
 					button.text = "Deselect All"
 					button.layoutData = new GridData(SWT.FILL, SWT.TOP, false, false)
-					button.enabled = false
-					button.addSelectionListener(new SelectionAdapter {
-						override widgetSelected(SelectionEvent e) {
-							tableViewer.allChecked = false
-							validate
-						}
-					})
 				]
 			]
 		]
@@ -167,6 +141,8 @@ class ConfigDialog extends TitleAreaDialog {
 	override protected okPressed() {
 		platformOnly = platformOnlyButton.selection
 		dialogSettings.put(PLATFORM_ONLY_SETTING, platformOnly)
+		dialogSettings.put(FILTER_SETTING, filterButton.selection)
+		dialogSettings.put(CHECKED_ELEMENTS_SETTING, tableViewer.checkedElements.map[(it as Element).name])
 		super.okPressed
 	}
 	
@@ -178,5 +154,54 @@ class ConfigDialog extends TitleAreaDialog {
 			errorMessage = null
 			getButton(IDialogConstants.OK_ID).enabled = true
 		}
+	}
+	
+	def private void addListeners() {
+		filterButton.addSelectionListener(new SelectionAdapter {
+			override widgetSelected(SelectionEvent e) {
+				val enable = filterButton.selection
+				tableViewer.table.enabled = enable
+				selectAllButton.enabled = enable
+				deselectAllButton.enabled = enable
+				validate
+			}
+		})
+		tableViewer.addCheckStateListener[validate]
+		selectAllButton.addSelectionListener(new SelectionAdapter {
+			override widgetSelected(SelectionEvent e) {
+				tableViewer.allChecked = true
+				validate
+			}
+		})
+		deselectAllButton.addSelectionListener(new SelectionAdapter {
+			override widgetSelected(SelectionEvent e) {
+				tableViewer.allChecked = false
+				validate
+			}
+		})
+	}
+	
+	def private void loadFromSettings() {
+		if (dialogSettings.getBoolean(PLATFORM_ONLY_SETTING)) {
+			platformOnlyButton.selection = true
+		} else {
+			allLevelsButton.selection = true
+		}
+		
+		val filter = dialogSettings.getBoolean(FILTER_SETTING)
+		filterButton.selection = filter
+		tableViewer.table.enabled = filter
+		selectAllButton.enabled = filter
+		deselectAllButton.enabled = filter
+		
+		val checkedNames = dialogSettings.getArray(CHECKED_ELEMENTS_SETTING)?.toSet ?: emptySet
+		val toCheck = uopsAndIntegrationModels.filter[checkedNames.contains(it.name)]
+		if (toCheck.empty) {
+			tableViewer.allChecked = true
+		} else {
+			tableViewer.checkedElements = toCheck
+		}
+		
+		validate
 	}
 }
