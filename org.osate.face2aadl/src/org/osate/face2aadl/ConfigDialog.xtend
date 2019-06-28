@@ -5,6 +5,7 @@ import face.integration.IntegrationModel
 import face.uop.PlatformSpecificComponent
 import face.uop.PortableComponent
 import java.util.List
+import org.eclipse.jface.dialogs.IDialogConstants
 import org.eclipse.jface.dialogs.TitleAreaDialog
 import org.eclipse.jface.viewers.ArrayContentProvider
 import org.eclipse.jface.viewers.CheckboxTableViewer
@@ -30,6 +31,7 @@ class ConfigDialog extends TitleAreaDialog {
 	
 	val dialogSettings = Activator.^default.dialogSettings.getOrCreateSection(class.name)
 	Button platformOnlyButton
+	Button filterButton
 	CheckboxTableViewer tableViewer
 	Button selectAllButton
 	Button deselectAllButton
@@ -106,7 +108,7 @@ class ConfigDialog extends TitleAreaDialog {
 					label.text = "Element filtering:"
 					label.layoutData = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1)
 				]
-				new Button(filteringComposite, SWT.CHECK) => [button |
+				filterButton = new Button(filteringComposite, SWT.CHECK) => [button |
 					button.text = "Only translate elements required for the selected UoPs and Integration Models:"
 					button.layoutData = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1)
 					button.addSelectionListener(new SelectionAdapter {
@@ -115,6 +117,7 @@ class ConfigDialog extends TitleAreaDialog {
 							tableViewer.table.enabled = enable
 							selectAllButton.enabled = enable
 							deselectAllButton.enabled = enable
+							validate
 						}
 					})
 				]
@@ -133,6 +136,7 @@ class ConfigDialog extends TitleAreaDialog {
 					}
 					tableViewer.input = uopsAndIntegrationModels
 					tableViewer.allChecked = true
+					tableViewer.addCheckStateListener[validate]
 				]
 				selectAllButton = new Button(filteringComposite, SWT.PUSH) => [button |
 					button.text = "Select All"
@@ -141,6 +145,7 @@ class ConfigDialog extends TitleAreaDialog {
 					button.addSelectionListener(new SelectionAdapter {
 						override widgetSelected(SelectionEvent e) {
 							tableViewer.allChecked = true
+							validate
 						}
 					})
 				]
@@ -151,6 +156,7 @@ class ConfigDialog extends TitleAreaDialog {
 					button.addSelectionListener(new SelectionAdapter {
 						override widgetSelected(SelectionEvent e) {
 							tableViewer.allChecked = false
+							validate
 						}
 					})
 				]
@@ -162,5 +168,15 @@ class ConfigDialog extends TitleAreaDialog {
 		platformOnly = platformOnlyButton.selection
 		dialogSettings.put(PLATFORM_ONLY_SETTING, platformOnly)
 		super.okPressed
+	}
+	
+	def private void validate() {
+		if (filterButton.selection && tableViewer.checkedElements.empty) {
+			errorMessage = "Check at least one UoP or Integration Model"
+			getButton(IDialogConstants.OK_ID).enabled = false
+		} else {
+			errorMessage = null
+			getButton(IDialogConstants.OK_ID).enabled = true
+		}
 	}
 }
