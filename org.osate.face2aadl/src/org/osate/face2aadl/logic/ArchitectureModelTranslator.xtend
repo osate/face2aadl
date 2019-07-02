@@ -34,22 +34,18 @@ class ArchitectureModelTranslator {
 	}
 	
 	def TranslatedPackage translateDataModel() {
-		val dataModelTranslator = new DataModelTranslator(faceFileName, dataModelPackageName, timestamp, platformOnly)
-		new TranslatedPackage(dataModelPackageName, dataModelTranslator.translate(model))
+		val dataModelTranslator = new DataModelTranslator(faceFileName, dataModelPackageName, timestamp)
+		new TranslatedPackage(dataModelPackageName, dataModelTranslator.translate(model, platformOnly))
 	}
 	
 	def TranslatedPackage translatePSSS() {
-		val psssTranslator = new UoPTranslator(PlatformSpecificComponent, faceFileName, psssPackageName,
-			dataModelPackageName, timestamp
-		)
-		new TranslatedPackage(psssPackageName, psssTranslator.translate(model))
+		val psssTranslator = new UoPTranslator(faceFileName, psssPackageName, dataModelPackageName, timestamp)
+		new TranslatedPackage(psssPackageName, psssTranslator.translate(model, PlatformSpecificComponent))
 	}
 	
 	def TranslatedPackage translatePCS() {
-		val pcsTranslator = new UoPTranslator(PortableComponent, faceFileName, pcsPackageName, dataModelPackageName,
-			timestamp
-		)
-		new TranslatedPackage(pcsPackageName, pcsTranslator.translate(model))
+		val pcsTranslator = new UoPTranslator(faceFileName, pcsPackageName, dataModelPackageName, timestamp)
+		new TranslatedPackage(pcsPackageName, pcsTranslator.translate(model, PortableComponent))
 	}
 	
 	def TranslatedPackage translateIntegrationModel() {

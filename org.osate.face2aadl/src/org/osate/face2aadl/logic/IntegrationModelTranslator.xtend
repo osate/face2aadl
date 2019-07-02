@@ -46,7 +46,7 @@ import static org.osate.face2aadl.logic.TranslatorUtil.translateDescription
 import static org.osate.face2aadl.logic.TranslatorUtil.translateUUID
 import static org.osate.face2aadl.logic.TranslatorUtil.translateViewReference
 
-import static extension org.eclipse.xtext.EcoreUtil2.eAll
+import static extension org.eclipse.xtext.EcoreUtil2.eAllOfType
 import static extension org.eclipse.xtext.EcoreUtil2.getContainerOfType
 
 @FinalFieldsConstructor
@@ -59,7 +59,10 @@ package class IntegrationModelTranslator {
 	val String timestamp
 	
 	def package Optional<String> translate(ArchitectureModel model) {
-		val integrationModels = model.im.map[it.eAll.toIterable].flatten.filter(IntegrationModel)
+		translate(model.im.map[it.eAllOfType(IntegrationModel)].flatten)
+	}
+	
+	def package Optional<String> translate(Iterable<IntegrationModel> integrationModels) {
 		val classifiers = integrationModels.map[translateIntegrationModel(it)]
 		val classifiersString = classifiers.join(System.lineSeparator)
 		
