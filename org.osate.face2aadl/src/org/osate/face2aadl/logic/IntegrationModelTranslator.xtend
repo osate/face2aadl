@@ -59,7 +59,7 @@ package class IntegrationModelTranslator {
 	val String timestamp
 	
 	def package Optional<String> translate(ArchitectureModel model) {
-		translate(model.im.map[it.eAllOfType(IntegrationModel)].flatten)
+		translate(model.im.flatMap[it.eAllOfType(IntegrationModel)])
 	}
 	
 	def package Optional<String> translate(Iterable<IntegrationModel> integrationModels) {
@@ -107,14 +107,14 @@ package class IntegrationModelTranslator {
 		val transportChannels = model.element.filter(TransportChannel)
 		val virtualBuses = transportChannels.map[translateTransportChannel(it)]
 		
-		val transportNodes = model.element.filter(IntegrationContext).map[it.node].flatten.toList
+		val transportNodes = model.element.filter(IntegrationContext).flatMap[it.node].toList
 		val nodeSubcomponents = transportNodes.map[translateTransportNodeSubcomponent(it)]
 		
 		val subcomponents = processes + virtualBuses + nodeSubcomponents
 		val subcomponentsString = subcomponents.join(System.lineSeparator)
 		val uuid = translateUUID(model)
 		
-		val tsNodeConnections = model.element.filter(IntegrationContext).map[it.connection].flatten.toList
+		val tsNodeConnections = model.element.filter(IntegrationContext).flatMap[it.connection].toList
 		
 		'''
 			«translateDescription(model)»

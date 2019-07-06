@@ -59,8 +59,8 @@ class TranslatorHandler extends AbstractHandler {
 		val faceResource = resourceSet.getResource(faceURI, true)
 		val root = faceResource.contents.head as ArchitectureModel
 		
-		val uops = root.um.map[it.getAllContentsOfType(UnitOfPortability)].flatten
-		val integrationModels = root.im.map[it.eAllOfType(IntegrationModel)].flatten
+		val uops = root.um.flatMap[it.getAllContentsOfType(UnitOfPortability)]
+		val integrationModels = root.im.flatMap[it.eAllOfType(IntegrationModel)]
 		val configDialog = new ConfigDialog(event.activeShell, (uops + integrationModels).sortBy[it.name])
 		if (configDialog.open == Window.OK) {
 			val WorkspaceModifyOperation operation = [monitor |

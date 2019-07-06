@@ -49,9 +49,9 @@ package class DataModelTranslator {
 	
 	def package Optional<String> translate(ArchitectureModel model, boolean platformOnly) {
 		val elements = if (platformOnly) {
-			model.dm.map[it.pdm].flatten.map[it.getAllContentsOfType(face.datamodel.platform.Element)].flatten
+			model.dm.flatMap[it.pdm].flatMap[it.getAllContentsOfType(face.datamodel.platform.Element)]
 		} else {
-			model.dm.map[it.getAllContentsOfType(Element)].flatten
+			model.dm.flatMap[it.getAllContentsOfType(Element)]
 		}
 		generateOutput(elements.map[translateDataModelObject(it, platformOnly)].filterNull)
 	}
