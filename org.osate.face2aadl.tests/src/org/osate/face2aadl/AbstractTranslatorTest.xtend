@@ -2,7 +2,10 @@ package org.osate.face2aadl
 
 import face.ArchitectureModel
 import face.FacePackage
+import face.integration.IntegrationModel
+import face.uop.UnitOfPortability
 import java.time.LocalDateTime
+import java.util.List
 import org.apache.commons.io.IOUtils
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
@@ -12,6 +15,7 @@ import org.junit.Test
 import org.osate.face2aadl.logic.ArchitectureModelTranslator
 import org.osate.face2aadl.logic.ArchitectureModelTranslator.TranslatedPackage
 
+import static extension org.eclipse.xtext.EcoreUtil2.getAllContentsOfType
 import static extension org.junit.Assert.assertEquals
 import static extension org.junit.Assert.assertNotNull
 import static extension org.junit.Assert.assertNull
@@ -19,13 +23,21 @@ import static extension org.junit.Assert.assertNull
 abstract class AbstractTranslatorTest {
 	val String faceFileName
 	val boolean platformOnly
+	val List<String> uopNames
+	val List<String> integrationModelNames
 	val time = LocalDateTime.of(2018, 3, 29, 15, 02, 31, 883_000_000).toString
 	
 	ArchitectureModelTranslator translator
 	
 	new(String baseName, boolean platformOnly) {
+		this(baseName, platformOnly, null, null)
+	}
+	
+	new(String baseName, boolean platformOnly, List<String> uopNames, List<String> integrationModelNames) {
 		faceFileName = baseName + ".face"
 		this.platformOnly = platformOnly
+		this.uopNames = uopNames
+		this.integrationModelNames = integrationModelNames
 	}
 	
 	@Before
@@ -36,7 +48,15 @@ abstract class AbstractTranslatorTest {
 		val resource = resourceSet.createResource(URI.createURI("synthetic:/" + faceFileName))
 		resource.load(class.getResourceAsStream(faceFileName), null)
 		val model = resource.contents.head as ArchitectureModel
-		translator = new ArchitectureModelTranslator(model, faceFileName, time, platformOnly)
+		translator = if (uopNames === null) {
+			new ArchitectureModelTranslator(model, faceFileName, time, platformOnly)
+		} else {
+			val allUoPs = model.getAllContentsOfType(UnitOfPortability)
+			val allIntegrationModels = model.getAllContentsOfType(IntegrationModel)
+			val uops = uopNames.map[name | allUoPs.findFirst[it.name == name]]
+			val integrationModels = integrationModelNames.map[name | allIntegrationModels.findFirst[it.name == name]]
+			new ArchitectureModelTranslator(model, uops, integrationModels, faceFileName, time, platformOnly)
+		}
 	}
 	
 	@Test
