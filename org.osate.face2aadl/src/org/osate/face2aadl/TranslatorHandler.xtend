@@ -73,7 +73,7 @@ class TranslatorHandler extends AbstractHandler {
 				subMonitor.workRemaining = 4
 				
 				val timestamp = LocalDateTime.now.toString
-				val translator = new ArchitectureModelTranslator(root, faceFile.name, timestamp,
+				val translator = ArchitectureModelTranslator.create(root, faceFile.name, timestamp,
 					configDialog.platformOnly
 				)
 				

@@ -49,13 +49,13 @@ abstract class AbstractTranslatorTest {
 		resource.load(class.getResourceAsStream(faceFileName), null)
 		val model = resource.contents.head as ArchitectureModel
 		translator = if (uopNames === null) {
-			new ArchitectureModelTranslator(model, faceFileName, time, platformOnly)
+			ArchitectureModelTranslator.create(model, faceFileName, time, platformOnly)
 		} else {
 			val allUoPs = model.getAllContentsOfType(UnitOfPortability)
 			val allIntegrationModels = model.getAllContentsOfType(IntegrationModel)
 			val uops = uopNames.map[name | allUoPs.findFirst[it.name == name]]
 			val integrationModels = integrationModelNames.map[name | allIntegrationModels.findFirst[it.name == name]]
-			new ArchitectureModelTranslator(model, uops, integrationModels, faceFileName, time, platformOnly)
+			ArchitectureModelTranslator.create(model, uops, integrationModels, faceFileName, time, platformOnly)
 		}
 	}
 	
