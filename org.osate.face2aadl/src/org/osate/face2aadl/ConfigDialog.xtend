@@ -4,12 +4,14 @@ import face.Element
 import face.integration.IntegrationModel
 import face.uop.PlatformSpecificComponent
 import face.uop.PortableComponent
+import face.uop.UnitOfPortability
 import java.util.List
 import org.eclipse.jface.dialogs.IDialogConstants
 import org.eclipse.jface.dialogs.TitleAreaDialog
 import org.eclipse.jface.viewers.ArrayContentProvider
 import org.eclipse.jface.viewers.CheckboxTableViewer
 import org.eclipse.jface.viewers.LabelProvider
+import org.eclipse.jface.viewers.ViewerComparator
 import org.eclipse.swt.SWT
 import org.eclipse.swt.events.SelectionAdapter
 import org.eclipse.swt.events.SelectionEvent
@@ -42,10 +44,21 @@ class ConfigDialog extends TitleAreaDialog {
 	
 	@Accessors(PUBLIC_GETTER)
 	boolean platformOnly
+	@Accessors(PUBLIC_GETTER)
+	boolean filter
+	@Accessors(PUBLIC_GETTER)
+	List<UnitOfPortability> selectedUoPs
+	@Accessors(PUBLIC_GETTER)
+	List<IntegrationModel> selectedIntegrationModels
 	
 	new(Shell parentShell, List<Element> uopsAndIntegrationModels) {
 		super(parentShell)
 		this.uopsAndIntegrationModels = uopsAndIntegrationModels
+	}
+	
+	new (Shell parentShell, Iterable<UnitOfPortability> uops, Iterable<IntegrationModel> integrationModels) {
+		super(parentShell)
+		uopsAndIntegrationModels = (uops + integrationModels).toList
 	}
 	
 	override protected isResizable() {
@@ -114,6 +127,7 @@ class ConfigDialog extends TitleAreaDialog {
 								}
 							}
 						}
+						tableViewer.comparator = new ViewerComparator
 						tableViewer.input = uopsAndIntegrationModels
 					]
 					selectAllButton = new Button(filteringGroup, SWT.PUSH) => [button |
@@ -132,8 +146,16 @@ class ConfigDialog extends TitleAreaDialog {
 	override protected okPressed() {
 		platformOnly = platformOnlyButton.selection
 		dialogSettings.put(PLATFORM_ONLY_SETTING, platformOnly)
+		
+		filter = filterButton.selection
 		dialogSettings.put(FILTER_SETTING, filterButton.selection)
-		dialogSettings.put(CHECKED_ELEMENTS_SETTING, tableViewer.checkedElements.map[(it as Element).name])
+		
+		if (filter) {
+			selectedUoPs = tableViewer.checkedElements.filter(UnitOfPortability).toList
+			selectedIntegrationModels = tableViewer.checkedElements.filter(IntegrationModel).toList
+			dialogSettings.put(CHECKED_ELEMENTS_SETTING, tableViewer.checkedElements.map[(it as Element).name])
+		}
+		
 		super.okPressed
 	}
 	

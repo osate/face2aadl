@@ -61,7 +61,7 @@ class TranslatorHandler extends AbstractHandler {
 		
 		val uops = root.um.flatMap[it.getAllContentsOfType(UnitOfPortability)]
 		val integrationModels = root.im.flatMap[it.eAllOfType(IntegrationModel)]
-		val configDialog = new ConfigDialog(event.activeShell, (uops + integrationModels).sortBy[it.name])
+		val configDialog = new ConfigDialog(event.activeShell, uops, integrationModels)
 		if (configDialog.open == Window.OK) {
 			val WorkspaceModifyOperation operation = [monitor |
 				val subMonitor = SubMonitor.convert(monitor, 5)
@@ -73,9 +73,13 @@ class TranslatorHandler extends AbstractHandler {
 				subMonitor.workRemaining = 4
 				
 				val timestamp = LocalDateTime.now.toString
-				val translator = ArchitectureModelTranslator.create(root, faceFile.name, timestamp,
-					configDialog.platformOnly
-				)
+				val translator = if (configDialog.filter) {
+					ArchitectureModelTranslator.create(root, configDialog.selectedUoPs,
+						configDialog.selectedIntegrationModels, faceFile.name, timestamp, configDialog.platformOnly
+					)
+				} else {
+					ArchitectureModelTranslator.create(root, faceFile.name, timestamp, configDialog.platformOnly)
+				}
 				
 				translateModel(translator.translateDataModel, modelGenDirectory, subMonitor.split(1))
 				translateModel(translator.translatePSSS, modelGenDirectory, subMonitor.split(1))
