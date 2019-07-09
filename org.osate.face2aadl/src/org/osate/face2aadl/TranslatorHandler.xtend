@@ -38,6 +38,7 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.common.util.WrappedException
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.emf.ecore.xmi.PackageNotFoundException
+import org.eclipse.emf.ecore.xmi.XMLResource
 import org.eclipse.jface.window.Window
 import org.eclipse.ui.actions.WorkspaceModifyOperation
 import org.eclipse.ui.statushandlers.StatusManager
@@ -56,7 +57,8 @@ class TranslatorHandler extends AbstractHandler {
 		
 		val resourceSet = new ResourceSetImpl
 		val faceURI = URI.createPlatformResourceURI(faceFile.fullPath.toString, true)
-		val faceResource = resourceSet.getResource(faceURI, true)
+		val faceResource = resourceSet.createResource(faceURI)
+		faceResource.load(#{XMLResource.OPTION_DEFER_IDREF_RESOLUTION -> true})
 		val root = faceResource.contents.head as ArchitectureModel
 		
 		val uops = root.um.flatMap[it.getAllContentsOfType(UnitOfPortability)]
