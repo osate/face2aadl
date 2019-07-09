@@ -4,9 +4,9 @@ import face.ArchitectureModel
 import face.Element
 import face.datamodel.logical.CompositeQuery
 import face.datamodel.logical.Query
+import face.datamodel.logical.View
 import face.datamodel.platform.CompositeTemplate
 import face.datamodel.platform.Template
-import face.datamodel.platform.View
 import face.integration.IntegrationContext
 import face.integration.IntegrationModel
 import face.integration.UoPInstance
@@ -20,6 +20,7 @@ import java.util.Optional
 import java.util.Set
 import org.apache.commons.io.FilenameUtils
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 
 import static org.osate.face2aadl.logic.TranslatorUtil.sanitizeID
 
@@ -34,15 +35,9 @@ class ArchitectureModelTranslator {
 	val String pcsPackageName
 	val String integrationModelPackageName
 	
-	val (DataModelTranslator)=>Optional<String> dataModelFunction
-	val (UoPTranslator)=>Optional<String> psssFunction
-	val (UoPTranslator)=>Optional<String> pcsFunction
-	val (IntegrationModelTranslator)=>Optional<String> integrationModelFunction
+	val TranslationInput translationInput
 	
-	private new(String faceFileName, String timestamp, (DataModelTranslator)=>Optional<String> dataModelFunction,
-		(UoPTranslator)=>Optional<String> psssFunction, (UoPTranslator)=>Optional<String> pcsFunction,
-		(IntegrationModelTranslator)=>Optional<String> integrationModelFunction
-	) {
+	private new(String faceFileName, String timestamp, TranslationInput translationInput) {
 		this.faceFileName = faceFileName
 		this.timestamp = timestamp
 		
@@ -52,21 +47,13 @@ class ArchitectureModelTranslator {
 		pcsPackageName = baseFileName + "_PCS"
 		integrationModelPackageName = baseFileName + "_integration_model"
 		
-		this.dataModelFunction = dataModelFunction
-		this.psssFunction = psssFunction
-		this.pcsFunction = pcsFunction
-		this.integrationModelFunction = integrationModelFunction
+		this.translationInput = translationInput
 	}
 	
 	def static ArchitectureModelTranslator create(ArchitectureModel model, String faceFileName, String timestamp,
 		boolean platformOnly
 	) {
-		new ArchitectureModelTranslator(faceFileName, timestamp,
-			[dataModelTranslator | dataModelTranslator.translate(model, platformOnly)],
-			[psssTranslator | psssTranslator.translate(model, PlatformSpecificComponent)],
-			[pcsTranslator | pcsTranslator.translate(model, PortableComponent)],
-			[integrationModelTranslator | integrationModelTranslator.translate(model)]
-		)
+		new ArchitectureModelTranslator(faceFileName, timestamp, new WholeModel(model, platformOnly))
 	}
 	
 	def static ArchitectureModelTranslator create(ArchitectureModel model, Iterable<UnitOfPortability> selectedUoPs,
@@ -82,47 +69,64 @@ class ArchitectureModelTranslator {
 		val orderedPcsUoPs = uops.filter(PortableComponent).toList
 		
 		val requiredPlatformViews = calculateRequiredPlatformViews(requiredIntegrationModels, requiredUoPs)
-		val orderedPlatformViews = requiredPlatformViews.sort(model, View)
+		val orderedPlatformViews = requiredPlatformViews.sort(model, face.datamodel.platform.View)
 		
-		val dataModelFunction = if (platformOnly) {
-			[DataModelTranslator it | it.translate(orderedPlatformViews)]
+		val translationInput = if (platformOnly) {
+			new FilteredPlatformOnly(orderedPlatformViews, orderedPsssUoPs, orderedPcsUoPs, orderedIntegrationModels)
 		} else {
 			val requiredLogicalViews = calculateRequiredLogicalViews(requiredPlatformViews)
-			val orderedLogicalViews = requiredLogicalViews.sort(model, face.datamodel.logical.View)
+			val orderedLogicalViews = requiredLogicalViews.sort(model, View)
 			
 			val requiredConceptualViews = calculateRequiredConceptualViews(requiredLogicalViews)
-			val orderedConceptualViews = requiredConceptualViews.sort(model, face.datamodel.conceptual.View);
+			val orderedConceptualViews = requiredConceptualViews.sort(model, face.datamodel.conceptual.View)
 			
-			[DataModelTranslator it | it.translate(orderedConceptualViews, orderedLogicalViews, orderedPlatformViews)]
+			new FilteredAllLevels(orderedConceptualViews, orderedLogicalViews, orderedPlatformViews, orderedPsssUoPs,
+				orderedPcsUoPs, orderedIntegrationModels
+			)
 		}
 		
-		new ArchitectureModelTranslator(faceFileName, timestamp, dataModelFunction,
-			[psssTranslator | psssTranslator.translate(orderedPsssUoPs)],
-			[pcsTranslator | pcsTranslator.translate(orderedPcsUoPs)],
-			[integrationModelTranslator | integrationModelTranslator.translate(orderedIntegrationModels)]
-		)
+		new ArchitectureModelTranslator(faceFileName, timestamp, translationInput)
 	}
 	
 	def TranslatedPackage translateDataModel() {
 		val dataModelTranslator = new DataModelTranslator(faceFileName, dataModelPackageName, timestamp)
-		new TranslatedPackage(dataModelPackageName, dataModelFunction.apply(dataModelTranslator))
+		val result = switch translationInput {
+			WholeModel: dataModelTranslator.translate(translationInput.model, translationInput.platformOnly)
+			FilteredAllLevels: dataModelTranslator.translate(translationInput.conceptualViews,
+				translationInput.logicalViews, translationInput.platformViews
+			)
+			FilteredPlatformOnly: dataModelTranslator.translate(translationInput.platformViews)
+		}
+		new TranslatedPackage(dataModelPackageName, result)
 	}
 	
 	def TranslatedPackage translatePSSS() {
 		val psssTranslator = new UoPTranslator(faceFileName, psssPackageName, dataModelPackageName, timestamp)
-		new TranslatedPackage(psssPackageName, psssFunction.apply(psssTranslator))
+		val result = switch translationInput {
+			WholeModel: psssTranslator.translate(translationInput.model, PlatformSpecificComponent)
+			Filtered: psssTranslator.translate(translationInput.psssUoPs)
+		}
+		new TranslatedPackage(psssPackageName, result)
 	}
 	
 	def TranslatedPackage translatePCS() {
 		val pcsTranslator = new UoPTranslator(faceFileName, pcsPackageName, dataModelPackageName, timestamp)
-		new TranslatedPackage(pcsPackageName, pcsFunction.apply(pcsTranslator))
+		val result = switch translationInput {
+			WholeModel: pcsTranslator.translate(translationInput.model, PortableComponent)
+			Filtered: pcsTranslator.translate(translationInput.pcsUoPs)
+		}
+		new TranslatedPackage(pcsPackageName, result)
 	}
 	
 	def TranslatedPackage translateIntegrationModel() {
 		val integrationModelTranslator = new IntegrationModelTranslator(faceFileName, integrationModelPackageName,
 			dataModelPackageName, psssPackageName, pcsPackageName, timestamp
 		)
-		new TranslatedPackage(integrationModelPackageName, integrationModelFunction.apply(integrationModelTranslator))
+		val result = switch translationInput {
+			WholeModel: integrationModelTranslator.translate(translationInput.model)
+			Filtered: integrationModelTranslator.translate(translationInput.integrationModels)
+		}
+		new TranslatedPackage(integrationModelPackageName, result)
 	}
 	
 	@Accessors
@@ -135,9 +139,7 @@ class ArchitectureModelTranslator {
 		model.getAllContentsOfType(type).filter[elements.contains(it)].toList
 	}
 	
-	def private static Set<face.datamodel.conceptual.View> calculateRequiredConceptualViews(
-		Set<face.datamodel.logical.View> logicalViews
-	) {
+	def private static Set<face.datamodel.conceptual.View> calculateRequiredConceptualViews(Set<View> logicalViews) {
 		val requiredConceptualViews = (
 			logicalViews.filter(Query).map[it.realizes] +
 			logicalViews.filter(CompositeQuery).map[it.realizes]
@@ -155,7 +157,7 @@ class ArchitectureModelTranslator {
 		unvisited.filter(face.datamodel.conceptual.CompositeQuery).forEach[addAllMembers(it, requiredConceptualViews)]
 	}
 	
-	def private static Set<face.datamodel.logical.View> calculateRequiredLogicalViews(Set<View> platformViews) {
+	def private static Set<View> calculateRequiredLogicalViews(Set<face.datamodel.platform.View> platformViews) {
 		val requiredLogicalViews = (
 			platformViews.filter(Template).map[it.boundQuery?.realizes] +
 			platformViews.filter(CompositeTemplate).map[it.realizes]
@@ -164,16 +166,14 @@ class ArchitectureModelTranslator {
 		requiredLogicalViews
 	}
 	
-	def private static void addAllMembers(CompositeQuery compositeQuery,
-		Set<face.datamodel.logical.View> requiredLogicalViews
-	) {
+	def private static void addAllMembers(CompositeQuery compositeQuery, Set<View> requiredLogicalViews) {
 		val unvisited = compositeQuery.composition.map[it.type].filter[!requiredLogicalViews.contains(it)].toList
 		requiredLogicalViews += unvisited
 		unvisited.filter(CompositeQuery).forEach[addAllMembers(it, requiredLogicalViews)]
 	}
 	
-	def private static Set<View> calculateRequiredPlatformViews(Set<IntegrationModel> integrationModels,
-		Set<UnitOfPortability> uops
+	def private static Set<face.datamodel.platform.View> calculateRequiredPlatformViews(
+		Set<IntegrationModel> integrationModels, Set<UnitOfPortability> uops
 	) {
 		val integrationContexts = integrationModels.flatMap[it.element].filter(IntegrationContext)
 		val transportNodes = integrationContexts.flatMap[it.node].toList
@@ -190,7 +190,9 @@ class ArchitectureModelTranslator {
 		requiredPlatformViews
 	}
 	
-	def private static void addAllMembers(CompositeTemplate compositeTemplate, Set<View> requiredPlatformViews) {
+	def private static void addAllMembers(CompositeTemplate compositeTemplate,
+		Set<face.datamodel.platform.View> requiredPlatformViews
+	) {
 		val unvisited = compositeTemplate.composition.map[it.type].filter[!requiredPlatformViews.contains(it)].toList
 		requiredPlatformViews += unvisited
 		unvisited.filter(CompositeTemplate).forEach[addAllMembers(it, requiredPlatformViews)]
@@ -201,4 +203,37 @@ class ArchitectureModelTranslator {
 	) {
 		(uops + integrationModels.flatMap[it.element].filter(UoPInstance).map[it.realizes]).toSet
 	}
+	
+	private interface TranslationInput {}
+	
+	@FinalFieldsConstructor
+	private static class WholeModel implements TranslationInput {
+		val public ArchitectureModel model
+		val public boolean platformOnly
+	}
+	
+	@FinalFieldsConstructor
+	private static abstract class Filtered implements TranslationInput {
+		val public List<face.datamodel.platform.View> platformViews
+		val public List<PlatformSpecificComponent> psssUoPs
+		val public List<PortableComponent> pcsUoPs
+		val public List<IntegrationModel> integrationModels
+	}
+	
+	private static class FilteredAllLevels extends Filtered {
+		val public List<face.datamodel.conceptual.View> conceptualViews
+		val public List<View> logicalViews
+		
+		new(List<face.datamodel.conceptual.View> conceptualViews, List<View> logicalViews,
+			List<face.datamodel.platform.View> platformViews, List<PlatformSpecificComponent> psssUoPs,
+			List<PortableComponent> pcsUoPs, List<IntegrationModel> integrationModels
+		) {
+			super(platformViews, psssUoPs, pcsUoPs, integrationModels)
+			this.conceptualViews = conceptualViews
+			this.logicalViews = logicalViews
+		}
+	}
+	
+	@FinalFieldsConstructor
+	private static class FilteredPlatformOnly extends Filtered {}
 }
