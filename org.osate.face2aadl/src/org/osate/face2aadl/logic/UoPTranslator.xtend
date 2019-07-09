@@ -38,17 +38,21 @@ import static org.osate.face2aadl.logic.TranslatorUtil.translateDescription
 import static org.osate.face2aadl.logic.TranslatorUtil.translateUUID
 import static org.osate.face2aadl.logic.TranslatorUtil.translateViewReference
 
+import static extension org.eclipse.xtext.EcoreUtil2.getAllContentsOfType
+
 @FinalFieldsConstructor
-class UoPTranslator implements ModelTranslator {
-	val Class<? extends UnitOfPortability> segmentType
+package class UoPTranslator {
 	val String faceFileName
 	val String packageName
 	val String dataModelPackageName
 	val String timestamp
 	
-	override translate(ArchitectureModel model) {
-		val components = model.um.map[it.eAllContents.toIterable].flatten.filter(segmentType)
-		val classifiers = components.map[translateUoP(it)]
+	def package Optional<String> translate(ArchitectureModel model, Class<? extends UnitOfPortability> segmentType) {
+		translate(model.um.map[it.getAllContentsOfType(segmentType)].flatten)
+	}
+	
+	def package Optional<String> translate(Iterable<? extends UnitOfPortability> uops) {
+		val classifiers = uops.map[translateUoP(it)]
 		val classifiersString = classifiers.join(System.lineSeparator)
 		
 		if (classifiersString.empty) {

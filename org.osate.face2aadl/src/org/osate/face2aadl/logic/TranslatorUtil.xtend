@@ -26,7 +26,7 @@ import java.util.regex.Pattern
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.xmi.XMLResource
 
-class TranslatorUtil {
+package class TranslatorUtil {
 	val static SANITIZE_PATTERN = Pattern.compile("\\W")
 	val static AADL_KEYWORDS = #{"aadlboolean", "aadlinteger", "aadlreal", "aadlstring", "abstract",
 		"access", "all", "annex", "applies", "binding", "bus", "calls", "classifier", "compute",
@@ -41,7 +41,7 @@ class TranslatorUtil {
 	//This is here because character literals don't work well in Xtend.
 	val static char UNDERSCORE = '_'
 	
-	def static String sanitizeID(String id) {
+	def package static String sanitizeID(String id) {
 		if (!id.empty) {
 			var sanitized = SANITIZE_PATTERN.matcher(id).replaceAll("_")
 			if (AADL_KEYWORDS.contains(sanitized.toLowerCase)) {

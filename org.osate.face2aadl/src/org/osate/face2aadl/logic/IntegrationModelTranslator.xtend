@@ -46,11 +46,11 @@ import static org.osate.face2aadl.logic.TranslatorUtil.translateDescription
 import static org.osate.face2aadl.logic.TranslatorUtil.translateUUID
 import static org.osate.face2aadl.logic.TranslatorUtil.translateViewReference
 
-import static extension org.eclipse.xtext.EcoreUtil2.eAll
+import static extension org.eclipse.xtext.EcoreUtil2.eAllOfType
 import static extension org.eclipse.xtext.EcoreUtil2.getContainerOfType
 
 @FinalFieldsConstructor
-class IntegrationModelTranslator implements ModelTranslator {
+package class IntegrationModelTranslator {
 	val String faceFileName
 	val String packageName
 	val String dataModelPackageName
@@ -58,8 +58,11 @@ class IntegrationModelTranslator implements ModelTranslator {
 	val String pcsPackageName
 	val String timestamp
 	
-	override translate(ArchitectureModel model) {
-		val integrationModels = model.im.map[it.eAll.toIterable].flatten.filter(IntegrationModel)
+	def package Optional<String> translate(ArchitectureModel model) {
+		translate(model.im.flatMap[it.eAllOfType(IntegrationModel)])
+	}
+	
+	def package Optional<String> translate(Iterable<IntegrationModel> integrationModels) {
 		val classifiers = integrationModels.map[translateIntegrationModel(it)]
 		val classifiersString = classifiers.join(System.lineSeparator)
 		
@@ -104,14 +107,14 @@ class IntegrationModelTranslator implements ModelTranslator {
 		val transportChannels = model.element.filter(TransportChannel)
 		val virtualBuses = transportChannels.map[translateTransportChannel(it)]
 		
-		val transportNodes = model.element.filter(IntegrationContext).map[it.node].flatten.toList
+		val transportNodes = model.element.filter(IntegrationContext).flatMap[it.node].toList
 		val nodeSubcomponents = transportNodes.map[translateTransportNodeSubcomponent(it)]
 		
 		val subcomponents = processes + virtualBuses + nodeSubcomponents
 		val subcomponentsString = subcomponents.join(System.lineSeparator)
 		val uuid = translateUUID(model)
 		
-		val tsNodeConnections = model.element.filter(IntegrationContext).map[it.connection].flatten.toList
+		val tsNodeConnections = model.element.filter(IntegrationContext).flatMap[it.connection].toList
 		
 		'''
 			«translateDescription(model)»

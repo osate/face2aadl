@@ -2,45 +2,42 @@ package org.osate.face2aadl
 
 import face.ArchitectureModel
 import face.FacePackage
-import face.uop.PlatformSpecificComponent
-import face.uop.PortableComponent
+import face.integration.IntegrationModel
+import face.uop.UnitOfPortability
 import java.time.LocalDateTime
+import java.util.List
 import org.apache.commons.io.IOUtils
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
 import org.junit.Before
 import org.junit.Test
-import org.osate.face2aadl.logic.DataModelTranslator
-import org.osate.face2aadl.logic.IntegrationModelTranslator
-import org.osate.face2aadl.logic.ModelTranslator
-import org.osate.face2aadl.logic.UoPTranslator
+import org.osate.face2aadl.logic.ArchitectureModelTranslator
+import org.osate.face2aadl.logic.ArchitectureModelTranslator.TranslatedPackage
 
-import static org.osate.face2aadl.logic.TranslatorUtil.sanitizeID
-
+import static extension org.eclipse.xtext.EcoreUtil2.getAllContentsOfType
 import static extension org.junit.Assert.assertEquals
 import static extension org.junit.Assert.assertNotNull
 import static extension org.junit.Assert.assertNull
 
 abstract class AbstractTranslatorTest {
 	val String faceFileName
-	val String dataModelName
-	val String psssName
-	val String pcsName
-	val String integrationModelName
 	val boolean platformOnly
+	val List<String> uopNames
+	val List<String> integrationModelNames
 	val time = LocalDateTime.of(2018, 3, 29, 15, 02, 31, 883_000_000).toString
 	
-	ArchitectureModel root
+	ArchitectureModelTranslator translator
 	
 	new(String baseName, boolean platformOnly) {
+		this(baseName, platformOnly, null, null)
+	}
+	
+	new(String baseName, boolean platformOnly, List<String> uopNames, List<String> integrationModelNames) {
 		faceFileName = baseName + ".face"
-		val aadlName = sanitizeID(baseName)
-		dataModelName = aadlName + "_data_model"
-		psssName = aadlName + "_PSSS"
-		pcsName = aadlName + "_PCS"
-		integrationModelName = aadlName + "_integration_model"
 		this.platformOnly = platformOnly
+		this.uopNames = uopNames
+		this.integrationModelNames = integrationModelNames
 	}
 	
 	@Before
@@ -50,42 +47,42 @@ abstract class AbstractTranslatorTest {
 		resourceSet.resourceFactoryRegistry.extensionToFactoryMap.put("face", new XMIResourceFactoryImpl)
 		val resource = resourceSet.createResource(URI.createURI("synthetic:/" + faceFileName))
 		resource.load(class.getResourceAsStream(faceFileName), null)
-		root = resource.contents.head as ArchitectureModel
+		val model = resource.contents.head as ArchitectureModel
+		translator = if (uopNames === null) {
+			ArchitectureModelTranslator.create(model, faceFileName, time, platformOnly)
+		} else {
+			val allUoPs = model.getAllContentsOfType(UnitOfPortability)
+			val allIntegrationModels = model.getAllContentsOfType(IntegrationModel)
+			val uops = uopNames.map[name | allUoPs.findFirst[it.name == name]]
+			val integrationModels = integrationModelNames.map[name | allIntegrationModels.findFirst[it.name == name]]
+			ArchitectureModelTranslator.create(model, uops, integrationModels, faceFileName, time, platformOnly)
+		}
 	}
 	
 	@Test
 	def void testDataModel() {
-		val translator = new DataModelTranslator(faceFileName, dataModelName, time, platformOnly)
-		testModel(translator, dataModelName)
+		testModel(translator.translateDataModel)
 	}
 	
 	@Test
 	def void testPSSS() {
-		val translator = new UoPTranslator(PlatformSpecificComponent, faceFileName, psssName, dataModelName,
-			time
-		)
-		testModel(translator, psssName)
+		testModel(translator.translatePSSS)
 	}
 	
 	@Test
 	def void testPCS() {
-		val translator = new UoPTranslator(PortableComponent, faceFileName, pcsName, dataModelName, time)
-		testModel(translator, pcsName)
+		testModel(translator.translatePCS)
 	}
 	
 	@Test
 	def void testIntegrationModel() {
-		val translator = new IntegrationModelTranslator(faceFileName, integrationModelName, dataModelName,
-			psssName, pcsName, time
-		)
-		testModel(translator, integrationModelName)
+		testModel(translator.translateIntegrationModel)
 	}
 	
-	def private void testModel(ModelTranslator translator, String packageName) {
-		val expected = class.getResourceAsStream(packageName + ".aadl")
-		val actual = translator.translate(root)
-		if (actual.present) {
-			IOUtils.toString(expected).assertEquals(actual.get.replace("\r", ""))
+	def private void testModel(TranslatedPackage translated) {
+		val expected = class.getResourceAsStream(translated.name + ".aadl")
+		if (translated.contents.present) {
+			IOUtils.toString(expected).assertEquals(translated.contents.get.replace("\r", ""))
 		} else {
 			expected.assertNull
 		}

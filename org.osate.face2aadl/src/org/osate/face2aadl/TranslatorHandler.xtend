@@ -20,8 +20,8 @@
 package org.osate.face2aadl
 
 import face.ArchitectureModel
-import face.uop.PlatformSpecificComponent
-import face.uop.PortableComponent
+import face.integration.IntegrationModel
+import face.uop.UnitOfPortability
 import java.io.ByteArrayInputStream
 import java.lang.reflect.InvocationTargetException
 import java.time.LocalDateTime
@@ -38,25 +38,32 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.common.util.WrappedException
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.emf.ecore.xmi.PackageNotFoundException
+import org.eclipse.emf.ecore.xmi.XMLResource
 import org.eclipse.jface.window.Window
 import org.eclipse.ui.actions.WorkspaceModifyOperation
 import org.eclipse.ui.statushandlers.StatusManager
-import org.osate.face2aadl.logic.DataModelTranslator
-import org.osate.face2aadl.logic.IntegrationModelTranslator
-import org.osate.face2aadl.logic.ModelTranslator
-import org.osate.face2aadl.logic.UoPTranslator
-
-import static org.osate.face2aadl.logic.TranslatorUtil.sanitizeID
+import org.osate.face2aadl.logic.ArchitectureModelTranslator
+import org.osate.face2aadl.logic.ArchitectureModelTranslator.TranslatedPackage
 
 import static extension org.eclipse.ui.handlers.HandlerUtil.getActiveShell
 import static extension org.eclipse.ui.handlers.HandlerUtil.getActiveWorkbenchWindow
 import static extension org.eclipse.ui.handlers.HandlerUtil.getCurrentStructuredSelection
+import static extension org.eclipse.xtext.EcoreUtil2.eAllOfType
+import static extension org.eclipse.xtext.EcoreUtil2.getAllContentsOfType
 
 class TranslatorHandler extends AbstractHandler {
 	override execute(ExecutionEvent event) throws ExecutionException {
 		val faceFile = event.currentStructuredSelection.firstElement as IFile
 		
-		val configDialog = new ConfigDialog(event.activeShell)
+		val resourceSet = new ResourceSetImpl
+		val faceURI = URI.createPlatformResourceURI(faceFile.fullPath.toString, true)
+		val faceResource = resourceSet.createResource(faceURI)
+		faceResource.load(#{XMLResource.OPTION_DEFER_IDREF_RESOLUTION -> true})
+		val root = faceResource.contents.head as ArchitectureModel
+		
+		val uops = root.um.flatMap[it.getAllContentsOfType(UnitOfPortability)]
+		val integrationModels = root.im.flatMap[it.eAllOfType(IntegrationModel)]
+		val configDialog = new ConfigDialog(event.activeShell, uops, integrationModels)
 		if (configDialog.open == Window.OK) {
 			val WorkspaceModifyOperation operation = [monitor |
 				val subMonitor = SubMonitor.convert(monitor, 5)
@@ -67,38 +74,19 @@ class TranslatorHandler extends AbstractHandler {
 				}
 				subMonitor.workRemaining = 4
 				
-				val baseFileName = sanitizeID(faceFile.fullPath.removeFileExtension.lastSegment)
-				val resourceSet = new ResourceSetImpl
-				val faceURI = URI.createPlatformResourceURI(faceFile.fullPath.toString, true)
-				val faceResource = resourceSet.getResource(faceURI, true)
-				val root = faceResource.contents.head as ArchitectureModel
 				val timestamp = LocalDateTime.now.toString
+				val translator = if (configDialog.filter) {
+					ArchitectureModelTranslator.create(root, configDialog.selectedUoPs,
+						configDialog.selectedIntegrationModels, faceFile.name, timestamp, configDialog.platformOnly
+					)
+				} else {
+					ArchitectureModelTranslator.create(root, faceFile.name, timestamp, configDialog.platformOnly)
+				}
 				
-				val dataModelPackageName = baseFileName + "_data_model"
-				val dataModelTranslator = new DataModelTranslator(faceFile.name, dataModelPackageName, timestamp,
-					configDialog.platformOnly
-				)
-				translateModel(dataModelTranslator, root, dataModelPackageName, modelGenDirectory, subMonitor.split(1))
-				
-				val psssPackageName = baseFileName + "_PSSS"
-				val psssTranslator = new UoPTranslator(PlatformSpecificComponent, faceFile.name, psssPackageName,
-					dataModelPackageName, timestamp
-				)
-				translateModel(psssTranslator, root, psssPackageName, modelGenDirectory, subMonitor.split(1))
-				
-				val pcsPackageName = baseFileName + "_PCS"
-				val pcsTranslator = new UoPTranslator(PortableComponent, faceFile.name, pcsPackageName,
-					dataModelPackageName, timestamp
-				)
-				translateModel(pcsTranslator, root, pcsPackageName, modelGenDirectory, subMonitor.split(1))
-				
-				val integrationModelPackageName = baseFileName + "_integration_model"
-				val integrationModelTranslator = new IntegrationModelTranslator(faceFile.name,
-					integrationModelPackageName, dataModelPackageName, psssPackageName, pcsPackageName, timestamp
-				)
-				translateModel(integrationModelTranslator, root, integrationModelPackageName, modelGenDirectory,
-					subMonitor.split(1)
-				)
+				translateModel(translator.translateDataModel, modelGenDirectory, subMonitor.split(1))
+				translateModel(translator.translatePSSS, modelGenDirectory, subMonitor.split(1))
+				translateModel(translator.translatePCS, modelGenDirectory, subMonitor.split(1))
+				translateModel(translator.translateIntegrationModel, modelGenDirectory, subMonitor.split(1))
 			]
 			try {
 				event.activeWorkbenchWindow.run(true, true, operation)
@@ -125,12 +113,10 @@ class TranslatorHandler extends AbstractHandler {
 		null
 	}
 	
-	def private void translateModel(ModelTranslator translator, ArchitectureModel model, String packageName,
-		IFolder modelGenDirectory, IProgressMonitor monitor
-	) {
-		translator.translate(model).ifPresent[packageContents |
+	def private void translateModel(TranslatedPackage translated, IFolder modelGenDirectory, IProgressMonitor monitor) {
+		translated.contents.ifPresent[packageContents |
 			val packageStream = new ByteArrayInputStream(packageContents.bytes)
-			val packageFile = modelGenDirectory.getFile(packageName + ".aadl")
+			val packageFile = modelGenDirectory.getFile(translated.name + ".aadl")
 			if (packageFile.exists) {
 				packageFile.setContents(packageStream, false, true, monitor)
 			} else {
