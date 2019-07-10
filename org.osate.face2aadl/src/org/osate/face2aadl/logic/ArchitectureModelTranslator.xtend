@@ -18,7 +18,6 @@ import face.uop.UnitOfPortability
 import java.util.List
 import java.util.Optional
 import java.util.Set
-import org.apache.commons.io.FilenameUtils
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 
@@ -41,7 +40,7 @@ class ArchitectureModelTranslator {
 		this.faceFileName = faceFileName
 		this.timestamp = timestamp
 		
-		val baseFileName = sanitizeID(FilenameUtils.removeExtension(faceFileName))
+		val baseFileName = sanitizeID(removeExtension(faceFileName))
 		dataModelPackageName = baseFileName + "_data_model"
 		psssPackageName = baseFileName + "_PSSS"
 		pcsPackageName = baseFileName + "_PCS"
@@ -236,4 +235,13 @@ class ArchitectureModelTranslator {
 	
 	@FinalFieldsConstructor
 	private static class FilteredPlatformOnly extends Filtered {}
+	
+	def private static String removeExtension(String fileName) {
+		val lastDot = fileName.lastIndexOf('.')
+		if (lastDot == -1) {
+			fileName
+		} else {
+			fileName.substring(0, lastDot)
+		}
+	}
 }
