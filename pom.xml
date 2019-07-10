@@ -13,7 +13,7 @@
 		<tycho-extras.version>1.1.0</tycho-extras.version>
 		
 		<osate.stable.version>2.3.7</osate.stable.version>
-		<xtext.stable.version>2.12.0</xtext.stable.version>
+		<xtext.stable.version>2.13.0</xtext.stable.version>
 		<xtext.testing.version>2.16.0</xtext.testing.version>
 
 		<osate.stable.url>http://osate-build.sei.cmu.edu/download/osate/stable/${osate.stable.version}/updates/</osate.stable.url>
