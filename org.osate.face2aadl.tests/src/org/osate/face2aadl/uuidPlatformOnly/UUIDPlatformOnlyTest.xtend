@@ -4,6 +4,6 @@ import org.osate.face2aadl.AbstractTranslatorTest
 
 class UUIDPlatformOnlyTest extends AbstractTranslatorTest {
 	new() {
-		super("uuidPlatformOnly", true)
+		super("uuidPlatformOnly", true, true)
 	}
 }

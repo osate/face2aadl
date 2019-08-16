@@ -25,19 +25,23 @@ abstract class AbstractTranslatorTest {
 	val boolean platformOnly
 	val List<String> uopNames
 	val List<String> integrationModelNames
+	val boolean createFlows
 	val time = LocalDateTime.of(2018, 3, 29, 15, 02, 31, 883_000_000).toString
 	
 	ArchitectureModelTranslator translator
 	
-	new(String baseName, boolean platformOnly) {
-		this(baseName, platformOnly, null, null)
+	new(String baseName, boolean platformOnly, boolean createFlows) {
+		this(baseName, platformOnly, null, null, createFlows)
 	}
 	
-	new(String baseName, boolean platformOnly, List<String> uopNames, List<String> integrationModelNames) {
+	new(String baseName, boolean platformOnly, List<String> uopNames, List<String> integrationModelNames,
+		boolean createFlows
+	) {
 		faceFileName = baseName + ".face"
 		this.platformOnly = platformOnly
 		this.uopNames = uopNames
 		this.integrationModelNames = integrationModelNames
+		this.createFlows = createFlows
 	}
 	
 	@Before
@@ -49,13 +53,15 @@ abstract class AbstractTranslatorTest {
 		resource.load(class.getResourceAsStream(faceFileName), null)
 		val model = resource.contents.head as ArchitectureModel
 		translator = if (uopNames === null) {
-			ArchitectureModelTranslator.create(model, faceFileName, time, platformOnly)
+			ArchitectureModelTranslator.create(model, faceFileName, time, platformOnly, createFlows)
 		} else {
 			val allUoPs = model.getAllContentsOfType(UnitOfPortability)
 			val allIntegrationModels = model.getAllContentsOfType(IntegrationModel)
 			val uops = uopNames.map[name | allUoPs.findFirst[it.name == name]]
 			val integrationModels = integrationModelNames.map[name | allIntegrationModels.findFirst[it.name == name]]
-			ArchitectureModelTranslator.create(model, uops, integrationModels, faceFileName, time, platformOnly)
+			ArchitectureModelTranslator.create(model, uops, integrationModels, faceFileName, time, platformOnly,
+				createFlows
+			)
 		}
 	}
 	

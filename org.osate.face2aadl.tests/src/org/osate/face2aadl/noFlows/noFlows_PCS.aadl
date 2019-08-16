@@ -1,0 +1,76 @@
+--Generated from "noFlows.face" at 2018-03-29T15:02:31.883
+package noFlows_PCS
+public
+	with FACE;
+	with noFlows_data_model;
+	
+	thread group Altitude_Sensor
+		features
+			Altitude_output: out event data port noFlows_data_model::Altitude_ft_Platform {
+				Output_Rate => [Value_Range => 8.0 .. 8.0; Rate_Unit => PerSecond;];
+				Queue_Size => 10;
+			};
+		properties
+			FACE::Profile => general;
+			FACE::Segment => PCS;
+	end Altitude_Sensor;
+	
+	thread group implementation Altitude_Sensor.impl
+		subcomponents
+			thread0: thread {
+				Compute_Execution_Time => 0 sec .. 0 sec;
+				Period => 125 ms;
+				Priority => 0;
+			};
+	end Altitude_Sensor.impl;
+	
+	process Altitude_Sensor_process
+		features
+			Altitude_output: out event data port noFlows_data_model::Altitude_ft_Platform {
+				Output_Rate => [Value_Range => 8.0 .. 8.0; Rate_Unit => PerSecond;];
+				Queue_Size => 10;
+			};
+	end Altitude_Sensor_process;
+	
+	process implementation Altitude_Sensor_process.impl
+		subcomponents
+			Altitude_Sensor: thread group Altitude_Sensor.impl;
+		connections
+			Altitude_output_connection: port Altitude_Sensor.Altitude_output -> Altitude_output;
+	end Altitude_Sensor_process.impl;
+	
+	thread group Autopilot
+		features
+			Altitude_input: in event data port noFlows_data_model::Altitude_m_Platform {
+				Input_Rate => [Value_Range => 8.0 .. 8.0; Rate_Unit => PerSecond;];
+				Queue_Size => 10;
+			};
+		properties
+			FACE::Profile => general;
+			FACE::Segment => PCS;
+	end Autopilot;
+	
+	thread group implementation Autopilot.impl
+		subcomponents
+			thread0: thread {
+				Compute_Execution_Time => 0 sec .. 0 sec;
+				Period => 125 ms;
+				Priority => 0;
+			};
+	end Autopilot.impl;
+	
+	process Autopilot_process
+		features
+			Altitude_input: in event data port noFlows_data_model::Altitude_m_Platform {
+				Input_Rate => [Value_Range => 8.0 .. 8.0; Rate_Unit => PerSecond;];
+				Queue_Size => 10;
+			};
+	end Autopilot_process;
+	
+	process implementation Autopilot_process.impl
+		subcomponents
+			Autopilot: thread group Autopilot.impl;
+		connections
+			Altitude_input_connection: port Altitude_input -> Autopilot.Altitude_input;
+	end Autopilot_process.impl;
+end noFlows_PCS;

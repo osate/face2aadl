@@ -4,6 +4,6 @@ import org.osate.face2aadl.AbstractTranslatorTest
 
 class ConceptualViewTest extends AbstractTranslatorTest {
 	new() {
-		super("conceptualView", false)
+		super("conceptualView", false, true)
 	}
 }

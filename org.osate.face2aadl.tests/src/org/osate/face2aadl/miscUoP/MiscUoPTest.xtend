@@ -4,6 +4,6 @@ import org.osate.face2aadl.AbstractTranslatorTest
 
 class MiscUoPTest extends AbstractTranslatorTest {
 	new() {
-		super("miscUoP", false)
+		super("miscUoP", false, true)
 	}
 }

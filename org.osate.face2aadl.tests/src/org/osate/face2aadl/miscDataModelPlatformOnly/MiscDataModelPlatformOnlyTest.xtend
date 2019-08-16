@@ -4,6 +4,6 @@ import org.osate.face2aadl.AbstractTranslatorTest
 
 class MiscDataModelPlatformOnlyTest extends AbstractTranslatorTest {
 	new() {
-		super("miscDataModelPlatformOnly", true)
+		super("miscDataModelPlatformOnly", true, true)
 	}
 }
