@@ -77,10 +77,13 @@ class TranslatorHandler extends AbstractHandler {
 				val timestamp = LocalDateTime.now.toString
 				val translator = if (configDialog.filter) {
 					ArchitectureModelTranslator.create(root, configDialog.selectedUoPs,
-						configDialog.selectedIntegrationModels, faceFile.name, timestamp, configDialog.platformOnly
+						configDialog.selectedIntegrationModels, faceFile.name, timestamp, configDialog.platformOnly,
+						configDialog.createFlows
 					)
 				} else {
-					ArchitectureModelTranslator.create(root, faceFile.name, timestamp, configDialog.platformOnly)
+					ArchitectureModelTranslator.create(root, faceFile.name, timestamp, configDialog.platformOnly,
+						configDialog.createFlows
+					)
 				}
 				
 				translateModel(translator.translateDataModel, modelGenDirectory, subMonitor.split(1))

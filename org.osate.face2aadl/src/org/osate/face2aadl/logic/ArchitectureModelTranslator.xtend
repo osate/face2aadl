@@ -34,9 +34,11 @@ class ArchitectureModelTranslator {
 	val String pcsPackageName
 	val String integrationModelPackageName
 	
+	val boolean createFlows
+	
 	val TranslationInput translationInput
 	
-	private new(String faceFileName, String timestamp, TranslationInput translationInput) {
+	private new(String faceFileName, String timestamp, boolean createFlows, TranslationInput translationInput) {
 		this.faceFileName = faceFileName
 		this.timestamp = timestamp
 		
@@ -46,18 +48,20 @@ class ArchitectureModelTranslator {
 		pcsPackageName = baseFileName + "_PCS"
 		integrationModelPackageName = baseFileName + "_integration_model"
 		
+		this.createFlows = createFlows
+		
 		this.translationInput = translationInput
 	}
 	
 	def static ArchitectureModelTranslator create(ArchitectureModel model, String faceFileName, String timestamp,
-		boolean platformOnly
+		boolean platformOnly, boolean createFlows
 	) {
-		new ArchitectureModelTranslator(faceFileName, timestamp, new WholeModel(model, platformOnly))
+		new ArchitectureModelTranslator(faceFileName, timestamp, createFlows, new WholeModel(model, platformOnly))
 	}
 	
 	def static ArchitectureModelTranslator create(ArchitectureModel model, Iterable<UnitOfPortability> selectedUoPs,
 		Iterable<IntegrationModel> selectedIntegrationModels, String faceFileName, String timestamp,
-		boolean platformOnly
+		boolean platformOnly, boolean createFlows
 	) {
 		val requiredIntegrationModels = selectedIntegrationModels.toSet
 		val orderedIntegrationModels = requiredIntegrationModels.sort(model, IntegrationModel)
@@ -84,7 +88,7 @@ class ArchitectureModelTranslator {
 			)
 		}
 		
-		new ArchitectureModelTranslator(faceFileName, timestamp, translationInput)
+		new ArchitectureModelTranslator(faceFileName, timestamp, createFlows, translationInput)
 	}
 	
 	def TranslatedPackage translateDataModel() {
@@ -102,8 +106,8 @@ class ArchitectureModelTranslator {
 	def TranslatedPackage translatePSSS() {
 		val psssTranslator = new UoPTranslator(faceFileName, psssPackageName, dataModelPackageName, timestamp)
 		val result = switch translationInput {
-			WholeModel: psssTranslator.translate(translationInput.model, PlatformSpecificComponent)
-			Filtered: psssTranslator.translate(translationInput.psssUoPs)
+			WholeModel: psssTranslator.translate(translationInput.model, PlatformSpecificComponent, createFlows)
+			Filtered: psssTranslator.translate(translationInput.psssUoPs, createFlows)
 		}
 		new TranslatedPackage(psssPackageName, result)
 	}
@@ -111,8 +115,8 @@ class ArchitectureModelTranslator {
 	def TranslatedPackage translatePCS() {
 		val pcsTranslator = new UoPTranslator(faceFileName, pcsPackageName, dataModelPackageName, timestamp)
 		val result = switch translationInput {
-			WholeModel: pcsTranslator.translate(translationInput.model, PortableComponent)
-			Filtered: pcsTranslator.translate(translationInput.pcsUoPs)
+			WholeModel: pcsTranslator.translate(translationInput.model, PortableComponent, createFlows)
+			Filtered: pcsTranslator.translate(translationInput.pcsUoPs, createFlows)
 		}
 		new TranslatedPackage(pcsPackageName, result)
 	}

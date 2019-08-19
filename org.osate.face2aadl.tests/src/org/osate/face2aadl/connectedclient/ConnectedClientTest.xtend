@@ -4,6 +4,6 @@ import org.osate.face2aadl.AbstractTranslatorTest
 
 class ConnectedClientTest extends AbstractTranslatorTest {
 	new() {
-		super("connectedClient", false)
+		super("connectedClient", false, true)
 	}
 }

@@ -4,6 +4,6 @@ import org.osate.face2aadl.AbstractTranslatorTest
 
 class ViewSinkTest extends AbstractTranslatorTest {
 	new() {
-		super("viewSink", false)
+		super("viewSink", false, true)
 	}
 }

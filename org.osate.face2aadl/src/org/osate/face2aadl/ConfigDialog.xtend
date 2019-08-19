@@ -30,6 +30,7 @@ class ConfigDialog extends TitleAreaDialog {
 	val static PLATFORM_ONLY_SETTING = "PLATFORM_ONLY_SETTING"
 	val static FILTER_SETTING = "FILTER_SETTING"
 	val static CHECKED_ELEMENTS_SETTING = "CHECKED_ELEMENTS_SETTING"
+	val static CREATE_FLOWS_SETTING = "CREATE_FLOWS_SETTING"
 	
 	val List<Element> uopsAndIntegrationModels
 	
@@ -41,6 +42,7 @@ class ConfigDialog extends TitleAreaDialog {
 	CheckboxTableViewer tableViewer
 	Button selectAllButton
 	Button deselectAllButton
+	Button createFlowsButton
 	
 	@Accessors(PUBLIC_GETTER)
 	boolean platformOnly
@@ -50,6 +52,8 @@ class ConfigDialog extends TitleAreaDialog {
 	List<UnitOfPortability> selectedUoPs
 	@Accessors(PUBLIC_GETTER)
 	List<IntegrationModel> selectedIntegrationModels
+	@Accessors(PUBLIC_GETTER)
+	boolean createFlows
 	
 	new(Shell parentShell, List<Element> uopsAndIntegrationModels) {
 		super(parentShell)
@@ -58,15 +62,12 @@ class ConfigDialog extends TitleAreaDialog {
 	
 	new (Shell parentShell, Iterable<UnitOfPortability> uops, Iterable<IntegrationModel> integrationModels) {
 		super(parentShell)
+		helpAvailable = false
 		uopsAndIntegrationModels = (uops + integrationModels).toList
 	}
 	
 	override protected isResizable() {
 		true
-	}
-	
-	override isHelpAvailable() {
-		false
 	}
 	
 	override protected getInitialSize() {
@@ -139,6 +140,15 @@ class ConfigDialog extends TitleAreaDialog {
 						button.layoutData = new GridData(SWT.FILL, SWT.TOP, false, false)
 					]
 				]
+				new Group(innerComposite, SWT.SHADOW_NONE) => [flowGroup |
+					flowGroup.text = "Flows"
+					flowGroup.layout = new GridLayout()
+					flowGroup.layoutData = new GridData(SWT.FILL, SWT.TOP, true, false)
+					createFlowsButton = new Button(flowGroup, SWT.CHECK) => [button |
+						button.text = "Create flow sinks and sources for each UoP's inputs and outputs"
+						button.layoutData = new GridData(SWT.LEFT, SWT.CENTER, false, false)
+					]
+				]
 			]
 		]
 	}
@@ -155,6 +165,9 @@ class ConfigDialog extends TitleAreaDialog {
 			selectedIntegrationModels = tableViewer.checkedElements.filter(IntegrationModel).toList
 			dialogSettings.put(CHECKED_ELEMENTS_SETTING, tableViewer.checkedElements.map[(it as Element).name])
 		}
+		
+		createFlows = createFlowsButton.selection
+		dialogSettings.put(CREATE_FLOWS_SETTING, createFlows)
 		
 		super.okPressed
 	}
@@ -216,5 +229,11 @@ class ConfigDialog extends TitleAreaDialog {
 		}
 		
 		validate
+		
+		if (dialogSettings.get(CREATE_FLOWS_SETTING) === null) {
+			createFlowsButton.selection = true
+		} else {
+			createFlowsButton.selection = dialogSettings.getBoolean(CREATE_FLOWS_SETTING)
+		}
 	}
 }

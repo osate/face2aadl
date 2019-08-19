@@ -47,12 +47,14 @@ package class UoPTranslator {
 	val String dataModelPackageName
 	val String timestamp
 	
-	def package Optional<String> translate(ArchitectureModel model, Class<? extends UnitOfPortability> segmentType) {
-		translate(model.um.map[it.getAllContentsOfType(segmentType)].flatten)
+	def package Optional<String> translate(ArchitectureModel model, Class<? extends UnitOfPortability> segmentType,
+		boolean createFlows
+	) {
+		translate(model.um.map[it.getAllContentsOfType(segmentType)].flatten, createFlows)
 	}
 	
-	def package Optional<String> translate(Iterable<? extends UnitOfPortability> uops) {
-		val classifiers = uops.map[translateUoP(it)]
+	def package Optional<String> translate(Iterable<? extends UnitOfPortability> uops, boolean createFlows) {
+		val classifiers = uops.map[translateUoP(it, createFlows)]
 		val classifiersString = classifiers.join(System.lineSeparator)
 		
 		if (classifiersString.empty) {
@@ -76,7 +78,7 @@ package class UoPTranslator {
 		}
 	}
 	
-	def private String translateUoP(UnitOfPortability component) {
+	def private String translateUoP(UnitOfPortability component, boolean createFlows) {
 		val name = sanitizeID(component.name)
 		val processName = name + "_process"
 		
@@ -127,10 +129,12 @@ package class UoPTranslator {
 				«IF !portsString.empty»
 				features
 					«portsString»
+				«IF createFlows»
 				flows
 					«FOR connection : component.connection»
 					«createFlowSpecs(connection)»
 					«ENDFOR»
+				«ENDIF»
 				«ENDIF»
 			end «processName»;
 			
@@ -140,10 +144,12 @@ package class UoPTranslator {
 				«IF !connectionsString.empty»
 				connections
 					«connectionsString»
+				«IF createFlows»
 				flows
 					«FOR connection : component.connection»
 					«createFlowImpls(connection, name)»
 					«ENDFOR»
+				«ENDIF»
 				«ENDIF»
 			end «processName».impl;
 		'''

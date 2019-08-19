@@ -31,10 +31,50 @@ To translate a FACE file into AADL, do the following:
 
 * Place a **.face** file in an AADL project.
 * Right-click the **.face** file in the AADL Navigator.
-* Select **Translate to AADL**.
+* Select **Translate to AADL**. This will open a dialog for configuring the translation options.
+* In the dialog, [configure the translation options](#translation-options) or accept the defaults and click
+  **OK**.
 * The translator will create a folder called **model-gen** which contains the AADL files.
 
 ![Translate Command](images/TranslateCommand.png)
+
+## Translation options
+
+The translator has a few options for configuring the resulting AADL model. There are options for selecting
+which parts of the data model should be translated, which UoPs and integration models should be translated,
+and if flow sinks and sources should be created for the UoPs.
+
+![Configure Translation Options](images/ConfigureTranslationOptions.png)
+
+### Data model levels
+
+By default, the translator will translate every translatable data model element in the FACE model. The list of
+translatable data model elements is described [below](#data-model-translation). If a FACE model contains many
+conceptual and logical data model elements which are not useful for analyzing the AADL model, they can be
+omitted from translation. The option **Platform only** will not translate any conceptual or logical elements.
+
+When this option is selected, platform data elements which realize a logical data element will be translated
+with a comment indicating that the extension of the logical element is not translated. Normally, such a
+realization produces a data type extension in AADL.
+
+### Element filtering
+
+By default, the translator will translate every UoP and integration model. The translator can be configured to
+translate only a subset of the available UoPs and integration models. To enable this option, check
+**Only translate elements required for the selected UoPs and Integration Models** and select the elements that
+should be translated.
+
+The translator will translate the selected elements and any UoPs or data model elements which are required for
+the translation. Data model elements not used by the selection will not be translated. For UoPs, it is
+possible for a UoP to be translated even if it is not selected. This happens when the UoP is required by a
+selected integration model.
+
+### Flows
+
+By default, the translator will create a flow sink for every UoP input and a flow source for every UoP output.
+These flow sinks and sources will be on the resulting process classifiers. The purpose of these flow
+declarations is to make it easier to extend the generated model and add end to end flows. If this is not
+desirable, then the creation of these flows can be disabled.
 
 ## Translation details
 
@@ -152,7 +192,8 @@ The following describes how various elements of the data model are translated.
 * The **name** field is used to create the name of the data type. The data type's name is
   ***\<name\>*_Platform**.
 * The **description** field is translated into a comment on the data type.
-* The **realizes** field is translated into the data type's extension reference.
+* If translating all data model levels, then the **realizes** field is translated into the data type's
+  extension reference.
 * The property **FACE::Realization_Tier** is set to the value of **platform**.
 * If the FACE file was generated using UUIDs, then the property **FACE::UUID** is set to the ID of the
   **Entity**.
@@ -163,8 +204,8 @@ The following describes how various elements of the data model are translated.
 * The **name** field is used to create the name of the data type. The data type's name is
   ***\<name\>*_Platform**.
 * The **description** field is translated into a comment on the data type.
-* If the **boundQuery** field is set and its **realizes** field is set, then it is translated into the data
-  type's extension reference.
+* If translating all data model levels, the **boundQuery** field is set, and its **realizes** field is set,
+  then it is translated into the data type's extension reference.
 * The property **FACE::Realization_Tier** is set to the value of **platform**.
 * If the FACE file was generated using UUIDs, then the property **FACE::UUID** is set to the ID of the
   **Template**.
@@ -175,7 +216,8 @@ The following describes how various elements of the data model are translated.
 	* The **name** field is used to create the name of the data type. The data type's name is
 	  ***\<name\>*_Platform**.
 	* The **description** field is translated into a comment on the data type.
-	* If the **realizes** field is set, then it is translated into the data type's extension reference.
+	* If translating all data model levels and the **realizes** field is set, then it is translated into the
+	  data type's extension reference.
 	* If the **isUnion** field is set to **true**, then the property **FACE::Is_Union** is set to the value
 	  **true**.
 	* The property **FACE::Realization_Tier** is set to the value of **platform**.
@@ -314,10 +356,10 @@ The following describes how UoPs are translated.
 	  ***\<name\>*_process**.
 	* Each **connection** *(face.uop.Connection)* is translated into a port of the process type. The
 	  translation of the port of the process type exactly matches the port of the thread group type.
-	* A flow source is created for each out port of the process type. The name of the flow source is
-	  ***\<port name\>*_source**.
-	* A flow sink is created for each in port of the process type. The name of the flow sink is
-	  ***\<port name\>*_sink**.
+	* If creating flows, then a flow source is created for each out port of the process type. The name of the
+	  flow source is ***\<port name\>*_source**.
+	* If creating flows, then a flow sink is created for each in port of the process type. The name of the
+	  flow sink is ***\<port name\>*_sink**.
 * Each **UnitOfPortability** is also translated into a process implementation which implements the process
   type.
 	* The **name** field is used to create the name of the process implementation. The process

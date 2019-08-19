@@ -1,0 +1,46 @@
+--Generated from "filteringNoFlows.face" at 2018-03-29T15:02:31.883
+package filteringNoFlows_PCS
+public
+	with FACE;
+	with filteringNoFlows_data_model;
+	
+	thread group UsedPCS1
+		features
+			Port1_and_2_request: out event data port filteringNoFlows_data_model::UsedTemplate1_Platform {
+				Output_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+			};
+			Port1_and_2_response: in event data port filteringNoFlows_data_model::UsedTemplate2_Platform {
+				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+			};
+		properties
+			FACE::Profile => general;
+			FACE::Segment => PCS;
+	end UsedPCS1;
+	
+	thread group implementation UsedPCS1.impl
+		subcomponents
+			thread0: thread {
+				Compute_Execution_Time => 0 sec .. 0 sec;
+				Period => 0 sec;
+				Priority => 0;
+			};
+	end UsedPCS1.impl;
+	
+	process UsedPCS1_process
+		features
+			Port1_and_2_request: out event data port filteringNoFlows_data_model::UsedTemplate1_Platform {
+				Output_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+			};
+			Port1_and_2_response: in event data port filteringNoFlows_data_model::UsedTemplate2_Platform {
+				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+			};
+	end UsedPCS1_process;
+	
+	process implementation UsedPCS1_process.impl
+		subcomponents
+			UsedPCS1: thread group UsedPCS1.impl;
+		connections
+			Port1_and_2_request_connection: port UsedPCS1.Port1_and_2_request -> Port1_and_2_request;
+			Port1_and_2_response_connection: port Port1_and_2_response -> UsedPCS1.Port1_and_2_response;
+	end UsedPCS1_process.impl;
+end filteringNoFlows_PCS;
