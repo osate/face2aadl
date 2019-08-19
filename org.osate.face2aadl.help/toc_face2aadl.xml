@@ -21,6 +21,11 @@
 <toc label="FACE Data Model to AADL Translator Documentation">
 	<topic href="html/Translator.html#introduction" label="Introduction"/>
 	<topic href="html/Translator.html#how-to-use" label="How to use"/>
+	<topic href="html/Translator.html#translation-options" label="Translation options">
+		<topic href="html/Translator.html#data-model-levels" label="Data model levels"/>
+		<topic href="html/Translator.html#element-filtering" label="Element filtering"/>
+		<topic href="html/Translator.html#flows" label="Flows"/>
+	</topic>
 	<topic href="html/Translator.html#translation-details" label="Translation details">
 		<topic href="html/Translator.html#data-model-translation" label="Data model translation">
 			<topic href="html/Translator.html#facedatamodelconceptualcomposableelement" label="face.datamodel.conceptual.ComposableElement"/>
