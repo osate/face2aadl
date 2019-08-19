@@ -20,7 +20,7 @@
 		<eclipse.stable.url>http://download.eclipse.org/releases/oxygen/201712201001/</eclipse.stable.url>
 		<xtext.stable.url>http://download.eclipse.org/modeling/tmf/xtext/updates/releases/${xtext.stable.version}/</xtext.stable.url>
 
-		<osate.testing.url>http://www.aadl.info/aadl/osate/testing/update-site/</osate.testing.url>
+		<osate.testing.url>http://osate-build.sei.cmu.edu/download/osate/testing/updates/</osate.testing.url>
 		<eclipse.testing.url>http://download.eclipse.org/releases/2018-12</eclipse.testing.url>
 		<xtext.testing.url>http://download.eclipse.org/modeling/tmf/xtext/updates/releases/${xtext.testing.version}/</xtext.testing.url>
 
