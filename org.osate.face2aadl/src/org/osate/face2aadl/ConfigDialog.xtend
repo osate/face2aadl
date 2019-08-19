@@ -62,15 +62,12 @@ class ConfigDialog extends TitleAreaDialog {
 	
 	new (Shell parentShell, Iterable<UnitOfPortability> uops, Iterable<IntegrationModel> integrationModels) {
 		super(parentShell)
+		helpAvailable = false
 		uopsAndIntegrationModels = (uops + integrationModels).toList
 	}
 	
 	override protected isResizable() {
 		true
-	}
-	
-	override isHelpAvailable() {
-		false
 	}
 	
 	override protected getInitialSize() {
