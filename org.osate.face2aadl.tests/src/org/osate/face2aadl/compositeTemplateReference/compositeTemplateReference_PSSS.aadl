@@ -1,4 +1,4 @@
---Generated from "compositeTemplateReference.face" at 2018-03-29T15:02:31.883
+--Generated from "compositeTemplateReference.face"
 package compositeTemplateReference_PSSS
 public
 	with compositeTemplateReference_data_model;

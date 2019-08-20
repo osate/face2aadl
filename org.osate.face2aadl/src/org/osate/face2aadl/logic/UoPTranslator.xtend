@@ -45,7 +45,6 @@ package class UoPTranslator {
 	val String faceFileName
 	val String packageName
 	val String dataModelPackageName
-	val String timestamp
 	
 	def package Optional<String> translate(ArchitectureModel model, Class<? extends UnitOfPortability> segmentType,
 		boolean createFlows
@@ -66,7 +65,7 @@ package class UoPTranslator {
 			}
 			
 			Optional.of('''
-				--Generated from "«faceFileName»" at «timestamp»
+				--Generated from "«faceFileName»"
 				package «packageName»
 				public
 					«FOR modelUnit : withs.sortBy[it.toUpperCase]»

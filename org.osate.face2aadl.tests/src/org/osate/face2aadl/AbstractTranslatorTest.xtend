@@ -4,7 +4,6 @@ import face.ArchitectureModel
 import face.FacePackage
 import face.integration.IntegrationModel
 import face.uop.UnitOfPortability
-import java.time.LocalDateTime
 import java.util.List
 import org.apache.commons.io.IOUtils
 import org.eclipse.emf.common.util.URI
@@ -26,7 +25,6 @@ abstract class AbstractTranslatorTest {
 	val List<String> uopNames
 	val List<String> integrationModelNames
 	val boolean createFlows
-	val time = LocalDateTime.of(2018, 3, 29, 15, 02, 31, 883_000_000).toString
 	
 	ArchitectureModelTranslator translator
 	
@@ -53,15 +51,13 @@ abstract class AbstractTranslatorTest {
 		resource.load(class.getResourceAsStream(faceFileName), null)
 		val model = resource.contents.head as ArchitectureModel
 		translator = if (uopNames === null) {
-			ArchitectureModelTranslator.create(model, faceFileName, time, platformOnly, createFlows)
+			ArchitectureModelTranslator.create(model, faceFileName, platformOnly, createFlows)
 		} else {
 			val allUoPs = model.getAllContentsOfType(UnitOfPortability)
 			val allIntegrationModels = model.getAllContentsOfType(IntegrationModel)
 			val uops = uopNames.map[name | allUoPs.findFirst[it.name == name]]
 			val integrationModels = integrationModelNames.map[name | allIntegrationModels.findFirst[it.name == name]]
-			ArchitectureModelTranslator.create(model, uops, integrationModels, faceFileName, time, platformOnly,
-				createFlows
-			)
+			ArchitectureModelTranslator.create(model, uops, integrationModels, faceFileName, platformOnly, createFlows)
 		}
 	}
 	

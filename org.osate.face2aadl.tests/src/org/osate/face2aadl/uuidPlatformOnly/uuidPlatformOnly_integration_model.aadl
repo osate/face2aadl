@@ -1,4 +1,4 @@
---Generated from "uuidPlatformOnly.face" at 2018-03-29T15:02:31.883
+--Generated from "uuidPlatformOnly.face"
 package uuidPlatformOnly_integration_model
 public
 	with FACE;

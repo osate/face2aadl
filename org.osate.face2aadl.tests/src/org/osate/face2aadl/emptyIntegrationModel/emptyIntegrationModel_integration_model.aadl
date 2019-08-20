@@ -1,4 +1,4 @@
---Generated from "emptyIntegrationModel.face" at 2018-03-29T15:02:31.883
+--Generated from "emptyIntegrationModel.face"
 package emptyIntegrationModel_integration_model
 public
 	system IntegrationModel1

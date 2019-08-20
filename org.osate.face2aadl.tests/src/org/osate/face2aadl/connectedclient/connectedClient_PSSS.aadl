@@ -1,4 +1,4 @@
---Generated from "connectedClient.face" at 2018-03-29T15:02:31.883
+--Generated from "connectedClient.face"
 package connectedClient_PSSS
 public
 	with connectedClient_data_model;

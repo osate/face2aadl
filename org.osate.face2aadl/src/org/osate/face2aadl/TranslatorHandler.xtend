@@ -24,7 +24,6 @@ import face.integration.IntegrationModel
 import face.uop.UnitOfPortability
 import java.io.ByteArrayInputStream
 import java.lang.reflect.InvocationTargetException
-import java.time.LocalDateTime
 import org.eclipse.core.commands.AbstractHandler
 import org.eclipse.core.commands.ExecutionEvent
 import org.eclipse.core.commands.ExecutionException
@@ -74,14 +73,13 @@ class TranslatorHandler extends AbstractHandler {
 				}
 				subMonitor.workRemaining = 4
 				
-				val timestamp = LocalDateTime.now.toString
 				val translator = if (configDialog.filter) {
 					ArchitectureModelTranslator.create(root, configDialog.selectedUoPs,
-						configDialog.selectedIntegrationModels, faceFile.name, timestamp, configDialog.platformOnly,
+						configDialog.selectedIntegrationModels, faceFile.name, configDialog.platformOnly,
 						configDialog.createFlows
 					)
 				} else {
-					ArchitectureModelTranslator.create(root, faceFile.name, timestamp, configDialog.platformOnly,
+					ArchitectureModelTranslator.create(root, faceFile.name, configDialog.platformOnly,
 						configDialog.createFlows
 					)
 				}

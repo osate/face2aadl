@@ -27,7 +27,6 @@ import static extension org.eclipse.xtext.EcoreUtil2.getAllContentsOfType
 
 class ArchitectureModelTranslator {
 	val String faceFileName
-	val String timestamp
 	
 	val String dataModelPackageName
 	val String psssPackageName
@@ -38,9 +37,8 @@ class ArchitectureModelTranslator {
 	
 	val TranslationInput translationInput
 	
-	private new(String faceFileName, String timestamp, boolean createFlows, TranslationInput translationInput) {
+	private new(String faceFileName, boolean createFlows, TranslationInput translationInput) {
 		this.faceFileName = faceFileName
-		this.timestamp = timestamp
 		
 		val baseFileName = sanitizeID(removeExtension(faceFileName))
 		dataModelPackageName = baseFileName + "_data_model"
@@ -53,15 +51,15 @@ class ArchitectureModelTranslator {
 		this.translationInput = translationInput
 	}
 	
-	def static ArchitectureModelTranslator create(ArchitectureModel model, String faceFileName, String timestamp,
-		boolean platformOnly, boolean createFlows
+	def static ArchitectureModelTranslator create(ArchitectureModel model, String faceFileName, boolean platformOnly,
+		boolean createFlows
 	) {
-		new ArchitectureModelTranslator(faceFileName, timestamp, createFlows, new WholeModel(model, platformOnly))
+		new ArchitectureModelTranslator(faceFileName, createFlows, new WholeModel(model, platformOnly))
 	}
 	
 	def static ArchitectureModelTranslator create(ArchitectureModel model, Iterable<UnitOfPortability> selectedUoPs,
-		Iterable<IntegrationModel> selectedIntegrationModels, String faceFileName, String timestamp,
-		boolean platformOnly, boolean createFlows
+		Iterable<IntegrationModel> selectedIntegrationModels, String faceFileName, boolean platformOnly,
+		boolean createFlows
 	) {
 		val requiredIntegrationModels = selectedIntegrationModels.toSet
 		val orderedIntegrationModels = requiredIntegrationModels.sort(model, IntegrationModel)
@@ -88,11 +86,11 @@ class ArchitectureModelTranslator {
 			)
 		}
 		
-		new ArchitectureModelTranslator(faceFileName, timestamp, createFlows, translationInput)
+		new ArchitectureModelTranslator(faceFileName, createFlows, translationInput)
 	}
 	
 	def TranslatedPackage translateDataModel() {
-		val dataModelTranslator = new DataModelTranslator(faceFileName, dataModelPackageName, timestamp)
+		val dataModelTranslator = new DataModelTranslator(faceFileName, dataModelPackageName)
 		val result = switch translationInput {
 			WholeModel: dataModelTranslator.translate(translationInput.model, translationInput.platformOnly)
 			FilteredAllLevels: dataModelTranslator.translate(translationInput.conceptualViews,
@@ -104,7 +102,7 @@ class ArchitectureModelTranslator {
 	}
 	
 	def TranslatedPackage translatePSSS() {
-		val psssTranslator = new UoPTranslator(faceFileName, psssPackageName, dataModelPackageName, timestamp)
+		val psssTranslator = new UoPTranslator(faceFileName, psssPackageName, dataModelPackageName)
 		val result = switch translationInput {
 			WholeModel: psssTranslator.translate(translationInput.model, PlatformSpecificComponent, createFlows)
 			Filtered: psssTranslator.translate(translationInput.psssUoPs, createFlows)
@@ -113,7 +111,7 @@ class ArchitectureModelTranslator {
 	}
 	
 	def TranslatedPackage translatePCS() {
-		val pcsTranslator = new UoPTranslator(faceFileName, pcsPackageName, dataModelPackageName, timestamp)
+		val pcsTranslator = new UoPTranslator(faceFileName, pcsPackageName, dataModelPackageName)
 		val result = switch translationInput {
 			WholeModel: pcsTranslator.translate(translationInput.model, PortableComponent, createFlows)
 			Filtered: pcsTranslator.translate(translationInput.pcsUoPs, createFlows)
@@ -123,7 +121,7 @@ class ArchitectureModelTranslator {
 	
 	def TranslatedPackage translateIntegrationModel() {
 		val integrationModelTranslator = new IntegrationModelTranslator(faceFileName, integrationModelPackageName,
-			dataModelPackageName, psssPackageName, pcsPackageName, timestamp
+			dataModelPackageName, psssPackageName, pcsPackageName
 		)
 		val result = switch translationInput {
 			WholeModel: integrationModelTranslator.translate(translationInput.model)

@@ -45,7 +45,6 @@ import static extension org.eclipse.xtext.EcoreUtil2.getAllContentsOfType
 package class DataModelTranslator {
 	val String faceFileName
 	val String packageName
-	val String timestamp
 	
 	def package Optional<String> translate(ArchitectureModel model, boolean platformOnly) {
 		val elements = if (platformOnly) {
@@ -77,7 +76,7 @@ package class DataModelTranslator {
 			Optional.empty
 		} else {
 			Optional.of('''
-				--Generated from "«faceFileName»" at «timestamp»
+				--Generated from "«faceFileName»"
 				package «packageName»
 				public
 					with FACE;

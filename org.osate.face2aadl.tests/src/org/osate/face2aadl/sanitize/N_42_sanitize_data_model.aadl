@@ -1,4 +1,4 @@
---Generated from "42.sanitize.face" at 2018-03-29T15:02:31.883
+--Generated from "42.sanitize.face"
 package N_42_sanitize_data_model
 public
 	with FACE;

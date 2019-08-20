@@ -1,4 +1,4 @@
---Generated from "miscDataModelPlatformOnly.face" at 2018-03-29T15:02:31.883
+--Generated from "miscDataModelPlatformOnly.face"
 package miscDataModelPlatformOnly_data_model
 public
 	with FACE;

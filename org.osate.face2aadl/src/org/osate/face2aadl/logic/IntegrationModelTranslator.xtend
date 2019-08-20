@@ -56,7 +56,6 @@ package class IntegrationModelTranslator {
 	val String dataModelPackageName
 	val String psssPackageName
 	val String pcsPackageName
-	val String timestamp
 	
 	def package Optional<String> translate(ArchitectureModel model) {
 		translate(model.im.flatMap[it.eAllOfType(IntegrationModel)])
@@ -84,7 +83,7 @@ package class IntegrationModelTranslator {
 			}
 			
 			Optional.of('''
-				--Generated from "«faceFileName»" at «timestamp»
+				--Generated from "«faceFileName»"
 				package «packageName»
 				public
 					«IF !withs.empty»

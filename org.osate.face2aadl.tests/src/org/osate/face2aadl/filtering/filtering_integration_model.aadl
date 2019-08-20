@@ -1,4 +1,4 @@
---Generated from "filtering.face" at 2018-03-29T15:02:31.883
+--Generated from "filtering.face"
 package filtering_integration_model
 public
 	with FACE;
