@@ -33,12 +33,19 @@ import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.IStatus
 import org.eclipse.core.runtime.Status
 import org.eclipse.core.runtime.SubMonitor
+import org.eclipse.emf.common.ui.dialogs.DiagnosticDialog
+import org.eclipse.emf.common.util.Diagnostic
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.common.util.WrappedException
+import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
+import org.eclipse.emf.ecore.util.Diagnostician
 import org.eclipse.emf.ecore.xmi.PackageNotFoundException
 import org.eclipse.emf.ecore.xmi.XMLResource
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory
+import org.eclipse.emf.edit.provider.IItemLabelProvider
 import org.eclipse.jface.window.Window
+import org.eclipse.ui.IWorkbenchWindow
 import org.eclipse.ui.actions.WorkspaceModifyOperation
 import org.eclipse.ui.statushandlers.StatusManager
 import org.osate.face2aadl.logic.ArchitectureModelTranslator
@@ -51,70 +58,89 @@ import static extension org.eclipse.xtext.EcoreUtil2.eAllOfType
 import static extension org.eclipse.xtext.EcoreUtil2.getAllContentsOfType
 
 class TranslatorHandler extends AbstractHandler {
+	val static ADAPTER_FACTORY = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE)
+	val static DIAGNOSTICIAN = new Diagnostician {
+		override getObjectLabel(EObject eObject) {
+			(ADAPTER_FACTORY.adapt(eObject, IItemLabelProvider) as IItemLabelProvider).getText(eObject)
+		}
+	}
+	
 	override execute(ExecutionEvent event) throws ExecutionException {
 		val faceFile = event.currentStructuredSelection.firstElement as IFile
 		
-		val resourceSet = new ResourceSetImpl
 		val faceURI = URI.createPlatformResourceURI(faceFile.fullPath.toString, true)
-		val faceResource = resourceSet.createResource(faceURI)
+		val faceResource = new ResourceSetImpl().createResource(faceURI)
 		faceResource.load(#{XMLResource.OPTION_DEFER_IDREF_RESOLUTION -> true})
 		val root = faceResource.contents.head as ArchitectureModel
 		
-		val uops = root.um.flatMap[it.getAllContentsOfType(UnitOfPortability)]
-		val integrationModels = root.im.flatMap[it.eAllOfType(IntegrationModel)]
-		val configDialog = new ConfigDialog(event.activeShell, uops, integrationModels)
-		if (configDialog.open == Window.OK) {
-			val WorkspaceModifyOperation operation = [monitor |
-				val subMonitor = SubMonitor.convert(monitor, 5)
-				
-				val modelGenDirectory = faceFile.project.getFolder("model-gen")
-				if (!modelGenDirectory.exists) {
-					modelGenDirectory.create(false, true, subMonitor.split(1))
-				}
-				subMonitor.workRemaining = 4
-				
-				val translator = if (configDialog.filter) {
-					ArchitectureModelTranslator.create(root, configDialog.selectedUoPs,
-						configDialog.selectedIntegrationModels, faceFile.name, configDialog.platformOnly,
-						configDialog.createFlows
-					)
-				} else {
-					ArchitectureModelTranslator.create(root, faceFile.name, configDialog.platformOnly,
-						configDialog.createFlows
-					)
-				}
-				
-				translateModel(translator.translateDataModel, modelGenDirectory, subMonitor.split(1))
-				translateModel(translator.translatePSSS, modelGenDirectory, subMonitor.split(1))
-				translateModel(translator.translatePCS, modelGenDirectory, subMonitor.split(1))
-				translateModel(translator.translateIntegrationModel, modelGenDirectory, subMonitor.split(1))
-			]
-			try {
-				event.activeWorkbenchWindow.run(true, true, operation)
-			} catch (InvocationTargetException e) {
-				val target = e.targetException
-				
-				if (target instanceof WrappedException && target.cause instanceof PackageNotFoundException) {
-					val message = '''"«faceFile.name»" is not a FACE 3.0 Data Model.'''
-					
-					val logStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID, message, target)
-					StatusManager.manager.handle(logStatus, StatusManager.LOG)
-					
-					val dialogStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID, message)
-					StatusManager.manager.handle(dialogStatus, StatusManager.SHOW)
-				} else {
-					val status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Error while translating.", target)
-					StatusManager.manager.handle(status, StatusManager.LOG.bitwiseOr(StatusManager.SHOW))
-				}
-			} catch (InterruptedException e) {
-				//Do nothing.
+		val diagnostic = DIAGNOSTICIAN.validate(root)
+		if (diagnostic.severity == Diagnostic.ERROR) {
+			DiagnosticDialog.open(event.activeShell, "Translate to AADL",
+				'''Unable to translate due to errors discovered in "«faceFile.name»".''', diagnostic, Diagnostic.ERROR
+			)
+		} else {
+			val uops = root.um.flatMap[it.getAllContentsOfType(UnitOfPortability)]
+			val integrationModels = root.im.flatMap[it.eAllOfType(IntegrationModel)]
+			val configDialog = new ConfigDialog(event.activeShell, uops, integrationModels)
+			if (configDialog.open == Window.OK) {
+				translate(root, faceFile, configDialog, event.activeWorkbenchWindow)
 			}
 		}
 		
 		null
 	}
 	
-	def private void translateModel(TranslatedPackage translated, IFolder modelGenDirectory, IProgressMonitor monitor) {
+	def private void translate(ArchitectureModel root, IFile faceFile, ConfigDialog configDialog,
+		IWorkbenchWindow workbenchWindow
+	) {
+		val WorkspaceModifyOperation operation = [monitor |
+			val subMonitor = SubMonitor.convert(monitor, 5)
+			
+			val modelGenDirectory = faceFile.project.getFolder("model-gen")
+			if (!modelGenDirectory.exists) {
+				modelGenDirectory.create(false, true, subMonitor.split(1))
+			}
+			subMonitor.workRemaining = 4
+			
+			val translator = if (configDialog.filter) {
+				ArchitectureModelTranslator.create(root, configDialog.selectedUoPs,
+					configDialog.selectedIntegrationModels, faceFile.name, configDialog.platformOnly,
+					configDialog.createFlows
+				)
+			} else {
+				ArchitectureModelTranslator.create(root, faceFile.name, configDialog.platformOnly,
+					configDialog.createFlows
+				)
+			}
+			
+			writePackage(translator.translateDataModel, modelGenDirectory, subMonitor.split(1))
+			writePackage(translator.translatePSSS, modelGenDirectory, subMonitor.split(1))
+			writePackage(translator.translatePCS, modelGenDirectory, subMonitor.split(1))
+			writePackage(translator.translateIntegrationModel, modelGenDirectory, subMonitor.split(1))
+		]
+		try {
+			workbenchWindow.run(true, true, operation)
+		} catch (InvocationTargetException e) {
+			val target = e.targetException
+			
+			if (target instanceof WrappedException && target.cause instanceof PackageNotFoundException) {
+				val message = '''"«faceFile.name»" is not a FACE 3.0 Data Model.'''
+				
+				val logStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID, message, target)
+				StatusManager.manager.handle(logStatus, StatusManager.LOG)
+				
+				val dialogStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID, message)
+				StatusManager.manager.handle(dialogStatus, StatusManager.SHOW)
+			} else {
+				val status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Error while translating.", target)
+				StatusManager.manager.handle(status, StatusManager.LOG.bitwiseOr(StatusManager.SHOW))
+			}
+		} catch (InterruptedException e) {
+			//Do nothing.
+		}
+	}
+	
+	def private void writePackage(TranslatedPackage translated, IFolder modelGenDirectory, IProgressMonitor monitor) {
 		translated.contents.ifPresent[packageContents |
 			val packageStream = new ByteArrayInputStream(packageContents.bytes)
 			val packageFile = modelGenDirectory.getFile(translated.name + ".aadl")
