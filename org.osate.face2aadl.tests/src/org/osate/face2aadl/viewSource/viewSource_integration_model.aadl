@@ -18,7 +18,7 @@ public
 	
 	abstract ViewSource1
 		features
-			output: out feature viewSource_data_model::Template1_Platform;
+			output: out feature viewSource_data_model::Template1_Platform.impl;
 		properties
 			FACE::Segment => TSS;
 	end ViewSource1;

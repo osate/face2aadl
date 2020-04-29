@@ -6,7 +6,7 @@ public
 	
 	thread group SelectedPSSS1
 		features
-			Port3: in event data port filteringPlatformOnly_data_model::UsedTemplate3_Platform {
+			Port3: in event data port filteringPlatformOnly_data_model::UsedTemplate3_Platform.impl {
 				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
 				Queue_Size => 10;
 			};
@@ -32,7 +32,7 @@ public
 	
 	process SelectedPSSS1_process
 		features
-			Port3: in event data port filteringPlatformOnly_data_model::UsedTemplate3_Platform {
+			Port3: in event data port filteringPlatformOnly_data_model::UsedTemplate3_Platform.impl {
 				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
 				Queue_Size => 10;
 			};

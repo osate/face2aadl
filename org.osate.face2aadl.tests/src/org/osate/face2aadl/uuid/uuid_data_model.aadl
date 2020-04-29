@@ -65,11 +65,17 @@ public
 			FACE::UUID => "_vbjbUGRQEeiJQvh_fVqImg";
 	end Template1_Platform;
 	
+	data implementation Template1_Platform.impl
+	end Template1_Platform.impl;
+	
 	data Template2_Platform extends Query2_Logical
 		properties
 			FACE::Realization_Tier => platform;
 			FACE::UUID => "_yQOiYGRQEeiJQvh_fVqImg";
 	end Template2_Platform;
+	
+	data implementation Template2_Platform.impl
+	end Template2_Platform.impl;
 	
 	data CompositeTemplate1_Platform extends CompositeQuery1_Logical
 		properties
@@ -79,10 +85,10 @@ public
 	
 	data implementation CompositeTemplate1_Platform.impl
 		subcomponents
-			Role1: data Template1_Platform {
+			Role1: data Template1_Platform.impl {
 				FACE::UUID => "_4UmfoGRQEeiJQvh_fVqImg";
 			};
-			Role2: data Template2_Platform {
+			Role2: data Template2_Platform.impl {
 				FACE::UUID => "_66QTQGRQEeiJQvh_fVqImg";
 			};
 	end CompositeTemplate1_Platform.impl;

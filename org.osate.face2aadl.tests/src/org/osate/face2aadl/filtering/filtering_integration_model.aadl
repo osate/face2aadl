@@ -20,14 +20,14 @@ public
 	
 	abstract Source1
 		features
-			output: out feature filtering_data_model::UsedTemplate2_Platform;
+			output: out feature filtering_data_model::UsedTemplate2_Platform.impl;
 		properties
 			FACE::Segment => TSS;
 	end Source1;
 	
 	abstract Sink1
 		features
-			input0: in feature filtering_data_model::UsedTemplate1_Platform;
+			input0: in feature filtering_data_model::UsedTemplate1_Platform.impl;
 		properties
 			FACE::Segment => TSS;
 	end Sink1;

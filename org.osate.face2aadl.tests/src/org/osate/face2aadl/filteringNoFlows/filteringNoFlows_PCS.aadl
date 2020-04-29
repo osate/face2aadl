@@ -6,10 +6,10 @@ public
 	
 	thread group UsedPCS1
 		features
-			Port1_and_2_request: out event data port filteringNoFlows_data_model::UsedTemplate1_Platform {
+			Port1_and_2_request: out event data port filteringNoFlows_data_model::UsedTemplate1_Platform.impl {
 				Output_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
 			};
-			Port1_and_2_response: in event data port filteringNoFlows_data_model::UsedTemplate2_Platform {
+			Port1_and_2_response: in event data port filteringNoFlows_data_model::UsedTemplate2_Platform.impl {
 				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
 			};
 		properties
@@ -28,10 +28,10 @@ public
 	
 	process UsedPCS1_process
 		features
-			Port1_and_2_request: out event data port filteringNoFlows_data_model::UsedTemplate1_Platform {
+			Port1_and_2_request: out event data port filteringNoFlows_data_model::UsedTemplate1_Platform.impl {
 				Output_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
 			};
-			Port1_and_2_response: in event data port filteringNoFlows_data_model::UsedTemplate2_Platform {
+			Port1_and_2_response: in event data port filteringNoFlows_data_model::UsedTemplate2_Platform.impl {
 				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
 			};
 	end UsedPCS1_process;

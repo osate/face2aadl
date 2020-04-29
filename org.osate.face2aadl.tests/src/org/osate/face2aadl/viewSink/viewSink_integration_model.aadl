@@ -18,7 +18,7 @@ public
 	
 	abstract ViewSink1
 		features
-			input0: in feature viewSink_data_model::Template1_Platform;
+			input0: in feature viewSink_data_model::Template1_Platform.impl;
 		properties
 			FACE::Segment => TSS;
 	end ViewSink1;

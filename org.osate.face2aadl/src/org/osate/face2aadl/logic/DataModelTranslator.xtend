@@ -249,6 +249,9 @@ package class DataModelTranslator {
 							FACE::Realization_Tier => platform;
 							«translateUUID(view)»
 					end «name»;
+					
+					data implementation «name».impl
+					end «name».impl;
 				'''
 			}
 			CompositeTemplate: {
@@ -303,6 +306,6 @@ package class DataModelTranslator {
 	}
 	
 	def private String translateViewReference(View view) {
-		'''«translateName(view)»«IF view instanceof CompositeTemplate».impl«ENDIF»'''
+		'''«translateName(view)».impl'''
 	}
 }

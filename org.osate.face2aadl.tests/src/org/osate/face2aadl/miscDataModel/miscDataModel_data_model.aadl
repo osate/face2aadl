@@ -33,4 +33,7 @@ public
 		properties
 			FACE::Realization_Tier => platform;
 	end Template1_Platform;
+	
+	data implementation Template1_Platform.impl
+	end Template1_Platform.impl;
 end miscDataModel_data_model;
