@@ -1,0 +1,85 @@
+/*******************************************************************************
+ * FACE Data Model to AADL Translator
+ * 
+ * Copyright 2018 Carnegie Mellon University. All Rights Reserved.
+ * 
+ * NO WARRANTY. THIS CARNEGIE MELLON UNIVERSITY AND SOFTWARE ENGINEERING INSTITUTE MATERIAL IS FURNISHED ON
+ * AN "AS-IS" BASIS. CARNEGIE MELLON UNIVERSITY MAKES NO WARRANTIES OF ANY KIND, EITHER EXPRESSED OR IMPLIED,
+ * AS TO ANY MATTER INCLUDING, BUT NOT LIMITED TO, WARRANTY OF FITNESS FOR PURPOSE OR MERCHANTABILITY,
+ * EXCLUSIVITY, OR RESULTS OBTAINED FROM USE OF THE MATERIAL. CARNEGIE MELLON UNIVERSITY DOES NOT MAKE ANY
+ * WARRANTY OF ANY KIND WITH RESPECT TO FREEDOM FROM PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.
+ * 
+ * Released under an Eclipse Public License - v1.0-style license, please see license.txt or contact
+ * permission@sei.cmu.edu for full terms.
+ * 
+ * [DISTRIBUTION STATEMENT A] This material has been approved for public release and unlimited distribution.
+ * Please see Copyright notice for non-US Government use and distribution.
+ * 
+ * DM18-0762
+ *******************************************************************************/
+module org.osate.simpleidl.GenerateSimpleIDL
+
+import org.eclipse.xtext.xtext.generator.*
+import org.eclipse.xtext.xtext.generator.model.project.*
+
+var rootPath = ".."
+
+Workflow {
+	
+	component = XtextGenerator {
+		configuration = {
+			project = StandardProjectConfig {
+				baseName = "org.osate.simpleidl"
+				rootPath = rootPath
+				eclipsePlugin = {
+					enabled = true
+				}
+				createEclipseMetaData = true
+			}
+			code = {
+				encoding = "UTF-8"
+				lineDelimiter = "\n"
+				fileHeader =
+'/*******************************************************************************
+ * FACE Data Model to AADL Translator
+ * 
+ * Copyright 2018 Carnegie Mellon University. All Rights Reserved.
+ * 
+ * NO WARRANTY. THIS CARNEGIE MELLON UNIVERSITY AND SOFTWARE ENGINEERING INSTITUTE MATERIAL IS FURNISHED ON
+ * AN "AS-IS" BASIS. CARNEGIE MELLON UNIVERSITY MAKES NO WARRANTIES OF ANY KIND, EITHER EXPRESSED OR IMPLIED,
+ * AS TO ANY MATTER INCLUDING, BUT NOT LIMITED TO, WARRANTY OF FITNESS FOR PURPOSE OR MERCHANTABILITY,
+ * EXCLUSIVITY, OR RESULTS OBTAINED FROM USE OF THE MATERIAL. CARNEGIE MELLON UNIVERSITY DOES NOT MAKE ANY
+ * WARRANTY OF ANY KIND WITH RESPECT TO FREEDOM FROM PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.
+ * 
+ * Released under an Eclipse Public License - v1.0-style license, please see license.txt or contact
+ * permission@sei.cmu.edu for full terms.
+ * 
+ * [DISTRIBUTION STATEMENT A] This material has been approved for public release and unlimited distribution.
+ * Please see Copyright notice for non-US Government use and distribution.
+ * 
+ * DM18-0762
+ *******************************************************************************/'
+				preferXtendStubs = false
+			}
+		}
+		language = StandardLanguage {
+			name = "org.osate.simpleidl.SimpleIDL"
+			fileExtensions = "idl"
+
+			serializer = {
+				generateStub = false
+			}
+			validator = {
+				// composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
+				// Generates checks for @Deprecated grammar annotations, an IssueProvider and a corresponding PropertyPage
+				generateDeprecationValidation = true
+			}
+			generator = {
+				generateXtendStub = true
+			}
+			junitSupport = {
+				junitVersion = "5"
+			}
+		}
+	}
+}

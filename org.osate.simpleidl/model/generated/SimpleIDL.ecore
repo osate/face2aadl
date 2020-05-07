@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="simpleIDL" nsURI="http://www.osate.org/simpleidl/SimpleIDL"
+    nsPrefix="simpleIDL">
+  <eClassifiers xsi:type="ecore:EClass" name="Specification">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="definitions" upperBound="-1"
+        eType="#//Definition" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Definition"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Member">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//SimpleTypeSpec"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="names" unique="false" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Case">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="labels" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//SimpleTypeSpec"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AnyDeclarator">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="arraySizes" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Type"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SimpleTypeSpec" eSuperTypes="#//Type"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Module" eSuperTypes="#//Definition">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="definitions" upperBound="-1"
+        eType="#//Definition" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Struct" eSuperTypes="#//Definition">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="members" upperBound="-1"
+        eType="#//Member" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StructForward" eSuperTypes="#//Definition">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Union" eSuperTypes="#//Definition">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cases" upperBound="-1"
+        eType="#//Case" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Enum" eSuperTypes="#//Definition">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="literals" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Typedef" eSuperTypes="#//Definition">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//Type" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="names" upperBound="-1"
+        eType="#//AnyDeclarator" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BoundedSequence" eSuperTypes="#//Type">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//SimpleTypeSpec"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="size" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UnboundedSequence" eSuperTypes="#//Type">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//SimpleTypeSpec"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BoundedString" eSuperTypes="#//Type">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="size" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UnboundedString" eSuperTypes="#//Type"/>
+  <eClassifiers xsi:type="ecore:EClass" name="BoundedWideString" eSuperTypes="#//Type">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="size" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UnboundedWideString" eSuperTypes="#//Type"/>
+  <eClassifiers xsi:type="ecore:EClass" name="FixedPtType" eSuperTypes="#//Type">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="totalDigits" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fractionalDigits" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SignedShortInt" eSuperTypes="#//SimpleTypeSpec"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SignedLongInt" eSuperTypes="#//SimpleTypeSpec"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SignedLongLongInt" eSuperTypes="#//SimpleTypeSpec"/>
+  <eClassifiers xsi:type="ecore:EClass" name="UnsignedShortInt" eSuperTypes="#//SimpleTypeSpec"/>
+  <eClassifiers xsi:type="ecore:EClass" name="UnsignedLongInt" eSuperTypes="#//SimpleTypeSpec"/>
+  <eClassifiers xsi:type="ecore:EClass" name="UnsignedLongLongInt" eSuperTypes="#//SimpleTypeSpec"/>
+  <eClassifiers xsi:type="ecore:EClass" name="FloatType" eSuperTypes="#//SimpleTypeSpec"/>
+  <eClassifiers xsi:type="ecore:EClass" name="DoubleType" eSuperTypes="#//SimpleTypeSpec"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LongDoubleType" eSuperTypes="#//SimpleTypeSpec"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CharType" eSuperTypes="#//SimpleTypeSpec"/>
+  <eClassifiers xsi:type="ecore:EClass" name="WideCharType" eSuperTypes="#//SimpleTypeSpec"/>
+  <eClassifiers xsi:type="ecore:EClass" name="BooleanType" eSuperTypes="#//SimpleTypeSpec"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OctetType" eSuperTypes="#//SimpleTypeSpec"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ReferencedType" eSuperTypes="#//SimpleTypeSpec">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+</ecore:EPackage>

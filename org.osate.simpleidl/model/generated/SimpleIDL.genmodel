@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="******************************************************************************&#xA;FACE Data Model to AADL Translator&#xA;&#xA;Copyright 2018 Carnegie Mellon University. All Rights Reserved.&#xA;&#xA;NO WARRANTY. THIS CARNEGIE MELLON UNIVERSITY AND SOFTWARE ENGINEERING INSTITUTE MATERIAL IS FURNISHED ON&#xA;AN &quot;AS-IS&quot; BASIS. CARNEGIE MELLON UNIVERSITY MAKES NO WARRANTIES OF ANY KIND, EITHER EXPRESSED OR IMPLIED,&#xA;AS TO ANY MATTER INCLUDING, BUT NOT LIMITED TO, WARRANTY OF FITNESS FOR PURPOSE OR MERCHANTABILITY,&#xA;EXCLUSIVITY, OR RESULTS OBTAINED FROM USE OF THE MATERIAL. CARNEGIE MELLON UNIVERSITY DOES NOT MAKE ANY&#xA;WARRANTY OF ANY KIND WITH RESPECT TO FREEDOM FROM PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.&#xA;&#xA;Released under an Eclipse Public License - v1.0-style license, please see license.txt or contact&#xA;permission@sei.cmu.edu for full terms.&#xA;&#xA;[DISTRIBUTION STATEMENT A] This material has been approved for public release and unlimited distribution.&#xA;Please see Copyright notice for non-US Government use and distribution.&#xA;&#xA;DM18-0762&#xA; ******************************************************************************"
+    modelDirectory="/org.osate.simpleidl/src-gen" modelPluginID="org.osate.simpleidl"
+    forceOverwrite="true" modelName="SimpleIDL" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    complianceLevel="8.0" copyrightFields="false" runtimeVersion="2.20">
+  <genPackages prefix="SimpleIDL" basePackage="org.osate.simpleidl" disposableProviderFactory="true"
+      fileExtensions="idl" ecorePackage="SimpleIDL.ecore#/">
+    <genClasses ecoreClass="SimpleIDL.ecore#//Specification">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//Specification/definitions"/>
+    </genClasses>
+    <genClasses ecoreClass="SimpleIDL.ecore#//Definition"/>
+    <genClasses ecoreClass="SimpleIDL.ecore#//Member">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//Member/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//Member/names"/>
+    </genClasses>
+    <genClasses ecoreClass="SimpleIDL.ecore#//Case">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//Case/labels"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//Case/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//Case/name"/>
+    </genClasses>
+    <genClasses ecoreClass="SimpleIDL.ecore#//AnyDeclarator">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//AnyDeclarator/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//AnyDeclarator/arraySizes"/>
+    </genClasses>
+    <genClasses ecoreClass="SimpleIDL.ecore#//Type"/>
+    <genClasses ecoreClass="SimpleIDL.ecore#//SimpleTypeSpec"/>
+    <genClasses ecoreClass="SimpleIDL.ecore#//Module">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//Module/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//Module/definitions"/>
+    </genClasses>
+    <genClasses ecoreClass="SimpleIDL.ecore#//Struct">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//Struct/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//Struct/members"/>
+    </genClasses>
+    <genClasses ecoreClass="SimpleIDL.ecore#//StructForward">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//StructForward/name"/>
+    </genClasses>
+    <genClasses ecoreClass="SimpleIDL.ecore#//Union">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//Union/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//Union/cases"/>
+    </genClasses>
+    <genClasses ecoreClass="SimpleIDL.ecore#//Enum">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//Enum/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//Enum/literals"/>
+    </genClasses>
+    <genClasses ecoreClass="SimpleIDL.ecore#//Typedef">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//Typedef/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//Typedef/names"/>
+    </genClasses>
+    <genClasses ecoreClass="SimpleIDL.ecore#//BoundedSequence">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//BoundedSequence/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//BoundedSequence/size"/>
+    </genClasses>
+    <genClasses ecoreClass="SimpleIDL.ecore#//UnboundedSequence">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//UnboundedSequence/type"/>
+    </genClasses>
+    <genClasses ecoreClass="SimpleIDL.ecore#//BoundedString">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//BoundedString/size"/>
+    </genClasses>
+    <genClasses ecoreClass="SimpleIDL.ecore#//UnboundedString"/>
+    <genClasses ecoreClass="SimpleIDL.ecore#//BoundedWideString">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//BoundedWideString/size"/>
+    </genClasses>
+    <genClasses ecoreClass="SimpleIDL.ecore#//UnboundedWideString"/>
+    <genClasses ecoreClass="SimpleIDL.ecore#//FixedPtType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//FixedPtType/totalDigits"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//FixedPtType/fractionalDigits"/>
+    </genClasses>
+    <genClasses ecoreClass="SimpleIDL.ecore#//SignedShortInt"/>
+    <genClasses ecoreClass="SimpleIDL.ecore#//SignedLongInt"/>
+    <genClasses ecoreClass="SimpleIDL.ecore#//SignedLongLongInt"/>
+    <genClasses ecoreClass="SimpleIDL.ecore#//UnsignedShortInt"/>
+    <genClasses ecoreClass="SimpleIDL.ecore#//UnsignedLongInt"/>
+    <genClasses ecoreClass="SimpleIDL.ecore#//UnsignedLongLongInt"/>
+    <genClasses ecoreClass="SimpleIDL.ecore#//FloatType"/>
+    <genClasses ecoreClass="SimpleIDL.ecore#//DoubleType"/>
+    <genClasses ecoreClass="SimpleIDL.ecore#//LongDoubleType"/>
+    <genClasses ecoreClass="SimpleIDL.ecore#//CharType"/>
+    <genClasses ecoreClass="SimpleIDL.ecore#//WideCharType"/>
+    <genClasses ecoreClass="SimpleIDL.ecore#//BooleanType"/>
+    <genClasses ecoreClass="SimpleIDL.ecore#//OctetType"/>
+    <genClasses ecoreClass="SimpleIDL.ecore#//ReferencedType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//ReferencedType/type"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
