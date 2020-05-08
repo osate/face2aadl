@@ -79,8 +79,7 @@ Specification:
 Definition:
 	{Module} 'module' name=ID '{' definitions+=Definition+ '}' ';' |
 	{Struct} 'struct' name=ID '{' members+=Member+ '}' ';' |
-	//TODO reference struct
-	{StructForward} 'struct' name=ID ';' |
+	{StructForward} 'struct' struct=[Struct] ';' |
 	//The syntax for union follows the FACE standard, not the IDL standard.
 	{Union} 'union' name=ID '{' 'switch' '(' 'unsigned' 'short' ')' '{' cases+=Case+ '}' ';' '}' ';' |
 	{Enum} 'enum' name=ID '{' literals+=ID (',' literals+=ID)* '}' ';' |
@@ -196,8 +195,7 @@ SimpleTypeSpec:
 	{WideCharType} 'wchar' |
 	{BooleanType} 'boolean' |
 	{OctetType} 'octet' |
-	//TODO make cross reference
-	{ReferencedType} type=ScopedName
+	{ReferencedType} type=[Definition|ScopedName]
 ;
 
 /*

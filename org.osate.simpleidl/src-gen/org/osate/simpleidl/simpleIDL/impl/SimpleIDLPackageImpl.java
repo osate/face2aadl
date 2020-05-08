@@ -620,9 +620,9 @@ public class SimpleIDLPackageImpl extends EPackageImpl implements SimpleIDLPacka
    * @generated
    */
   @Override
-  public EAttribute getStructForward_Name()
+  public EReference getStructForward_Struct()
   {
-    return (EAttribute)structForwardEClass.getEStructuralFeatures().get(0);
+    return (EReference)structForwardEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1038,9 +1038,9 @@ public class SimpleIDLPackageImpl extends EPackageImpl implements SimpleIDLPacka
    * @generated
    */
   @Override
-  public EAttribute getReferencedType_Type()
+  public EReference getReferencedType_Type()
   {
-    return (EAttribute)referencedTypeEClass.getEStructuralFeatures().get(0);
+    return (EReference)referencedTypeEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1105,7 +1105,7 @@ public class SimpleIDLPackageImpl extends EPackageImpl implements SimpleIDLPacka
     createEReference(structEClass, STRUCT__MEMBERS);
 
     structForwardEClass = createEClass(STRUCT_FORWARD);
-    createEAttribute(structForwardEClass, STRUCT_FORWARD__NAME);
+    createEReference(structForwardEClass, STRUCT_FORWARD__STRUCT);
 
     unionEClass = createEClass(UNION);
     createEAttribute(unionEClass, UNION__NAME);
@@ -1167,7 +1167,7 @@ public class SimpleIDLPackageImpl extends EPackageImpl implements SimpleIDLPacka
     octetTypeEClass = createEClass(OCTET_TYPE);
 
     referencedTypeEClass = createEClass(REFERENCED_TYPE);
-    createEAttribute(referencedTypeEClass, REFERENCED_TYPE__TYPE);
+    createEReference(referencedTypeEClass, REFERENCED_TYPE__TYPE);
   }
 
   /**
@@ -1260,7 +1260,7 @@ public class SimpleIDLPackageImpl extends EPackageImpl implements SimpleIDLPacka
     initEReference(getStruct_Members(), this.getMember(), null, "members", null, 0, -1, Struct.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(structForwardEClass, StructForward.class, "StructForward", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getStructForward_Name(), ecorePackage.getEString(), "name", null, 0, 1, StructForward.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getStructForward_Struct(), this.getStruct(), null, "struct", null, 0, 1, StructForward.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(unionEClass, Union.class, "Union", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getUnion_Name(), ecorePackage.getEString(), "name", null, 0, 1, Union.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1322,7 +1322,7 @@ public class SimpleIDLPackageImpl extends EPackageImpl implements SimpleIDLPacka
     initEClass(octetTypeEClass, OctetType.class, "OctetType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(referencedTypeEClass, ReferencedType.class, "ReferencedType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getReferencedType_Type(), ecorePackage.getEString(), "type", null, 0, 1, ReferencedType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getReferencedType_Type(), this.getDefinition(), null, "type", null, 0, 1, ReferencedType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

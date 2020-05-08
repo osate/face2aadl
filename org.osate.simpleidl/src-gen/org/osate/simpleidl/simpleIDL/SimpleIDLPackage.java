@@ -365,13 +365,13 @@ public interface SimpleIDLPackage extends EPackage
   int STRUCT_FORWARD = 9;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * The feature id for the '<em><b>Struct</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STRUCT_FORWARD__NAME = DEFINITION_FEATURE_COUNT + 0;
+  int STRUCT_FORWARD__STRUCT = DEFINITION_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Struct Forward</em>' class.
@@ -947,7 +947,7 @@ public interface SimpleIDLPackage extends EPackage
   int REFERENCED_TYPE = 33;
 
   /**
-   * The feature id for the '<em><b>Type</b></em>' attribute.
+   * The feature id for the '<em><b>Type</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -1198,15 +1198,15 @@ public interface SimpleIDLPackage extends EPackage
   EClass getStructForward();
 
   /**
-   * Returns the meta object for the attribute '{@link org.osate.simpleidl.simpleIDL.StructForward#getName <em>Name</em>}'.
+   * Returns the meta object for the reference '{@link org.osate.simpleidl.simpleIDL.StructForward#getStruct <em>Struct</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see org.osate.simpleidl.simpleIDL.StructForward#getName()
+   * @return the meta object for the reference '<em>Struct</em>'.
+   * @see org.osate.simpleidl.simpleIDL.StructForward#getStruct()
    * @see #getStructForward()
    * @generated
    */
-  EAttribute getStructForward_Name();
+  EReference getStructForward_Struct();
 
   /**
    * Returns the meta object for class '{@link org.osate.simpleidl.simpleIDL.Union <em>Union</em>}'.
@@ -1592,15 +1592,15 @@ public interface SimpleIDLPackage extends EPackage
   EClass getReferencedType();
 
   /**
-   * Returns the meta object for the attribute '{@link org.osate.simpleidl.simpleIDL.ReferencedType#getType <em>Type</em>}'.
+   * Returns the meta object for the reference '{@link org.osate.simpleidl.simpleIDL.ReferencedType#getType <em>Type</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Type</em>'.
+   * @return the meta object for the reference '<em>Type</em>'.
    * @see org.osate.simpleidl.simpleIDL.ReferencedType#getType()
    * @see #getReferencedType()
    * @generated
    */
-  EAttribute getReferencedType_Type();
+  EReference getReferencedType_Type();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -1822,12 +1822,12 @@ public interface SimpleIDLPackage extends EPackage
     EClass STRUCT_FORWARD = eINSTANCE.getStructForward();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Struct</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute STRUCT_FORWARD__NAME = eINSTANCE.getStructForward_Name();
+    EReference STRUCT_FORWARD__STRUCT = eINSTANCE.getStructForward_Struct();
 
     /**
      * The meta object literal for the '{@link org.osate.simpleidl.simpleIDL.impl.UnionImpl <em>Union</em>}' class.
@@ -2174,12 +2174,12 @@ public interface SimpleIDLPackage extends EPackage
     EClass REFERENCED_TYPE = eINSTANCE.getReferencedType();
 
     /**
-     * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Type</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute REFERENCED_TYPE__TYPE = eINSTANCE.getReferencedType_Type();
+    EReference REFERENCED_TYPE__TYPE = eINSTANCE.getReferencedType_Type();
 
   }
 

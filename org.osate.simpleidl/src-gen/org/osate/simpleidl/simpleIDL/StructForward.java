@@ -31,7 +31,7 @@ package org.osate.simpleidl.simpleIDL;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.osate.simpleidl.simpleIDL.StructForward#getName <em>Name</em>}</li>
+ *   <li>{@link org.osate.simpleidl.simpleIDL.StructForward#getStruct <em>Struct</em>}</li>
  * </ul>
  *
  * @see org.osate.simpleidl.simpleIDL.SimpleIDLPackage#getStructForward()
@@ -41,25 +41,25 @@ package org.osate.simpleidl.simpleIDL;
 public interface StructForward extends Definition
 {
   /**
-   * Returns the value of the '<em><b>Name</b></em>' attribute.
+   * Returns the value of the '<em><b>Struct</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Name</em>' attribute.
-   * @see #setName(String)
-   * @see org.osate.simpleidl.simpleIDL.SimpleIDLPackage#getStructForward_Name()
+   * @return the value of the '<em>Struct</em>' reference.
+   * @see #setStruct(Struct)
+   * @see org.osate.simpleidl.simpleIDL.SimpleIDLPackage#getStructForward_Struct()
    * @model
    * @generated
    */
-  String getName();
+  Struct getStruct();
 
   /**
-   * Sets the value of the '{@link org.osate.simpleidl.simpleIDL.StructForward#getName <em>Name</em>}' attribute.
+   * Sets the value of the '{@link org.osate.simpleidl.simpleIDL.StructForward#getStruct <em>Struct</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Name</em>' attribute.
-   * @see #getName()
+   * @param value the new value of the '<em>Struct</em>' reference.
+   * @see #getStruct()
    * @generated
    */
-  void setName(String value);
+  void setStruct(Struct value);
 
 } // StructForward

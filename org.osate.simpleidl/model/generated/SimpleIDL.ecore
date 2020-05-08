@@ -38,7 +38,7 @@
         eType="#//Member" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="StructForward" eSuperTypes="#//Definition">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="struct" eType="#//Struct"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Union" eSuperTypes="#//Definition">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -90,6 +90,6 @@
   <eClassifiers xsi:type="ecore:EClass" name="BooleanType" eSuperTypes="#//SimpleTypeSpec"/>
   <eClassifiers xsi:type="ecore:EClass" name="OctetType" eSuperTypes="#//SimpleTypeSpec"/>
   <eClassifiers xsi:type="ecore:EClass" name="ReferencedType" eSuperTypes="#//SimpleTypeSpec">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//Definition"/>
   </eClassifiers>
 </ecore:EPackage>

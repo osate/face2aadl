@@ -284,7 +284,7 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDefinition"
-    // InternalSimpleIDL.g:123:1: ruleDefinition returns [EObject current=null] : ( ( () otherlv_1= 'module' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= '{' ( (lv_definitions_4_0= ruleDefinition ) )+ otherlv_5= '}' otherlv_6= ';' ) | ( () otherlv_8= 'struct' ( (lv_name_9_0= RULE_ID ) ) otherlv_10= '{' ( (lv_members_11_0= ruleMember ) )+ otherlv_12= '}' otherlv_13= ';' ) | ( () otherlv_15= 'struct' ( (lv_name_16_0= RULE_ID ) ) otherlv_17= ';' ) | ( () otherlv_19= 'union' ( (lv_name_20_0= RULE_ID ) ) otherlv_21= '{' otherlv_22= 'switch' otherlv_23= '(' otherlv_24= 'unsigned' otherlv_25= 'short' otherlv_26= ')' otherlv_27= '{' ( (lv_cases_28_0= ruleCase ) )+ otherlv_29= '}' otherlv_30= ';' otherlv_31= '}' otherlv_32= ';' ) | ( () otherlv_34= 'enum' ( (lv_name_35_0= RULE_ID ) ) otherlv_36= '{' ( (lv_literals_37_0= RULE_ID ) ) (otherlv_38= ',' ( (lv_literals_39_0= RULE_ID ) ) )* otherlv_40= '}' otherlv_41= ';' ) | ( () otherlv_43= 'typedef' ( (lv_type_44_0= ruleType ) ) ( (lv_names_45_0= ruleAnyDeclarator ) ) (otherlv_46= ',' ( (lv_names_47_0= ruleAnyDeclarator ) ) )* otherlv_48= ';' ) ) ;
+    // InternalSimpleIDL.g:123:1: ruleDefinition returns [EObject current=null] : ( ( () otherlv_1= 'module' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= '{' ( (lv_definitions_4_0= ruleDefinition ) )+ otherlv_5= '}' otherlv_6= ';' ) | ( () otherlv_8= 'struct' ( (lv_name_9_0= RULE_ID ) ) otherlv_10= '{' ( (lv_members_11_0= ruleMember ) )+ otherlv_12= '}' otherlv_13= ';' ) | ( () otherlv_15= 'struct' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' ) | ( () otherlv_19= 'union' ( (lv_name_20_0= RULE_ID ) ) otherlv_21= '{' otherlv_22= 'switch' otherlv_23= '(' otherlv_24= 'unsigned' otherlv_25= 'short' otherlv_26= ')' otherlv_27= '{' ( (lv_cases_28_0= ruleCase ) )+ otherlv_29= '}' otherlv_30= ';' otherlv_31= '}' otherlv_32= ';' ) | ( () otherlv_34= 'enum' ( (lv_name_35_0= RULE_ID ) ) otherlv_36= '{' ( (lv_literals_37_0= RULE_ID ) ) (otherlv_38= ',' ( (lv_literals_39_0= RULE_ID ) ) )* otherlv_40= '}' otherlv_41= ';' ) | ( () otherlv_43= 'typedef' ( (lv_type_44_0= ruleType ) ) ( (lv_names_45_0= ruleAnyDeclarator ) ) (otherlv_46= ',' ( (lv_names_47_0= ruleAnyDeclarator ) ) )* otherlv_48= ';' ) ) ;
     public final EObject ruleDefinition() throws RecognitionException {
         EObject current = null;
 
@@ -299,7 +299,7 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
         Token otherlv_12=null;
         Token otherlv_13=null;
         Token otherlv_15=null;
-        Token lv_name_16_0=null;
+        Token otherlv_16=null;
         Token otherlv_17=null;
         Token otherlv_19=null;
         Token lv_name_20_0=null;
@@ -342,10 +342,10 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSimpleIDL.g:129:2: ( ( ( () otherlv_1= 'module' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= '{' ( (lv_definitions_4_0= ruleDefinition ) )+ otherlv_5= '}' otherlv_6= ';' ) | ( () otherlv_8= 'struct' ( (lv_name_9_0= RULE_ID ) ) otherlv_10= '{' ( (lv_members_11_0= ruleMember ) )+ otherlv_12= '}' otherlv_13= ';' ) | ( () otherlv_15= 'struct' ( (lv_name_16_0= RULE_ID ) ) otherlv_17= ';' ) | ( () otherlv_19= 'union' ( (lv_name_20_0= RULE_ID ) ) otherlv_21= '{' otherlv_22= 'switch' otherlv_23= '(' otherlv_24= 'unsigned' otherlv_25= 'short' otherlv_26= ')' otherlv_27= '{' ( (lv_cases_28_0= ruleCase ) )+ otherlv_29= '}' otherlv_30= ';' otherlv_31= '}' otherlv_32= ';' ) | ( () otherlv_34= 'enum' ( (lv_name_35_0= RULE_ID ) ) otherlv_36= '{' ( (lv_literals_37_0= RULE_ID ) ) (otherlv_38= ',' ( (lv_literals_39_0= RULE_ID ) ) )* otherlv_40= '}' otherlv_41= ';' ) | ( () otherlv_43= 'typedef' ( (lv_type_44_0= ruleType ) ) ( (lv_names_45_0= ruleAnyDeclarator ) ) (otherlv_46= ',' ( (lv_names_47_0= ruleAnyDeclarator ) ) )* otherlv_48= ';' ) ) )
-            // InternalSimpleIDL.g:130:2: ( ( () otherlv_1= 'module' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= '{' ( (lv_definitions_4_0= ruleDefinition ) )+ otherlv_5= '}' otherlv_6= ';' ) | ( () otherlv_8= 'struct' ( (lv_name_9_0= RULE_ID ) ) otherlv_10= '{' ( (lv_members_11_0= ruleMember ) )+ otherlv_12= '}' otherlv_13= ';' ) | ( () otherlv_15= 'struct' ( (lv_name_16_0= RULE_ID ) ) otherlv_17= ';' ) | ( () otherlv_19= 'union' ( (lv_name_20_0= RULE_ID ) ) otherlv_21= '{' otherlv_22= 'switch' otherlv_23= '(' otherlv_24= 'unsigned' otherlv_25= 'short' otherlv_26= ')' otherlv_27= '{' ( (lv_cases_28_0= ruleCase ) )+ otherlv_29= '}' otherlv_30= ';' otherlv_31= '}' otherlv_32= ';' ) | ( () otherlv_34= 'enum' ( (lv_name_35_0= RULE_ID ) ) otherlv_36= '{' ( (lv_literals_37_0= RULE_ID ) ) (otherlv_38= ',' ( (lv_literals_39_0= RULE_ID ) ) )* otherlv_40= '}' otherlv_41= ';' ) | ( () otherlv_43= 'typedef' ( (lv_type_44_0= ruleType ) ) ( (lv_names_45_0= ruleAnyDeclarator ) ) (otherlv_46= ',' ( (lv_names_47_0= ruleAnyDeclarator ) ) )* otherlv_48= ';' ) )
+            // InternalSimpleIDL.g:129:2: ( ( ( () otherlv_1= 'module' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= '{' ( (lv_definitions_4_0= ruleDefinition ) )+ otherlv_5= '}' otherlv_6= ';' ) | ( () otherlv_8= 'struct' ( (lv_name_9_0= RULE_ID ) ) otherlv_10= '{' ( (lv_members_11_0= ruleMember ) )+ otherlv_12= '}' otherlv_13= ';' ) | ( () otherlv_15= 'struct' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' ) | ( () otherlv_19= 'union' ( (lv_name_20_0= RULE_ID ) ) otherlv_21= '{' otherlv_22= 'switch' otherlv_23= '(' otherlv_24= 'unsigned' otherlv_25= 'short' otherlv_26= ')' otherlv_27= '{' ( (lv_cases_28_0= ruleCase ) )+ otherlv_29= '}' otherlv_30= ';' otherlv_31= '}' otherlv_32= ';' ) | ( () otherlv_34= 'enum' ( (lv_name_35_0= RULE_ID ) ) otherlv_36= '{' ( (lv_literals_37_0= RULE_ID ) ) (otherlv_38= ',' ( (lv_literals_39_0= RULE_ID ) ) )* otherlv_40= '}' otherlv_41= ';' ) | ( () otherlv_43= 'typedef' ( (lv_type_44_0= ruleType ) ) ( (lv_names_45_0= ruleAnyDeclarator ) ) (otherlv_46= ',' ( (lv_names_47_0= ruleAnyDeclarator ) ) )* otherlv_48= ';' ) ) )
+            // InternalSimpleIDL.g:130:2: ( ( () otherlv_1= 'module' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= '{' ( (lv_definitions_4_0= ruleDefinition ) )+ otherlv_5= '}' otherlv_6= ';' ) | ( () otherlv_8= 'struct' ( (lv_name_9_0= RULE_ID ) ) otherlv_10= '{' ( (lv_members_11_0= ruleMember ) )+ otherlv_12= '}' otherlv_13= ';' ) | ( () otherlv_15= 'struct' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' ) | ( () otherlv_19= 'union' ( (lv_name_20_0= RULE_ID ) ) otherlv_21= '{' otherlv_22= 'switch' otherlv_23= '(' otherlv_24= 'unsigned' otherlv_25= 'short' otherlv_26= ')' otherlv_27= '{' ( (lv_cases_28_0= ruleCase ) )+ otherlv_29= '}' otherlv_30= ';' otherlv_31= '}' otherlv_32= ';' ) | ( () otherlv_34= 'enum' ( (lv_name_35_0= RULE_ID ) ) otherlv_36= '{' ( (lv_literals_37_0= RULE_ID ) ) (otherlv_38= ',' ( (lv_literals_39_0= RULE_ID ) ) )* otherlv_40= '}' otherlv_41= ';' ) | ( () otherlv_43= 'typedef' ( (lv_type_44_0= ruleType ) ) ( (lv_names_45_0= ruleAnyDeclarator ) ) (otherlv_46= ',' ( (lv_names_47_0= ruleAnyDeclarator ) ) )* otherlv_48= ';' ) )
             {
-            // InternalSimpleIDL.g:130:2: ( ( () otherlv_1= 'module' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= '{' ( (lv_definitions_4_0= ruleDefinition ) )+ otherlv_5= '}' otherlv_6= ';' ) | ( () otherlv_8= 'struct' ( (lv_name_9_0= RULE_ID ) ) otherlv_10= '{' ( (lv_members_11_0= ruleMember ) )+ otherlv_12= '}' otherlv_13= ';' ) | ( () otherlv_15= 'struct' ( (lv_name_16_0= RULE_ID ) ) otherlv_17= ';' ) | ( () otherlv_19= 'union' ( (lv_name_20_0= RULE_ID ) ) otherlv_21= '{' otherlv_22= 'switch' otherlv_23= '(' otherlv_24= 'unsigned' otherlv_25= 'short' otherlv_26= ')' otherlv_27= '{' ( (lv_cases_28_0= ruleCase ) )+ otherlv_29= '}' otherlv_30= ';' otherlv_31= '}' otherlv_32= ';' ) | ( () otherlv_34= 'enum' ( (lv_name_35_0= RULE_ID ) ) otherlv_36= '{' ( (lv_literals_37_0= RULE_ID ) ) (otherlv_38= ',' ( (lv_literals_39_0= RULE_ID ) ) )* otherlv_40= '}' otherlv_41= ';' ) | ( () otherlv_43= 'typedef' ( (lv_type_44_0= ruleType ) ) ( (lv_names_45_0= ruleAnyDeclarator ) ) (otherlv_46= ',' ( (lv_names_47_0= ruleAnyDeclarator ) ) )* otherlv_48= ';' ) )
+            // InternalSimpleIDL.g:130:2: ( ( () otherlv_1= 'module' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= '{' ( (lv_definitions_4_0= ruleDefinition ) )+ otherlv_5= '}' otherlv_6= ';' ) | ( () otherlv_8= 'struct' ( (lv_name_9_0= RULE_ID ) ) otherlv_10= '{' ( (lv_members_11_0= ruleMember ) )+ otherlv_12= '}' otherlv_13= ';' ) | ( () otherlv_15= 'struct' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' ) | ( () otherlv_19= 'union' ( (lv_name_20_0= RULE_ID ) ) otherlv_21= '{' otherlv_22= 'switch' otherlv_23= '(' otherlv_24= 'unsigned' otherlv_25= 'short' otherlv_26= ')' otherlv_27= '{' ( (lv_cases_28_0= ruleCase ) )+ otherlv_29= '}' otherlv_30= ';' otherlv_31= '}' otherlv_32= ';' ) | ( () otherlv_34= 'enum' ( (lv_name_35_0= RULE_ID ) ) otherlv_36= '{' ( (lv_literals_37_0= RULE_ID ) ) (otherlv_38= ',' ( (lv_literals_39_0= RULE_ID ) ) )* otherlv_40= '}' otherlv_41= ';' ) | ( () otherlv_43= 'typedef' ( (lv_type_44_0= ruleType ) ) ( (lv_names_45_0= ruleAnyDeclarator ) ) (otherlv_46= ',' ( (lv_names_47_0= ruleAnyDeclarator ) ) )* otherlv_48= ';' ) )
             int alt7=6;
             switch ( input.LA(1) ) {
             case 12:
@@ -643,10 +643,10 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalSimpleIDL.g:257:3: ( () otherlv_15= 'struct' ( (lv_name_16_0= RULE_ID ) ) otherlv_17= ';' )
+                    // InternalSimpleIDL.g:257:3: ( () otherlv_15= 'struct' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' )
                     {
-                    // InternalSimpleIDL.g:257:3: ( () otherlv_15= 'struct' ( (lv_name_16_0= RULE_ID ) ) otherlv_17= ';' )
-                    // InternalSimpleIDL.g:258:4: () otherlv_15= 'struct' ( (lv_name_16_0= RULE_ID ) ) otherlv_17= ';'
+                    // InternalSimpleIDL.g:257:3: ( () otherlv_15= 'struct' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';' )
+                    // InternalSimpleIDL.g:258:4: () otherlv_15= 'struct' ( (otherlv_16= RULE_ID ) ) otherlv_17= ';'
                     {
                     // InternalSimpleIDL.g:258:4: ()
                     // InternalSimpleIDL.g:259:5: 
@@ -663,25 +663,20 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
                     				newLeafNode(otherlv_15, grammarAccess.getDefinitionAccess().getStructKeyword_2_1());
                     			
-                    // InternalSimpleIDL.g:269:4: ( (lv_name_16_0= RULE_ID ) )
-                    // InternalSimpleIDL.g:270:5: (lv_name_16_0= RULE_ID )
+                    // InternalSimpleIDL.g:269:4: ( (otherlv_16= RULE_ID ) )
+                    // InternalSimpleIDL.g:270:5: (otherlv_16= RULE_ID )
                     {
-                    // InternalSimpleIDL.g:270:5: (lv_name_16_0= RULE_ID )
-                    // InternalSimpleIDL.g:271:6: lv_name_16_0= RULE_ID
+                    // InternalSimpleIDL.g:270:5: (otherlv_16= RULE_ID )
+                    // InternalSimpleIDL.g:271:6: otherlv_16= RULE_ID
                     {
-                    lv_name_16_0=(Token)match(input,RULE_ID,FOLLOW_7); 
-
-                    						newLeafNode(lv_name_16_0, grammarAccess.getDefinitionAccess().getNameIDTerminalRuleCall_2_2_0());
-                    					
 
                     						if (current==null) {
                     							current = createModelElement(grammarAccess.getDefinitionRule());
                     						}
-                    						setWithLastConsumed(
-                    							current,
-                    							"name",
-                    							lv_name_16_0,
-                    							"org.osate.simpleidl.SimpleIDL.ID");
+                    					
+                    otherlv_16=(Token)match(input,RULE_ID,FOLLOW_7); 
+
+                    						newLeafNode(otherlv_16, grammarAccess.getDefinitionAccess().getStructStructCrossReference_2_2_0());
                     					
 
                     }
@@ -700,13 +695,13 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalSimpleIDL.g:293:3: ( () otherlv_19= 'union' ( (lv_name_20_0= RULE_ID ) ) otherlv_21= '{' otherlv_22= 'switch' otherlv_23= '(' otherlv_24= 'unsigned' otherlv_25= 'short' otherlv_26= ')' otherlv_27= '{' ( (lv_cases_28_0= ruleCase ) )+ otherlv_29= '}' otherlv_30= ';' otherlv_31= '}' otherlv_32= ';' )
+                    // InternalSimpleIDL.g:288:3: ( () otherlv_19= 'union' ( (lv_name_20_0= RULE_ID ) ) otherlv_21= '{' otherlv_22= 'switch' otherlv_23= '(' otherlv_24= 'unsigned' otherlv_25= 'short' otherlv_26= ')' otherlv_27= '{' ( (lv_cases_28_0= ruleCase ) )+ otherlv_29= '}' otherlv_30= ';' otherlv_31= '}' otherlv_32= ';' )
                     {
-                    // InternalSimpleIDL.g:293:3: ( () otherlv_19= 'union' ( (lv_name_20_0= RULE_ID ) ) otherlv_21= '{' otherlv_22= 'switch' otherlv_23= '(' otherlv_24= 'unsigned' otherlv_25= 'short' otherlv_26= ')' otherlv_27= '{' ( (lv_cases_28_0= ruleCase ) )+ otherlv_29= '}' otherlv_30= ';' otherlv_31= '}' otherlv_32= ';' )
-                    // InternalSimpleIDL.g:294:4: () otherlv_19= 'union' ( (lv_name_20_0= RULE_ID ) ) otherlv_21= '{' otherlv_22= 'switch' otherlv_23= '(' otherlv_24= 'unsigned' otherlv_25= 'short' otherlv_26= ')' otherlv_27= '{' ( (lv_cases_28_0= ruleCase ) )+ otherlv_29= '}' otherlv_30= ';' otherlv_31= '}' otherlv_32= ';'
+                    // InternalSimpleIDL.g:288:3: ( () otherlv_19= 'union' ( (lv_name_20_0= RULE_ID ) ) otherlv_21= '{' otherlv_22= 'switch' otherlv_23= '(' otherlv_24= 'unsigned' otherlv_25= 'short' otherlv_26= ')' otherlv_27= '{' ( (lv_cases_28_0= ruleCase ) )+ otherlv_29= '}' otherlv_30= ';' otherlv_31= '}' otherlv_32= ';' )
+                    // InternalSimpleIDL.g:289:4: () otherlv_19= 'union' ( (lv_name_20_0= RULE_ID ) ) otherlv_21= '{' otherlv_22= 'switch' otherlv_23= '(' otherlv_24= 'unsigned' otherlv_25= 'short' otherlv_26= ')' otherlv_27= '{' ( (lv_cases_28_0= ruleCase ) )+ otherlv_29= '}' otherlv_30= ';' otherlv_31= '}' otherlv_32= ';'
                     {
-                    // InternalSimpleIDL.g:294:4: ()
-                    // InternalSimpleIDL.g:295:5: 
+                    // InternalSimpleIDL.g:289:4: ()
+                    // InternalSimpleIDL.g:290:5: 
                     {
 
                     					current = forceCreateModelElement(
@@ -720,11 +715,11 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
                     				newLeafNode(otherlv_19, grammarAccess.getDefinitionAccess().getUnionKeyword_3_1());
                     			
-                    // InternalSimpleIDL.g:305:4: ( (lv_name_20_0= RULE_ID ) )
-                    // InternalSimpleIDL.g:306:5: (lv_name_20_0= RULE_ID )
+                    // InternalSimpleIDL.g:300:4: ( (lv_name_20_0= RULE_ID ) )
+                    // InternalSimpleIDL.g:301:5: (lv_name_20_0= RULE_ID )
                     {
-                    // InternalSimpleIDL.g:306:5: (lv_name_20_0= RULE_ID )
-                    // InternalSimpleIDL.g:307:6: lv_name_20_0= RULE_ID
+                    // InternalSimpleIDL.g:301:5: (lv_name_20_0= RULE_ID )
+                    // InternalSimpleIDL.g:302:6: lv_name_20_0= RULE_ID
                     {
                     lv_name_20_0=(Token)match(input,RULE_ID,FOLLOW_5); 
 
@@ -774,7 +769,7 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
                     				newLeafNode(otherlv_27, grammarAccess.getDefinitionAccess().getLeftCurlyBracketKeyword_3_9());
                     			
-                    // InternalSimpleIDL.g:351:4: ( (lv_cases_28_0= ruleCase ) )+
+                    // InternalSimpleIDL.g:346:4: ( (lv_cases_28_0= ruleCase ) )+
                     int cnt4=0;
                     loop4:
                     do {
@@ -788,10 +783,10 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
                         switch (alt4) {
                     	case 1 :
-                    	    // InternalSimpleIDL.g:352:5: (lv_cases_28_0= ruleCase )
+                    	    // InternalSimpleIDL.g:347:5: (lv_cases_28_0= ruleCase )
                     	    {
-                    	    // InternalSimpleIDL.g:352:5: (lv_cases_28_0= ruleCase )
-                    	    // InternalSimpleIDL.g:353:6: lv_cases_28_0= ruleCase
+                    	    // InternalSimpleIDL.g:347:5: (lv_cases_28_0= ruleCase )
+                    	    // InternalSimpleIDL.g:348:6: lv_cases_28_0= ruleCase
                     	    {
 
                     	    						newCompositeNode(grammarAccess.getDefinitionAccess().getCasesCaseParserRuleCall_3_10_0());
@@ -851,13 +846,13 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalSimpleIDL.g:388:3: ( () otherlv_34= 'enum' ( (lv_name_35_0= RULE_ID ) ) otherlv_36= '{' ( (lv_literals_37_0= RULE_ID ) ) (otherlv_38= ',' ( (lv_literals_39_0= RULE_ID ) ) )* otherlv_40= '}' otherlv_41= ';' )
+                    // InternalSimpleIDL.g:383:3: ( () otherlv_34= 'enum' ( (lv_name_35_0= RULE_ID ) ) otherlv_36= '{' ( (lv_literals_37_0= RULE_ID ) ) (otherlv_38= ',' ( (lv_literals_39_0= RULE_ID ) ) )* otherlv_40= '}' otherlv_41= ';' )
                     {
-                    // InternalSimpleIDL.g:388:3: ( () otherlv_34= 'enum' ( (lv_name_35_0= RULE_ID ) ) otherlv_36= '{' ( (lv_literals_37_0= RULE_ID ) ) (otherlv_38= ',' ( (lv_literals_39_0= RULE_ID ) ) )* otherlv_40= '}' otherlv_41= ';' )
-                    // InternalSimpleIDL.g:389:4: () otherlv_34= 'enum' ( (lv_name_35_0= RULE_ID ) ) otherlv_36= '{' ( (lv_literals_37_0= RULE_ID ) ) (otherlv_38= ',' ( (lv_literals_39_0= RULE_ID ) ) )* otherlv_40= '}' otherlv_41= ';'
+                    // InternalSimpleIDL.g:383:3: ( () otherlv_34= 'enum' ( (lv_name_35_0= RULE_ID ) ) otherlv_36= '{' ( (lv_literals_37_0= RULE_ID ) ) (otherlv_38= ',' ( (lv_literals_39_0= RULE_ID ) ) )* otherlv_40= '}' otherlv_41= ';' )
+                    // InternalSimpleIDL.g:384:4: () otherlv_34= 'enum' ( (lv_name_35_0= RULE_ID ) ) otherlv_36= '{' ( (lv_literals_37_0= RULE_ID ) ) (otherlv_38= ',' ( (lv_literals_39_0= RULE_ID ) ) )* otherlv_40= '}' otherlv_41= ';'
                     {
-                    // InternalSimpleIDL.g:389:4: ()
-                    // InternalSimpleIDL.g:390:5: 
+                    // InternalSimpleIDL.g:384:4: ()
+                    // InternalSimpleIDL.g:385:5: 
                     {
 
                     					current = forceCreateModelElement(
@@ -871,11 +866,11 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
                     				newLeafNode(otherlv_34, grammarAccess.getDefinitionAccess().getEnumKeyword_4_1());
                     			
-                    // InternalSimpleIDL.g:400:4: ( (lv_name_35_0= RULE_ID ) )
-                    // InternalSimpleIDL.g:401:5: (lv_name_35_0= RULE_ID )
+                    // InternalSimpleIDL.g:395:4: ( (lv_name_35_0= RULE_ID ) )
+                    // InternalSimpleIDL.g:396:5: (lv_name_35_0= RULE_ID )
                     {
-                    // InternalSimpleIDL.g:401:5: (lv_name_35_0= RULE_ID )
-                    // InternalSimpleIDL.g:402:6: lv_name_35_0= RULE_ID
+                    // InternalSimpleIDL.g:396:5: (lv_name_35_0= RULE_ID )
+                    // InternalSimpleIDL.g:397:6: lv_name_35_0= RULE_ID
                     {
                     lv_name_35_0=(Token)match(input,RULE_ID,FOLLOW_5); 
 
@@ -901,11 +896,11 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
                     				newLeafNode(otherlv_36, grammarAccess.getDefinitionAccess().getLeftCurlyBracketKeyword_4_3());
                     			
-                    // InternalSimpleIDL.g:422:4: ( (lv_literals_37_0= RULE_ID ) )
-                    // InternalSimpleIDL.g:423:5: (lv_literals_37_0= RULE_ID )
+                    // InternalSimpleIDL.g:417:4: ( (lv_literals_37_0= RULE_ID ) )
+                    // InternalSimpleIDL.g:418:5: (lv_literals_37_0= RULE_ID )
                     {
-                    // InternalSimpleIDL.g:423:5: (lv_literals_37_0= RULE_ID )
-                    // InternalSimpleIDL.g:424:6: lv_literals_37_0= RULE_ID
+                    // InternalSimpleIDL.g:418:5: (lv_literals_37_0= RULE_ID )
+                    // InternalSimpleIDL.g:419:6: lv_literals_37_0= RULE_ID
                     {
                     lv_literals_37_0=(Token)match(input,RULE_ID,FOLLOW_18); 
 
@@ -927,7 +922,7 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSimpleIDL.g:440:4: (otherlv_38= ',' ( (lv_literals_39_0= RULE_ID ) ) )*
+                    // InternalSimpleIDL.g:435:4: (otherlv_38= ',' ( (lv_literals_39_0= RULE_ID ) ) )*
                     loop5:
                     do {
                         int alt5=2;
@@ -940,17 +935,17 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
                         switch (alt5) {
                     	case 1 :
-                    	    // InternalSimpleIDL.g:441:5: otherlv_38= ',' ( (lv_literals_39_0= RULE_ID ) )
+                    	    // InternalSimpleIDL.g:436:5: otherlv_38= ',' ( (lv_literals_39_0= RULE_ID ) )
                     	    {
                     	    otherlv_38=(Token)match(input,24,FOLLOW_4); 
 
                     	    					newLeafNode(otherlv_38, grammarAccess.getDefinitionAccess().getCommaKeyword_4_5_0());
                     	    				
-                    	    // InternalSimpleIDL.g:445:5: ( (lv_literals_39_0= RULE_ID ) )
-                    	    // InternalSimpleIDL.g:446:6: (lv_literals_39_0= RULE_ID )
+                    	    // InternalSimpleIDL.g:440:5: ( (lv_literals_39_0= RULE_ID ) )
+                    	    // InternalSimpleIDL.g:441:6: (lv_literals_39_0= RULE_ID )
                     	    {
-                    	    // InternalSimpleIDL.g:446:6: (lv_literals_39_0= RULE_ID )
-                    	    // InternalSimpleIDL.g:447:7: lv_literals_39_0= RULE_ID
+                    	    // InternalSimpleIDL.g:441:6: (lv_literals_39_0= RULE_ID )
+                    	    // InternalSimpleIDL.g:442:7: lv_literals_39_0= RULE_ID
                     	    {
                     	    lv_literals_39_0=(Token)match(input,RULE_ID,FOLLOW_18); 
 
@@ -996,13 +991,13 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalSimpleIDL.g:474:3: ( () otherlv_43= 'typedef' ( (lv_type_44_0= ruleType ) ) ( (lv_names_45_0= ruleAnyDeclarator ) ) (otherlv_46= ',' ( (lv_names_47_0= ruleAnyDeclarator ) ) )* otherlv_48= ';' )
+                    // InternalSimpleIDL.g:469:3: ( () otherlv_43= 'typedef' ( (lv_type_44_0= ruleType ) ) ( (lv_names_45_0= ruleAnyDeclarator ) ) (otherlv_46= ',' ( (lv_names_47_0= ruleAnyDeclarator ) ) )* otherlv_48= ';' )
                     {
-                    // InternalSimpleIDL.g:474:3: ( () otherlv_43= 'typedef' ( (lv_type_44_0= ruleType ) ) ( (lv_names_45_0= ruleAnyDeclarator ) ) (otherlv_46= ',' ( (lv_names_47_0= ruleAnyDeclarator ) ) )* otherlv_48= ';' )
-                    // InternalSimpleIDL.g:475:4: () otherlv_43= 'typedef' ( (lv_type_44_0= ruleType ) ) ( (lv_names_45_0= ruleAnyDeclarator ) ) (otherlv_46= ',' ( (lv_names_47_0= ruleAnyDeclarator ) ) )* otherlv_48= ';'
+                    // InternalSimpleIDL.g:469:3: ( () otherlv_43= 'typedef' ( (lv_type_44_0= ruleType ) ) ( (lv_names_45_0= ruleAnyDeclarator ) ) (otherlv_46= ',' ( (lv_names_47_0= ruleAnyDeclarator ) ) )* otherlv_48= ';' )
+                    // InternalSimpleIDL.g:470:4: () otherlv_43= 'typedef' ( (lv_type_44_0= ruleType ) ) ( (lv_names_45_0= ruleAnyDeclarator ) ) (otherlv_46= ',' ( (lv_names_47_0= ruleAnyDeclarator ) ) )* otherlv_48= ';'
                     {
-                    // InternalSimpleIDL.g:475:4: ()
-                    // InternalSimpleIDL.g:476:5: 
+                    // InternalSimpleIDL.g:470:4: ()
+                    // InternalSimpleIDL.g:471:5: 
                     {
 
                     					current = forceCreateModelElement(
@@ -1016,11 +1011,11 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
                     				newLeafNode(otherlv_43, grammarAccess.getDefinitionAccess().getTypedefKeyword_5_1());
                     			
-                    // InternalSimpleIDL.g:486:4: ( (lv_type_44_0= ruleType ) )
-                    // InternalSimpleIDL.g:487:5: (lv_type_44_0= ruleType )
+                    // InternalSimpleIDL.g:481:4: ( (lv_type_44_0= ruleType ) )
+                    // InternalSimpleIDL.g:482:5: (lv_type_44_0= ruleType )
                     {
-                    // InternalSimpleIDL.g:487:5: (lv_type_44_0= ruleType )
-                    // InternalSimpleIDL.g:488:6: lv_type_44_0= ruleType
+                    // InternalSimpleIDL.g:482:5: (lv_type_44_0= ruleType )
+                    // InternalSimpleIDL.g:483:6: lv_type_44_0= ruleType
                     {
 
                     						newCompositeNode(grammarAccess.getDefinitionAccess().getTypeTypeParserRuleCall_5_2_0());
@@ -1047,11 +1042,11 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSimpleIDL.g:505:4: ( (lv_names_45_0= ruleAnyDeclarator ) )
-                    // InternalSimpleIDL.g:506:5: (lv_names_45_0= ruleAnyDeclarator )
+                    // InternalSimpleIDL.g:500:4: ( (lv_names_45_0= ruleAnyDeclarator ) )
+                    // InternalSimpleIDL.g:501:5: (lv_names_45_0= ruleAnyDeclarator )
                     {
-                    // InternalSimpleIDL.g:506:5: (lv_names_45_0= ruleAnyDeclarator )
-                    // InternalSimpleIDL.g:507:6: lv_names_45_0= ruleAnyDeclarator
+                    // InternalSimpleIDL.g:501:5: (lv_names_45_0= ruleAnyDeclarator )
+                    // InternalSimpleIDL.g:502:6: lv_names_45_0= ruleAnyDeclarator
                     {
 
                     						newCompositeNode(grammarAccess.getDefinitionAccess().getNamesAnyDeclaratorParserRuleCall_5_3_0());
@@ -1078,7 +1073,7 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSimpleIDL.g:524:4: (otherlv_46= ',' ( (lv_names_47_0= ruleAnyDeclarator ) ) )*
+                    // InternalSimpleIDL.g:519:4: (otherlv_46= ',' ( (lv_names_47_0= ruleAnyDeclarator ) ) )*
                     loop6:
                     do {
                         int alt6=2;
@@ -1091,17 +1086,17 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
                         switch (alt6) {
                     	case 1 :
-                    	    // InternalSimpleIDL.g:525:5: otherlv_46= ',' ( (lv_names_47_0= ruleAnyDeclarator ) )
+                    	    // InternalSimpleIDL.g:520:5: otherlv_46= ',' ( (lv_names_47_0= ruleAnyDeclarator ) )
                     	    {
                     	    otherlv_46=(Token)match(input,24,FOLLOW_4); 
 
                     	    					newLeafNode(otherlv_46, grammarAccess.getDefinitionAccess().getCommaKeyword_5_4_0());
                     	    				
-                    	    // InternalSimpleIDL.g:529:5: ( (lv_names_47_0= ruleAnyDeclarator ) )
-                    	    // InternalSimpleIDL.g:530:6: (lv_names_47_0= ruleAnyDeclarator )
+                    	    // InternalSimpleIDL.g:524:5: ( (lv_names_47_0= ruleAnyDeclarator ) )
+                    	    // InternalSimpleIDL.g:525:6: (lv_names_47_0= ruleAnyDeclarator )
                     	    {
-                    	    // InternalSimpleIDL.g:530:6: (lv_names_47_0= ruleAnyDeclarator )
-                    	    // InternalSimpleIDL.g:531:7: lv_names_47_0= ruleAnyDeclarator
+                    	    // InternalSimpleIDL.g:525:6: (lv_names_47_0= ruleAnyDeclarator )
+                    	    // InternalSimpleIDL.g:526:7: lv_names_47_0= ruleAnyDeclarator
                     	    {
 
                     	    							newCompositeNode(grammarAccess.getDefinitionAccess().getNamesAnyDeclaratorParserRuleCall_5_4_1_0());
@@ -1170,7 +1165,7 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleMember"
-    // InternalSimpleIDL.g:558:1: entryRuleMember returns [EObject current=null] : iv_ruleMember= ruleMember EOF ;
+    // InternalSimpleIDL.g:553:1: entryRuleMember returns [EObject current=null] : iv_ruleMember= ruleMember EOF ;
     public final EObject entryRuleMember() throws RecognitionException {
         EObject current = null;
 
@@ -1178,8 +1173,8 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalSimpleIDL.g:558:47: (iv_ruleMember= ruleMember EOF )
-            // InternalSimpleIDL.g:559:2: iv_ruleMember= ruleMember EOF
+            // InternalSimpleIDL.g:553:47: (iv_ruleMember= ruleMember EOF )
+            // InternalSimpleIDL.g:554:2: iv_ruleMember= ruleMember EOF
             {
              newCompositeNode(grammarAccess.getMemberRule()); 
             pushFollow(FOLLOW_1);
@@ -1206,7 +1201,7 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleMember"
-    // InternalSimpleIDL.g:565:1: ruleMember returns [EObject current=null] : ( ( (lv_type_0_0= ruleSimpleTypeSpec ) ) ( (lv_names_1_0= RULE_ID ) ) (otherlv_2= ',' ( (lv_names_3_0= RULE_ID ) ) )* otherlv_4= ';' ) ;
+    // InternalSimpleIDL.g:560:1: ruleMember returns [EObject current=null] : ( ( (lv_type_0_0= ruleSimpleTypeSpec ) ) ( (lv_names_1_0= RULE_ID ) ) (otherlv_2= ',' ( (lv_names_3_0= RULE_ID ) ) )* otherlv_4= ';' ) ;
     public final EObject ruleMember() throws RecognitionException {
         EObject current = null;
 
@@ -1221,17 +1216,17 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSimpleIDL.g:571:2: ( ( ( (lv_type_0_0= ruleSimpleTypeSpec ) ) ( (lv_names_1_0= RULE_ID ) ) (otherlv_2= ',' ( (lv_names_3_0= RULE_ID ) ) )* otherlv_4= ';' ) )
-            // InternalSimpleIDL.g:572:2: ( ( (lv_type_0_0= ruleSimpleTypeSpec ) ) ( (lv_names_1_0= RULE_ID ) ) (otherlv_2= ',' ( (lv_names_3_0= RULE_ID ) ) )* otherlv_4= ';' )
+            // InternalSimpleIDL.g:566:2: ( ( ( (lv_type_0_0= ruleSimpleTypeSpec ) ) ( (lv_names_1_0= RULE_ID ) ) (otherlv_2= ',' ( (lv_names_3_0= RULE_ID ) ) )* otherlv_4= ';' ) )
+            // InternalSimpleIDL.g:567:2: ( ( (lv_type_0_0= ruleSimpleTypeSpec ) ) ( (lv_names_1_0= RULE_ID ) ) (otherlv_2= ',' ( (lv_names_3_0= RULE_ID ) ) )* otherlv_4= ';' )
             {
-            // InternalSimpleIDL.g:572:2: ( ( (lv_type_0_0= ruleSimpleTypeSpec ) ) ( (lv_names_1_0= RULE_ID ) ) (otherlv_2= ',' ( (lv_names_3_0= RULE_ID ) ) )* otherlv_4= ';' )
-            // InternalSimpleIDL.g:573:3: ( (lv_type_0_0= ruleSimpleTypeSpec ) ) ( (lv_names_1_0= RULE_ID ) ) (otherlv_2= ',' ( (lv_names_3_0= RULE_ID ) ) )* otherlv_4= ';'
+            // InternalSimpleIDL.g:567:2: ( ( (lv_type_0_0= ruleSimpleTypeSpec ) ) ( (lv_names_1_0= RULE_ID ) ) (otherlv_2= ',' ( (lv_names_3_0= RULE_ID ) ) )* otherlv_4= ';' )
+            // InternalSimpleIDL.g:568:3: ( (lv_type_0_0= ruleSimpleTypeSpec ) ) ( (lv_names_1_0= RULE_ID ) ) (otherlv_2= ',' ( (lv_names_3_0= RULE_ID ) ) )* otherlv_4= ';'
             {
-            // InternalSimpleIDL.g:573:3: ( (lv_type_0_0= ruleSimpleTypeSpec ) )
-            // InternalSimpleIDL.g:574:4: (lv_type_0_0= ruleSimpleTypeSpec )
+            // InternalSimpleIDL.g:568:3: ( (lv_type_0_0= ruleSimpleTypeSpec ) )
+            // InternalSimpleIDL.g:569:4: (lv_type_0_0= ruleSimpleTypeSpec )
             {
-            // InternalSimpleIDL.g:574:4: (lv_type_0_0= ruleSimpleTypeSpec )
-            // InternalSimpleIDL.g:575:5: lv_type_0_0= ruleSimpleTypeSpec
+            // InternalSimpleIDL.g:569:4: (lv_type_0_0= ruleSimpleTypeSpec )
+            // InternalSimpleIDL.g:570:5: lv_type_0_0= ruleSimpleTypeSpec
             {
 
             					newCompositeNode(grammarAccess.getMemberAccess().getTypeSimpleTypeSpecParserRuleCall_0_0());
@@ -1258,11 +1253,11 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSimpleIDL.g:592:3: ( (lv_names_1_0= RULE_ID ) )
-            // InternalSimpleIDL.g:593:4: (lv_names_1_0= RULE_ID )
+            // InternalSimpleIDL.g:587:3: ( (lv_names_1_0= RULE_ID ) )
+            // InternalSimpleIDL.g:588:4: (lv_names_1_0= RULE_ID )
             {
-            // InternalSimpleIDL.g:593:4: (lv_names_1_0= RULE_ID )
-            // InternalSimpleIDL.g:594:5: lv_names_1_0= RULE_ID
+            // InternalSimpleIDL.g:588:4: (lv_names_1_0= RULE_ID )
+            // InternalSimpleIDL.g:589:5: lv_names_1_0= RULE_ID
             {
             lv_names_1_0=(Token)match(input,RULE_ID,FOLLOW_20); 
 
@@ -1284,7 +1279,7 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSimpleIDL.g:610:3: (otherlv_2= ',' ( (lv_names_3_0= RULE_ID ) ) )*
+            // InternalSimpleIDL.g:605:3: (otherlv_2= ',' ( (lv_names_3_0= RULE_ID ) ) )*
             loop8:
             do {
                 int alt8=2;
@@ -1297,17 +1292,17 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
                 switch (alt8) {
             	case 1 :
-            	    // InternalSimpleIDL.g:611:4: otherlv_2= ',' ( (lv_names_3_0= RULE_ID ) )
+            	    // InternalSimpleIDL.g:606:4: otherlv_2= ',' ( (lv_names_3_0= RULE_ID ) )
             	    {
             	    otherlv_2=(Token)match(input,24,FOLLOW_4); 
 
             	    				newLeafNode(otherlv_2, grammarAccess.getMemberAccess().getCommaKeyword_2_0());
             	    			
-            	    // InternalSimpleIDL.g:615:4: ( (lv_names_3_0= RULE_ID ) )
-            	    // InternalSimpleIDL.g:616:5: (lv_names_3_0= RULE_ID )
+            	    // InternalSimpleIDL.g:610:4: ( (lv_names_3_0= RULE_ID ) )
+            	    // InternalSimpleIDL.g:611:5: (lv_names_3_0= RULE_ID )
             	    {
-            	    // InternalSimpleIDL.g:616:5: (lv_names_3_0= RULE_ID )
-            	    // InternalSimpleIDL.g:617:6: lv_names_3_0= RULE_ID
+            	    // InternalSimpleIDL.g:611:5: (lv_names_3_0= RULE_ID )
+            	    // InternalSimpleIDL.g:612:6: lv_names_3_0= RULE_ID
             	    {
             	    lv_names_3_0=(Token)match(input,RULE_ID,FOLLOW_20); 
 
@@ -1365,7 +1360,7 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleCase"
-    // InternalSimpleIDL.g:642:1: entryRuleCase returns [EObject current=null] : iv_ruleCase= ruleCase EOF ;
+    // InternalSimpleIDL.g:637:1: entryRuleCase returns [EObject current=null] : iv_ruleCase= ruleCase EOF ;
     public final EObject entryRuleCase() throws RecognitionException {
         EObject current = null;
 
@@ -1373,8 +1368,8 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalSimpleIDL.g:642:45: (iv_ruleCase= ruleCase EOF )
-            // InternalSimpleIDL.g:643:2: iv_ruleCase= ruleCase EOF
+            // InternalSimpleIDL.g:637:45: (iv_ruleCase= ruleCase EOF )
+            // InternalSimpleIDL.g:638:2: iv_ruleCase= ruleCase EOF
             {
              newCompositeNode(grammarAccess.getCaseRule()); 
             pushFollow(FOLLOW_1);
@@ -1401,7 +1396,7 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCase"
-    // InternalSimpleIDL.g:649:1: ruleCase returns [EObject current=null] : ( (otherlv_0= 'case' ( (lv_labels_1_0= RULE_INT ) ) otherlv_2= ':' )+ ( (lv_type_3_0= ruleSimpleTypeSpec ) ) ( (lv_name_4_0= RULE_ID ) ) otherlv_5= ';' ) ;
+    // InternalSimpleIDL.g:644:1: ruleCase returns [EObject current=null] : ( (otherlv_0= 'case' ( (lv_labels_1_0= RULE_INT ) ) otherlv_2= ':' )+ ( (lv_type_3_0= ruleSimpleTypeSpec ) ) ( (lv_name_4_0= RULE_ID ) ) otherlv_5= ';' ) ;
     public final EObject ruleCase() throws RecognitionException {
         EObject current = null;
 
@@ -1417,13 +1412,13 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSimpleIDL.g:655:2: ( ( (otherlv_0= 'case' ( (lv_labels_1_0= RULE_INT ) ) otherlv_2= ':' )+ ( (lv_type_3_0= ruleSimpleTypeSpec ) ) ( (lv_name_4_0= RULE_ID ) ) otherlv_5= ';' ) )
-            // InternalSimpleIDL.g:656:2: ( (otherlv_0= 'case' ( (lv_labels_1_0= RULE_INT ) ) otherlv_2= ':' )+ ( (lv_type_3_0= ruleSimpleTypeSpec ) ) ( (lv_name_4_0= RULE_ID ) ) otherlv_5= ';' )
+            // InternalSimpleIDL.g:650:2: ( ( (otherlv_0= 'case' ( (lv_labels_1_0= RULE_INT ) ) otherlv_2= ':' )+ ( (lv_type_3_0= ruleSimpleTypeSpec ) ) ( (lv_name_4_0= RULE_ID ) ) otherlv_5= ';' ) )
+            // InternalSimpleIDL.g:651:2: ( (otherlv_0= 'case' ( (lv_labels_1_0= RULE_INT ) ) otherlv_2= ':' )+ ( (lv_type_3_0= ruleSimpleTypeSpec ) ) ( (lv_name_4_0= RULE_ID ) ) otherlv_5= ';' )
             {
-            // InternalSimpleIDL.g:656:2: ( (otherlv_0= 'case' ( (lv_labels_1_0= RULE_INT ) ) otherlv_2= ':' )+ ( (lv_type_3_0= ruleSimpleTypeSpec ) ) ( (lv_name_4_0= RULE_ID ) ) otherlv_5= ';' )
-            // InternalSimpleIDL.g:657:3: (otherlv_0= 'case' ( (lv_labels_1_0= RULE_INT ) ) otherlv_2= ':' )+ ( (lv_type_3_0= ruleSimpleTypeSpec ) ) ( (lv_name_4_0= RULE_ID ) ) otherlv_5= ';'
+            // InternalSimpleIDL.g:651:2: ( (otherlv_0= 'case' ( (lv_labels_1_0= RULE_INT ) ) otherlv_2= ':' )+ ( (lv_type_3_0= ruleSimpleTypeSpec ) ) ( (lv_name_4_0= RULE_ID ) ) otherlv_5= ';' )
+            // InternalSimpleIDL.g:652:3: (otherlv_0= 'case' ( (lv_labels_1_0= RULE_INT ) ) otherlv_2= ':' )+ ( (lv_type_3_0= ruleSimpleTypeSpec ) ) ( (lv_name_4_0= RULE_ID ) ) otherlv_5= ';'
             {
-            // InternalSimpleIDL.g:657:3: (otherlv_0= 'case' ( (lv_labels_1_0= RULE_INT ) ) otherlv_2= ':' )+
+            // InternalSimpleIDL.g:652:3: (otherlv_0= 'case' ( (lv_labels_1_0= RULE_INT ) ) otherlv_2= ':' )+
             int cnt9=0;
             loop9:
             do {
@@ -1437,17 +1432,17 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
                 switch (alt9) {
             	case 1 :
-            	    // InternalSimpleIDL.g:658:4: otherlv_0= 'case' ( (lv_labels_1_0= RULE_INT ) ) otherlv_2= ':'
+            	    // InternalSimpleIDL.g:653:4: otherlv_0= 'case' ( (lv_labels_1_0= RULE_INT ) ) otherlv_2= ':'
             	    {
             	    otherlv_0=(Token)match(input,26,FOLLOW_21); 
 
             	    				newLeafNode(otherlv_0, grammarAccess.getCaseAccess().getCaseKeyword_0_0());
             	    			
-            	    // InternalSimpleIDL.g:662:4: ( (lv_labels_1_0= RULE_INT ) )
-            	    // InternalSimpleIDL.g:663:5: (lv_labels_1_0= RULE_INT )
+            	    // InternalSimpleIDL.g:657:4: ( (lv_labels_1_0= RULE_INT ) )
+            	    // InternalSimpleIDL.g:658:5: (lv_labels_1_0= RULE_INT )
             	    {
-            	    // InternalSimpleIDL.g:663:5: (lv_labels_1_0= RULE_INT )
-            	    // InternalSimpleIDL.g:664:6: lv_labels_1_0= RULE_INT
+            	    // InternalSimpleIDL.g:658:5: (lv_labels_1_0= RULE_INT )
+            	    // InternalSimpleIDL.g:659:6: lv_labels_1_0= RULE_INT
             	    {
             	    lv_labels_1_0=(Token)match(input,RULE_INT,FOLLOW_22); 
 
@@ -1486,11 +1481,11 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
                 cnt9++;
             } while (true);
 
-            // InternalSimpleIDL.g:685:3: ( (lv_type_3_0= ruleSimpleTypeSpec ) )
-            // InternalSimpleIDL.g:686:4: (lv_type_3_0= ruleSimpleTypeSpec )
+            // InternalSimpleIDL.g:680:3: ( (lv_type_3_0= ruleSimpleTypeSpec ) )
+            // InternalSimpleIDL.g:681:4: (lv_type_3_0= ruleSimpleTypeSpec )
             {
-            // InternalSimpleIDL.g:686:4: (lv_type_3_0= ruleSimpleTypeSpec )
-            // InternalSimpleIDL.g:687:5: lv_type_3_0= ruleSimpleTypeSpec
+            // InternalSimpleIDL.g:681:4: (lv_type_3_0= ruleSimpleTypeSpec )
+            // InternalSimpleIDL.g:682:5: lv_type_3_0= ruleSimpleTypeSpec
             {
 
             					newCompositeNode(grammarAccess.getCaseAccess().getTypeSimpleTypeSpecParserRuleCall_1_0());
@@ -1517,11 +1512,11 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSimpleIDL.g:704:3: ( (lv_name_4_0= RULE_ID ) )
-            // InternalSimpleIDL.g:705:4: (lv_name_4_0= RULE_ID )
+            // InternalSimpleIDL.g:699:3: ( (lv_name_4_0= RULE_ID ) )
+            // InternalSimpleIDL.g:700:4: (lv_name_4_0= RULE_ID )
             {
-            // InternalSimpleIDL.g:705:4: (lv_name_4_0= RULE_ID )
-            // InternalSimpleIDL.g:706:5: lv_name_4_0= RULE_ID
+            // InternalSimpleIDL.g:700:4: (lv_name_4_0= RULE_ID )
+            // InternalSimpleIDL.g:701:5: lv_name_4_0= RULE_ID
             {
             lv_name_4_0=(Token)match(input,RULE_ID,FOLLOW_7); 
 
@@ -1570,7 +1565,7 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleAnyDeclarator"
-    // InternalSimpleIDL.g:730:1: entryRuleAnyDeclarator returns [EObject current=null] : iv_ruleAnyDeclarator= ruleAnyDeclarator EOF ;
+    // InternalSimpleIDL.g:725:1: entryRuleAnyDeclarator returns [EObject current=null] : iv_ruleAnyDeclarator= ruleAnyDeclarator EOF ;
     public final EObject entryRuleAnyDeclarator() throws RecognitionException {
         EObject current = null;
 
@@ -1578,8 +1573,8 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalSimpleIDL.g:730:54: (iv_ruleAnyDeclarator= ruleAnyDeclarator EOF )
-            // InternalSimpleIDL.g:731:2: iv_ruleAnyDeclarator= ruleAnyDeclarator EOF
+            // InternalSimpleIDL.g:725:54: (iv_ruleAnyDeclarator= ruleAnyDeclarator EOF )
+            // InternalSimpleIDL.g:726:2: iv_ruleAnyDeclarator= ruleAnyDeclarator EOF
             {
              newCompositeNode(grammarAccess.getAnyDeclaratorRule()); 
             pushFollow(FOLLOW_1);
@@ -1606,7 +1601,7 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAnyDeclarator"
-    // InternalSimpleIDL.g:737:1: ruleAnyDeclarator returns [EObject current=null] : ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= '[' ( (lv_arraySizes_2_0= RULE_INT ) ) otherlv_3= ']' )* ) ;
+    // InternalSimpleIDL.g:732:1: ruleAnyDeclarator returns [EObject current=null] : ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= '[' ( (lv_arraySizes_2_0= RULE_INT ) ) otherlv_3= ']' )* ) ;
     public final EObject ruleAnyDeclarator() throws RecognitionException {
         EObject current = null;
 
@@ -1619,17 +1614,17 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSimpleIDL.g:743:2: ( ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= '[' ( (lv_arraySizes_2_0= RULE_INT ) ) otherlv_3= ']' )* ) )
-            // InternalSimpleIDL.g:744:2: ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= '[' ( (lv_arraySizes_2_0= RULE_INT ) ) otherlv_3= ']' )* )
+            // InternalSimpleIDL.g:738:2: ( ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= '[' ( (lv_arraySizes_2_0= RULE_INT ) ) otherlv_3= ']' )* ) )
+            // InternalSimpleIDL.g:739:2: ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= '[' ( (lv_arraySizes_2_0= RULE_INT ) ) otherlv_3= ']' )* )
             {
-            // InternalSimpleIDL.g:744:2: ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= '[' ( (lv_arraySizes_2_0= RULE_INT ) ) otherlv_3= ']' )* )
-            // InternalSimpleIDL.g:745:3: ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= '[' ( (lv_arraySizes_2_0= RULE_INT ) ) otherlv_3= ']' )*
+            // InternalSimpleIDL.g:739:2: ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= '[' ( (lv_arraySizes_2_0= RULE_INT ) ) otherlv_3= ']' )* )
+            // InternalSimpleIDL.g:740:3: ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= '[' ( (lv_arraySizes_2_0= RULE_INT ) ) otherlv_3= ']' )*
             {
-            // InternalSimpleIDL.g:745:3: ( (lv_name_0_0= RULE_ID ) )
-            // InternalSimpleIDL.g:746:4: (lv_name_0_0= RULE_ID )
+            // InternalSimpleIDL.g:740:3: ( (lv_name_0_0= RULE_ID ) )
+            // InternalSimpleIDL.g:741:4: (lv_name_0_0= RULE_ID )
             {
-            // InternalSimpleIDL.g:746:4: (lv_name_0_0= RULE_ID )
-            // InternalSimpleIDL.g:747:5: lv_name_0_0= RULE_ID
+            // InternalSimpleIDL.g:741:4: (lv_name_0_0= RULE_ID )
+            // InternalSimpleIDL.g:742:5: lv_name_0_0= RULE_ID
             {
             lv_name_0_0=(Token)match(input,RULE_ID,FOLLOW_24); 
 
@@ -1651,7 +1646,7 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSimpleIDL.g:763:3: (otherlv_1= '[' ( (lv_arraySizes_2_0= RULE_INT ) ) otherlv_3= ']' )*
+            // InternalSimpleIDL.g:758:3: (otherlv_1= '[' ( (lv_arraySizes_2_0= RULE_INT ) ) otherlv_3= ']' )*
             loop10:
             do {
                 int alt10=2;
@@ -1664,17 +1659,17 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
                 switch (alt10) {
             	case 1 :
-            	    // InternalSimpleIDL.g:764:4: otherlv_1= '[' ( (lv_arraySizes_2_0= RULE_INT ) ) otherlv_3= ']'
+            	    // InternalSimpleIDL.g:759:4: otherlv_1= '[' ( (lv_arraySizes_2_0= RULE_INT ) ) otherlv_3= ']'
             	    {
             	    otherlv_1=(Token)match(input,28,FOLLOW_21); 
 
             	    				newLeafNode(otherlv_1, grammarAccess.getAnyDeclaratorAccess().getLeftSquareBracketKeyword_1_0());
             	    			
-            	    // InternalSimpleIDL.g:768:4: ( (lv_arraySizes_2_0= RULE_INT ) )
-            	    // InternalSimpleIDL.g:769:5: (lv_arraySizes_2_0= RULE_INT )
+            	    // InternalSimpleIDL.g:763:4: ( (lv_arraySizes_2_0= RULE_INT ) )
+            	    // InternalSimpleIDL.g:764:5: (lv_arraySizes_2_0= RULE_INT )
             	    {
-            	    // InternalSimpleIDL.g:769:5: (lv_arraySizes_2_0= RULE_INT )
-            	    // InternalSimpleIDL.g:770:6: lv_arraySizes_2_0= RULE_INT
+            	    // InternalSimpleIDL.g:764:5: (lv_arraySizes_2_0= RULE_INT )
+            	    // InternalSimpleIDL.g:765:6: lv_arraySizes_2_0= RULE_INT
             	    {
             	    lv_arraySizes_2_0=(Token)match(input,RULE_INT,FOLLOW_25); 
 
@@ -1732,7 +1727,7 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleType"
-    // InternalSimpleIDL.g:795:1: entryRuleType returns [EObject current=null] : iv_ruleType= ruleType EOF ;
+    // InternalSimpleIDL.g:790:1: entryRuleType returns [EObject current=null] : iv_ruleType= ruleType EOF ;
     public final EObject entryRuleType() throws RecognitionException {
         EObject current = null;
 
@@ -1740,8 +1735,8 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalSimpleIDL.g:795:45: (iv_ruleType= ruleType EOF )
-            // InternalSimpleIDL.g:796:2: iv_ruleType= ruleType EOF
+            // InternalSimpleIDL.g:790:45: (iv_ruleType= ruleType EOF )
+            // InternalSimpleIDL.g:791:2: iv_ruleType= ruleType EOF
             {
              newCompositeNode(grammarAccess.getTypeRule()); 
             pushFollow(FOLLOW_1);
@@ -1768,7 +1763,7 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleType"
-    // InternalSimpleIDL.g:802:1: ruleType returns [EObject current=null] : (this_SimpleTypeSpec_0= ruleSimpleTypeSpec | ( () otherlv_2= 'sequence' otherlv_3= '<' ( (lv_type_4_0= ruleSimpleTypeSpec ) ) otherlv_5= ',' ( (lv_size_6_0= RULE_INT ) ) otherlv_7= '>' ) | ( () otherlv_9= 'sequence' otherlv_10= '<' ( (lv_type_11_0= ruleSimpleTypeSpec ) ) otherlv_12= '>' ) | ( () otherlv_14= 'string' otherlv_15= '<' ( (lv_size_16_0= RULE_INT ) ) otherlv_17= '>' ) | ( () otherlv_19= 'string' ) | ( () otherlv_21= 'wstring' otherlv_22= '<' ( (lv_size_23_0= RULE_INT ) ) otherlv_24= '>' ) | ( () otherlv_26= 'wstring' ) | ( () otherlv_28= 'fixed' otherlv_29= '<' ( (lv_totalDigits_30_0= RULE_INT ) ) otherlv_31= ',' ( (lv_fractionalDigits_32_0= RULE_INT ) ) otherlv_33= '>' ) ) ;
+    // InternalSimpleIDL.g:797:1: ruleType returns [EObject current=null] : (this_SimpleTypeSpec_0= ruleSimpleTypeSpec | ( () otherlv_2= 'sequence' otherlv_3= '<' ( (lv_type_4_0= ruleSimpleTypeSpec ) ) otherlv_5= ',' ( (lv_size_6_0= RULE_INT ) ) otherlv_7= '>' ) | ( () otherlv_9= 'sequence' otherlv_10= '<' ( (lv_type_11_0= ruleSimpleTypeSpec ) ) otherlv_12= '>' ) | ( () otherlv_14= 'string' otherlv_15= '<' ( (lv_size_16_0= RULE_INT ) ) otherlv_17= '>' ) | ( () otherlv_19= 'string' ) | ( () otherlv_21= 'wstring' otherlv_22= '<' ( (lv_size_23_0= RULE_INT ) ) otherlv_24= '>' ) | ( () otherlv_26= 'wstring' ) | ( () otherlv_28= 'fixed' otherlv_29= '<' ( (lv_totalDigits_30_0= RULE_INT ) ) otherlv_31= ',' ( (lv_fractionalDigits_32_0= RULE_INT ) ) otherlv_33= '>' ) ) ;
     public final EObject ruleType() throws RecognitionException {
         EObject current = null;
 
@@ -1807,15 +1802,15 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSimpleIDL.g:808:2: ( (this_SimpleTypeSpec_0= ruleSimpleTypeSpec | ( () otherlv_2= 'sequence' otherlv_3= '<' ( (lv_type_4_0= ruleSimpleTypeSpec ) ) otherlv_5= ',' ( (lv_size_6_0= RULE_INT ) ) otherlv_7= '>' ) | ( () otherlv_9= 'sequence' otherlv_10= '<' ( (lv_type_11_0= ruleSimpleTypeSpec ) ) otherlv_12= '>' ) | ( () otherlv_14= 'string' otherlv_15= '<' ( (lv_size_16_0= RULE_INT ) ) otherlv_17= '>' ) | ( () otherlv_19= 'string' ) | ( () otherlv_21= 'wstring' otherlv_22= '<' ( (lv_size_23_0= RULE_INT ) ) otherlv_24= '>' ) | ( () otherlv_26= 'wstring' ) | ( () otherlv_28= 'fixed' otherlv_29= '<' ( (lv_totalDigits_30_0= RULE_INT ) ) otherlv_31= ',' ( (lv_fractionalDigits_32_0= RULE_INT ) ) otherlv_33= '>' ) ) )
-            // InternalSimpleIDL.g:809:2: (this_SimpleTypeSpec_0= ruleSimpleTypeSpec | ( () otherlv_2= 'sequence' otherlv_3= '<' ( (lv_type_4_0= ruleSimpleTypeSpec ) ) otherlv_5= ',' ( (lv_size_6_0= RULE_INT ) ) otherlv_7= '>' ) | ( () otherlv_9= 'sequence' otherlv_10= '<' ( (lv_type_11_0= ruleSimpleTypeSpec ) ) otherlv_12= '>' ) | ( () otherlv_14= 'string' otherlv_15= '<' ( (lv_size_16_0= RULE_INT ) ) otherlv_17= '>' ) | ( () otherlv_19= 'string' ) | ( () otherlv_21= 'wstring' otherlv_22= '<' ( (lv_size_23_0= RULE_INT ) ) otherlv_24= '>' ) | ( () otherlv_26= 'wstring' ) | ( () otherlv_28= 'fixed' otherlv_29= '<' ( (lv_totalDigits_30_0= RULE_INT ) ) otherlv_31= ',' ( (lv_fractionalDigits_32_0= RULE_INT ) ) otherlv_33= '>' ) )
+            // InternalSimpleIDL.g:803:2: ( (this_SimpleTypeSpec_0= ruleSimpleTypeSpec | ( () otherlv_2= 'sequence' otherlv_3= '<' ( (lv_type_4_0= ruleSimpleTypeSpec ) ) otherlv_5= ',' ( (lv_size_6_0= RULE_INT ) ) otherlv_7= '>' ) | ( () otherlv_9= 'sequence' otherlv_10= '<' ( (lv_type_11_0= ruleSimpleTypeSpec ) ) otherlv_12= '>' ) | ( () otherlv_14= 'string' otherlv_15= '<' ( (lv_size_16_0= RULE_INT ) ) otherlv_17= '>' ) | ( () otherlv_19= 'string' ) | ( () otherlv_21= 'wstring' otherlv_22= '<' ( (lv_size_23_0= RULE_INT ) ) otherlv_24= '>' ) | ( () otherlv_26= 'wstring' ) | ( () otherlv_28= 'fixed' otherlv_29= '<' ( (lv_totalDigits_30_0= RULE_INT ) ) otherlv_31= ',' ( (lv_fractionalDigits_32_0= RULE_INT ) ) otherlv_33= '>' ) ) )
+            // InternalSimpleIDL.g:804:2: (this_SimpleTypeSpec_0= ruleSimpleTypeSpec | ( () otherlv_2= 'sequence' otherlv_3= '<' ( (lv_type_4_0= ruleSimpleTypeSpec ) ) otherlv_5= ',' ( (lv_size_6_0= RULE_INT ) ) otherlv_7= '>' ) | ( () otherlv_9= 'sequence' otherlv_10= '<' ( (lv_type_11_0= ruleSimpleTypeSpec ) ) otherlv_12= '>' ) | ( () otherlv_14= 'string' otherlv_15= '<' ( (lv_size_16_0= RULE_INT ) ) otherlv_17= '>' ) | ( () otherlv_19= 'string' ) | ( () otherlv_21= 'wstring' otherlv_22= '<' ( (lv_size_23_0= RULE_INT ) ) otherlv_24= '>' ) | ( () otherlv_26= 'wstring' ) | ( () otherlv_28= 'fixed' otherlv_29= '<' ( (lv_totalDigits_30_0= RULE_INT ) ) otherlv_31= ',' ( (lv_fractionalDigits_32_0= RULE_INT ) ) otherlv_33= '>' ) )
             {
-            // InternalSimpleIDL.g:809:2: (this_SimpleTypeSpec_0= ruleSimpleTypeSpec | ( () otherlv_2= 'sequence' otherlv_3= '<' ( (lv_type_4_0= ruleSimpleTypeSpec ) ) otherlv_5= ',' ( (lv_size_6_0= RULE_INT ) ) otherlv_7= '>' ) | ( () otherlv_9= 'sequence' otherlv_10= '<' ( (lv_type_11_0= ruleSimpleTypeSpec ) ) otherlv_12= '>' ) | ( () otherlv_14= 'string' otherlv_15= '<' ( (lv_size_16_0= RULE_INT ) ) otherlv_17= '>' ) | ( () otherlv_19= 'string' ) | ( () otherlv_21= 'wstring' otherlv_22= '<' ( (lv_size_23_0= RULE_INT ) ) otherlv_24= '>' ) | ( () otherlv_26= 'wstring' ) | ( () otherlv_28= 'fixed' otherlv_29= '<' ( (lv_totalDigits_30_0= RULE_INT ) ) otherlv_31= ',' ( (lv_fractionalDigits_32_0= RULE_INT ) ) otherlv_33= '>' ) )
+            // InternalSimpleIDL.g:804:2: (this_SimpleTypeSpec_0= ruleSimpleTypeSpec | ( () otherlv_2= 'sequence' otherlv_3= '<' ( (lv_type_4_0= ruleSimpleTypeSpec ) ) otherlv_5= ',' ( (lv_size_6_0= RULE_INT ) ) otherlv_7= '>' ) | ( () otherlv_9= 'sequence' otherlv_10= '<' ( (lv_type_11_0= ruleSimpleTypeSpec ) ) otherlv_12= '>' ) | ( () otherlv_14= 'string' otherlv_15= '<' ( (lv_size_16_0= RULE_INT ) ) otherlv_17= '>' ) | ( () otherlv_19= 'string' ) | ( () otherlv_21= 'wstring' otherlv_22= '<' ( (lv_size_23_0= RULE_INT ) ) otherlv_24= '>' ) | ( () otherlv_26= 'wstring' ) | ( () otherlv_28= 'fixed' otherlv_29= '<' ( (lv_totalDigits_30_0= RULE_INT ) ) otherlv_31= ',' ( (lv_fractionalDigits_32_0= RULE_INT ) ) otherlv_33= '>' ) )
             int alt11=8;
             alt11 = dfa11.predict(input);
             switch (alt11) {
                 case 1 :
-                    // InternalSimpleIDL.g:810:3: this_SimpleTypeSpec_0= ruleSimpleTypeSpec
+                    // InternalSimpleIDL.g:805:3: this_SimpleTypeSpec_0= ruleSimpleTypeSpec
                     {
 
                     			newCompositeNode(grammarAccess.getTypeAccess().getSimpleTypeSpecParserRuleCall_0());
@@ -1833,13 +1828,13 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalSimpleIDL.g:819:3: ( () otherlv_2= 'sequence' otherlv_3= '<' ( (lv_type_4_0= ruleSimpleTypeSpec ) ) otherlv_5= ',' ( (lv_size_6_0= RULE_INT ) ) otherlv_7= '>' )
+                    // InternalSimpleIDL.g:814:3: ( () otherlv_2= 'sequence' otherlv_3= '<' ( (lv_type_4_0= ruleSimpleTypeSpec ) ) otherlv_5= ',' ( (lv_size_6_0= RULE_INT ) ) otherlv_7= '>' )
                     {
-                    // InternalSimpleIDL.g:819:3: ( () otherlv_2= 'sequence' otherlv_3= '<' ( (lv_type_4_0= ruleSimpleTypeSpec ) ) otherlv_5= ',' ( (lv_size_6_0= RULE_INT ) ) otherlv_7= '>' )
-                    // InternalSimpleIDL.g:820:4: () otherlv_2= 'sequence' otherlv_3= '<' ( (lv_type_4_0= ruleSimpleTypeSpec ) ) otherlv_5= ',' ( (lv_size_6_0= RULE_INT ) ) otherlv_7= '>'
+                    // InternalSimpleIDL.g:814:3: ( () otherlv_2= 'sequence' otherlv_3= '<' ( (lv_type_4_0= ruleSimpleTypeSpec ) ) otherlv_5= ',' ( (lv_size_6_0= RULE_INT ) ) otherlv_7= '>' )
+                    // InternalSimpleIDL.g:815:4: () otherlv_2= 'sequence' otherlv_3= '<' ( (lv_type_4_0= ruleSimpleTypeSpec ) ) otherlv_5= ',' ( (lv_size_6_0= RULE_INT ) ) otherlv_7= '>'
                     {
-                    // InternalSimpleIDL.g:820:4: ()
-                    // InternalSimpleIDL.g:821:5: 
+                    // InternalSimpleIDL.g:815:4: ()
+                    // InternalSimpleIDL.g:816:5: 
                     {
 
                     					current = forceCreateModelElement(
@@ -1857,11 +1852,11 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
                     				newLeafNode(otherlv_3, grammarAccess.getTypeAccess().getLessThanSignKeyword_1_2());
                     			
-                    // InternalSimpleIDL.g:835:4: ( (lv_type_4_0= ruleSimpleTypeSpec ) )
-                    // InternalSimpleIDL.g:836:5: (lv_type_4_0= ruleSimpleTypeSpec )
+                    // InternalSimpleIDL.g:830:4: ( (lv_type_4_0= ruleSimpleTypeSpec ) )
+                    // InternalSimpleIDL.g:831:5: (lv_type_4_0= ruleSimpleTypeSpec )
                     {
-                    // InternalSimpleIDL.g:836:5: (lv_type_4_0= ruleSimpleTypeSpec )
-                    // InternalSimpleIDL.g:837:6: lv_type_4_0= ruleSimpleTypeSpec
+                    // InternalSimpleIDL.g:831:5: (lv_type_4_0= ruleSimpleTypeSpec )
+                    // InternalSimpleIDL.g:832:6: lv_type_4_0= ruleSimpleTypeSpec
                     {
 
                     						newCompositeNode(grammarAccess.getTypeAccess().getTypeSimpleTypeSpecParserRuleCall_1_3_0());
@@ -1892,11 +1887,11 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
                     				newLeafNode(otherlv_5, grammarAccess.getTypeAccess().getCommaKeyword_1_4());
                     			
-                    // InternalSimpleIDL.g:858:4: ( (lv_size_6_0= RULE_INT ) )
-                    // InternalSimpleIDL.g:859:5: (lv_size_6_0= RULE_INT )
+                    // InternalSimpleIDL.g:853:4: ( (lv_size_6_0= RULE_INT ) )
+                    // InternalSimpleIDL.g:854:5: (lv_size_6_0= RULE_INT )
                     {
-                    // InternalSimpleIDL.g:859:5: (lv_size_6_0= RULE_INT )
-                    // InternalSimpleIDL.g:860:6: lv_size_6_0= RULE_INT
+                    // InternalSimpleIDL.g:854:5: (lv_size_6_0= RULE_INT )
+                    // InternalSimpleIDL.g:855:6: lv_size_6_0= RULE_INT
                     {
                     lv_size_6_0=(Token)match(input,RULE_INT,FOLLOW_28); 
 
@@ -1929,13 +1924,13 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalSimpleIDL.g:882:3: ( () otherlv_9= 'sequence' otherlv_10= '<' ( (lv_type_11_0= ruleSimpleTypeSpec ) ) otherlv_12= '>' )
+                    // InternalSimpleIDL.g:877:3: ( () otherlv_9= 'sequence' otherlv_10= '<' ( (lv_type_11_0= ruleSimpleTypeSpec ) ) otherlv_12= '>' )
                     {
-                    // InternalSimpleIDL.g:882:3: ( () otherlv_9= 'sequence' otherlv_10= '<' ( (lv_type_11_0= ruleSimpleTypeSpec ) ) otherlv_12= '>' )
-                    // InternalSimpleIDL.g:883:4: () otherlv_9= 'sequence' otherlv_10= '<' ( (lv_type_11_0= ruleSimpleTypeSpec ) ) otherlv_12= '>'
+                    // InternalSimpleIDL.g:877:3: ( () otherlv_9= 'sequence' otherlv_10= '<' ( (lv_type_11_0= ruleSimpleTypeSpec ) ) otherlv_12= '>' )
+                    // InternalSimpleIDL.g:878:4: () otherlv_9= 'sequence' otherlv_10= '<' ( (lv_type_11_0= ruleSimpleTypeSpec ) ) otherlv_12= '>'
                     {
-                    // InternalSimpleIDL.g:883:4: ()
-                    // InternalSimpleIDL.g:884:5: 
+                    // InternalSimpleIDL.g:878:4: ()
+                    // InternalSimpleIDL.g:879:5: 
                     {
 
                     					current = forceCreateModelElement(
@@ -1953,11 +1948,11 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
                     				newLeafNode(otherlv_10, grammarAccess.getTypeAccess().getLessThanSignKeyword_2_2());
                     			
-                    // InternalSimpleIDL.g:898:4: ( (lv_type_11_0= ruleSimpleTypeSpec ) )
-                    // InternalSimpleIDL.g:899:5: (lv_type_11_0= ruleSimpleTypeSpec )
+                    // InternalSimpleIDL.g:893:4: ( (lv_type_11_0= ruleSimpleTypeSpec ) )
+                    // InternalSimpleIDL.g:894:5: (lv_type_11_0= ruleSimpleTypeSpec )
                     {
-                    // InternalSimpleIDL.g:899:5: (lv_type_11_0= ruleSimpleTypeSpec )
-                    // InternalSimpleIDL.g:900:6: lv_type_11_0= ruleSimpleTypeSpec
+                    // InternalSimpleIDL.g:894:5: (lv_type_11_0= ruleSimpleTypeSpec )
+                    // InternalSimpleIDL.g:895:6: lv_type_11_0= ruleSimpleTypeSpec
                     {
 
                     						newCompositeNode(grammarAccess.getTypeAccess().getTypeSimpleTypeSpecParserRuleCall_2_3_0());
@@ -1995,13 +1990,13 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalSimpleIDL.g:923:3: ( () otherlv_14= 'string' otherlv_15= '<' ( (lv_size_16_0= RULE_INT ) ) otherlv_17= '>' )
+                    // InternalSimpleIDL.g:918:3: ( () otherlv_14= 'string' otherlv_15= '<' ( (lv_size_16_0= RULE_INT ) ) otherlv_17= '>' )
                     {
-                    // InternalSimpleIDL.g:923:3: ( () otherlv_14= 'string' otherlv_15= '<' ( (lv_size_16_0= RULE_INT ) ) otherlv_17= '>' )
-                    // InternalSimpleIDL.g:924:4: () otherlv_14= 'string' otherlv_15= '<' ( (lv_size_16_0= RULE_INT ) ) otherlv_17= '>'
+                    // InternalSimpleIDL.g:918:3: ( () otherlv_14= 'string' otherlv_15= '<' ( (lv_size_16_0= RULE_INT ) ) otherlv_17= '>' )
+                    // InternalSimpleIDL.g:919:4: () otherlv_14= 'string' otherlv_15= '<' ( (lv_size_16_0= RULE_INT ) ) otherlv_17= '>'
                     {
-                    // InternalSimpleIDL.g:924:4: ()
-                    // InternalSimpleIDL.g:925:5: 
+                    // InternalSimpleIDL.g:919:4: ()
+                    // InternalSimpleIDL.g:920:5: 
                     {
 
                     					current = forceCreateModelElement(
@@ -2019,11 +2014,11 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
                     				newLeafNode(otherlv_15, grammarAccess.getTypeAccess().getLessThanSignKeyword_3_2());
                     			
-                    // InternalSimpleIDL.g:939:4: ( (lv_size_16_0= RULE_INT ) )
-                    // InternalSimpleIDL.g:940:5: (lv_size_16_0= RULE_INT )
+                    // InternalSimpleIDL.g:934:4: ( (lv_size_16_0= RULE_INT ) )
+                    // InternalSimpleIDL.g:935:5: (lv_size_16_0= RULE_INT )
                     {
-                    // InternalSimpleIDL.g:940:5: (lv_size_16_0= RULE_INT )
-                    // InternalSimpleIDL.g:941:6: lv_size_16_0= RULE_INT
+                    // InternalSimpleIDL.g:935:5: (lv_size_16_0= RULE_INT )
+                    // InternalSimpleIDL.g:936:6: lv_size_16_0= RULE_INT
                     {
                     lv_size_16_0=(Token)match(input,RULE_INT,FOLLOW_28); 
 
@@ -2056,13 +2051,13 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalSimpleIDL.g:963:3: ( () otherlv_19= 'string' )
+                    // InternalSimpleIDL.g:958:3: ( () otherlv_19= 'string' )
                     {
-                    // InternalSimpleIDL.g:963:3: ( () otherlv_19= 'string' )
-                    // InternalSimpleIDL.g:964:4: () otherlv_19= 'string'
+                    // InternalSimpleIDL.g:958:3: ( () otherlv_19= 'string' )
+                    // InternalSimpleIDL.g:959:4: () otherlv_19= 'string'
                     {
-                    // InternalSimpleIDL.g:964:4: ()
-                    // InternalSimpleIDL.g:965:5: 
+                    // InternalSimpleIDL.g:959:4: ()
+                    // InternalSimpleIDL.g:960:5: 
                     {
 
                     					current = forceCreateModelElement(
@@ -2083,13 +2078,13 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalSimpleIDL.g:977:3: ( () otherlv_21= 'wstring' otherlv_22= '<' ( (lv_size_23_0= RULE_INT ) ) otherlv_24= '>' )
+                    // InternalSimpleIDL.g:972:3: ( () otherlv_21= 'wstring' otherlv_22= '<' ( (lv_size_23_0= RULE_INT ) ) otherlv_24= '>' )
                     {
-                    // InternalSimpleIDL.g:977:3: ( () otherlv_21= 'wstring' otherlv_22= '<' ( (lv_size_23_0= RULE_INT ) ) otherlv_24= '>' )
-                    // InternalSimpleIDL.g:978:4: () otherlv_21= 'wstring' otherlv_22= '<' ( (lv_size_23_0= RULE_INT ) ) otherlv_24= '>'
+                    // InternalSimpleIDL.g:972:3: ( () otherlv_21= 'wstring' otherlv_22= '<' ( (lv_size_23_0= RULE_INT ) ) otherlv_24= '>' )
+                    // InternalSimpleIDL.g:973:4: () otherlv_21= 'wstring' otherlv_22= '<' ( (lv_size_23_0= RULE_INT ) ) otherlv_24= '>'
                     {
-                    // InternalSimpleIDL.g:978:4: ()
-                    // InternalSimpleIDL.g:979:5: 
+                    // InternalSimpleIDL.g:973:4: ()
+                    // InternalSimpleIDL.g:974:5: 
                     {
 
                     					current = forceCreateModelElement(
@@ -2107,11 +2102,11 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
                     				newLeafNode(otherlv_22, grammarAccess.getTypeAccess().getLessThanSignKeyword_5_2());
                     			
-                    // InternalSimpleIDL.g:993:4: ( (lv_size_23_0= RULE_INT ) )
-                    // InternalSimpleIDL.g:994:5: (lv_size_23_0= RULE_INT )
+                    // InternalSimpleIDL.g:988:4: ( (lv_size_23_0= RULE_INT ) )
+                    // InternalSimpleIDL.g:989:5: (lv_size_23_0= RULE_INT )
                     {
-                    // InternalSimpleIDL.g:994:5: (lv_size_23_0= RULE_INT )
-                    // InternalSimpleIDL.g:995:6: lv_size_23_0= RULE_INT
+                    // InternalSimpleIDL.g:989:5: (lv_size_23_0= RULE_INT )
+                    // InternalSimpleIDL.g:990:6: lv_size_23_0= RULE_INT
                     {
                     lv_size_23_0=(Token)match(input,RULE_INT,FOLLOW_28); 
 
@@ -2144,13 +2139,13 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // InternalSimpleIDL.g:1017:3: ( () otherlv_26= 'wstring' )
+                    // InternalSimpleIDL.g:1012:3: ( () otherlv_26= 'wstring' )
                     {
-                    // InternalSimpleIDL.g:1017:3: ( () otherlv_26= 'wstring' )
-                    // InternalSimpleIDL.g:1018:4: () otherlv_26= 'wstring'
+                    // InternalSimpleIDL.g:1012:3: ( () otherlv_26= 'wstring' )
+                    // InternalSimpleIDL.g:1013:4: () otherlv_26= 'wstring'
                     {
-                    // InternalSimpleIDL.g:1018:4: ()
-                    // InternalSimpleIDL.g:1019:5: 
+                    // InternalSimpleIDL.g:1013:4: ()
+                    // InternalSimpleIDL.g:1014:5: 
                     {
 
                     					current = forceCreateModelElement(
@@ -2171,13 +2166,13 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 8 :
-                    // InternalSimpleIDL.g:1031:3: ( () otherlv_28= 'fixed' otherlv_29= '<' ( (lv_totalDigits_30_0= RULE_INT ) ) otherlv_31= ',' ( (lv_fractionalDigits_32_0= RULE_INT ) ) otherlv_33= '>' )
+                    // InternalSimpleIDL.g:1026:3: ( () otherlv_28= 'fixed' otherlv_29= '<' ( (lv_totalDigits_30_0= RULE_INT ) ) otherlv_31= ',' ( (lv_fractionalDigits_32_0= RULE_INT ) ) otherlv_33= '>' )
                     {
-                    // InternalSimpleIDL.g:1031:3: ( () otherlv_28= 'fixed' otherlv_29= '<' ( (lv_totalDigits_30_0= RULE_INT ) ) otherlv_31= ',' ( (lv_fractionalDigits_32_0= RULE_INT ) ) otherlv_33= '>' )
-                    // InternalSimpleIDL.g:1032:4: () otherlv_28= 'fixed' otherlv_29= '<' ( (lv_totalDigits_30_0= RULE_INT ) ) otherlv_31= ',' ( (lv_fractionalDigits_32_0= RULE_INT ) ) otherlv_33= '>'
+                    // InternalSimpleIDL.g:1026:3: ( () otherlv_28= 'fixed' otherlv_29= '<' ( (lv_totalDigits_30_0= RULE_INT ) ) otherlv_31= ',' ( (lv_fractionalDigits_32_0= RULE_INT ) ) otherlv_33= '>' )
+                    // InternalSimpleIDL.g:1027:4: () otherlv_28= 'fixed' otherlv_29= '<' ( (lv_totalDigits_30_0= RULE_INT ) ) otherlv_31= ',' ( (lv_fractionalDigits_32_0= RULE_INT ) ) otherlv_33= '>'
                     {
-                    // InternalSimpleIDL.g:1032:4: ()
-                    // InternalSimpleIDL.g:1033:5: 
+                    // InternalSimpleIDL.g:1027:4: ()
+                    // InternalSimpleIDL.g:1028:5: 
                     {
 
                     					current = forceCreateModelElement(
@@ -2195,11 +2190,11 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
                     				newLeafNode(otherlv_29, grammarAccess.getTypeAccess().getLessThanSignKeyword_7_2());
                     			
-                    // InternalSimpleIDL.g:1047:4: ( (lv_totalDigits_30_0= RULE_INT ) )
-                    // InternalSimpleIDL.g:1048:5: (lv_totalDigits_30_0= RULE_INT )
+                    // InternalSimpleIDL.g:1042:4: ( (lv_totalDigits_30_0= RULE_INT ) )
+                    // InternalSimpleIDL.g:1043:5: (lv_totalDigits_30_0= RULE_INT )
                     {
-                    // InternalSimpleIDL.g:1048:5: (lv_totalDigits_30_0= RULE_INT )
-                    // InternalSimpleIDL.g:1049:6: lv_totalDigits_30_0= RULE_INT
+                    // InternalSimpleIDL.g:1043:5: (lv_totalDigits_30_0= RULE_INT )
+                    // InternalSimpleIDL.g:1044:6: lv_totalDigits_30_0= RULE_INT
                     {
                     lv_totalDigits_30_0=(Token)match(input,RULE_INT,FOLLOW_27); 
 
@@ -2225,11 +2220,11 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
                     				newLeafNode(otherlv_31, grammarAccess.getTypeAccess().getCommaKeyword_7_4());
                     			
-                    // InternalSimpleIDL.g:1069:4: ( (lv_fractionalDigits_32_0= RULE_INT ) )
-                    // InternalSimpleIDL.g:1070:5: (lv_fractionalDigits_32_0= RULE_INT )
+                    // InternalSimpleIDL.g:1064:4: ( (lv_fractionalDigits_32_0= RULE_INT ) )
+                    // InternalSimpleIDL.g:1065:5: (lv_fractionalDigits_32_0= RULE_INT )
                     {
-                    // InternalSimpleIDL.g:1070:5: (lv_fractionalDigits_32_0= RULE_INT )
-                    // InternalSimpleIDL.g:1071:6: lv_fractionalDigits_32_0= RULE_INT
+                    // InternalSimpleIDL.g:1065:5: (lv_fractionalDigits_32_0= RULE_INT )
+                    // InternalSimpleIDL.g:1066:6: lv_fractionalDigits_32_0= RULE_INT
                     {
                     lv_fractionalDigits_32_0=(Token)match(input,RULE_INT,FOLLOW_28); 
 
@@ -2284,7 +2279,7 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleSimpleTypeSpec"
-    // InternalSimpleIDL.g:1096:1: entryRuleSimpleTypeSpec returns [EObject current=null] : iv_ruleSimpleTypeSpec= ruleSimpleTypeSpec EOF ;
+    // InternalSimpleIDL.g:1091:1: entryRuleSimpleTypeSpec returns [EObject current=null] : iv_ruleSimpleTypeSpec= ruleSimpleTypeSpec EOF ;
     public final EObject entryRuleSimpleTypeSpec() throws RecognitionException {
         EObject current = null;
 
@@ -2292,8 +2287,8 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalSimpleIDL.g:1096:55: (iv_ruleSimpleTypeSpec= ruleSimpleTypeSpec EOF )
-            // InternalSimpleIDL.g:1097:2: iv_ruleSimpleTypeSpec= ruleSimpleTypeSpec EOF
+            // InternalSimpleIDL.g:1091:55: (iv_ruleSimpleTypeSpec= ruleSimpleTypeSpec EOF )
+            // InternalSimpleIDL.g:1092:2: iv_ruleSimpleTypeSpec= ruleSimpleTypeSpec EOF
             {
              newCompositeNode(grammarAccess.getSimpleTypeSpecRule()); 
             pushFollow(FOLLOW_1);
@@ -2320,7 +2315,7 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleSimpleTypeSpec"
-    // InternalSimpleIDL.g:1103:1: ruleSimpleTypeSpec returns [EObject current=null] : ( ( () otherlv_1= 'short' ) | ( () otherlv_3= 'long' ) | ( () otherlv_5= 'long' otherlv_6= 'long' ) | ( () otherlv_8= 'unsigned' otherlv_9= 'short' ) | ( () otherlv_11= 'unsigned' otherlv_12= 'long' ) | ( () otherlv_14= 'unsigned' otherlv_15= 'long' otherlv_16= 'long' ) | ( () otherlv_18= 'float' ) | ( () otherlv_20= 'double' ) | ( () otherlv_22= 'long' otherlv_23= 'double' ) | ( () otherlv_25= 'char' ) | ( () otherlv_27= 'wchar' ) | ( () otherlv_29= 'boolean' ) | ( () otherlv_31= 'octet' ) | ( () ( (lv_type_33_0= ruleScopedName ) ) ) ) ;
+    // InternalSimpleIDL.g:1098:1: ruleSimpleTypeSpec returns [EObject current=null] : ( ( () otherlv_1= 'short' ) | ( () otherlv_3= 'long' ) | ( () otherlv_5= 'long' otherlv_6= 'long' ) | ( () otherlv_8= 'unsigned' otherlv_9= 'short' ) | ( () otherlv_11= 'unsigned' otherlv_12= 'long' ) | ( () otherlv_14= 'unsigned' otherlv_15= 'long' otherlv_16= 'long' ) | ( () otherlv_18= 'float' ) | ( () otherlv_20= 'double' ) | ( () otherlv_22= 'long' otherlv_23= 'double' ) | ( () otherlv_25= 'char' ) | ( () otherlv_27= 'wchar' ) | ( () otherlv_29= 'boolean' ) | ( () otherlv_31= 'octet' ) | ( () ( ( ruleScopedName ) ) ) ) ;
     public final EObject ruleSimpleTypeSpec() throws RecognitionException {
         EObject current = null;
 
@@ -2343,28 +2338,26 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
         Token otherlv_27=null;
         Token otherlv_29=null;
         Token otherlv_31=null;
-        AntlrDatatypeRuleToken lv_type_33_0 = null;
-
 
 
         	enterRule();
 
         try {
-            // InternalSimpleIDL.g:1109:2: ( ( ( () otherlv_1= 'short' ) | ( () otherlv_3= 'long' ) | ( () otherlv_5= 'long' otherlv_6= 'long' ) | ( () otherlv_8= 'unsigned' otherlv_9= 'short' ) | ( () otherlv_11= 'unsigned' otherlv_12= 'long' ) | ( () otherlv_14= 'unsigned' otherlv_15= 'long' otherlv_16= 'long' ) | ( () otherlv_18= 'float' ) | ( () otherlv_20= 'double' ) | ( () otherlv_22= 'long' otherlv_23= 'double' ) | ( () otherlv_25= 'char' ) | ( () otherlv_27= 'wchar' ) | ( () otherlv_29= 'boolean' ) | ( () otherlv_31= 'octet' ) | ( () ( (lv_type_33_0= ruleScopedName ) ) ) ) )
-            // InternalSimpleIDL.g:1110:2: ( ( () otherlv_1= 'short' ) | ( () otherlv_3= 'long' ) | ( () otherlv_5= 'long' otherlv_6= 'long' ) | ( () otherlv_8= 'unsigned' otherlv_9= 'short' ) | ( () otherlv_11= 'unsigned' otherlv_12= 'long' ) | ( () otherlv_14= 'unsigned' otherlv_15= 'long' otherlv_16= 'long' ) | ( () otherlv_18= 'float' ) | ( () otherlv_20= 'double' ) | ( () otherlv_22= 'long' otherlv_23= 'double' ) | ( () otherlv_25= 'char' ) | ( () otherlv_27= 'wchar' ) | ( () otherlv_29= 'boolean' ) | ( () otherlv_31= 'octet' ) | ( () ( (lv_type_33_0= ruleScopedName ) ) ) )
+            // InternalSimpleIDL.g:1104:2: ( ( ( () otherlv_1= 'short' ) | ( () otherlv_3= 'long' ) | ( () otherlv_5= 'long' otherlv_6= 'long' ) | ( () otherlv_8= 'unsigned' otherlv_9= 'short' ) | ( () otherlv_11= 'unsigned' otherlv_12= 'long' ) | ( () otherlv_14= 'unsigned' otherlv_15= 'long' otherlv_16= 'long' ) | ( () otherlv_18= 'float' ) | ( () otherlv_20= 'double' ) | ( () otherlv_22= 'long' otherlv_23= 'double' ) | ( () otherlv_25= 'char' ) | ( () otherlv_27= 'wchar' ) | ( () otherlv_29= 'boolean' ) | ( () otherlv_31= 'octet' ) | ( () ( ( ruleScopedName ) ) ) ) )
+            // InternalSimpleIDL.g:1105:2: ( ( () otherlv_1= 'short' ) | ( () otherlv_3= 'long' ) | ( () otherlv_5= 'long' otherlv_6= 'long' ) | ( () otherlv_8= 'unsigned' otherlv_9= 'short' ) | ( () otherlv_11= 'unsigned' otherlv_12= 'long' ) | ( () otherlv_14= 'unsigned' otherlv_15= 'long' otherlv_16= 'long' ) | ( () otherlv_18= 'float' ) | ( () otherlv_20= 'double' ) | ( () otherlv_22= 'long' otherlv_23= 'double' ) | ( () otherlv_25= 'char' ) | ( () otherlv_27= 'wchar' ) | ( () otherlv_29= 'boolean' ) | ( () otherlv_31= 'octet' ) | ( () ( ( ruleScopedName ) ) ) )
             {
-            // InternalSimpleIDL.g:1110:2: ( ( () otherlv_1= 'short' ) | ( () otherlv_3= 'long' ) | ( () otherlv_5= 'long' otherlv_6= 'long' ) | ( () otherlv_8= 'unsigned' otherlv_9= 'short' ) | ( () otherlv_11= 'unsigned' otherlv_12= 'long' ) | ( () otherlv_14= 'unsigned' otherlv_15= 'long' otherlv_16= 'long' ) | ( () otherlv_18= 'float' ) | ( () otherlv_20= 'double' ) | ( () otherlv_22= 'long' otherlv_23= 'double' ) | ( () otherlv_25= 'char' ) | ( () otherlv_27= 'wchar' ) | ( () otherlv_29= 'boolean' ) | ( () otherlv_31= 'octet' ) | ( () ( (lv_type_33_0= ruleScopedName ) ) ) )
+            // InternalSimpleIDL.g:1105:2: ( ( () otherlv_1= 'short' ) | ( () otherlv_3= 'long' ) | ( () otherlv_5= 'long' otherlv_6= 'long' ) | ( () otherlv_8= 'unsigned' otherlv_9= 'short' ) | ( () otherlv_11= 'unsigned' otherlv_12= 'long' ) | ( () otherlv_14= 'unsigned' otherlv_15= 'long' otherlv_16= 'long' ) | ( () otherlv_18= 'float' ) | ( () otherlv_20= 'double' ) | ( () otherlv_22= 'long' otherlv_23= 'double' ) | ( () otherlv_25= 'char' ) | ( () otherlv_27= 'wchar' ) | ( () otherlv_29= 'boolean' ) | ( () otherlv_31= 'octet' ) | ( () ( ( ruleScopedName ) ) ) )
             int alt12=14;
             alt12 = dfa12.predict(input);
             switch (alt12) {
                 case 1 :
-                    // InternalSimpleIDL.g:1111:3: ( () otherlv_1= 'short' )
+                    // InternalSimpleIDL.g:1106:3: ( () otherlv_1= 'short' )
                     {
-                    // InternalSimpleIDL.g:1111:3: ( () otherlv_1= 'short' )
-                    // InternalSimpleIDL.g:1112:4: () otherlv_1= 'short'
+                    // InternalSimpleIDL.g:1106:3: ( () otherlv_1= 'short' )
+                    // InternalSimpleIDL.g:1107:4: () otherlv_1= 'short'
                     {
-                    // InternalSimpleIDL.g:1112:4: ()
-                    // InternalSimpleIDL.g:1113:5: 
+                    // InternalSimpleIDL.g:1107:4: ()
+                    // InternalSimpleIDL.g:1108:5: 
                     {
 
                     					current = forceCreateModelElement(
@@ -2385,13 +2378,13 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalSimpleIDL.g:1125:3: ( () otherlv_3= 'long' )
+                    // InternalSimpleIDL.g:1120:3: ( () otherlv_3= 'long' )
                     {
-                    // InternalSimpleIDL.g:1125:3: ( () otherlv_3= 'long' )
-                    // InternalSimpleIDL.g:1126:4: () otherlv_3= 'long'
+                    // InternalSimpleIDL.g:1120:3: ( () otherlv_3= 'long' )
+                    // InternalSimpleIDL.g:1121:4: () otherlv_3= 'long'
                     {
-                    // InternalSimpleIDL.g:1126:4: ()
-                    // InternalSimpleIDL.g:1127:5: 
+                    // InternalSimpleIDL.g:1121:4: ()
+                    // InternalSimpleIDL.g:1122:5: 
                     {
 
                     					current = forceCreateModelElement(
@@ -2412,13 +2405,13 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalSimpleIDL.g:1139:3: ( () otherlv_5= 'long' otherlv_6= 'long' )
+                    // InternalSimpleIDL.g:1134:3: ( () otherlv_5= 'long' otherlv_6= 'long' )
                     {
-                    // InternalSimpleIDL.g:1139:3: ( () otherlv_5= 'long' otherlv_6= 'long' )
-                    // InternalSimpleIDL.g:1140:4: () otherlv_5= 'long' otherlv_6= 'long'
+                    // InternalSimpleIDL.g:1134:3: ( () otherlv_5= 'long' otherlv_6= 'long' )
+                    // InternalSimpleIDL.g:1135:4: () otherlv_5= 'long' otherlv_6= 'long'
                     {
-                    // InternalSimpleIDL.g:1140:4: ()
-                    // InternalSimpleIDL.g:1141:5: 
+                    // InternalSimpleIDL.g:1135:4: ()
+                    // InternalSimpleIDL.g:1136:5: 
                     {
 
                     					current = forceCreateModelElement(
@@ -2443,13 +2436,13 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalSimpleIDL.g:1157:3: ( () otherlv_8= 'unsigned' otherlv_9= 'short' )
+                    // InternalSimpleIDL.g:1152:3: ( () otherlv_8= 'unsigned' otherlv_9= 'short' )
                     {
-                    // InternalSimpleIDL.g:1157:3: ( () otherlv_8= 'unsigned' otherlv_9= 'short' )
-                    // InternalSimpleIDL.g:1158:4: () otherlv_8= 'unsigned' otherlv_9= 'short'
+                    // InternalSimpleIDL.g:1152:3: ( () otherlv_8= 'unsigned' otherlv_9= 'short' )
+                    // InternalSimpleIDL.g:1153:4: () otherlv_8= 'unsigned' otherlv_9= 'short'
                     {
-                    // InternalSimpleIDL.g:1158:4: ()
-                    // InternalSimpleIDL.g:1159:5: 
+                    // InternalSimpleIDL.g:1153:4: ()
+                    // InternalSimpleIDL.g:1154:5: 
                     {
 
                     					current = forceCreateModelElement(
@@ -2474,13 +2467,13 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalSimpleIDL.g:1175:3: ( () otherlv_11= 'unsigned' otherlv_12= 'long' )
+                    // InternalSimpleIDL.g:1170:3: ( () otherlv_11= 'unsigned' otherlv_12= 'long' )
                     {
-                    // InternalSimpleIDL.g:1175:3: ( () otherlv_11= 'unsigned' otherlv_12= 'long' )
-                    // InternalSimpleIDL.g:1176:4: () otherlv_11= 'unsigned' otherlv_12= 'long'
+                    // InternalSimpleIDL.g:1170:3: ( () otherlv_11= 'unsigned' otherlv_12= 'long' )
+                    // InternalSimpleIDL.g:1171:4: () otherlv_11= 'unsigned' otherlv_12= 'long'
                     {
-                    // InternalSimpleIDL.g:1176:4: ()
-                    // InternalSimpleIDL.g:1177:5: 
+                    // InternalSimpleIDL.g:1171:4: ()
+                    // InternalSimpleIDL.g:1172:5: 
                     {
 
                     					current = forceCreateModelElement(
@@ -2505,13 +2498,13 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalSimpleIDL.g:1193:3: ( () otherlv_14= 'unsigned' otherlv_15= 'long' otherlv_16= 'long' )
+                    // InternalSimpleIDL.g:1188:3: ( () otherlv_14= 'unsigned' otherlv_15= 'long' otherlv_16= 'long' )
                     {
-                    // InternalSimpleIDL.g:1193:3: ( () otherlv_14= 'unsigned' otherlv_15= 'long' otherlv_16= 'long' )
-                    // InternalSimpleIDL.g:1194:4: () otherlv_14= 'unsigned' otherlv_15= 'long' otherlv_16= 'long'
+                    // InternalSimpleIDL.g:1188:3: ( () otherlv_14= 'unsigned' otherlv_15= 'long' otherlv_16= 'long' )
+                    // InternalSimpleIDL.g:1189:4: () otherlv_14= 'unsigned' otherlv_15= 'long' otherlv_16= 'long'
                     {
-                    // InternalSimpleIDL.g:1194:4: ()
-                    // InternalSimpleIDL.g:1195:5: 
+                    // InternalSimpleIDL.g:1189:4: ()
+                    // InternalSimpleIDL.g:1190:5: 
                     {
 
                     					current = forceCreateModelElement(
@@ -2540,13 +2533,13 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // InternalSimpleIDL.g:1215:3: ( () otherlv_18= 'float' )
+                    // InternalSimpleIDL.g:1210:3: ( () otherlv_18= 'float' )
                     {
-                    // InternalSimpleIDL.g:1215:3: ( () otherlv_18= 'float' )
-                    // InternalSimpleIDL.g:1216:4: () otherlv_18= 'float'
+                    // InternalSimpleIDL.g:1210:3: ( () otherlv_18= 'float' )
+                    // InternalSimpleIDL.g:1211:4: () otherlv_18= 'float'
                     {
-                    // InternalSimpleIDL.g:1216:4: ()
-                    // InternalSimpleIDL.g:1217:5: 
+                    // InternalSimpleIDL.g:1211:4: ()
+                    // InternalSimpleIDL.g:1212:5: 
                     {
 
                     					current = forceCreateModelElement(
@@ -2567,13 +2560,13 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 8 :
-                    // InternalSimpleIDL.g:1229:3: ( () otherlv_20= 'double' )
+                    // InternalSimpleIDL.g:1224:3: ( () otherlv_20= 'double' )
                     {
-                    // InternalSimpleIDL.g:1229:3: ( () otherlv_20= 'double' )
-                    // InternalSimpleIDL.g:1230:4: () otherlv_20= 'double'
+                    // InternalSimpleIDL.g:1224:3: ( () otherlv_20= 'double' )
+                    // InternalSimpleIDL.g:1225:4: () otherlv_20= 'double'
                     {
-                    // InternalSimpleIDL.g:1230:4: ()
-                    // InternalSimpleIDL.g:1231:5: 
+                    // InternalSimpleIDL.g:1225:4: ()
+                    // InternalSimpleIDL.g:1226:5: 
                     {
 
                     					current = forceCreateModelElement(
@@ -2594,13 +2587,13 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 9 :
-                    // InternalSimpleIDL.g:1243:3: ( () otherlv_22= 'long' otherlv_23= 'double' )
+                    // InternalSimpleIDL.g:1238:3: ( () otherlv_22= 'long' otherlv_23= 'double' )
                     {
-                    // InternalSimpleIDL.g:1243:3: ( () otherlv_22= 'long' otherlv_23= 'double' )
-                    // InternalSimpleIDL.g:1244:4: () otherlv_22= 'long' otherlv_23= 'double'
+                    // InternalSimpleIDL.g:1238:3: ( () otherlv_22= 'long' otherlv_23= 'double' )
+                    // InternalSimpleIDL.g:1239:4: () otherlv_22= 'long' otherlv_23= 'double'
                     {
-                    // InternalSimpleIDL.g:1244:4: ()
-                    // InternalSimpleIDL.g:1245:5: 
+                    // InternalSimpleIDL.g:1239:4: ()
+                    // InternalSimpleIDL.g:1240:5: 
                     {
 
                     					current = forceCreateModelElement(
@@ -2625,13 +2618,13 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 10 :
-                    // InternalSimpleIDL.g:1261:3: ( () otherlv_25= 'char' )
+                    // InternalSimpleIDL.g:1256:3: ( () otherlv_25= 'char' )
                     {
-                    // InternalSimpleIDL.g:1261:3: ( () otherlv_25= 'char' )
-                    // InternalSimpleIDL.g:1262:4: () otherlv_25= 'char'
+                    // InternalSimpleIDL.g:1256:3: ( () otherlv_25= 'char' )
+                    // InternalSimpleIDL.g:1257:4: () otherlv_25= 'char'
                     {
-                    // InternalSimpleIDL.g:1262:4: ()
-                    // InternalSimpleIDL.g:1263:5: 
+                    // InternalSimpleIDL.g:1257:4: ()
+                    // InternalSimpleIDL.g:1258:5: 
                     {
 
                     					current = forceCreateModelElement(
@@ -2652,13 +2645,13 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 11 :
-                    // InternalSimpleIDL.g:1275:3: ( () otherlv_27= 'wchar' )
+                    // InternalSimpleIDL.g:1270:3: ( () otherlv_27= 'wchar' )
                     {
-                    // InternalSimpleIDL.g:1275:3: ( () otherlv_27= 'wchar' )
-                    // InternalSimpleIDL.g:1276:4: () otherlv_27= 'wchar'
+                    // InternalSimpleIDL.g:1270:3: ( () otherlv_27= 'wchar' )
+                    // InternalSimpleIDL.g:1271:4: () otherlv_27= 'wchar'
                     {
-                    // InternalSimpleIDL.g:1276:4: ()
-                    // InternalSimpleIDL.g:1277:5: 
+                    // InternalSimpleIDL.g:1271:4: ()
+                    // InternalSimpleIDL.g:1272:5: 
                     {
 
                     					current = forceCreateModelElement(
@@ -2679,13 +2672,13 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 12 :
-                    // InternalSimpleIDL.g:1289:3: ( () otherlv_29= 'boolean' )
+                    // InternalSimpleIDL.g:1284:3: ( () otherlv_29= 'boolean' )
                     {
-                    // InternalSimpleIDL.g:1289:3: ( () otherlv_29= 'boolean' )
-                    // InternalSimpleIDL.g:1290:4: () otherlv_29= 'boolean'
+                    // InternalSimpleIDL.g:1284:3: ( () otherlv_29= 'boolean' )
+                    // InternalSimpleIDL.g:1285:4: () otherlv_29= 'boolean'
                     {
-                    // InternalSimpleIDL.g:1290:4: ()
-                    // InternalSimpleIDL.g:1291:5: 
+                    // InternalSimpleIDL.g:1285:4: ()
+                    // InternalSimpleIDL.g:1286:5: 
                     {
 
                     					current = forceCreateModelElement(
@@ -2706,13 +2699,13 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 13 :
-                    // InternalSimpleIDL.g:1303:3: ( () otherlv_31= 'octet' )
+                    // InternalSimpleIDL.g:1298:3: ( () otherlv_31= 'octet' )
                     {
-                    // InternalSimpleIDL.g:1303:3: ( () otherlv_31= 'octet' )
-                    // InternalSimpleIDL.g:1304:4: () otherlv_31= 'octet'
+                    // InternalSimpleIDL.g:1298:3: ( () otherlv_31= 'octet' )
+                    // InternalSimpleIDL.g:1299:4: () otherlv_31= 'octet'
                     {
-                    // InternalSimpleIDL.g:1304:4: ()
-                    // InternalSimpleIDL.g:1305:5: 
+                    // InternalSimpleIDL.g:1299:4: ()
+                    // InternalSimpleIDL.g:1300:5: 
                     {
 
                     					current = forceCreateModelElement(
@@ -2733,13 +2726,13 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 14 :
-                    // InternalSimpleIDL.g:1317:3: ( () ( (lv_type_33_0= ruleScopedName ) ) )
+                    // InternalSimpleIDL.g:1312:3: ( () ( ( ruleScopedName ) ) )
                     {
-                    // InternalSimpleIDL.g:1317:3: ( () ( (lv_type_33_0= ruleScopedName ) ) )
-                    // InternalSimpleIDL.g:1318:4: () ( (lv_type_33_0= ruleScopedName ) )
+                    // InternalSimpleIDL.g:1312:3: ( () ( ( ruleScopedName ) ) )
+                    // InternalSimpleIDL.g:1313:4: () ( ( ruleScopedName ) )
                     {
-                    // InternalSimpleIDL.g:1318:4: ()
-                    // InternalSimpleIDL.g:1319:5: 
+                    // InternalSimpleIDL.g:1313:4: ()
+                    // InternalSimpleIDL.g:1314:5: 
                     {
 
                     					current = forceCreateModelElement(
@@ -2749,29 +2742,26 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSimpleIDL.g:1325:4: ( (lv_type_33_0= ruleScopedName ) )
-                    // InternalSimpleIDL.g:1326:5: (lv_type_33_0= ruleScopedName )
+                    // InternalSimpleIDL.g:1320:4: ( ( ruleScopedName ) )
+                    // InternalSimpleIDL.g:1321:5: ( ruleScopedName )
                     {
-                    // InternalSimpleIDL.g:1326:5: (lv_type_33_0= ruleScopedName )
-                    // InternalSimpleIDL.g:1327:6: lv_type_33_0= ruleScopedName
+                    // InternalSimpleIDL.g:1321:5: ( ruleScopedName )
+                    // InternalSimpleIDL.g:1322:6: ruleScopedName
                     {
 
-                    						newCompositeNode(grammarAccess.getSimpleTypeSpecAccess().getTypeScopedNameParserRuleCall_13_1_0());
+                    						if (current==null) {
+                    							current = createModelElement(grammarAccess.getSimpleTypeSpecRule());
+                    						}
+                    					
+
+                    						newCompositeNode(grammarAccess.getSimpleTypeSpecAccess().getTypeDefinitionCrossReference_13_1_0());
                     					
                     pushFollow(FOLLOW_2);
-                    lv_type_33_0=ruleScopedName();
+                    ruleScopedName();
 
                     state._fsp--;
 
 
-                    						if (current==null) {
-                    							current = createModelElementForParent(grammarAccess.getSimpleTypeSpecRule());
-                    						}
-                    						set(
-                    							current,
-                    							"type",
-                    							lv_type_33_0,
-                    							"org.osate.simpleidl.SimpleIDL.ScopedName");
                     						afterParserOrEnumRuleCall();
                     					
 
@@ -2809,7 +2799,7 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleScopedName"
-    // InternalSimpleIDL.g:1349:1: entryRuleScopedName returns [String current=null] : iv_ruleScopedName= ruleScopedName EOF ;
+    // InternalSimpleIDL.g:1341:1: entryRuleScopedName returns [String current=null] : iv_ruleScopedName= ruleScopedName EOF ;
     public final String entryRuleScopedName() throws RecognitionException {
         String current = null;
 
@@ -2817,8 +2807,8 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalSimpleIDL.g:1349:50: (iv_ruleScopedName= ruleScopedName EOF )
-            // InternalSimpleIDL.g:1350:2: iv_ruleScopedName= ruleScopedName EOF
+            // InternalSimpleIDL.g:1341:50: (iv_ruleScopedName= ruleScopedName EOF )
+            // InternalSimpleIDL.g:1342:2: iv_ruleScopedName= ruleScopedName EOF
             {
              newCompositeNode(grammarAccess.getScopedNameRule()); 
             pushFollow(FOLLOW_1);
@@ -2845,7 +2835,7 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleScopedName"
-    // InternalSimpleIDL.g:1356:1: ruleScopedName returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= '::' )? (this_ID_1= RULE_ID kw= '::' )* this_ID_3= RULE_ID ) ;
+    // InternalSimpleIDL.g:1348:1: ruleScopedName returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= '::' )? (this_ID_1= RULE_ID kw= '::' )* this_ID_3= RULE_ID ) ;
     public final AntlrDatatypeRuleToken ruleScopedName() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -2857,13 +2847,13 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSimpleIDL.g:1362:2: ( ( (kw= '::' )? (this_ID_1= RULE_ID kw= '::' )* this_ID_3= RULE_ID ) )
-            // InternalSimpleIDL.g:1363:2: ( (kw= '::' )? (this_ID_1= RULE_ID kw= '::' )* this_ID_3= RULE_ID )
+            // InternalSimpleIDL.g:1354:2: ( ( (kw= '::' )? (this_ID_1= RULE_ID kw= '::' )* this_ID_3= RULE_ID ) )
+            // InternalSimpleIDL.g:1355:2: ( (kw= '::' )? (this_ID_1= RULE_ID kw= '::' )* this_ID_3= RULE_ID )
             {
-            // InternalSimpleIDL.g:1363:2: ( (kw= '::' )? (this_ID_1= RULE_ID kw= '::' )* this_ID_3= RULE_ID )
-            // InternalSimpleIDL.g:1364:3: (kw= '::' )? (this_ID_1= RULE_ID kw= '::' )* this_ID_3= RULE_ID
+            // InternalSimpleIDL.g:1355:2: ( (kw= '::' )? (this_ID_1= RULE_ID kw= '::' )* this_ID_3= RULE_ID )
+            // InternalSimpleIDL.g:1356:3: (kw= '::' )? (this_ID_1= RULE_ID kw= '::' )* this_ID_3= RULE_ID
             {
-            // InternalSimpleIDL.g:1364:3: (kw= '::' )?
+            // InternalSimpleIDL.g:1356:3: (kw= '::' )?
             int alt13=2;
             int LA13_0 = input.LA(1);
 
@@ -2872,7 +2862,7 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
             }
             switch (alt13) {
                 case 1 :
-                    // InternalSimpleIDL.g:1365:4: kw= '::'
+                    // InternalSimpleIDL.g:1357:4: kw= '::'
                     {
                     kw=(Token)match(input,43,FOLLOW_4); 
 
@@ -2885,7 +2875,7 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSimpleIDL.g:1371:3: (this_ID_1= RULE_ID kw= '::' )*
+            // InternalSimpleIDL.g:1363:3: (this_ID_1= RULE_ID kw= '::' )*
             loop14:
             do {
                 int alt14=2;
@@ -2904,7 +2894,7 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
 
                 switch (alt14) {
             	case 1 :
-            	    // InternalSimpleIDL.g:1372:4: this_ID_1= RULE_ID kw= '::'
+            	    // InternalSimpleIDL.g:1364:4: this_ID_1= RULE_ID kw= '::'
             	    {
             	    this_ID_1=(Token)match(input,RULE_ID,FOLLOW_31); 
 
@@ -3021,7 +3011,7 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
             this.transition = dfa_7;
         }
         public String getDescription() {
-            return "809:2: (this_SimpleTypeSpec_0= ruleSimpleTypeSpec | ( () otherlv_2= 'sequence' otherlv_3= '<' ( (lv_type_4_0= ruleSimpleTypeSpec ) ) otherlv_5= ',' ( (lv_size_6_0= RULE_INT ) ) otherlv_7= '>' ) | ( () otherlv_9= 'sequence' otherlv_10= '<' ( (lv_type_11_0= ruleSimpleTypeSpec ) ) otherlv_12= '>' ) | ( () otherlv_14= 'string' otherlv_15= '<' ( (lv_size_16_0= RULE_INT ) ) otherlv_17= '>' ) | ( () otherlv_19= 'string' ) | ( () otherlv_21= 'wstring' otherlv_22= '<' ( (lv_size_23_0= RULE_INT ) ) otherlv_24= '>' ) | ( () otherlv_26= 'wstring' ) | ( () otherlv_28= 'fixed' otherlv_29= '<' ( (lv_totalDigits_30_0= RULE_INT ) ) otherlv_31= ',' ( (lv_fractionalDigits_32_0= RULE_INT ) ) otherlv_33= '>' ) )";
+            return "804:2: (this_SimpleTypeSpec_0= ruleSimpleTypeSpec | ( () otherlv_2= 'sequence' otherlv_3= '<' ( (lv_type_4_0= ruleSimpleTypeSpec ) ) otherlv_5= ',' ( (lv_size_6_0= RULE_INT ) ) otherlv_7= '>' ) | ( () otherlv_9= 'sequence' otherlv_10= '<' ( (lv_type_11_0= ruleSimpleTypeSpec ) ) otherlv_12= '>' ) | ( () otherlv_14= 'string' otherlv_15= '<' ( (lv_size_16_0= RULE_INT ) ) otherlv_17= '>' ) | ( () otherlv_19= 'string' ) | ( () otherlv_21= 'wstring' otherlv_22= '<' ( (lv_size_23_0= RULE_INT ) ) otherlv_24= '>' ) | ( () otherlv_26= 'wstring' ) | ( () otherlv_28= 'fixed' otherlv_29= '<' ( (lv_totalDigits_30_0= RULE_INT ) ) otherlv_31= ',' ( (lv_fractionalDigits_32_0= RULE_INT ) ) otherlv_33= '>' ) )";
         }
     }
     static final String dfa_8s = "\22\uffff";
@@ -3073,7 +3063,7 @@ public class InternalSimpleIDLParser extends AbstractInternalAntlrParser {
             this.transition = dfa_14;
         }
         public String getDescription() {
-            return "1110:2: ( ( () otherlv_1= 'short' ) | ( () otherlv_3= 'long' ) | ( () otherlv_5= 'long' otherlv_6= 'long' ) | ( () otherlv_8= 'unsigned' otherlv_9= 'short' ) | ( () otherlv_11= 'unsigned' otherlv_12= 'long' ) | ( () otherlv_14= 'unsigned' otherlv_15= 'long' otherlv_16= 'long' ) | ( () otherlv_18= 'float' ) | ( () otherlv_20= 'double' ) | ( () otherlv_22= 'long' otherlv_23= 'double' ) | ( () otherlv_25= 'char' ) | ( () otherlv_27= 'wchar' ) | ( () otherlv_29= 'boolean' ) | ( () otherlv_31= 'octet' ) | ( () ( (lv_type_33_0= ruleScopedName ) ) ) )";
+            return "1105:2: ( ( () otherlv_1= 'short' ) | ( () otherlv_3= 'long' ) | ( () otherlv_5= 'long' otherlv_6= 'long' ) | ( () otherlv_8= 'unsigned' otherlv_9= 'short' ) | ( () otherlv_11= 'unsigned' otherlv_12= 'long' ) | ( () otherlv_14= 'unsigned' otherlv_15= 'long' otherlv_16= 'long' ) | ( () otherlv_18= 'float' ) | ( () otherlv_20= 'double' ) | ( () otherlv_22= 'long' otherlv_23= 'double' ) | ( () otherlv_25= 'char' ) | ( () otherlv_27= 'wchar' ) | ( () otherlv_29= 'boolean' ) | ( () otherlv_31= 'octet' ) | ( () ( ( ruleScopedName ) ) ) )";
         }
     }
  

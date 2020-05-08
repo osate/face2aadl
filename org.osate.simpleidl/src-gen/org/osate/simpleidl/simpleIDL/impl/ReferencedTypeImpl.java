@@ -24,9 +24,11 @@ package org.osate.simpleidl.simpleIDL.impl;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.osate.simpleidl.simpleIDL.Definition;
 import org.osate.simpleidl.simpleIDL.ReferencedType;
 import org.osate.simpleidl.simpleIDL.SimpleIDLPackage;
 
@@ -46,24 +48,14 @@ import org.osate.simpleidl.simpleIDL.SimpleIDLPackage;
 public class ReferencedTypeImpl extends SimpleTypeSpecImpl implements ReferencedType
 {
   /**
-   * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+   * The cached value of the '{@link #getType() <em>Type</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getType()
    * @generated
    * @ordered
    */
-  protected static final String TYPE_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getType()
-   * @generated
-   * @ordered
-   */
-  protected String type = TYPE_EDEFAULT;
+  protected Definition type;
 
   /**
    * <!-- begin-user-doc -->
@@ -92,7 +84,27 @@ public class ReferencedTypeImpl extends SimpleTypeSpecImpl implements Referenced
    * @generated
    */
   @Override
-  public String getType()
+  public Definition getType()
+  {
+    if (type != null && type.eIsProxy())
+    {
+      InternalEObject oldType = (InternalEObject)type;
+      type = (Definition)eResolveProxy(oldType);
+      if (type != oldType)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SimpleIDLPackage.REFERENCED_TYPE__TYPE, oldType, type));
+      }
+    }
+    return type;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Definition basicGetType()
   {
     return type;
   }
@@ -103,9 +115,9 @@ public class ReferencedTypeImpl extends SimpleTypeSpecImpl implements Referenced
    * @generated
    */
   @Override
-  public void setType(String newType)
+  public void setType(Definition newType)
   {
-    String oldType = type;
+    Definition oldType = type;
     type = newType;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, SimpleIDLPackage.REFERENCED_TYPE__TYPE, oldType, type));
@@ -122,7 +134,8 @@ public class ReferencedTypeImpl extends SimpleTypeSpecImpl implements Referenced
     switch (featureID)
     {
       case SimpleIDLPackage.REFERENCED_TYPE__TYPE:
-        return getType();
+        if (resolve) return getType();
+        return basicGetType();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -138,7 +151,7 @@ public class ReferencedTypeImpl extends SimpleTypeSpecImpl implements Referenced
     switch (featureID)
     {
       case SimpleIDLPackage.REFERENCED_TYPE__TYPE:
-        setType((String)newValue);
+        setType((Definition)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -155,7 +168,7 @@ public class ReferencedTypeImpl extends SimpleTypeSpecImpl implements Referenced
     switch (featureID)
     {
       case SimpleIDLPackage.REFERENCED_TYPE__TYPE:
-        setType(TYPE_EDEFAULT);
+        setType((Definition)null);
         return;
     }
     super.eUnset(featureID);
@@ -172,26 +185,9 @@ public class ReferencedTypeImpl extends SimpleTypeSpecImpl implements Referenced
     switch (featureID)
     {
       case SimpleIDLPackage.REFERENCED_TYPE__TYPE:
-        return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
+        return type != null;
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (type: ");
-    result.append(type);
-    result.append(')');
-    return result.toString();
   }
 
 } //ReferencedTypeImpl

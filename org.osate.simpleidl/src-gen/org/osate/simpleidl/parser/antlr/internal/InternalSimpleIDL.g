@@ -268,19 +268,14 @@ ruleDefinition returns [EObject current=null]
 			}
 			(
 				(
-					lv_name_16_0=RULE_ID
-					{
-						newLeafNode(lv_name_16_0, grammarAccess.getDefinitionAccess().getNameIDTerminalRuleCall_2_2_0());
-					}
 					{
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getDefinitionRule());
 						}
-						setWithLastConsumed(
-							$current,
-							"name",
-							lv_name_16_0,
-							"org.osate.simpleidl.SimpleIDL.ID");
+					}
+					otherlv_16=RULE_ID
+					{
+						newLeafNode(otherlv_16, grammarAccess.getDefinitionAccess().getStructStructCrossReference_2_2_0());
 					}
 				)
 			)
@@ -1325,18 +1320,15 @@ ruleSimpleTypeSpec returns [EObject current=null]
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getSimpleTypeSpecAccess().getTypeScopedNameParserRuleCall_13_1_0());
-					}
-					lv_type_33_0=ruleScopedName
-					{
 						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getSimpleTypeSpecRule());
+							$current = createModelElement(grammarAccess.getSimpleTypeSpecRule());
 						}
-						set(
-							$current,
-							"type",
-							lv_type_33_0,
-							"org.osate.simpleidl.SimpleIDL.ScopedName");
+					}
+					{
+						newCompositeNode(grammarAccess.getSimpleTypeSpecAccess().getTypeDefinitionCrossReference_13_1_0());
+					}
+					ruleScopedName
+					{
 						afterParserOrEnumRuleCall();
 					}
 				)

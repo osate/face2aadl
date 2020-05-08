@@ -24,10 +24,12 @@ package org.osate.simpleidl.simpleIDL.impl;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.osate.simpleidl.simpleIDL.SimpleIDLPackage;
+import org.osate.simpleidl.simpleIDL.Struct;
 import org.osate.simpleidl.simpleIDL.StructForward;
 
 /**
@@ -38,7 +40,7 @@ import org.osate.simpleidl.simpleIDL.StructForward;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.osate.simpleidl.simpleIDL.impl.StructForwardImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.osate.simpleidl.simpleIDL.impl.StructForwardImpl#getStruct <em>Struct</em>}</li>
  * </ul>
  *
  * @generated
@@ -46,24 +48,14 @@ import org.osate.simpleidl.simpleIDL.StructForward;
 public class StructForwardImpl extends DefinitionImpl implements StructForward
 {
   /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+   * The cached value of the '{@link #getStruct() <em>Struct</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getName()
+   * @see #getStruct()
    * @generated
    * @ordered
    */
-  protected static final String NAME_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected String name = NAME_EDEFAULT;
+  protected Struct struct;
 
   /**
    * <!-- begin-user-doc -->
@@ -92,9 +84,29 @@ public class StructForwardImpl extends DefinitionImpl implements StructForward
    * @generated
    */
   @Override
-  public String getName()
+  public Struct getStruct()
   {
-    return name;
+    if (struct != null && struct.eIsProxy())
+    {
+      InternalEObject oldStruct = (InternalEObject)struct;
+      struct = (Struct)eResolveProxy(oldStruct);
+      if (struct != oldStruct)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SimpleIDLPackage.STRUCT_FORWARD__STRUCT, oldStruct, struct));
+      }
+    }
+    return struct;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Struct basicGetStruct()
+  {
+    return struct;
   }
 
   /**
@@ -103,12 +115,12 @@ public class StructForwardImpl extends DefinitionImpl implements StructForward
    * @generated
    */
   @Override
-  public void setName(String newName)
+  public void setStruct(Struct newStruct)
   {
-    String oldName = name;
-    name = newName;
+    Struct oldStruct = struct;
+    struct = newStruct;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SimpleIDLPackage.STRUCT_FORWARD__NAME, oldName, name));
+      eNotify(new ENotificationImpl(this, Notification.SET, SimpleIDLPackage.STRUCT_FORWARD__STRUCT, oldStruct, struct));
   }
 
   /**
@@ -121,8 +133,9 @@ public class StructForwardImpl extends DefinitionImpl implements StructForward
   {
     switch (featureID)
     {
-      case SimpleIDLPackage.STRUCT_FORWARD__NAME:
-        return getName();
+      case SimpleIDLPackage.STRUCT_FORWARD__STRUCT:
+        if (resolve) return getStruct();
+        return basicGetStruct();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -137,8 +150,8 @@ public class StructForwardImpl extends DefinitionImpl implements StructForward
   {
     switch (featureID)
     {
-      case SimpleIDLPackage.STRUCT_FORWARD__NAME:
-        setName((String)newValue);
+      case SimpleIDLPackage.STRUCT_FORWARD__STRUCT:
+        setStruct((Struct)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -154,8 +167,8 @@ public class StructForwardImpl extends DefinitionImpl implements StructForward
   {
     switch (featureID)
     {
-      case SimpleIDLPackage.STRUCT_FORWARD__NAME:
-        setName(NAME_EDEFAULT);
+      case SimpleIDLPackage.STRUCT_FORWARD__STRUCT:
+        setStruct((Struct)null);
         return;
     }
     super.eUnset(featureID);
@@ -171,27 +184,10 @@ public class StructForwardImpl extends DefinitionImpl implements StructForward
   {
     switch (featureID)
     {
-      case SimpleIDLPackage.STRUCT_FORWARD__NAME:
-        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+      case SimpleIDLPackage.STRUCT_FORWARD__STRUCT:
+        return struct != null;
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (name: ");
-    result.append(name);
-    result.append(')');
-    return result.toString();
   }
 
 } //StructForwardImpl

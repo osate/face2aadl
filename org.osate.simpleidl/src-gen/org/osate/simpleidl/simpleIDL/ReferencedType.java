@@ -41,25 +41,25 @@ package org.osate.simpleidl.simpleIDL;
 public interface ReferencedType extends SimpleTypeSpec
 {
   /**
-   * Returns the value of the '<em><b>Type</b></em>' attribute.
+   * Returns the value of the '<em><b>Type</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Type</em>' attribute.
-   * @see #setType(String)
+   * @return the value of the '<em>Type</em>' reference.
+   * @see #setType(Definition)
    * @see org.osate.simpleidl.simpleIDL.SimpleIDLPackage#getReferencedType_Type()
    * @model
    * @generated
    */
-  String getType();
+  Definition getType();
 
   /**
-   * Sets the value of the '{@link org.osate.simpleidl.simpleIDL.ReferencedType#getType <em>Type</em>}' attribute.
+   * Sets the value of the '{@link org.osate.simpleidl.simpleIDL.ReferencedType#getType <em>Type</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Type</em>' attribute.
+   * @param value the new value of the '<em>Type</em>' reference.
    * @see #getType()
    * @generated
    */
-  void setType(String value);
+  void setType(Definition value);
 
 } // ReferencedType

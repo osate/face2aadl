@@ -34,7 +34,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//Struct/members"/>
     </genClasses>
     <genClasses ecoreClass="SimpleIDL.ecore#//StructForward">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//StructForward/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//StructForward/struct"/>
     </genClasses>
     <genClasses ecoreClass="SimpleIDL.ecore#//Union">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//Union/name"/>
@@ -81,7 +81,7 @@
     <genClasses ecoreClass="SimpleIDL.ecore#//BooleanType"/>
     <genClasses ecoreClass="SimpleIDL.ecore#//OctetType"/>
     <genClasses ecoreClass="SimpleIDL.ecore#//ReferencedType">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//ReferencedType/type"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//ReferencedType/type"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

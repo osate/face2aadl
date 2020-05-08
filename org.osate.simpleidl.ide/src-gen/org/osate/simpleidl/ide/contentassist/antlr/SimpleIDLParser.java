@@ -92,7 +92,7 @@ public class SimpleIDLParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getDefinitionAccess().getDefinitionsAssignment_0_4(), "rule__Definition__DefinitionsAssignment_0_4");
 			builder.put(grammarAccess.getDefinitionAccess().getNameAssignment_1_2(), "rule__Definition__NameAssignment_1_2");
 			builder.put(grammarAccess.getDefinitionAccess().getMembersAssignment_1_4(), "rule__Definition__MembersAssignment_1_4");
-			builder.put(grammarAccess.getDefinitionAccess().getNameAssignment_2_2(), "rule__Definition__NameAssignment_2_2");
+			builder.put(grammarAccess.getDefinitionAccess().getStructAssignment_2_2(), "rule__Definition__StructAssignment_2_2");
 			builder.put(grammarAccess.getDefinitionAccess().getNameAssignment_3_2(), "rule__Definition__NameAssignment_3_2");
 			builder.put(grammarAccess.getDefinitionAccess().getCasesAssignment_3_10(), "rule__Definition__CasesAssignment_3_10");
 			builder.put(grammarAccess.getDefinitionAccess().getNameAssignment_4_2(), "rule__Definition__NameAssignment_4_2");

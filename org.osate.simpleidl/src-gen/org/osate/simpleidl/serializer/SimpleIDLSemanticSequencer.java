@@ -239,15 +239,15 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	 *     Definition returns StructForward
 	 *
 	 * Constraint:
-	 *     name=ID
+	 *     struct=[Struct|ID]
 	 */
 	protected void sequence_Definition(ISerializationContext context, StructForward semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, SimpleIDLPackage.Literals.STRUCT_FORWARD__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SimpleIDLPackage.Literals.STRUCT_FORWARD__NAME));
+			if (transientValues.isValueTransient(semanticObject, SimpleIDLPackage.Literals.STRUCT_FORWARD__STRUCT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SimpleIDLPackage.Literals.STRUCT_FORWARD__STRUCT));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getDefinitionAccess().getNameIDTerminalRuleCall_2_2_0(), semanticObject.getName());
+		feeder.accept(grammarAccess.getDefinitionAccess().getStructStructIDTerminalRuleCall_2_2_0_1(), semanticObject.eGet(SimpleIDLPackage.Literals.STRUCT_FORWARD__STRUCT, false));
 		feeder.finish();
 	}
 	
@@ -372,7 +372,7 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	 *     SimpleTypeSpec returns ReferencedType
 	 *
 	 * Constraint:
-	 *     type=ScopedName
+	 *     type=[Definition|ScopedName]
 	 */
 	protected void sequence_SimpleTypeSpec(ISerializationContext context, ReferencedType semanticObject) {
 		if (errorAcceptor != null) {
@@ -380,7 +380,7 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SimpleIDLPackage.Literals.REFERENCED_TYPE__TYPE));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getSimpleTypeSpecAccess().getTypeScopedNameParserRuleCall_13_1_0(), semanticObject.getType());
+		feeder.accept(grammarAccess.getSimpleTypeSpecAccess().getTypeDefinitionScopedNameParserRuleCall_13_1_0_1(), semanticObject.eGet(SimpleIDLPackage.Literals.REFERENCED_TYPE__TYPE, false));
 		feeder.finish();
 	}
 	

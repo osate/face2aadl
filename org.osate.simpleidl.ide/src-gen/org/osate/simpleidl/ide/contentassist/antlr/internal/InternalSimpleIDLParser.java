@@ -801,11 +801,11 @@ public class InternalSimpleIDLParser extends AbstractInternalContentAssistParser
                 if ( (LA2_2==RULE_ID) ) {
                     int LA2_6 = input.LA(3);
 
-                    if ( (LA2_6==15) ) {
-                        alt2=3;
-                    }
-                    else if ( (LA2_6==13) ) {
+                    if ( (LA2_6==13) ) {
                         alt2=2;
+                    }
+                    else if ( (LA2_6==15) ) {
+                        alt2=3;
                     }
                     else {
                         NoViableAltException nvae =
@@ -2967,31 +2967,31 @@ public class InternalSimpleIDLParser extends AbstractInternalContentAssistParser
 
 
     // $ANTLR start "rule__Definition__Group_2__2__Impl"
-    // InternalSimpleIDL.g:928:1: rule__Definition__Group_2__2__Impl : ( ( rule__Definition__NameAssignment_2_2 ) ) ;
+    // InternalSimpleIDL.g:928:1: rule__Definition__Group_2__2__Impl : ( ( rule__Definition__StructAssignment_2_2 ) ) ;
     public final void rule__Definition__Group_2__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSimpleIDL.g:932:1: ( ( ( rule__Definition__NameAssignment_2_2 ) ) )
-            // InternalSimpleIDL.g:933:1: ( ( rule__Definition__NameAssignment_2_2 ) )
+            // InternalSimpleIDL.g:932:1: ( ( ( rule__Definition__StructAssignment_2_2 ) ) )
+            // InternalSimpleIDL.g:933:1: ( ( rule__Definition__StructAssignment_2_2 ) )
             {
-            // InternalSimpleIDL.g:933:1: ( ( rule__Definition__NameAssignment_2_2 ) )
-            // InternalSimpleIDL.g:934:2: ( rule__Definition__NameAssignment_2_2 )
+            // InternalSimpleIDL.g:933:1: ( ( rule__Definition__StructAssignment_2_2 ) )
+            // InternalSimpleIDL.g:934:2: ( rule__Definition__StructAssignment_2_2 )
             {
-             before(grammarAccess.getDefinitionAccess().getNameAssignment_2_2()); 
-            // InternalSimpleIDL.g:935:2: ( rule__Definition__NameAssignment_2_2 )
-            // InternalSimpleIDL.g:935:3: rule__Definition__NameAssignment_2_2
+             before(grammarAccess.getDefinitionAccess().getStructAssignment_2_2()); 
+            // InternalSimpleIDL.g:935:2: ( rule__Definition__StructAssignment_2_2 )
+            // InternalSimpleIDL.g:935:3: rule__Definition__StructAssignment_2_2
             {
             pushFollow(FOLLOW_2);
-            rule__Definition__NameAssignment_2_2();
+            rule__Definition__StructAssignment_2_2();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getDefinitionAccess().getNameAssignment_2_2()); 
+             after(grammarAccess.getDefinitionAccess().getStructAssignment_2_2()); 
 
             }
 
@@ -12834,22 +12834,30 @@ public class InternalSimpleIDLParser extends AbstractInternalContentAssistParser
     // $ANTLR end "rule__Definition__MembersAssignment_1_4"
 
 
-    // $ANTLR start "rule__Definition__NameAssignment_2_2"
-    // InternalSimpleIDL.g:4380:1: rule__Definition__NameAssignment_2_2 : ( RULE_ID ) ;
-    public final void rule__Definition__NameAssignment_2_2() throws RecognitionException {
+    // $ANTLR start "rule__Definition__StructAssignment_2_2"
+    // InternalSimpleIDL.g:4380:1: rule__Definition__StructAssignment_2_2 : ( ( RULE_ID ) ) ;
+    public final void rule__Definition__StructAssignment_2_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSimpleIDL.g:4384:1: ( ( RULE_ID ) )
-            // InternalSimpleIDL.g:4385:2: ( RULE_ID )
+            // InternalSimpleIDL.g:4384:1: ( ( ( RULE_ID ) ) )
+            // InternalSimpleIDL.g:4385:2: ( ( RULE_ID ) )
             {
-            // InternalSimpleIDL.g:4385:2: ( RULE_ID )
-            // InternalSimpleIDL.g:4386:3: RULE_ID
+            // InternalSimpleIDL.g:4385:2: ( ( RULE_ID ) )
+            // InternalSimpleIDL.g:4386:3: ( RULE_ID )
             {
-             before(grammarAccess.getDefinitionAccess().getNameIDTerminalRuleCall_2_2_0()); 
+             before(grammarAccess.getDefinitionAccess().getStructStructCrossReference_2_2_0()); 
+            // InternalSimpleIDL.g:4387:3: ( RULE_ID )
+            // InternalSimpleIDL.g:4388:4: RULE_ID
+            {
+             before(grammarAccess.getDefinitionAccess().getStructStructIDTerminalRuleCall_2_2_0_1()); 
             match(input,RULE_ID,FOLLOW_2); 
-             after(grammarAccess.getDefinitionAccess().getNameIDTerminalRuleCall_2_2_0()); 
+             after(grammarAccess.getDefinitionAccess().getStructStructIDTerminalRuleCall_2_2_0_1()); 
+
+            }
+
+             after(grammarAccess.getDefinitionAccess().getStructStructCrossReference_2_2_0()); 
 
             }
 
@@ -12868,21 +12876,21 @@ public class InternalSimpleIDLParser extends AbstractInternalContentAssistParser
         }
         return ;
     }
-    // $ANTLR end "rule__Definition__NameAssignment_2_2"
+    // $ANTLR end "rule__Definition__StructAssignment_2_2"
 
 
     // $ANTLR start "rule__Definition__NameAssignment_3_2"
-    // InternalSimpleIDL.g:4395:1: rule__Definition__NameAssignment_3_2 : ( RULE_ID ) ;
+    // InternalSimpleIDL.g:4399:1: rule__Definition__NameAssignment_3_2 : ( RULE_ID ) ;
     public final void rule__Definition__NameAssignment_3_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSimpleIDL.g:4399:1: ( ( RULE_ID ) )
-            // InternalSimpleIDL.g:4400:2: ( RULE_ID )
+            // InternalSimpleIDL.g:4403:1: ( ( RULE_ID ) )
+            // InternalSimpleIDL.g:4404:2: ( RULE_ID )
             {
-            // InternalSimpleIDL.g:4400:2: ( RULE_ID )
-            // InternalSimpleIDL.g:4401:3: RULE_ID
+            // InternalSimpleIDL.g:4404:2: ( RULE_ID )
+            // InternalSimpleIDL.g:4405:3: RULE_ID
             {
              before(grammarAccess.getDefinitionAccess().getNameIDTerminalRuleCall_3_2_0()); 
             match(input,RULE_ID,FOLLOW_2); 
@@ -12909,17 +12917,17 @@ public class InternalSimpleIDLParser extends AbstractInternalContentAssistParser
 
 
     // $ANTLR start "rule__Definition__CasesAssignment_3_10"
-    // InternalSimpleIDL.g:4410:1: rule__Definition__CasesAssignment_3_10 : ( ruleCase ) ;
+    // InternalSimpleIDL.g:4414:1: rule__Definition__CasesAssignment_3_10 : ( ruleCase ) ;
     public final void rule__Definition__CasesAssignment_3_10() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSimpleIDL.g:4414:1: ( ( ruleCase ) )
-            // InternalSimpleIDL.g:4415:2: ( ruleCase )
+            // InternalSimpleIDL.g:4418:1: ( ( ruleCase ) )
+            // InternalSimpleIDL.g:4419:2: ( ruleCase )
             {
-            // InternalSimpleIDL.g:4415:2: ( ruleCase )
-            // InternalSimpleIDL.g:4416:3: ruleCase
+            // InternalSimpleIDL.g:4419:2: ( ruleCase )
+            // InternalSimpleIDL.g:4420:3: ruleCase
             {
              before(grammarAccess.getDefinitionAccess().getCasesCaseParserRuleCall_3_10_0()); 
             pushFollow(FOLLOW_2);
@@ -12950,17 +12958,17 @@ public class InternalSimpleIDLParser extends AbstractInternalContentAssistParser
 
 
     // $ANTLR start "rule__Definition__NameAssignment_4_2"
-    // InternalSimpleIDL.g:4425:1: rule__Definition__NameAssignment_4_2 : ( RULE_ID ) ;
+    // InternalSimpleIDL.g:4429:1: rule__Definition__NameAssignment_4_2 : ( RULE_ID ) ;
     public final void rule__Definition__NameAssignment_4_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSimpleIDL.g:4429:1: ( ( RULE_ID ) )
-            // InternalSimpleIDL.g:4430:2: ( RULE_ID )
+            // InternalSimpleIDL.g:4433:1: ( ( RULE_ID ) )
+            // InternalSimpleIDL.g:4434:2: ( RULE_ID )
             {
-            // InternalSimpleIDL.g:4430:2: ( RULE_ID )
-            // InternalSimpleIDL.g:4431:3: RULE_ID
+            // InternalSimpleIDL.g:4434:2: ( RULE_ID )
+            // InternalSimpleIDL.g:4435:3: RULE_ID
             {
              before(grammarAccess.getDefinitionAccess().getNameIDTerminalRuleCall_4_2_0()); 
             match(input,RULE_ID,FOLLOW_2); 
@@ -12987,17 +12995,17 @@ public class InternalSimpleIDLParser extends AbstractInternalContentAssistParser
 
 
     // $ANTLR start "rule__Definition__LiteralsAssignment_4_4"
-    // InternalSimpleIDL.g:4440:1: rule__Definition__LiteralsAssignment_4_4 : ( RULE_ID ) ;
+    // InternalSimpleIDL.g:4444:1: rule__Definition__LiteralsAssignment_4_4 : ( RULE_ID ) ;
     public final void rule__Definition__LiteralsAssignment_4_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSimpleIDL.g:4444:1: ( ( RULE_ID ) )
-            // InternalSimpleIDL.g:4445:2: ( RULE_ID )
+            // InternalSimpleIDL.g:4448:1: ( ( RULE_ID ) )
+            // InternalSimpleIDL.g:4449:2: ( RULE_ID )
             {
-            // InternalSimpleIDL.g:4445:2: ( RULE_ID )
-            // InternalSimpleIDL.g:4446:3: RULE_ID
+            // InternalSimpleIDL.g:4449:2: ( RULE_ID )
+            // InternalSimpleIDL.g:4450:3: RULE_ID
             {
              before(grammarAccess.getDefinitionAccess().getLiteralsIDTerminalRuleCall_4_4_0()); 
             match(input,RULE_ID,FOLLOW_2); 
@@ -13024,17 +13032,17 @@ public class InternalSimpleIDLParser extends AbstractInternalContentAssistParser
 
 
     // $ANTLR start "rule__Definition__LiteralsAssignment_4_5_1"
-    // InternalSimpleIDL.g:4455:1: rule__Definition__LiteralsAssignment_4_5_1 : ( RULE_ID ) ;
+    // InternalSimpleIDL.g:4459:1: rule__Definition__LiteralsAssignment_4_5_1 : ( RULE_ID ) ;
     public final void rule__Definition__LiteralsAssignment_4_5_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSimpleIDL.g:4459:1: ( ( RULE_ID ) )
-            // InternalSimpleIDL.g:4460:2: ( RULE_ID )
+            // InternalSimpleIDL.g:4463:1: ( ( RULE_ID ) )
+            // InternalSimpleIDL.g:4464:2: ( RULE_ID )
             {
-            // InternalSimpleIDL.g:4460:2: ( RULE_ID )
-            // InternalSimpleIDL.g:4461:3: RULE_ID
+            // InternalSimpleIDL.g:4464:2: ( RULE_ID )
+            // InternalSimpleIDL.g:4465:3: RULE_ID
             {
              before(grammarAccess.getDefinitionAccess().getLiteralsIDTerminalRuleCall_4_5_1_0()); 
             match(input,RULE_ID,FOLLOW_2); 
@@ -13061,17 +13069,17 @@ public class InternalSimpleIDLParser extends AbstractInternalContentAssistParser
 
 
     // $ANTLR start "rule__Definition__TypeAssignment_5_2"
-    // InternalSimpleIDL.g:4470:1: rule__Definition__TypeAssignment_5_2 : ( ruleType ) ;
+    // InternalSimpleIDL.g:4474:1: rule__Definition__TypeAssignment_5_2 : ( ruleType ) ;
     public final void rule__Definition__TypeAssignment_5_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSimpleIDL.g:4474:1: ( ( ruleType ) )
-            // InternalSimpleIDL.g:4475:2: ( ruleType )
+            // InternalSimpleIDL.g:4478:1: ( ( ruleType ) )
+            // InternalSimpleIDL.g:4479:2: ( ruleType )
             {
-            // InternalSimpleIDL.g:4475:2: ( ruleType )
-            // InternalSimpleIDL.g:4476:3: ruleType
+            // InternalSimpleIDL.g:4479:2: ( ruleType )
+            // InternalSimpleIDL.g:4480:3: ruleType
             {
              before(grammarAccess.getDefinitionAccess().getTypeTypeParserRuleCall_5_2_0()); 
             pushFollow(FOLLOW_2);
@@ -13102,17 +13110,17 @@ public class InternalSimpleIDLParser extends AbstractInternalContentAssistParser
 
 
     // $ANTLR start "rule__Definition__NamesAssignment_5_3"
-    // InternalSimpleIDL.g:4485:1: rule__Definition__NamesAssignment_5_3 : ( ruleAnyDeclarator ) ;
+    // InternalSimpleIDL.g:4489:1: rule__Definition__NamesAssignment_5_3 : ( ruleAnyDeclarator ) ;
     public final void rule__Definition__NamesAssignment_5_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSimpleIDL.g:4489:1: ( ( ruleAnyDeclarator ) )
-            // InternalSimpleIDL.g:4490:2: ( ruleAnyDeclarator )
+            // InternalSimpleIDL.g:4493:1: ( ( ruleAnyDeclarator ) )
+            // InternalSimpleIDL.g:4494:2: ( ruleAnyDeclarator )
             {
-            // InternalSimpleIDL.g:4490:2: ( ruleAnyDeclarator )
-            // InternalSimpleIDL.g:4491:3: ruleAnyDeclarator
+            // InternalSimpleIDL.g:4494:2: ( ruleAnyDeclarator )
+            // InternalSimpleIDL.g:4495:3: ruleAnyDeclarator
             {
              before(grammarAccess.getDefinitionAccess().getNamesAnyDeclaratorParserRuleCall_5_3_0()); 
             pushFollow(FOLLOW_2);
@@ -13143,17 +13151,17 @@ public class InternalSimpleIDLParser extends AbstractInternalContentAssistParser
 
 
     // $ANTLR start "rule__Definition__NamesAssignment_5_4_1"
-    // InternalSimpleIDL.g:4500:1: rule__Definition__NamesAssignment_5_4_1 : ( ruleAnyDeclarator ) ;
+    // InternalSimpleIDL.g:4504:1: rule__Definition__NamesAssignment_5_4_1 : ( ruleAnyDeclarator ) ;
     public final void rule__Definition__NamesAssignment_5_4_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSimpleIDL.g:4504:1: ( ( ruleAnyDeclarator ) )
-            // InternalSimpleIDL.g:4505:2: ( ruleAnyDeclarator )
+            // InternalSimpleIDL.g:4508:1: ( ( ruleAnyDeclarator ) )
+            // InternalSimpleIDL.g:4509:2: ( ruleAnyDeclarator )
             {
-            // InternalSimpleIDL.g:4505:2: ( ruleAnyDeclarator )
-            // InternalSimpleIDL.g:4506:3: ruleAnyDeclarator
+            // InternalSimpleIDL.g:4509:2: ( ruleAnyDeclarator )
+            // InternalSimpleIDL.g:4510:3: ruleAnyDeclarator
             {
              before(grammarAccess.getDefinitionAccess().getNamesAnyDeclaratorParserRuleCall_5_4_1_0()); 
             pushFollow(FOLLOW_2);
@@ -13184,17 +13192,17 @@ public class InternalSimpleIDLParser extends AbstractInternalContentAssistParser
 
 
     // $ANTLR start "rule__Member__TypeAssignment_0"
-    // InternalSimpleIDL.g:4515:1: rule__Member__TypeAssignment_0 : ( ruleSimpleTypeSpec ) ;
+    // InternalSimpleIDL.g:4519:1: rule__Member__TypeAssignment_0 : ( ruleSimpleTypeSpec ) ;
     public final void rule__Member__TypeAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSimpleIDL.g:4519:1: ( ( ruleSimpleTypeSpec ) )
-            // InternalSimpleIDL.g:4520:2: ( ruleSimpleTypeSpec )
+            // InternalSimpleIDL.g:4523:1: ( ( ruleSimpleTypeSpec ) )
+            // InternalSimpleIDL.g:4524:2: ( ruleSimpleTypeSpec )
             {
-            // InternalSimpleIDL.g:4520:2: ( ruleSimpleTypeSpec )
-            // InternalSimpleIDL.g:4521:3: ruleSimpleTypeSpec
+            // InternalSimpleIDL.g:4524:2: ( ruleSimpleTypeSpec )
+            // InternalSimpleIDL.g:4525:3: ruleSimpleTypeSpec
             {
              before(grammarAccess.getMemberAccess().getTypeSimpleTypeSpecParserRuleCall_0_0()); 
             pushFollow(FOLLOW_2);
@@ -13225,17 +13233,17 @@ public class InternalSimpleIDLParser extends AbstractInternalContentAssistParser
 
 
     // $ANTLR start "rule__Member__NamesAssignment_1"
-    // InternalSimpleIDL.g:4530:1: rule__Member__NamesAssignment_1 : ( RULE_ID ) ;
+    // InternalSimpleIDL.g:4534:1: rule__Member__NamesAssignment_1 : ( RULE_ID ) ;
     public final void rule__Member__NamesAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSimpleIDL.g:4534:1: ( ( RULE_ID ) )
-            // InternalSimpleIDL.g:4535:2: ( RULE_ID )
+            // InternalSimpleIDL.g:4538:1: ( ( RULE_ID ) )
+            // InternalSimpleIDL.g:4539:2: ( RULE_ID )
             {
-            // InternalSimpleIDL.g:4535:2: ( RULE_ID )
-            // InternalSimpleIDL.g:4536:3: RULE_ID
+            // InternalSimpleIDL.g:4539:2: ( RULE_ID )
+            // InternalSimpleIDL.g:4540:3: RULE_ID
             {
              before(grammarAccess.getMemberAccess().getNamesIDTerminalRuleCall_1_0()); 
             match(input,RULE_ID,FOLLOW_2); 
@@ -13262,17 +13270,17 @@ public class InternalSimpleIDLParser extends AbstractInternalContentAssistParser
 
 
     // $ANTLR start "rule__Member__NamesAssignment_2_1"
-    // InternalSimpleIDL.g:4545:1: rule__Member__NamesAssignment_2_1 : ( RULE_ID ) ;
+    // InternalSimpleIDL.g:4549:1: rule__Member__NamesAssignment_2_1 : ( RULE_ID ) ;
     public final void rule__Member__NamesAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSimpleIDL.g:4549:1: ( ( RULE_ID ) )
-            // InternalSimpleIDL.g:4550:2: ( RULE_ID )
+            // InternalSimpleIDL.g:4553:1: ( ( RULE_ID ) )
+            // InternalSimpleIDL.g:4554:2: ( RULE_ID )
             {
-            // InternalSimpleIDL.g:4550:2: ( RULE_ID )
-            // InternalSimpleIDL.g:4551:3: RULE_ID
+            // InternalSimpleIDL.g:4554:2: ( RULE_ID )
+            // InternalSimpleIDL.g:4555:3: RULE_ID
             {
              before(grammarAccess.getMemberAccess().getNamesIDTerminalRuleCall_2_1_0()); 
             match(input,RULE_ID,FOLLOW_2); 
@@ -13299,17 +13307,17 @@ public class InternalSimpleIDLParser extends AbstractInternalContentAssistParser
 
 
     // $ANTLR start "rule__Case__LabelsAssignment_0_1"
-    // InternalSimpleIDL.g:4560:1: rule__Case__LabelsAssignment_0_1 : ( RULE_INT ) ;
+    // InternalSimpleIDL.g:4564:1: rule__Case__LabelsAssignment_0_1 : ( RULE_INT ) ;
     public final void rule__Case__LabelsAssignment_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSimpleIDL.g:4564:1: ( ( RULE_INT ) )
-            // InternalSimpleIDL.g:4565:2: ( RULE_INT )
+            // InternalSimpleIDL.g:4568:1: ( ( RULE_INT ) )
+            // InternalSimpleIDL.g:4569:2: ( RULE_INT )
             {
-            // InternalSimpleIDL.g:4565:2: ( RULE_INT )
-            // InternalSimpleIDL.g:4566:3: RULE_INT
+            // InternalSimpleIDL.g:4569:2: ( RULE_INT )
+            // InternalSimpleIDL.g:4570:3: RULE_INT
             {
              before(grammarAccess.getCaseAccess().getLabelsINTTerminalRuleCall_0_1_0()); 
             match(input,RULE_INT,FOLLOW_2); 
@@ -13336,17 +13344,17 @@ public class InternalSimpleIDLParser extends AbstractInternalContentAssistParser
 
 
     // $ANTLR start "rule__Case__TypeAssignment_1"
-    // InternalSimpleIDL.g:4575:1: rule__Case__TypeAssignment_1 : ( ruleSimpleTypeSpec ) ;
+    // InternalSimpleIDL.g:4579:1: rule__Case__TypeAssignment_1 : ( ruleSimpleTypeSpec ) ;
     public final void rule__Case__TypeAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSimpleIDL.g:4579:1: ( ( ruleSimpleTypeSpec ) )
-            // InternalSimpleIDL.g:4580:2: ( ruleSimpleTypeSpec )
+            // InternalSimpleIDL.g:4583:1: ( ( ruleSimpleTypeSpec ) )
+            // InternalSimpleIDL.g:4584:2: ( ruleSimpleTypeSpec )
             {
-            // InternalSimpleIDL.g:4580:2: ( ruleSimpleTypeSpec )
-            // InternalSimpleIDL.g:4581:3: ruleSimpleTypeSpec
+            // InternalSimpleIDL.g:4584:2: ( ruleSimpleTypeSpec )
+            // InternalSimpleIDL.g:4585:3: ruleSimpleTypeSpec
             {
              before(grammarAccess.getCaseAccess().getTypeSimpleTypeSpecParserRuleCall_1_0()); 
             pushFollow(FOLLOW_2);
@@ -13377,17 +13385,17 @@ public class InternalSimpleIDLParser extends AbstractInternalContentAssistParser
 
 
     // $ANTLR start "rule__Case__NameAssignment_2"
-    // InternalSimpleIDL.g:4590:1: rule__Case__NameAssignment_2 : ( RULE_ID ) ;
+    // InternalSimpleIDL.g:4594:1: rule__Case__NameAssignment_2 : ( RULE_ID ) ;
     public final void rule__Case__NameAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSimpleIDL.g:4594:1: ( ( RULE_ID ) )
-            // InternalSimpleIDL.g:4595:2: ( RULE_ID )
+            // InternalSimpleIDL.g:4598:1: ( ( RULE_ID ) )
+            // InternalSimpleIDL.g:4599:2: ( RULE_ID )
             {
-            // InternalSimpleIDL.g:4595:2: ( RULE_ID )
-            // InternalSimpleIDL.g:4596:3: RULE_ID
+            // InternalSimpleIDL.g:4599:2: ( RULE_ID )
+            // InternalSimpleIDL.g:4600:3: RULE_ID
             {
              before(grammarAccess.getCaseAccess().getNameIDTerminalRuleCall_2_0()); 
             match(input,RULE_ID,FOLLOW_2); 
@@ -13414,17 +13422,17 @@ public class InternalSimpleIDLParser extends AbstractInternalContentAssistParser
 
 
     // $ANTLR start "rule__AnyDeclarator__NameAssignment_0"
-    // InternalSimpleIDL.g:4605:1: rule__AnyDeclarator__NameAssignment_0 : ( RULE_ID ) ;
+    // InternalSimpleIDL.g:4609:1: rule__AnyDeclarator__NameAssignment_0 : ( RULE_ID ) ;
     public final void rule__AnyDeclarator__NameAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSimpleIDL.g:4609:1: ( ( RULE_ID ) )
-            // InternalSimpleIDL.g:4610:2: ( RULE_ID )
+            // InternalSimpleIDL.g:4613:1: ( ( RULE_ID ) )
+            // InternalSimpleIDL.g:4614:2: ( RULE_ID )
             {
-            // InternalSimpleIDL.g:4610:2: ( RULE_ID )
-            // InternalSimpleIDL.g:4611:3: RULE_ID
+            // InternalSimpleIDL.g:4614:2: ( RULE_ID )
+            // InternalSimpleIDL.g:4615:3: RULE_ID
             {
              before(grammarAccess.getAnyDeclaratorAccess().getNameIDTerminalRuleCall_0_0()); 
             match(input,RULE_ID,FOLLOW_2); 
@@ -13451,17 +13459,17 @@ public class InternalSimpleIDLParser extends AbstractInternalContentAssistParser
 
 
     // $ANTLR start "rule__AnyDeclarator__ArraySizesAssignment_1_1"
-    // InternalSimpleIDL.g:4620:1: rule__AnyDeclarator__ArraySizesAssignment_1_1 : ( RULE_INT ) ;
+    // InternalSimpleIDL.g:4624:1: rule__AnyDeclarator__ArraySizesAssignment_1_1 : ( RULE_INT ) ;
     public final void rule__AnyDeclarator__ArraySizesAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSimpleIDL.g:4624:1: ( ( RULE_INT ) )
-            // InternalSimpleIDL.g:4625:2: ( RULE_INT )
+            // InternalSimpleIDL.g:4628:1: ( ( RULE_INT ) )
+            // InternalSimpleIDL.g:4629:2: ( RULE_INT )
             {
-            // InternalSimpleIDL.g:4625:2: ( RULE_INT )
-            // InternalSimpleIDL.g:4626:3: RULE_INT
+            // InternalSimpleIDL.g:4629:2: ( RULE_INT )
+            // InternalSimpleIDL.g:4630:3: RULE_INT
             {
              before(grammarAccess.getAnyDeclaratorAccess().getArraySizesINTTerminalRuleCall_1_1_0()); 
             match(input,RULE_INT,FOLLOW_2); 
@@ -13488,17 +13496,17 @@ public class InternalSimpleIDLParser extends AbstractInternalContentAssistParser
 
 
     // $ANTLR start "rule__Type__TypeAssignment_1_3"
-    // InternalSimpleIDL.g:4635:1: rule__Type__TypeAssignment_1_3 : ( ruleSimpleTypeSpec ) ;
+    // InternalSimpleIDL.g:4639:1: rule__Type__TypeAssignment_1_3 : ( ruleSimpleTypeSpec ) ;
     public final void rule__Type__TypeAssignment_1_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSimpleIDL.g:4639:1: ( ( ruleSimpleTypeSpec ) )
-            // InternalSimpleIDL.g:4640:2: ( ruleSimpleTypeSpec )
+            // InternalSimpleIDL.g:4643:1: ( ( ruleSimpleTypeSpec ) )
+            // InternalSimpleIDL.g:4644:2: ( ruleSimpleTypeSpec )
             {
-            // InternalSimpleIDL.g:4640:2: ( ruleSimpleTypeSpec )
-            // InternalSimpleIDL.g:4641:3: ruleSimpleTypeSpec
+            // InternalSimpleIDL.g:4644:2: ( ruleSimpleTypeSpec )
+            // InternalSimpleIDL.g:4645:3: ruleSimpleTypeSpec
             {
              before(grammarAccess.getTypeAccess().getTypeSimpleTypeSpecParserRuleCall_1_3_0()); 
             pushFollow(FOLLOW_2);
@@ -13529,17 +13537,17 @@ public class InternalSimpleIDLParser extends AbstractInternalContentAssistParser
 
 
     // $ANTLR start "rule__Type__SizeAssignment_1_5"
-    // InternalSimpleIDL.g:4650:1: rule__Type__SizeAssignment_1_5 : ( RULE_INT ) ;
+    // InternalSimpleIDL.g:4654:1: rule__Type__SizeAssignment_1_5 : ( RULE_INT ) ;
     public final void rule__Type__SizeAssignment_1_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSimpleIDL.g:4654:1: ( ( RULE_INT ) )
-            // InternalSimpleIDL.g:4655:2: ( RULE_INT )
+            // InternalSimpleIDL.g:4658:1: ( ( RULE_INT ) )
+            // InternalSimpleIDL.g:4659:2: ( RULE_INT )
             {
-            // InternalSimpleIDL.g:4655:2: ( RULE_INT )
-            // InternalSimpleIDL.g:4656:3: RULE_INT
+            // InternalSimpleIDL.g:4659:2: ( RULE_INT )
+            // InternalSimpleIDL.g:4660:3: RULE_INT
             {
              before(grammarAccess.getTypeAccess().getSizeINTTerminalRuleCall_1_5_0()); 
             match(input,RULE_INT,FOLLOW_2); 
@@ -13566,17 +13574,17 @@ public class InternalSimpleIDLParser extends AbstractInternalContentAssistParser
 
 
     // $ANTLR start "rule__Type__TypeAssignment_2_3"
-    // InternalSimpleIDL.g:4665:1: rule__Type__TypeAssignment_2_3 : ( ruleSimpleTypeSpec ) ;
+    // InternalSimpleIDL.g:4669:1: rule__Type__TypeAssignment_2_3 : ( ruleSimpleTypeSpec ) ;
     public final void rule__Type__TypeAssignment_2_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSimpleIDL.g:4669:1: ( ( ruleSimpleTypeSpec ) )
-            // InternalSimpleIDL.g:4670:2: ( ruleSimpleTypeSpec )
+            // InternalSimpleIDL.g:4673:1: ( ( ruleSimpleTypeSpec ) )
+            // InternalSimpleIDL.g:4674:2: ( ruleSimpleTypeSpec )
             {
-            // InternalSimpleIDL.g:4670:2: ( ruleSimpleTypeSpec )
-            // InternalSimpleIDL.g:4671:3: ruleSimpleTypeSpec
+            // InternalSimpleIDL.g:4674:2: ( ruleSimpleTypeSpec )
+            // InternalSimpleIDL.g:4675:3: ruleSimpleTypeSpec
             {
              before(grammarAccess.getTypeAccess().getTypeSimpleTypeSpecParserRuleCall_2_3_0()); 
             pushFollow(FOLLOW_2);
@@ -13607,17 +13615,17 @@ public class InternalSimpleIDLParser extends AbstractInternalContentAssistParser
 
 
     // $ANTLR start "rule__Type__SizeAssignment_3_3"
-    // InternalSimpleIDL.g:4680:1: rule__Type__SizeAssignment_3_3 : ( RULE_INT ) ;
+    // InternalSimpleIDL.g:4684:1: rule__Type__SizeAssignment_3_3 : ( RULE_INT ) ;
     public final void rule__Type__SizeAssignment_3_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSimpleIDL.g:4684:1: ( ( RULE_INT ) )
-            // InternalSimpleIDL.g:4685:2: ( RULE_INT )
+            // InternalSimpleIDL.g:4688:1: ( ( RULE_INT ) )
+            // InternalSimpleIDL.g:4689:2: ( RULE_INT )
             {
-            // InternalSimpleIDL.g:4685:2: ( RULE_INT )
-            // InternalSimpleIDL.g:4686:3: RULE_INT
+            // InternalSimpleIDL.g:4689:2: ( RULE_INT )
+            // InternalSimpleIDL.g:4690:3: RULE_INT
             {
              before(grammarAccess.getTypeAccess().getSizeINTTerminalRuleCall_3_3_0()); 
             match(input,RULE_INT,FOLLOW_2); 
@@ -13644,17 +13652,17 @@ public class InternalSimpleIDLParser extends AbstractInternalContentAssistParser
 
 
     // $ANTLR start "rule__Type__SizeAssignment_5_3"
-    // InternalSimpleIDL.g:4695:1: rule__Type__SizeAssignment_5_3 : ( RULE_INT ) ;
+    // InternalSimpleIDL.g:4699:1: rule__Type__SizeAssignment_5_3 : ( RULE_INT ) ;
     public final void rule__Type__SizeAssignment_5_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSimpleIDL.g:4699:1: ( ( RULE_INT ) )
-            // InternalSimpleIDL.g:4700:2: ( RULE_INT )
+            // InternalSimpleIDL.g:4703:1: ( ( RULE_INT ) )
+            // InternalSimpleIDL.g:4704:2: ( RULE_INT )
             {
-            // InternalSimpleIDL.g:4700:2: ( RULE_INT )
-            // InternalSimpleIDL.g:4701:3: RULE_INT
+            // InternalSimpleIDL.g:4704:2: ( RULE_INT )
+            // InternalSimpleIDL.g:4705:3: RULE_INT
             {
              before(grammarAccess.getTypeAccess().getSizeINTTerminalRuleCall_5_3_0()); 
             match(input,RULE_INT,FOLLOW_2); 
@@ -13681,17 +13689,17 @@ public class InternalSimpleIDLParser extends AbstractInternalContentAssistParser
 
 
     // $ANTLR start "rule__Type__TotalDigitsAssignment_7_3"
-    // InternalSimpleIDL.g:4710:1: rule__Type__TotalDigitsAssignment_7_3 : ( RULE_INT ) ;
+    // InternalSimpleIDL.g:4714:1: rule__Type__TotalDigitsAssignment_7_3 : ( RULE_INT ) ;
     public final void rule__Type__TotalDigitsAssignment_7_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSimpleIDL.g:4714:1: ( ( RULE_INT ) )
-            // InternalSimpleIDL.g:4715:2: ( RULE_INT )
+            // InternalSimpleIDL.g:4718:1: ( ( RULE_INT ) )
+            // InternalSimpleIDL.g:4719:2: ( RULE_INT )
             {
-            // InternalSimpleIDL.g:4715:2: ( RULE_INT )
-            // InternalSimpleIDL.g:4716:3: RULE_INT
+            // InternalSimpleIDL.g:4719:2: ( RULE_INT )
+            // InternalSimpleIDL.g:4720:3: RULE_INT
             {
              before(grammarAccess.getTypeAccess().getTotalDigitsINTTerminalRuleCall_7_3_0()); 
             match(input,RULE_INT,FOLLOW_2); 
@@ -13718,17 +13726,17 @@ public class InternalSimpleIDLParser extends AbstractInternalContentAssistParser
 
 
     // $ANTLR start "rule__Type__FractionalDigitsAssignment_7_5"
-    // InternalSimpleIDL.g:4725:1: rule__Type__FractionalDigitsAssignment_7_5 : ( RULE_INT ) ;
+    // InternalSimpleIDL.g:4729:1: rule__Type__FractionalDigitsAssignment_7_5 : ( RULE_INT ) ;
     public final void rule__Type__FractionalDigitsAssignment_7_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSimpleIDL.g:4729:1: ( ( RULE_INT ) )
-            // InternalSimpleIDL.g:4730:2: ( RULE_INT )
+            // InternalSimpleIDL.g:4733:1: ( ( RULE_INT ) )
+            // InternalSimpleIDL.g:4734:2: ( RULE_INT )
             {
-            // InternalSimpleIDL.g:4730:2: ( RULE_INT )
-            // InternalSimpleIDL.g:4731:3: RULE_INT
+            // InternalSimpleIDL.g:4734:2: ( RULE_INT )
+            // InternalSimpleIDL.g:4735:3: RULE_INT
             {
              before(grammarAccess.getTypeAccess().getFractionalDigitsINTTerminalRuleCall_7_5_0()); 
             match(input,RULE_INT,FOLLOW_2); 
@@ -13755,25 +13763,33 @@ public class InternalSimpleIDLParser extends AbstractInternalContentAssistParser
 
 
     // $ANTLR start "rule__SimpleTypeSpec__TypeAssignment_13_1"
-    // InternalSimpleIDL.g:4740:1: rule__SimpleTypeSpec__TypeAssignment_13_1 : ( ruleScopedName ) ;
+    // InternalSimpleIDL.g:4744:1: rule__SimpleTypeSpec__TypeAssignment_13_1 : ( ( ruleScopedName ) ) ;
     public final void rule__SimpleTypeSpec__TypeAssignment_13_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSimpleIDL.g:4744:1: ( ( ruleScopedName ) )
-            // InternalSimpleIDL.g:4745:2: ( ruleScopedName )
+            // InternalSimpleIDL.g:4748:1: ( ( ( ruleScopedName ) ) )
+            // InternalSimpleIDL.g:4749:2: ( ( ruleScopedName ) )
             {
-            // InternalSimpleIDL.g:4745:2: ( ruleScopedName )
-            // InternalSimpleIDL.g:4746:3: ruleScopedName
+            // InternalSimpleIDL.g:4749:2: ( ( ruleScopedName ) )
+            // InternalSimpleIDL.g:4750:3: ( ruleScopedName )
             {
-             before(grammarAccess.getSimpleTypeSpecAccess().getTypeScopedNameParserRuleCall_13_1_0()); 
+             before(grammarAccess.getSimpleTypeSpecAccess().getTypeDefinitionCrossReference_13_1_0()); 
+            // InternalSimpleIDL.g:4751:3: ( ruleScopedName )
+            // InternalSimpleIDL.g:4752:4: ruleScopedName
+            {
+             before(grammarAccess.getSimpleTypeSpecAccess().getTypeDefinitionScopedNameParserRuleCall_13_1_0_1()); 
             pushFollow(FOLLOW_2);
             ruleScopedName();
 
             state._fsp--;
 
-             after(grammarAccess.getSimpleTypeSpecAccess().getTypeScopedNameParserRuleCall_13_1_0()); 
+             after(grammarAccess.getSimpleTypeSpecAccess().getTypeDefinitionScopedNameParserRuleCall_13_1_0_1()); 
+
+            }
+
+             after(grammarAccess.getSimpleTypeSpecAccess().getTypeDefinitionCrossReference_13_1_0()); 
 
             }
 
@@ -13803,7 +13819,7 @@ public class InternalSimpleIDLParser extends AbstractInternalContentAssistParser
     static final String dfa_2s = "\3\uffff\1\7\1\11\31\uffff";
     static final String dfa_3s = "\1\4\1\uffff\1\37\2\4\1\uffff\1\4\4\uffff\2\30\1\25\6\30\1\4\1\30\2\uffff\4\30\1\4\1\30";
     static final String dfa_4s = "\1\53\1\uffff\3\37\1\uffff\1\53\4\uffff\1\40\1\46\1\44\6\40\1\4\1\53\2\uffff\2\40\1\44\1\40\1\4\1\40";
-    static final String dfa_5s = "\1\uffff\1\1\3\uffff\1\10\1\uffff\1\5\1\4\1\7\1\6\13\uffff\1\2\1\3\6\uffff";
+    static final String dfa_5s = "\1\uffff\1\1\3\uffff\1\10\1\uffff\1\5\1\4\1\7\1\6\13\uffff\1\3\1\2\6\uffff";
     static final String dfa_6s = "\36\uffff}>";
     static final String[] dfa_7s = {
             "\1\1\17\uffff\2\1\10\uffff\1\2\2\uffff\1\3\1\4\1\5\10\1",
@@ -13817,25 +13833,25 @@ public class InternalSimpleIDLParser extends AbstractInternalContentAssistParser
             "",
             "",
             "",
-            "\1\26\7\uffff\1\27",
-            "\1\26\7\uffff\1\27\3\uffff\1\31\1\uffff\1\30",
+            "\1\27\7\uffff\1\26",
+            "\1\27\7\uffff\1\26\3\uffff\1\30\1\uffff\1\31",
             "\1\33\16\uffff\1\32",
-            "\1\26\7\uffff\1\27",
-            "\1\26\7\uffff\1\27",
-            "\1\26\7\uffff\1\27",
-            "\1\26\7\uffff\1\27",
-            "\1\26\7\uffff\1\27",
-            "\1\26\7\uffff\1\27",
+            "\1\27\7\uffff\1\26",
+            "\1\27\7\uffff\1\26",
+            "\1\27\7\uffff\1\26",
+            "\1\27\7\uffff\1\26",
+            "\1\27\7\uffff\1\26",
+            "\1\27\7\uffff\1\26",
             "\1\25",
-            "\1\26\7\uffff\1\27\12\uffff\1\34",
+            "\1\27\7\uffff\1\26\12\uffff\1\34",
             "",
             "",
-            "\1\26\7\uffff\1\27",
-            "\1\26\7\uffff\1\27",
-            "\1\26\7\uffff\1\27\3\uffff\1\35",
-            "\1\26\7\uffff\1\27",
+            "\1\27\7\uffff\1\26",
+            "\1\27\7\uffff\1\26",
+            "\1\27\7\uffff\1\26\3\uffff\1\35",
+            "\1\27\7\uffff\1\26",
             "\1\25",
-            "\1\26\7\uffff\1\27"
+            "\1\27\7\uffff\1\26"
     };
 
     static final short[] dfa_1 = DFA.unpackEncodedString(dfa_1s);

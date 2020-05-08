@@ -25,6 +25,7 @@ import java.util.List;
 import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.Assignment;
+import org.eclipse.xtext.CrossReference;
 import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.GrammarUtil;
 import org.eclipse.xtext.Group;
@@ -93,8 +94,9 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_2 = (Group)cAlternatives.eContents().get(2);
 		private final Action cStructForwardAction_2_0 = (Action)cGroup_2.eContents().get(0);
 		private final Keyword cStructKeyword_2_1 = (Keyword)cGroup_2.eContents().get(1);
-		private final Assignment cNameAssignment_2_2 = (Assignment)cGroup_2.eContents().get(2);
-		private final RuleCall cNameIDTerminalRuleCall_2_2_0 = (RuleCall)cNameAssignment_2_2.eContents().get(0);
+		private final Assignment cStructAssignment_2_2 = (Assignment)cGroup_2.eContents().get(2);
+		private final CrossReference cStructStructCrossReference_2_2_0 = (CrossReference)cStructAssignment_2_2.eContents().get(0);
+		private final RuleCall cStructStructIDTerminalRuleCall_2_2_0_1 = (RuleCall)cStructStructCrossReference_2_2_0.eContents().get(1);
 		private final Keyword cSemicolonKeyword_2_3 = (Keyword)cGroup_2.eContents().get(3);
 		private final Group cGroup_3 = (Group)cAlternatives.eContents().get(3);
 		private final Action cUnionAction_3_0 = (Action)cGroup_3.eContents().get(0);
@@ -176,13 +178,13 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 		// * (65) <any_declarators> ::= <any_declarator> { "," <any_declarator> }*
 		// */ Definition:
 		//	{Module} 'module' name=ID '{' definitions+=Definition+ '}' ';' | {Struct} 'struct' name=ID '{' members+=Member+ '}'
-		//	';' | {StructForward} 'struct' name=ID ';' | {Union} 'union' name=ID '{' 'switch' '(' 'unsigned' 'short' ')' '{'
-		//	cases+=Case+ '}' ';' '}' ';' | {Enum} 'enum' name=ID '{' literals+=ID (',' literals+=ID)* '}' ';' | {Typedef}
+		//	';' | {StructForward} 'struct' struct=[Struct] ';' | {Union} 'union' name=ID '{' 'switch' '(' 'unsigned' 'short' ')'
+		//	'{' cases+=Case+ '}' ';' '}' ';' | {Enum} 'enum' name=ID '{' literals+=ID (',' literals+=ID)* '}' ';' | {Typedef}
 		//	'typedef' type=Type names+=AnyDeclarator (',' names+=AnyDeclarator)* ';';
 		@Override public ParserRule getRule() { return rule; }
 		
 		//{Module} 'module' name=ID '{' definitions+=Definition+ '}' ';' | {Struct} 'struct' name=ID '{' members+=Member+ '}' ';'
-		//| {StructForward} 'struct' name=ID ';' | {Union} 'union' name=ID '{' 'switch' '(' 'unsigned' 'short' ')' '{'
+		//| {StructForward} 'struct' struct=[Struct] ';' | {Union} 'union' name=ID '{' 'switch' '(' 'unsigned' 'short' ')' '{'
 		//cases+=Case+ '}' ';' '}' ';' | {Enum} 'enum' name=ID '{' literals+=ID (',' literals+=ID)* '}' ';' | {Typedef} 'typedef'
 		//type=Type names+=AnyDeclarator (',' names+=AnyDeclarator)* ';'
 		public Alternatives getAlternatives() { return cAlternatives; }
@@ -247,7 +249,7 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 		//';'
 		public Keyword getSemicolonKeyword_1_6() { return cSemicolonKeyword_1_6; }
 		
-		//{StructForward} 'struct' name=ID ';'
+		//{StructForward} 'struct' struct=[Struct] ';'
 		public Group getGroup_2() { return cGroup_2; }
 		
 		//{StructForward}
@@ -256,11 +258,14 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 		//'struct'
 		public Keyword getStructKeyword_2_1() { return cStructKeyword_2_1; }
 		
-		//name=ID
-		public Assignment getNameAssignment_2_2() { return cNameAssignment_2_2; }
+		//struct=[Struct]
+		public Assignment getStructAssignment_2_2() { return cStructAssignment_2_2; }
+		
+		//[Struct]
+		public CrossReference getStructStructCrossReference_2_2_0() { return cStructStructCrossReference_2_2_0; }
 		
 		//ID
-		public RuleCall getNameIDTerminalRuleCall_2_2_0() { return cNameIDTerminalRuleCall_2_2_0; }
+		public RuleCall getStructStructIDTerminalRuleCall_2_2_0_1() { return cStructStructIDTerminalRuleCall_2_2_0_1; }
 		
 		//';'
 		public Keyword getSemicolonKeyword_2_3() { return cSemicolonKeyword_2_3; }
@@ -831,7 +836,8 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_13 = (Group)cAlternatives.eContents().get(13);
 		private final Action cReferencedTypeAction_13_0 = (Action)cGroup_13.eContents().get(0);
 		private final Assignment cTypeAssignment_13_1 = (Assignment)cGroup_13.eContents().get(1);
-		private final RuleCall cTypeScopedNameParserRuleCall_13_1_0 = (RuleCall)cTypeAssignment_13_1.eContents().get(0);
+		private final CrossReference cTypeDefinitionCrossReference_13_1_0 = (CrossReference)cTypeAssignment_13_1.eContents().get(0);
+		private final RuleCall cTypeDefinitionScopedNameParserRuleCall_13_1_0_1 = (RuleCall)cTypeDefinitionCrossReference_13_1_0.eContents().get(1);
 		
 		///*
 		// * (22) <simple_type_spec> ::= <base_type_spec>
@@ -867,13 +873,13 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 		//	{SignedShortInt} 'short' | {SignedLongInt} 'long' | {SignedLongLongInt} 'long' 'long' | {UnsignedShortInt} 'unsigned'
 		//	'short' | {UnsignedLongInt} 'unsigned' 'long' | {UnsignedLongLongInt} 'unsigned' 'long' 'long' | {FloatType} 'float' |
 		//	{DoubleType} 'double' | {LongDoubleType} 'long' 'double' | {CharType} 'char' | {WideCharType} 'wchar' | {BooleanType}
-		//	'boolean' | {OctetType} 'octet' | {ReferencedType} type=ScopedName;
+		//	'boolean' | {OctetType} 'octet' | {ReferencedType} type=[Definition|ScopedName];
 		@Override public ParserRule getRule() { return rule; }
 		
 		//{SignedShortInt} 'short' | {SignedLongInt} 'long' | {SignedLongLongInt} 'long' 'long' | {UnsignedShortInt} 'unsigned'
 		//'short' | {UnsignedLongInt} 'unsigned' 'long' | {UnsignedLongLongInt} 'unsigned' 'long' 'long' | {FloatType} 'float' |
 		//{DoubleType} 'double' | {LongDoubleType} 'long' 'double' | {CharType} 'char' | {WideCharType} 'wchar' | {BooleanType}
-		//'boolean' | {OctetType} 'octet' | {ReferencedType} type=ScopedName
+		//'boolean' | {OctetType} 'octet' | {ReferencedType} type=[Definition|ScopedName]
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//{SignedShortInt} 'short'
@@ -1011,17 +1017,20 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 		//'octet'
 		public Keyword getOctetKeyword_12_1() { return cOctetKeyword_12_1; }
 		
-		//{ReferencedType} type=ScopedName
+		//{ReferencedType} type=[Definition|ScopedName]
 		public Group getGroup_13() { return cGroup_13; }
 		
 		//{ReferencedType}
 		public Action getReferencedTypeAction_13_0() { return cReferencedTypeAction_13_0; }
 		
-		//type=ScopedName
+		//type=[Definition|ScopedName]
 		public Assignment getTypeAssignment_13_1() { return cTypeAssignment_13_1; }
 		
+		//[Definition|ScopedName]
+		public CrossReference getTypeDefinitionCrossReference_13_1_0() { return cTypeDefinitionCrossReference_13_1_0; }
+		
 		//ScopedName
-		public RuleCall getTypeScopedNameParserRuleCall_13_1_0() { return cTypeScopedNameParserRuleCall_13_1_0; }
+		public RuleCall getTypeDefinitionScopedNameParserRuleCall_13_1_0_1() { return cTypeDefinitionScopedNameParserRuleCall_13_1_0_1; }
 	}
 	public class ScopedNameElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.osate.simpleidl.SimpleIDL.ScopedName");
@@ -1177,8 +1186,8 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 	// * (65) <any_declarators> ::= <any_declarator> { "," <any_declarator> }*
 	// */ Definition:
 	//	{Module} 'module' name=ID '{' definitions+=Definition+ '}' ';' | {Struct} 'struct' name=ID '{' members+=Member+ '}'
-	//	';' | {StructForward} 'struct' name=ID ';' | {Union} 'union' name=ID '{' 'switch' '(' 'unsigned' 'short' ')' '{'
-	//	cases+=Case+ '}' ';' '}' ';' | {Enum} 'enum' name=ID '{' literals+=ID (',' literals+=ID)* '}' ';' | {Typedef}
+	//	';' | {StructForward} 'struct' struct=[Struct] ';' | {Union} 'union' name=ID '{' 'switch' '(' 'unsigned' 'short' ')'
+	//	'{' cases+=Case+ '}' ';' '}' ';' | {Enum} 'enum' name=ID '{' literals+=ID (',' literals+=ID)* '}' ';' | {Typedef}
 	//	'typedef' type=Type names+=AnyDeclarator (',' names+=AnyDeclarator)* ';';
 	public DefinitionElements getDefinitionAccess() {
 		return pDefinition;
@@ -1302,7 +1311,7 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 	//	{SignedShortInt} 'short' | {SignedLongInt} 'long' | {SignedLongLongInt} 'long' 'long' | {UnsignedShortInt} 'unsigned'
 	//	'short' | {UnsignedLongInt} 'unsigned' 'long' | {UnsignedLongLongInt} 'unsigned' 'long' 'long' | {FloatType} 'float' |
 	//	{DoubleType} 'double' | {LongDoubleType} 'long' 'double' | {CharType} 'char' | {WideCharType} 'wchar' | {BooleanType}
-	//	'boolean' | {OctetType} 'octet' | {ReferencedType} type=ScopedName;
+	//	'boolean' | {OctetType} 'octet' | {ReferencedType} type=[Definition|ScopedName];
 	public SimpleTypeSpecElements getSimpleTypeSpecAccess() {
 		return pSimpleTypeSpec;
 	}
