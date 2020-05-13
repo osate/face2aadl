@@ -8,6 +8,9 @@ public
 			FACE::Realization_Tier => platform;
 	end Boolean1_Platform;
 	
+	data implementation Boolean1_Platform.impl
+	end Boolean1_Platform.impl;
+	
 	data Entity3_Platform --extension of Entity2_Logical not translated
 		properties
 			FACE::Realization_Tier => platform;

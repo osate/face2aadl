@@ -126,6 +126,9 @@ package class DataModelTranslator {
 							FACE::Realization_Tier => platform;
 							«translateUUID(element)»
 					end «name»;
+					
+					data implementation «name».impl
+					end «name».impl;
 				'''
 			}
 			face.datamodel.platform.Entity: {

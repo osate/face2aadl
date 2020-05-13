@@ -24,6 +24,9 @@ public
 			FACE::Realization_Tier => platform;
 	end Boolean1_Platform;
 	
+	data implementation Boolean1_Platform.impl
+	end Boolean1_Platform.impl;
+	
 	data Entity3_Platform extends Entity2_Logical
 		properties
 			FACE::Realization_Tier => platform;
