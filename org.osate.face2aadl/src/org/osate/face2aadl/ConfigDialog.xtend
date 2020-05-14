@@ -49,6 +49,7 @@ class ConfigDialog extends TitleAreaDialog {
 	val static PLATFORM_ONLY_SETTING = "PLATFORM_ONLY_SETTING"
 	val static FILTER_SETTING = "FILTER_SETTING"
 	val static CHECKED_ELEMENTS_SETTING = "CHECKED_ELEMENTS_SETTING"
+	val static PROCESS_IDL_SETTING = "PROCESS_IDL_SETTING"
 	val static CREATE_FLOWS_SETTING = "CREATE_FLOWS_SETTING"
 	
 	val List<Element> uopsAndIntegrationModels
@@ -61,6 +62,7 @@ class ConfigDialog extends TitleAreaDialog {
 	CheckboxTableViewer tableViewer
 	Button selectAllButton
 	Button deselectAllButton
+	Button processIdlButton
 	Button createFlowsButton
 	
 	@Accessors(PUBLIC_GETTER)
@@ -71,6 +73,8 @@ class ConfigDialog extends TitleAreaDialog {
 	List<UnitOfPortability> selectedUoPs
 	@Accessors(PUBLIC_GETTER)
 	List<IntegrationModel> selectedIntegrationModels
+	@Accessors(PUBLIC_GETTER)
+	boolean processIdl
 	@Accessors(PUBLIC_GETTER)
 	boolean createFlows
 	
@@ -159,11 +163,15 @@ class ConfigDialog extends TitleAreaDialog {
 						button.layoutData = new GridData(SWT.FILL, SWT.TOP, false, false)
 					]
 				]
-				new Group(innerComposite, SWT.SHADOW_NONE) => [flowGroup |
-					flowGroup.text = "Flows"
-					flowGroup.layout = new GridLayout()
-					flowGroup.layoutData = new GridData(SWT.FILL, SWT.TOP, true, false)
-					createFlowsButton = new Button(flowGroup, SWT.CHECK) => [button |
+				new Group(innerComposite, SWT.SHADOW_NONE) => [otherGroup |
+					otherGroup.text = "Other options"
+					otherGroup.layout = new GridLayout()
+					otherGroup.layoutData = new GridData(SWT.FILL, SWT.TOP, true, false)
+					processIdlButton = new Button(otherGroup, SWT.CHECK) => [button |
+						button.text = "Process IDL files discovered in the project"
+						button.layoutData = new GridData(SWT.LEFT, SWT.CENTER, false, false)
+					]
+					createFlowsButton = new Button(otherGroup, SWT.CHECK) => [button |
 						button.text = "Create flow sinks and sources for each UoP's inputs and outputs"
 						button.layoutData = new GridData(SWT.LEFT, SWT.CENTER, false, false)
 					]
@@ -184,6 +192,9 @@ class ConfigDialog extends TitleAreaDialog {
 			selectedIntegrationModels = tableViewer.checkedElements.filter(IntegrationModel).toList
 			dialogSettings.put(CHECKED_ELEMENTS_SETTING, tableViewer.checkedElements.map[(it as Element).name])
 		}
+		
+		processIdl = processIdlButton.selection
+		dialogSettings.put(PROCESS_IDL_SETTING, processIdl)
 		
 		createFlows = createFlowsButton.selection
 		dialogSettings.put(CREATE_FLOWS_SETTING, createFlows)
@@ -249,6 +260,11 @@ class ConfigDialog extends TitleAreaDialog {
 		
 		validate
 		
+		if (dialogSettings.get(PROCESS_IDL_SETTING) === null) {
+			processIdlButton.selection = false
+		} else {
+			processIdlButton.selection = dialogSettings.getBoolean(PROCESS_IDL_SETTING)
+		}
 		if (dialogSettings.get(CREATE_FLOWS_SETTING) === null) {
 			createFlowsButton.selection = true
 		} else {

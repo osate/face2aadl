@@ -19,7 +19,9 @@
  *******************************************************************************/
 package org.osate.face2aadl.logic
 
+import com.google.inject.Injector
 import face.ArchitectureModel
+import face.datamodel.DataModel
 import face.datamodel.Element
 import face.datamodel.conceptual.ComposableElement
 import face.datamodel.conceptual.CompositeQuery
@@ -32,19 +34,35 @@ import face.datamodel.platform.Template
 import face.datamodel.platform.TemplateComposition
 import face.datamodel.platform.View
 import java.util.Optional
-import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
+import org.eclipse.emf.ecore.resource.ResourceSet
+import org.eclipse.xtext.naming.QualifiedName
+import org.eclipse.xtext.resource.IResourceDescriptions
+import org.eclipse.xtext.resource.IResourceDescriptionsProvider
+import org.osate.simpleidl.simpleIDL.SimpleIDLPackage
 
 import static org.osate.face2aadl.logic.TranslatorUtil.sanitizeID
 import static org.osate.face2aadl.logic.TranslatorUtil.translateDescription
 import static org.osate.face2aadl.logic.TranslatorUtil.translateName
 import static org.osate.face2aadl.logic.TranslatorUtil.translateUUID
 
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.resolve
 import static extension org.eclipse.xtext.EcoreUtil2.getAllContentsOfType
+import static extension org.eclipse.xtext.EcoreUtil2.getContainerOfType
 
-@FinalFieldsConstructor
 package class DataModelTranslator {
 	val String faceFileName
 	val String packageName
+	val Optional<Pair<ResourceSet, IResourceDescriptions>> idlOption
+	
+	new(String faceFileName, String packageName, Optional<Pair<Injector, ResourceSet>> idlOption) {
+		this.faceFileName = faceFileName
+		this.packageName = packageName
+		this.idlOption = idlOption.map[pair |
+			val injector = pair.key
+			val resourceSet = pair.value
+			resourceSet -> injector.getInstance(IResourceDescriptionsProvider).getResourceDescriptions(resourceSet)
+		]
+	}
 	
 	def package Optional<String> translate(ArchitectureModel model, boolean platformOnly) {
 		val elements = if (platformOnly) {
@@ -118,6 +136,21 @@ package class DataModelTranslator {
 			
 			//Platform
 			PhysicalDataType: {
+				idlOption.ifPresent[option |
+					val resourceSet = option.key
+					val descriptions = option.value
+					val definitionType = SimpleIDLPackage.eINSTANCE.definition
+					val dataModel = element.getContainerOfType(DataModel)
+					val lookupName = QualifiedName.create("FACE", "DM", dataModel.name, element.name)
+					val objects = descriptions.getExportedObjects(definitionType, lookupName, true).toList
+					if (objects.size == 0) {
+						println(lookupName.toString("::") + ": NOTHING FOUND")
+					} else if (objects.size == 1) {
+						println(lookupName.toString("::") + ": " + objects.head.EObjectOrProxy.resolve(resourceSet))
+					} else {
+						println(lookupName.toString("::") + ": MULTIPLE OBJECTS")
+					}
+				]
 				val name = translateName(element)
 				'''
 					«translateDescription(element)»

@@ -19,6 +19,7 @@
  *******************************************************************************/
 package org.osate.face2aadl.logic
 
+import com.google.inject.Injector
 import face.ArchitectureModel
 import face.Element
 import face.datamodel.logical.CompositeQuery
@@ -37,6 +38,7 @@ import face.uop.UnitOfPortability
 import java.util.List
 import java.util.Optional
 import java.util.Set
+import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 
@@ -53,10 +55,13 @@ class ArchitectureModelTranslator {
 	val String integrationModelPackageName
 	
 	val boolean createFlows
+	val Optional<Pair<Injector, ResourceSet>> idlOption
 	
 	val TranslationInput translationInput
 	
-	private new(String faceFileName, boolean createFlows, TranslationInput translationInput) {
+	private new(String faceFileName, boolean createFlows, Optional<Pair<Injector, ResourceSet>> idlOption,
+		TranslationInput translationInput
+	) {
 		this.faceFileName = faceFileName
 		
 		val baseFileName = sanitizeID(removeExtension(faceFileName))
@@ -66,19 +71,20 @@ class ArchitectureModelTranslator {
 		integrationModelPackageName = baseFileName + "_integration_model"
 		
 		this.createFlows = createFlows
+		this.idlOption = idlOption
 		
 		this.translationInput = translationInput
 	}
 	
 	def static ArchitectureModelTranslator create(ArchitectureModel model, String faceFileName, boolean platformOnly,
-		boolean createFlows
+		boolean createFlows, Optional<Pair<Injector, ResourceSet>> idlOption
 	) {
-		new ArchitectureModelTranslator(faceFileName, createFlows, new WholeModel(model, platformOnly))
+		new ArchitectureModelTranslator(faceFileName, createFlows, idlOption, new WholeModel(model, platformOnly))
 	}
 	
 	def static ArchitectureModelTranslator create(ArchitectureModel model, Iterable<UnitOfPortability> selectedUoPs,
 		Iterable<IntegrationModel> selectedIntegrationModels, String faceFileName, boolean platformOnly,
-		boolean createFlows
+		boolean createFlows, Optional<Pair<Injector, ResourceSet>> idlOption
 	) {
 		val requiredIntegrationModels = selectedIntegrationModels.toSet
 		val orderedIntegrationModels = requiredIntegrationModels.sort(model, IntegrationModel)
@@ -105,11 +111,11 @@ class ArchitectureModelTranslator {
 			)
 		}
 		
-		new ArchitectureModelTranslator(faceFileName, createFlows, translationInput)
+		new ArchitectureModelTranslator(faceFileName, createFlows, idlOption, translationInput)
 	}
 	
 	def TranslatedPackage translateDataModel() {
-		val dataModelTranslator = new DataModelTranslator(faceFileName, dataModelPackageName)
+		val dataModelTranslator = new DataModelTranslator(faceFileName, dataModelPackageName, idlOption)
 		val result = switch translationInput {
 			WholeModel: dataModelTranslator.translate(translationInput.model, translationInput.platformOnly)
 			FilteredAllLevels: dataModelTranslator.translate(translationInput.conceptualViews,
