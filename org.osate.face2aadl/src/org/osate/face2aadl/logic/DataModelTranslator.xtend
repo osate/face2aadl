@@ -579,7 +579,7 @@ package class DataModelTranslator {
 											«sanitizeID(memberName)»: data «sanitizeID(structName)»_Platform.impl[«typedefType.size»];
 											«ELSE»
 											«val unused = idlOnlyStructs += sequenceType»
-											«sanitizeID(memberName)»: data «sanitizeID(structName)»_IDL.impl[«typedefType.size»];
+											«sanitizeID(memberName)»: data «sanitizeID(idlNameProvider.getFullyQualifiedName(sequenceType).toString("_"))»_IDL.impl[«typedefType.size»];
 											«ENDIF»
 											«ELSE»
 											«sanitizeID(memberName)»: data «sanitizeID(sequenceType.name)»_Platform.impl[«typedefType.size»];
@@ -596,7 +596,7 @@ package class DataModelTranslator {
 									end «name».impl;
 									«FOR struct : idlOnlyStructs»
 									
-									«val structName = struct.name»
+									«val structName = sanitizeID(idlNameProvider.getFullyQualifiedName(struct).toString("_"))»
 									--Generated from «idlNameProvider.getFullyQualifiedName(struct).toString("::")»
 									data «structName»_IDL
 									end «structName»_IDL;
