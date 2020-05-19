@@ -35,10 +35,39 @@ import face.datamodel.platform.TemplateComposition
 import face.datamodel.platform.View
 import java.util.Optional
 import org.eclipse.emf.ecore.resource.ResourceSet
+import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.resource.IResourceDescriptions
 import org.eclipse.xtext.resource.IResourceDescriptionsProvider
+import org.osate.simpleidl.simpleIDL.BooleanType
+import org.osate.simpleidl.simpleIDL.BoundedSequence
+import org.osate.simpleidl.simpleIDL.BoundedString
+import org.osate.simpleidl.simpleIDL.BoundedWideString
+import org.osate.simpleidl.simpleIDL.CharType
+import org.osate.simpleidl.simpleIDL.Definition
+import org.osate.simpleidl.simpleIDL.DoubleType
+import org.osate.simpleidl.simpleIDL.Enum
+import org.osate.simpleidl.simpleIDL.FixedPtType
+import org.osate.simpleidl.simpleIDL.FloatType
+import org.osate.simpleidl.simpleIDL.LongDoubleType
+import org.osate.simpleidl.simpleIDL.Module
+import org.osate.simpleidl.simpleIDL.OctetType
+import org.osate.simpleidl.simpleIDL.ReferencedType
+import org.osate.simpleidl.simpleIDL.SignedLongInt
+import org.osate.simpleidl.simpleIDL.SignedLongLongInt
+import org.osate.simpleidl.simpleIDL.SignedShortInt
 import org.osate.simpleidl.simpleIDL.SimpleIDLPackage
+import org.osate.simpleidl.simpleIDL.Struct
+import org.osate.simpleidl.simpleIDL.StructForward
+import org.osate.simpleidl.simpleIDL.Typedef
+import org.osate.simpleidl.simpleIDL.UnboundedSequence
+import org.osate.simpleidl.simpleIDL.UnboundedString
+import org.osate.simpleidl.simpleIDL.UnboundedWideString
+import org.osate.simpleidl.simpleIDL.Union
+import org.osate.simpleidl.simpleIDL.UnsignedLongInt
+import org.osate.simpleidl.simpleIDL.UnsignedLongLongInt
+import org.osate.simpleidl.simpleIDL.UnsignedShortInt
+import org.osate.simpleidl.simpleIDL.WideCharType
 
 import static org.osate.face2aadl.logic.TranslatorUtil.sanitizeID
 import static org.osate.face2aadl.logic.TranslatorUtil.translateDescription
@@ -52,7 +81,9 @@ import static extension org.eclipse.xtext.EcoreUtil2.getContainerOfType
 package class DataModelTranslator {
 	val String faceFileName
 	val String packageName
+	//TODO Combine into a triple
 	val Optional<Pair<ResourceSet, IResourceDescriptions>> idlOption
+	val IQualifiedNameProvider idlNameProvider
 	
 	new(String faceFileName, String packageName, Optional<Pair<Injector, ResourceSet>> idlOption) {
 		this.faceFileName = faceFileName
@@ -62,6 +93,11 @@ package class DataModelTranslator {
 			val resourceSet = pair.value
 			resourceSet -> injector.getInstance(IResourceDescriptionsProvider).getResourceDescriptions(resourceSet)
 		]
+		if (idlOption.present) {
+			idlNameProvider = idlOption.get.key.getInstance(IQualifiedNameProvider)
+		} else {
+			idlNameProvider = null
+		}
 	}
 	
 	def package Optional<String> translate(ArchitectureModel model, boolean platformOnly) {
@@ -97,6 +133,12 @@ package class DataModelTranslator {
 				--Generated from "«faceFileName»"
 				package «packageName»
 				public
+					«IF classifiersString.contains("Base_Types::")»
+					with Base_Types;
+					«ENDIF»
+					«IF classifiersString.contains("Data_Model::")»
+					with Data_Model;
+					«ENDIF»
 					with FACE;
 					
 					«classifiersString»
@@ -136,7 +178,7 @@ package class DataModelTranslator {
 			
 			//Platform
 			PhysicalDataType: {
-				idlOption.ifPresent[option |
+				val idlBasedContents = idlOption.map[option |
 					val resourceSet = option.key
 					val descriptions = option.value
 					val definitionType = SimpleIDLPackage.eINSTANCE.definition
@@ -144,25 +186,213 @@ package class DataModelTranslator {
 					val lookupName = QualifiedName.create("FACE", "DM", dataModel.name, element.name)
 					val objects = descriptions.getExportedObjects(definitionType, lookupName, true).toList
 					if (objects.size == 0) {
-						println(lookupName.toString("::") + ": NOTHING FOUND")
+//						println("Could not find " + lookupName.toString("::"))
+						val name = translateName(element)
+						'''
+							«translateDescription(element)»
+							data «name»
+								properties
+									FACE::Realization_Tier => platform;
+									«translateUUID(element)»
+							end «name»;
+							
+							data implementation «name».impl
+							end «name».impl;
+						'''
 					} else if (objects.size == 1) {
-						println(lookupName.toString("::") + ": " + objects.head.EObjectOrProxy.resolve(resourceSet))
+						val object = objects.head.EObjectOrProxy.resolve(resourceSet)
+						switch object {
+							Module: throw new UnsupportedOperationException(lookupName.toString("::") + " is a Module")
+							Struct: {
+								val name = translateName(element)
+								'''
+									«translateDescription(element)»
+									data «name»
+										properties
+											FACE::Realization_Tier => platform;
+											«translateUUID(element)»
+									end «name»;
+									
+									data implementation «name».impl
+										subcomponents
+											«FOR member : object.members»
+											«val type = (member.type as ReferencedType).type»
+											«if (type.eIsProxy) throw new UnsupportedOperationException("Proxy found")»
+											«FOR memberName : member.names»
+											«sanitizeID(memberName)»: data «sanitizeID(type.name)»_Platform.impl;
+											«ENDFOR»
+											«ENDFOR»
+									end «name».impl;
+								'''
+							}
+							StructForward: throw new UnsupportedOperationException(lookupName.toString("::") + " is a StructForward")
+							Union: throw new UnsupportedOperationException(lookupName.toString("::") + " is a Union")
+							Enum: {
+								val name = translateName(element)
+								'''
+									«translateDescription(element)»
+									data «name»
+										properties
+											Data_Model::Data_Representation => Enum;
+											FACE::Realization_Tier => platform;
+											«translateUUID(element)»
+									end «name»;
+									
+									data implementation «name».impl
+									end «name».impl;
+								'''
+							}
+							Typedef: {
+								switch type : object.type {
+									SignedShortInt: {
+										val name = translateName(element)
+										'''
+											«translateDescription(element)»
+											data «name» extends Base_Types::Integer_16
+												properties
+													FACE::Realization_Tier => platform;
+													«translateUUID(element)»
+											end «name»;
+											
+											data implementation «name».impl
+											end «name».impl;
+										'''
+									}
+									SignedLongInt: throw new UnsupportedOperationException(lookupName.toString("::") + " is a SignedLongInt")
+									SignedLongLongInt: throw new UnsupportedOperationException(lookupName.toString("::") + " is a SignedLongLongInt")
+									UnsignedShortInt: {
+										val name = translateName(element)
+										'''
+											«translateDescription(element)»
+											data «name» extends Base_Types::Unsigned_16
+												properties
+													FACE::Realization_Tier => platform;
+													«translateUUID(element)»
+											end «name»;
+											
+											data implementation «name».impl
+											end «name».impl;
+										'''
+									}
+									UnsignedLongInt: {
+										val name = translateName(element)
+										'''
+											«translateDescription(element)»
+											data «name» extends Base_Types::Unsigned_32
+												properties
+													FACE::Realization_Tier => platform;
+													«translateUUID(element)»
+											end «name»;
+											
+											data implementation «name».impl
+											end «name».impl;
+										'''
+									}
+									UnsignedLongLongInt: throw new UnsupportedOperationException(lookupName.toString("::") + " is a UnsignedLongLongInt")
+									FloatType: {
+										val name = translateName(element)
+										'''
+											«translateDescription(element)»
+											data «name» extends Base_Types::Float_32
+												properties
+													FACE::Realization_Tier => platform;
+													«translateUUID(element)»
+											end «name»;
+											
+											data implementation «name».impl
+											end «name».impl;
+										'''
+									}
+									DoubleType: {
+										val name = translateName(element)
+										'''
+											«translateDescription(element)»
+											data «name» extends Base_Types::Float_64
+												properties
+													FACE::Realization_Tier => platform;
+													«translateUUID(element)»
+											end «name»;
+											
+											data implementation «name».impl
+											end «name».impl;
+										'''
+									}
+									LongDoubleType: throw new UnsupportedOperationException(lookupName.toString("::") + " is a LongDoubleType")
+									CharType: throw new UnsupportedOperationException(lookupName.toString("::") + " is a CharType")
+									WideCharType: throw new UnsupportedOperationException(lookupName.toString("::") + " is a WideCharType")
+									BooleanType: {
+										println(lookupName.toString("::") + " is a BooleanType")
+										val name = translateName(element)
+										'''
+											«translateDescription(element)»
+											data «name» --TODO
+												properties
+													FACE::Realization_Tier => platform;
+													«translateUUID(element)»
+											end «name»;
+											
+											data implementation «name».impl
+											end «name».impl;
+										'''
+									}
+									OctetType: throw new UnsupportedOperationException(lookupName.toString("::") + " is a OctetType")
+									ReferencedType: throw new UnsupportedOperationException(lookupName.toString("::") + " is a ReferencedType")
+									BoundedSequence: throw new UnsupportedOperationException(lookupName.toString("::") + " is a BoundedSequence")
+									UnboundedSequence: throw new UnsupportedOperationException(lookupName.toString("::") + " is a UnboundedSequence")
+									BoundedString: {
+										val name = translateName(element)
+										'''
+											«translateDescription(element)»
+											data «name» extends Base_Types::String
+												properties
+													Data_Size => «type.size» Bytes;
+													FACE::Realization_Tier => platform;
+													«translateUUID(element)»
+											end «name»;
+											
+											data implementation «name».impl
+											end «name».impl;
+										'''
+									}
+									UnboundedString: {
+										println(lookupName.toString("::") + " is a UnboundedString")
+										val name = translateName(element)
+										'''
+											«translateDescription(element)»
+											data «name» --TODO
+												properties
+													FACE::Realization_Tier => platform;
+													«translateUUID(element)»
+											end «name»;
+											
+											data implementation «name».impl
+											end «name».impl;
+										'''
+									}
+									BoundedWideString: throw new UnsupportedOperationException(lookupName.toString("::") + " is a BoundedWideString")
+									UnboundedWideString: throw new UnsupportedOperationException(lookupName.toString("::") + " is a UnboundedWideString")
+									FixedPtType: throw new UnsupportedOperationException(lookupName.toString("::") + " is a FixedPtType")
+								}
+							}
+						}
 					} else {
-						println(lookupName.toString("::") + ": MULTIPLE OBJECTS")
+						throw new AssertionError("Multiple definitions found for " + lookupName.toString("::"))
 					}
 				]
-				val name = translateName(element)
-				'''
-					«translateDescription(element)»
-					data «name»
-						properties
-							FACE::Realization_Tier => platform;
-							«translateUUID(element)»
-					end «name»;
-					
-					data implementation «name».impl
-					end «name».impl;
-				'''
+				idlBasedContents.orElseGet[
+					val name = translateName(element)
+					'''
+						«translateDescription(element)»
+						data «name»
+							properties
+								FACE::Realization_Tier => platform;
+								«translateUUID(element)»
+						end «name»;
+						
+						data implementation «name».impl
+						end «name».impl;
+					'''
+				]
 			}
 			face.datamodel.platform.Entity: {
 				val name = translateName(element)
@@ -273,22 +503,177 @@ package class DataModelTranslator {
 			}«ENDIF»;'''
 	}
 	
+	//TODO Handle cycles
+	def private Definition followReferences(Definition object) {
+		if (object instanceof Typedef) {
+			val type = object.type
+			if (type instanceof ReferencedType) {
+				if (type.type.eIsProxy) {
+					throw new UnsupportedOperationException("Found a proxy")
+				} else {
+					followReferences(type.type)
+				}
+			} else {
+				object
+			}
+		} else {
+			object
+		}
+	}
+	
 	def private String translateView(View view, boolean platformOnly) {
 		switch view {
 			Template: {
-				val name = translateName(view)
-				val realizes = view.boundQuery?.realizes
-				'''
-					«translateDescription(view)»
-					data «name»«IF realizes !== null» «translateExtends(realizes, platformOnly)»«ENDIF»
-						properties
-							FACE::Realization_Tier => platform;
-							«translateUUID(view)»
-					end «name»;
-					
-					data implementation «name».impl
-					end «name».impl;
-				'''
+				val idlBasedContents = idlOption.map[option |
+					val resourceSet = option.key
+					val descriptions = option.value
+					val definitionType = SimpleIDLPackage.eINSTANCE.definition
+					val dataModel = view.getContainerOfType(DataModel)
+					val lookupName = QualifiedName.create("FACE", "DM", dataModel.name, view.name)
+					val objects = descriptions.getExportedObjects(definitionType, lookupName, true).toList
+					if (objects.size == 0) {
+//						println("Could not find " + lookupName.toString("::"))
+						val name = translateName(view)
+						val realizes = view.boundQuery?.realizes
+						'''
+							«translateDescription(view)»
+							data «name»«IF realizes !== null» «translateExtends(realizes, platformOnly)»«ENDIF»
+								properties
+									FACE::Realization_Tier => platform;
+									«translateUUID(view)»
+							end «name»;
+							
+							data implementation «name».impl
+							end «name».impl;
+						'''
+					} else if (objects.size == 1) {
+						val object = followReferences(objects.head.EObjectOrProxy.resolve(resourceSet) as Definition)
+						switch object {
+							Module: throw new UnsupportedOperationException(lookupName.toString("::") + " is a Module")
+							Struct: {
+								val name = translateName(view)
+								val realizes = view.boundQuery?.realizes
+								val idlOnlyStructs = newLinkedHashSet
+								'''
+									«translateDescription(view)»
+									data «name»«IF realizes !== null» «translateExtends(realizes, platformOnly)»«ENDIF»
+										properties
+											FACE::Realization_Tier => platform;
+											«translateUUID(view)»
+									end «name»;
+									
+									data implementation «name».impl
+										subcomponents
+											«FOR member : object.members»
+											«val type = (member.type as ReferencedType).type»
+											«if (type.eIsProxy) throw new UnsupportedOperationException("Proxy found")»
+											«FOR memberName : member.names»
+											«IF type instanceof Typedef»
+											«val typedefType = type.type»
+											«IF typedefType instanceof BoundedSequence»
+											«val sequenceType = (typedefType.type as ReferencedType).type»
+											«if (sequenceType.eIsProxy) throw new UnsupportedOperationException("Proxy found")»
+											«IF sequenceType instanceof Struct»
+											«val structName = sequenceType.name»
+											«IF view.getContainerOfType(ArchitectureModel).eAllContents.filter(face.Element).filter[it instanceof PhysicalDataType || it instanceof View].exists[it.name == structName]»
+											«sanitizeID(memberName)»: data «sanitizeID(structName)»_Platform.impl[«typedefType.size»];
+											«ELSE»
+											«val unused = idlOnlyStructs += sequenceType»
+											«sanitizeID(memberName)»: data «sanitizeID(structName)»_IDL.impl[«typedefType.size»];
+											«ENDIF»
+											«ELSE»
+											«sanitizeID(memberName)»: data «sanitizeID(sequenceType.name)»_Platform.impl[«typedefType.size»];
+											«ENDIF»
+											«ELSE»
+											«if (typedefType instanceof UnboundedSequence) throw new UnsupportedOperationException(lookupName.toString("::") + "." + memberName + " is an UnboundedSequence")»
+											«sanitizeID(memberName)»: data «sanitizeID(type.name)»_Platform.impl;
+											«ENDIF»
+											«ELSE»
+											«sanitizeID(memberName)»: data «sanitizeID(type.name)»_Platform.impl;
+											«ENDIF»
+											«ENDFOR»
+											«ENDFOR»
+									end «name».impl;
+									«FOR struct : idlOnlyStructs»
+									
+									«val structName = struct.name»
+									--Generated from «idlNameProvider.getFullyQualifiedName(struct).toString("::")»
+									data «structName»_IDL
+									end «structName»_IDL;
+									
+									data implementation «structName»_IDL.impl
+										subcomponents
+											«FOR member : struct.members»
+											«val type = (member.type as ReferencedType).type»
+											«if (type.eIsProxy) throw new UnsupportedOperationException("Proxy found")»
+											«FOR memberName : member.names»
+											«IF type instanceof Typedef»
+											«val typedefType = type.type»
+											«IF typedefType instanceof BoundedSequence»
+											«val sequenceType = (typedefType.type as ReferencedType).type»
+											«if (sequenceType.eIsProxy) throw new UnsupportedOperationException("Proxy found")»
+											«sanitizeID(memberName)»: data «sanitizeID(sequenceType.name)»_Platform.impl[«typedefType.size»];
+											«ELSE»
+											«if (typedefType instanceof UnboundedSequence) throw new UnsupportedOperationException(lookupName.toString("::") + "." + memberName + " is an UnboundedSequence")»
+											«sanitizeID(memberName)»: data «sanitizeID(type.name)»_Platform.impl;
+											«ENDIF»
+											«ELSE»
+											«sanitizeID(memberName)»: data «sanitizeID(type.name)»_Platform.impl;
+											«ENDIF»
+											«ENDFOR»
+											«ENDFOR»
+									end «structName»_IDL.impl;
+									«ENDFOR»
+								'''
+							}
+							StructForward: throw new UnsupportedOperationException(lookupName.toString("::") + " is a StructForward")
+							Union: throw new UnsupportedOperationException(lookupName.toString("::") + " is a Union")
+							Enum: throw new UnsupportedOperationException(lookupName.toString("::") + " is an Enum")
+							Typedef: {
+								switch object.type {
+									SignedShortInt: throw new UnsupportedOperationException(lookupName.toString("::") + " is a SignedShortInt")
+									SignedLongInt: throw new UnsupportedOperationException(lookupName.toString("::") + " is a SignedLongInt")
+									SignedLongLongInt: throw new UnsupportedOperationException(lookupName.toString("::") + " is a SignedLongLongInt")
+									UnsignedShortInt: throw new UnsupportedOperationException(lookupName.toString("::") + " is an UnsignedShortInt")
+									UnsignedLongInt: throw new UnsupportedOperationException(lookupName.toString("::") + " is a UnsignedLongInt")
+									UnsignedLongLongInt: throw new UnsupportedOperationException(lookupName.toString("::") + " is a UnsignedLongLongInt")
+									FloatType: throw new UnsupportedOperationException(lookupName.toString("::") + " is a FloatType")
+									DoubleType: throw new UnsupportedOperationException(lookupName.toString("::") + " is a DoubleType")
+									LongDoubleType: throw new UnsupportedOperationException(lookupName.toString("::") + " is a LongDoubleType")
+									CharType: throw new UnsupportedOperationException(lookupName.toString("::") + " is a CharType")
+									WideCharType: throw new UnsupportedOperationException(lookupName.toString("::") + " is a WideCharType")
+									BooleanType: throw new UnsupportedOperationException(lookupName.toString("::") + " is a BooleanType")
+									OctetType: throw new UnsupportedOperationException(lookupName.toString("::") + " is a OctetType")
+									ReferencedType: throw new UnsupportedOperationException(lookupName.toString("::") + " is a ReferencedType")
+									BoundedSequence: throw new UnsupportedOperationException(lookupName.toString("::") + " is a BoundedSequence")
+									UnboundedSequence: throw new UnsupportedOperationException(lookupName.toString("::") + " is a UnboundedSequence")
+									BoundedString: throw new UnsupportedOperationException(lookupName.toString("::") + " is a BoundedString")
+									UnboundedString: throw new UnsupportedOperationException(lookupName.toString("::") + " is a UnboundedString")
+									BoundedWideString: throw new UnsupportedOperationException(lookupName.toString("::") + " is a BoundedWideString")
+									UnboundedWideString: throw new UnsupportedOperationException(lookupName.toString("::") + " is a UnboundedWideString")
+									FixedPtType: throw new UnsupportedOperationException(lookupName.toString("::") + " is a FixedPtType")
+								}
+							}
+						}
+					} else {
+						throw new AssertionError("Multiple definitions found for " + lookupName.toString("::"))
+					}
+				]
+				idlBasedContents.orElseGet[
+					val name = translateName(view)
+					val realizes = view.boundQuery?.realizes
+					'''
+						«translateDescription(view)»
+						data «name»«IF realizes !== null» «translateExtends(realizes, platformOnly)»«ENDIF»
+							properties
+								FACE::Realization_Tier => platform;
+								«translateUUID(view)»
+						end «name»;
+						
+						data implementation «name».impl
+						end «name».impl;
+					'''
+				]
 			}
 			CompositeTemplate: {
 				val name = translateName(view)
@@ -311,6 +696,16 @@ package class DataModelTranslator {
 					end «name».impl;
 				'''
 			}
+		}
+	}
+	
+	def private String getName(Definition definition) {
+		switch definition {
+			Module: definition.name
+			Struct: definition.name
+			Union: definition.name
+			Enum: definition.name
+			Typedef: definition.names.head.name
 		}
 	}
 	
