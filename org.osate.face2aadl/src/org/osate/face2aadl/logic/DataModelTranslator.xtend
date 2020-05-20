@@ -448,7 +448,17 @@ package class DataModelTranslator {
 				}
 			}
 		} else {
-			'''«sanitizeID(memberName)»: data «sanitizeID(type.name)»_Platform.impl;'''
+			if (type instanceof Struct) {
+				val structName = type.name
+				if (architectureModel.eAllContents.filter(face.Element).filter[it instanceof PhysicalDataType || it instanceof View].exists[it.name == structName]) {
+					'''«sanitizeID(memberName)»: data «sanitizeID(type.name)»_Platform.impl;'''
+				} else {
+					idlOnlyStructs += type
+					'''«sanitizeID(memberName)»: data «sanitizeID(idlNameProvider.getFullyQualifiedName(type).toString("_"))»_IDL.impl;'''
+				}
+			} else {
+				'''«sanitizeID(memberName)»: data «sanitizeID(type.name)»_Platform.impl;'''
+			}
 		}
 	}
 	
