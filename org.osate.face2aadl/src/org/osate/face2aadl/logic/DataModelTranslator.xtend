@@ -321,11 +321,10 @@ package class DataModelTranslator {
 									CharType: throw new UnsupportedOperationException(lookupName.toString("::") + " is a CharType")
 									WideCharType: throw new UnsupportedOperationException(lookupName.toString("::") + " is a WideCharType")
 									BooleanType: {
-										println(lookupName.toString("::") + " is a BooleanType")
 										val name = translateName(element)
 										'''
 											«translateDescription(element)»
-											data «name» --TODO
+											data «name» extends Base_Types::Boolean
 												properties
 													FACE::Realization_Tier => platform;
 													«translateUUID(element)»
@@ -355,11 +354,10 @@ package class DataModelTranslator {
 										'''
 									}
 									UnboundedString: {
-										println(lookupName.toString("::") + " is a UnboundedString")
 										val name = translateName(element)
 										'''
 											«translateDescription(element)»
-											data «name» --TODO
+											data «name» extends Base_Types::String
 												properties
 													FACE::Realization_Tier => platform;
 													«translateUUID(element)»
