@@ -421,7 +421,17 @@ package class DataModelTranslator {
 				if (arrayType.eIsProxy) {
 					throw new UnsupportedOperationException("Proxy found")
 				}
-				'''«sanitizeID(memberName)»: data «sanitizeID(arrayType.name)»_Platform.impl[«type.names.head.arraySizes.head»];'''
+				if (arrayType instanceof Struct) {
+					val structName = arrayType.name
+					if (architectureModel.eAllContents.filter(face.Element).filter[it instanceof PhysicalDataType || it instanceof View].exists[it.name == structName]) {
+						'''«sanitizeID(memberName)»: data «sanitizeID(arrayType.name)»_Platform.impl[«type.names.head.arraySizes.head»];'''
+					} else {
+						idlOnlyStructs += arrayType
+						'''«sanitizeID(memberName)»: data «sanitizeID(idlNameProvider.getFullyQualifiedName(arrayType).toString("_"))»_IDL.impl[«type.names.head.arraySizes.head»];'''
+					}
+				} else {
+					'''«sanitizeID(memberName)»: data «sanitizeID(arrayType.name)»_Platform.impl[«type.names.head.arraySizes.head»];'''
+				}
 			} else if (type.names.head.arraySizes.size > 1) {
 				throw new UnsupportedOperationException(lookupName.toString("::") + "." + memberName + " is a multi-dimensional array")
 			} else {
