@@ -499,51 +499,44 @@ ruleDefinition returns [EObject current=null]
 			)
 			(
 				(
+					lv_name_45_0=RULE_ID
 					{
-						newCompositeNode(grammarAccess.getDefinitionAccess().getNamesAnyDeclaratorParserRuleCall_5_3_0());
+						newLeafNode(lv_name_45_0, grammarAccess.getDefinitionAccess().getNameIDTerminalRuleCall_5_3_0());
 					}
-					lv_names_45_0=ruleAnyDeclarator
 					{
 						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getDefinitionRule());
+							$current = createModelElement(grammarAccess.getDefinitionRule());
 						}
-						add(
+						setWithLastConsumed(
 							$current,
-							"names",
-							lv_names_45_0,
-							"org.osate.simpleidl.SimpleIDL.AnyDeclarator");
-						afterParserOrEnumRuleCall();
+							"name",
+							lv_name_45_0,
+							"org.osate.simpleidl.SimpleIDL.ID");
 					}
 				)
 			)
 			(
-				otherlv_46=','
-				{
-					newLeafNode(otherlv_46, grammarAccess.getDefinitionAccess().getCommaKeyword_5_4_0());
-				}
 				(
-					(
-						{
-							newCompositeNode(grammarAccess.getDefinitionAccess().getNamesAnyDeclaratorParserRuleCall_5_4_1_0());
+					{
+						newCompositeNode(grammarAccess.getDefinitionAccess().getArraySizeFixedArraySizeParserRuleCall_5_4_0());
+					}
+					lv_arraySize_46_0=ruleFixedArraySize
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getDefinitionRule());
 						}
-						lv_names_47_0=ruleAnyDeclarator
-						{
-							if ($current==null) {
-								$current = createModelElementForParent(grammarAccess.getDefinitionRule());
-							}
-							add(
-								$current,
-								"names",
-								lv_names_47_0,
-								"org.osate.simpleidl.SimpleIDL.AnyDeclarator");
-							afterParserOrEnumRuleCall();
-						}
-					)
+						set(
+							$current,
+							"arraySize",
+							lv_arraySize_46_0,
+							"org.osate.simpleidl.SimpleIDL.FixedArraySize");
+						afterParserOrEnumRuleCall();
+					}
 				)
-			)*
-			otherlv_48=';'
+			)?
+			otherlv_47=';'
 			{
-				newLeafNode(otherlv_48, grammarAccess.getDefinitionAccess().getSemicolonKeyword_5_5());
+				newLeafNode(otherlv_47, grammarAccess.getDefinitionAccess().getSemicolonKeyword_5_5());
 			}
 		)
 	)
@@ -694,62 +687,6 @@ ruleCase returns [EObject current=null]
 		{
 			newLeafNode(otherlv_5, grammarAccess.getCaseAccess().getSemicolonKeyword_3());
 		}
-	)
-;
-
-// Entry rule entryRuleAnyDeclarator
-entryRuleAnyDeclarator returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getAnyDeclaratorRule()); }
-	iv_ruleAnyDeclarator=ruleAnyDeclarator
-	{ $current=$iv_ruleAnyDeclarator.current; }
-	EOF;
-
-// Rule AnyDeclarator
-ruleAnyDeclarator returns [EObject current=null]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	(
-		(
-			(
-				lv_name_0_0=RULE_ID
-				{
-					newLeafNode(lv_name_0_0, grammarAccess.getAnyDeclaratorAccess().getNameIDTerminalRuleCall_0_0());
-				}
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getAnyDeclaratorRule());
-					}
-					setWithLastConsumed(
-						$current,
-						"name",
-						lv_name_0_0,
-						"org.osate.simpleidl.SimpleIDL.ID");
-				}
-			)
-		)
-		(
-			(
-				{
-					newCompositeNode(grammarAccess.getAnyDeclaratorAccess().getArraySizeFixedArraySizeParserRuleCall_1_0());
-				}
-				lv_arraySize_1_0=ruleFixedArraySize
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getAnyDeclaratorRule());
-					}
-					set(
-						$current,
-						"arraySize",
-						lv_arraySize_1_0,
-						"org.osate.simpleidl.SimpleIDL.FixedArraySize");
-					afterParserOrEnumRuleCall();
-				}
-			)
-		)?
 	)
 ;
 

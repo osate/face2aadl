@@ -28,7 +28,6 @@ import org.eclipse.emf.ecore.EReference;
 
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
-import org.osate.simpleidl.simpleIDL.AnyDeclarator;
 import org.osate.simpleidl.simpleIDL.BooleanType;
 import org.osate.simpleidl.simpleIDL.BoundedSequence;
 import org.osate.simpleidl.simpleIDL.BoundedString;
@@ -99,13 +98,6 @@ public class SimpleIDLPackageImpl extends EPackageImpl implements SimpleIDLPacka
    * @generated
    */
   private EClass caseEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass anyDeclaratorEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -496,39 +488,6 @@ public class SimpleIDLPackageImpl extends EPackageImpl implements SimpleIDLPacka
    * @generated
    */
   @Override
-  public EClass getAnyDeclarator()
-  {
-    return anyDeclaratorEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EAttribute getAnyDeclarator_Name()
-  {
-    return (EAttribute)anyDeclaratorEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EReference getAnyDeclarator_ArraySize()
-  {
-    return (EReference)anyDeclaratorEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public EClass getFixedArraySize()
   {
     return fixedArraySizeEClass;
@@ -749,9 +708,20 @@ public class SimpleIDLPackageImpl extends EPackageImpl implements SimpleIDLPacka
    * @generated
    */
   @Override
-  public EReference getTypedef_Names()
+  public EAttribute getTypedef_Name()
   {
-    return (EReference)typedefEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)typedefEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getTypedef_ArraySize()
+  {
+    return (EReference)typedefEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -1118,10 +1088,6 @@ public class SimpleIDLPackageImpl extends EPackageImpl implements SimpleIDLPacka
     createEReference(caseEClass, CASE__TYPE);
     createEAttribute(caseEClass, CASE__NAME);
 
-    anyDeclaratorEClass = createEClass(ANY_DECLARATOR);
-    createEAttribute(anyDeclaratorEClass, ANY_DECLARATOR__NAME);
-    createEReference(anyDeclaratorEClass, ANY_DECLARATOR__ARRAY_SIZE);
-
     fixedArraySizeEClass = createEClass(FIXED_ARRAY_SIZE);
     createEAttribute(fixedArraySizeEClass, FIXED_ARRAY_SIZE__SIZE);
 
@@ -1150,7 +1116,8 @@ public class SimpleIDLPackageImpl extends EPackageImpl implements SimpleIDLPacka
 
     typedefEClass = createEClass(TYPEDEF);
     createEReference(typedefEClass, TYPEDEF__TYPE);
-    createEReference(typedefEClass, TYPEDEF__NAMES);
+    createEAttribute(typedefEClass, TYPEDEF__NAME);
+    createEReference(typedefEClass, TYPEDEF__ARRAY_SIZE);
 
     boundedSequenceEClass = createEClass(BOUNDED_SEQUENCE);
     createEReference(boundedSequenceEClass, BOUNDED_SEQUENCE__TYPE);
@@ -1276,10 +1243,6 @@ public class SimpleIDLPackageImpl extends EPackageImpl implements SimpleIDLPacka
     initEReference(getCase_Type(), this.getSimpleTypeSpec(), null, "type", null, 0, 1, Case.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getCase_Name(), ecorePackage.getEString(), "name", null, 0, 1, Case.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(anyDeclaratorEClass, AnyDeclarator.class, "AnyDeclarator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getAnyDeclarator_Name(), ecorePackage.getEString(), "name", null, 0, 1, AnyDeclarator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getAnyDeclarator_ArraySize(), this.getFixedArraySize(), null, "arraySize", null, 0, 1, AnyDeclarator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEClass(fixedArraySizeEClass, FixedArraySize.class, "FixedArraySize", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getFixedArraySize_Size(), ecorePackage.getEInt(), "size", null, 0, 1, FixedArraySize.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -1308,7 +1271,8 @@ public class SimpleIDLPackageImpl extends EPackageImpl implements SimpleIDLPacka
 
     initEClass(typedefEClass, Typedef.class, "Typedef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getTypedef_Type(), this.getType(), null, "type", null, 0, 1, Typedef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getTypedef_Names(), this.getAnyDeclarator(), null, "names", null, 0, -1, Typedef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getTypedef_Name(), ecorePackage.getEString(), "name", null, 0, 1, Typedef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTypedef_ArraySize(), this.getFixedArraySize(), null, "arraySize", null, 0, 1, Typedef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(boundedSequenceEClass, BoundedSequence.class, "BoundedSequence", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getBoundedSequence_Type(), this.getSimpleTypeSpec(), null, "type", null, 0, 1, BoundedSequence.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

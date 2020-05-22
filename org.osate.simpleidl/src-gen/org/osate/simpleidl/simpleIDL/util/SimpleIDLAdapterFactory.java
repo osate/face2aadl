@@ -28,7 +28,6 @@ import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 
 import org.eclipse.emf.ecore.EObject;
 
-import org.osate.simpleidl.simpleIDL.AnyDeclarator;
 import org.osate.simpleidl.simpleIDL.BooleanType;
 import org.osate.simpleidl.simpleIDL.BoundedSequence;
 import org.osate.simpleidl.simpleIDL.BoundedString;
@@ -145,11 +144,6 @@ public class SimpleIDLAdapterFactory extends AdapterFactoryImpl
       public Adapter caseCase(Case object)
       {
         return createCaseAdapter();
-      }
-      @Override
-      public Adapter caseAnyDeclarator(AnyDeclarator object)
-      {
-        return createAnyDeclaratorAdapter();
       }
       @Override
       public Adapter caseFixedArraySize(FixedArraySize object)
@@ -379,21 +373,6 @@ public class SimpleIDLAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createCaseAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.osate.simpleidl.simpleIDL.AnyDeclarator <em>Any Declarator</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.osate.simpleidl.simpleIDL.AnyDeclarator
-   * @generated
-   */
-  public Adapter createAnyDeclaratorAdapter()
   {
     return null;
   }

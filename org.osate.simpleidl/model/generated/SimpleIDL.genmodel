@@ -19,10 +19,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//Case/type"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//Case/name"/>
     </genClasses>
-    <genClasses ecoreClass="SimpleIDL.ecore#//AnyDeclarator">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//AnyDeclarator/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//AnyDeclarator/arraySize"/>
-    </genClasses>
     <genClasses ecoreClass="SimpleIDL.ecore#//FixedArraySize">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//FixedArraySize/size"/>
     </genClasses>
@@ -49,7 +45,8 @@
     </genClasses>
     <genClasses ecoreClass="SimpleIDL.ecore#//Typedef">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//Typedef/type"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//Typedef/names"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//Typedef/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//Typedef/arraySize"/>
     </genClasses>
     <genClasses ecoreClass="SimpleIDL.ecore#//BoundedSequence">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//BoundedSequence/type"/>

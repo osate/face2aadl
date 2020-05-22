@@ -21,22 +21,15 @@
  */
 package org.osate.simpleidl.simpleIDL.impl;
 
-import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
-
-import org.osate.simpleidl.simpleIDL.AnyDeclarator;
+import org.osate.simpleidl.simpleIDL.FixedArraySize;
 import org.osate.simpleidl.simpleIDL.SimpleIDLPackage;
 import org.osate.simpleidl.simpleIDL.Type;
 import org.osate.simpleidl.simpleIDL.Typedef;
@@ -50,7 +43,8 @@ import org.osate.simpleidl.simpleIDL.Typedef;
  * </p>
  * <ul>
  *   <li>{@link org.osate.simpleidl.simpleIDL.impl.TypedefImpl#getType <em>Type</em>}</li>
- *   <li>{@link org.osate.simpleidl.simpleIDL.impl.TypedefImpl#getNames <em>Names</em>}</li>
+ *   <li>{@link org.osate.simpleidl.simpleIDL.impl.TypedefImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.osate.simpleidl.simpleIDL.impl.TypedefImpl#getArraySize <em>Array Size</em>}</li>
  * </ul>
  *
  * @generated
@@ -68,14 +62,34 @@ public class TypedefImpl extends DefinitionImpl implements Typedef
   protected Type type;
 
   /**
-   * The cached value of the '{@link #getNames() <em>Names</em>}' containment reference list.
+   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getNames()
+   * @see #getName()
    * @generated
    * @ordered
    */
-  protected EList<AnyDeclarator> names;
+  protected static final String NAME_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getName()
+   * @generated
+   * @ordered
+   */
+  protected String name = NAME_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getArraySize() <em>Array Size</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getArraySize()
+   * @generated
+   * @ordered
+   */
+  protected FixedArraySize arraySize;
 
   /**
    * <!-- begin-user-doc -->
@@ -154,13 +168,73 @@ public class TypedefImpl extends DefinitionImpl implements Typedef
    * @generated
    */
   @Override
-  public EList<AnyDeclarator> getNames()
+  public String getName()
   {
-    if (names == null)
+    return name;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setName(String newName)
+  {
+    String oldName = name;
+    name = newName;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SimpleIDLPackage.TYPEDEF__NAME, oldName, name));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public FixedArraySize getArraySize()
+  {
+    return arraySize;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetArraySize(FixedArraySize newArraySize, NotificationChain msgs)
+  {
+    FixedArraySize oldArraySize = arraySize;
+    arraySize = newArraySize;
+    if (eNotificationRequired())
     {
-      names = new EObjectContainmentEList<AnyDeclarator>(AnyDeclarator.class, this, SimpleIDLPackage.TYPEDEF__NAMES);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SimpleIDLPackage.TYPEDEF__ARRAY_SIZE, oldArraySize, newArraySize);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
     }
-    return names;
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setArraySize(FixedArraySize newArraySize)
+  {
+    if (newArraySize != arraySize)
+    {
+      NotificationChain msgs = null;
+      if (arraySize != null)
+        msgs = ((InternalEObject)arraySize).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SimpleIDLPackage.TYPEDEF__ARRAY_SIZE, null, msgs);
+      if (newArraySize != null)
+        msgs = ((InternalEObject)newArraySize).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SimpleIDLPackage.TYPEDEF__ARRAY_SIZE, null, msgs);
+      msgs = basicSetArraySize(newArraySize, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SimpleIDLPackage.TYPEDEF__ARRAY_SIZE, newArraySize, newArraySize));
   }
 
   /**
@@ -175,8 +249,8 @@ public class TypedefImpl extends DefinitionImpl implements Typedef
     {
       case SimpleIDLPackage.TYPEDEF__TYPE:
         return basicSetType(null, msgs);
-      case SimpleIDLPackage.TYPEDEF__NAMES:
-        return ((InternalEList<?>)getNames()).basicRemove(otherEnd, msgs);
+      case SimpleIDLPackage.TYPEDEF__ARRAY_SIZE:
+        return basicSetArraySize(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -193,8 +267,10 @@ public class TypedefImpl extends DefinitionImpl implements Typedef
     {
       case SimpleIDLPackage.TYPEDEF__TYPE:
         return getType();
-      case SimpleIDLPackage.TYPEDEF__NAMES:
-        return getNames();
+      case SimpleIDLPackage.TYPEDEF__NAME:
+        return getName();
+      case SimpleIDLPackage.TYPEDEF__ARRAY_SIZE:
+        return getArraySize();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -204,7 +280,6 @@ public class TypedefImpl extends DefinitionImpl implements Typedef
    * <!-- end-user-doc -->
    * @generated
    */
-  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -213,9 +288,11 @@ public class TypedefImpl extends DefinitionImpl implements Typedef
       case SimpleIDLPackage.TYPEDEF__TYPE:
         setType((Type)newValue);
         return;
-      case SimpleIDLPackage.TYPEDEF__NAMES:
-        getNames().clear();
-        getNames().addAll((Collection<? extends AnyDeclarator>)newValue);
+      case SimpleIDLPackage.TYPEDEF__NAME:
+        setName((String)newValue);
+        return;
+      case SimpleIDLPackage.TYPEDEF__ARRAY_SIZE:
+        setArraySize((FixedArraySize)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -234,8 +311,11 @@ public class TypedefImpl extends DefinitionImpl implements Typedef
       case SimpleIDLPackage.TYPEDEF__TYPE:
         setType((Type)null);
         return;
-      case SimpleIDLPackage.TYPEDEF__NAMES:
-        getNames().clear();
+      case SimpleIDLPackage.TYPEDEF__NAME:
+        setName(NAME_EDEFAULT);
+        return;
+      case SimpleIDLPackage.TYPEDEF__ARRAY_SIZE:
+        setArraySize((FixedArraySize)null);
         return;
     }
     super.eUnset(featureID);
@@ -253,10 +333,29 @@ public class TypedefImpl extends DefinitionImpl implements Typedef
     {
       case SimpleIDLPackage.TYPEDEF__TYPE:
         return type != null;
-      case SimpleIDLPackage.TYPEDEF__NAMES:
-        return names != null && !names.isEmpty();
+      case SimpleIDLPackage.TYPEDEF__NAME:
+        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+      case SimpleIDLPackage.TYPEDEF__ARRAY_SIZE:
+        return arraySize != null;
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuilder result = new StringBuilder(super.toString());
+    result.append(" (name: ");
+    result.append(name);
+    result.append(')');
+    return result.toString();
   }
 
 } //TypedefImpl

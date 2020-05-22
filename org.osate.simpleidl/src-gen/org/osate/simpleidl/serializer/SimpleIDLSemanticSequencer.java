@@ -31,7 +31,6 @@ import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
 import org.eclipse.xtext.serializer.sequencer.AbstractDelegatingSemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
 import org.osate.simpleidl.services.SimpleIDLGrammarAccess;
-import org.osate.simpleidl.simpleIDL.AnyDeclarator;
 import org.osate.simpleidl.simpleIDL.BooleanType;
 import org.osate.simpleidl.simpleIDL.BoundedSequence;
 import org.osate.simpleidl.simpleIDL.BoundedString;
@@ -77,9 +76,6 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 		Set<Parameter> parameters = context.getEnabledBooleanParameters();
 		if (epackage == SimpleIDLPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
-			case SimpleIDLPackage.ANY_DECLARATOR:
-				sequence_AnyDeclarator(context, (AnyDeclarator) semanticObject); 
-				return; 
 			case SimpleIDLPackage.BOOLEAN_TYPE:
 				sequence_SimpleTypeSpec(context, (BooleanType) semanticObject); 
 				return; 
@@ -180,18 +176,6 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	
 	/**
 	 * Contexts:
-	 *     AnyDeclarator returns AnyDeclarator
-	 *
-	 * Constraint:
-	 *     (name=ID arraySize=FixedArraySize?)
-	 */
-	protected void sequence_AnyDeclarator(ISerializationContext context, AnyDeclarator semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
 	 *     Case returns Case
 	 *
 	 * Constraint:
@@ -261,7 +245,7 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	 *     Definition returns Typedef
 	 *
 	 * Constraint:
-	 *     (type=Type names+=AnyDeclarator names+=AnyDeclarator*)
+	 *     (type=Type name=ID arraySize=FixedArraySize?)
 	 */
 	protected void sequence_Definition(ISerializationContext context, Typedef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

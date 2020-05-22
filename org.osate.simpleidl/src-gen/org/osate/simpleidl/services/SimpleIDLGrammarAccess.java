@@ -135,12 +135,10 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cTypedefKeyword_5_1 = (Keyword)cGroup_5.eContents().get(1);
 		private final Assignment cTypeAssignment_5_2 = (Assignment)cGroup_5.eContents().get(2);
 		private final RuleCall cTypeTypeParserRuleCall_5_2_0 = (RuleCall)cTypeAssignment_5_2.eContents().get(0);
-		private final Assignment cNamesAssignment_5_3 = (Assignment)cGroup_5.eContents().get(3);
-		private final RuleCall cNamesAnyDeclaratorParserRuleCall_5_3_0 = (RuleCall)cNamesAssignment_5_3.eContents().get(0);
-		private final Group cGroup_5_4 = (Group)cGroup_5.eContents().get(4);
-		private final Keyword cCommaKeyword_5_4_0 = (Keyword)cGroup_5_4.eContents().get(0);
-		private final Assignment cNamesAssignment_5_4_1 = (Assignment)cGroup_5_4.eContents().get(1);
-		private final RuleCall cNamesAnyDeclaratorParserRuleCall_5_4_1_0 = (RuleCall)cNamesAssignment_5_4_1.eContents().get(0);
+		private final Assignment cNameAssignment_5_3 = (Assignment)cGroup_5.eContents().get(3);
+		private final RuleCall cNameIDTerminalRuleCall_5_3_0 = (RuleCall)cNameAssignment_5_3.eContents().get(0);
+		private final Assignment cArraySizeAssignment_5_4 = (Assignment)cGroup_5.eContents().get(4);
+		private final RuleCall cArraySizeFixedArraySizeParserRuleCall_5_4_0 = (RuleCall)cArraySizeAssignment_5_4.eContents().get(0);
 		private final Keyword cSemicolonKeyword_5_5 = (Keyword)cGroup_5.eContents().get(5);
 		
 		///*
@@ -170,23 +168,27 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 		// * (57) <enum_dcl> ::= "enum" <identifier>
 		// *                     "{" <enumerator> { "," <enumerator> } * "}"
 		// * (58) <enumerator> ::= <identifier>
+		// * (59) <array_declarator> ::= <identifier> <fixed_array_size>+
+		// * (62) <simple_declarator> ::= <identifier>
 		// * (63) <typedef_dcl> ::= "typedef" <type_declarator>
 		// * (64) <type_declarator> ::= { <simple_type_spec>
 		// *                            | <template_type_spec>
 		// *                            | <constr_type_dcl>
 		// *                            } <any_declarators>
 		// * (65) <any_declarators> ::= <any_declarator> { "," <any_declarator> }*
+		// * (66) <any_declarator> ::= <simple_declarator>
+		// *                       | <array_declarator>
 		// */ Definition:
 		//	{Module} 'module' name=ID '{' definitions+=Definition+ '}' ';' | {Struct} 'struct' name=ID '{' members+=Member+ '}'
 		//	';' | {StructForward} 'struct' struct=[Struct] ';' | {Union} 'union' name=ID '{' 'switch' '(' 'unsigned' 'short' ')'
 		//	'{' cases+=Case+ '}' ';' '}' ';' | {Enum} 'enum' name=ID '{' literals+=ID (',' literals+=ID)* '}' ';' | {Typedef}
-		//	'typedef' type=Type names+=AnyDeclarator (',' names+=AnyDeclarator)* ';';
+		//	'typedef' type=Type name=ID arraySize=FixedArraySize? ';';
 		@Override public ParserRule getRule() { return rule; }
 		
 		//{Module} 'module' name=ID '{' definitions+=Definition+ '}' ';' | {Struct} 'struct' name=ID '{' members+=Member+ '}' ';'
 		//| {StructForward} 'struct' struct=[Struct] ';' | {Union} 'union' name=ID '{' 'switch' '(' 'unsigned' 'short' ')' '{'
 		//cases+=Case+ '}' ';' '}' ';' | {Enum} 'enum' name=ID '{' literals+=ID (',' literals+=ID)* '}' ';' | {Typedef} 'typedef'
-		//type=Type names+=AnyDeclarator (',' names+=AnyDeclarator)* ';'
+		//type=Type name=ID arraySize=FixedArraySize? ';'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//{Module} 'module' name=ID '{' definitions+=Definition+ '}' ';'
@@ -366,7 +368,7 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 		//';'
 		public Keyword getSemicolonKeyword_4_7() { return cSemicolonKeyword_4_7; }
 		
-		//{Typedef} 'typedef' type=Type names+=AnyDeclarator (',' names+=AnyDeclarator)* ';'
+		//{Typedef} 'typedef' type=Type name=ID arraySize=FixedArraySize? ';'
 		public Group getGroup_5() { return cGroup_5; }
 		
 		//{Typedef}
@@ -381,23 +383,17 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 		//Type
 		public RuleCall getTypeTypeParserRuleCall_5_2_0() { return cTypeTypeParserRuleCall_5_2_0; }
 		
-		//names+=AnyDeclarator
-		public Assignment getNamesAssignment_5_3() { return cNamesAssignment_5_3; }
+		//name=ID
+		public Assignment getNameAssignment_5_3() { return cNameAssignment_5_3; }
 		
-		//AnyDeclarator
-		public RuleCall getNamesAnyDeclaratorParserRuleCall_5_3_0() { return cNamesAnyDeclaratorParserRuleCall_5_3_0; }
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_5_3_0() { return cNameIDTerminalRuleCall_5_3_0; }
 		
-		//(',' names+=AnyDeclarator)*
-		public Group getGroup_5_4() { return cGroup_5_4; }
+		//arraySize=FixedArraySize?
+		public Assignment getArraySizeAssignment_5_4() { return cArraySizeAssignment_5_4; }
 		
-		//','
-		public Keyword getCommaKeyword_5_4_0() { return cCommaKeyword_5_4_0; }
-		
-		//names+=AnyDeclarator
-		public Assignment getNamesAssignment_5_4_1() { return cNamesAssignment_5_4_1; }
-		
-		//AnyDeclarator
-		public RuleCall getNamesAnyDeclaratorParserRuleCall_5_4_1_0() { return cNamesAnyDeclaratorParserRuleCall_5_4_1_0; }
+		//FixedArraySize
+		public RuleCall getArraySizeFixedArraySizeParserRuleCall_5_4_0() { return cArraySizeFixedArraySizeParserRuleCall_5_4_0; }
 		
 		//';'
 		public Keyword getSemicolonKeyword_5_5() { return cSemicolonKeyword_5_5; }
@@ -497,38 +493,6 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//';'
 		public Keyword getSemicolonKeyword_3() { return cSemicolonKeyword_3; }
-	}
-	public class AnyDeclaratorElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.osate.simpleidl.SimpleIDL.AnyDeclarator");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cNameIDTerminalRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
-		private final Assignment cArraySizeAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cArraySizeFixedArraySizeParserRuleCall_1_0 = (RuleCall)cArraySizeAssignment_1.eContents().get(0);
-		
-		///*
-		// * (59) <array_declarator> ::= <identifier> <fixed_array_size>+
-		// * (62) <simple_declarator> ::= <identifier>
-		// * (66) <any_declarator> ::= <simple_declarator>
-		// *                       | <array_declarator>
-		// */ AnyDeclarator:
-		//	name=ID arraySize=FixedArraySize?;
-		@Override public ParserRule getRule() { return rule; }
-		
-		//name=ID arraySize=FixedArraySize?
-		public Group getGroup() { return cGroup; }
-		
-		//name=ID
-		public Assignment getNameAssignment_0() { return cNameAssignment_0; }
-		
-		//ID
-		public RuleCall getNameIDTerminalRuleCall_0_0() { return cNameIDTerminalRuleCall_0_0; }
-		
-		//arraySize=FixedArraySize?
-		public Assignment getArraySizeAssignment_1() { return cArraySizeAssignment_1; }
-		
-		//FixedArraySize
-		public RuleCall getArraySizeFixedArraySizeParserRuleCall_1_0() { return cArraySizeFixedArraySizeParserRuleCall_1_0; }
 	}
 	public class FixedArraySizeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.osate.simpleidl.SimpleIDL.FixedArraySize");
@@ -1073,7 +1037,6 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 	private final DefinitionElements pDefinition;
 	private final MemberElements pMember;
 	private final CaseElements pCase;
-	private final AnyDeclaratorElements pAnyDeclarator;
 	private final FixedArraySizeElements pFixedArraySize;
 	private final TypeElements pType;
 	private final SimpleTypeSpecElements pSimpleTypeSpec;
@@ -1094,7 +1057,6 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 		this.pDefinition = new DefinitionElements();
 		this.pMember = new MemberElements();
 		this.pCase = new CaseElements();
-		this.pAnyDeclarator = new AnyDeclaratorElements();
 		this.pFixedArraySize = new FixedArraySizeElements();
 		this.pType = new TypeElements();
 		this.pSimpleTypeSpec = new SimpleTypeSpecElements();
@@ -1180,17 +1142,21 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 	// * (57) <enum_dcl> ::= "enum" <identifier>
 	// *                     "{" <enumerator> { "," <enumerator> } * "}"
 	// * (58) <enumerator> ::= <identifier>
+	// * (59) <array_declarator> ::= <identifier> <fixed_array_size>+
+	// * (62) <simple_declarator> ::= <identifier>
 	// * (63) <typedef_dcl> ::= "typedef" <type_declarator>
 	// * (64) <type_declarator> ::= { <simple_type_spec>
 	// *                            | <template_type_spec>
 	// *                            | <constr_type_dcl>
 	// *                            } <any_declarators>
 	// * (65) <any_declarators> ::= <any_declarator> { "," <any_declarator> }*
+	// * (66) <any_declarator> ::= <simple_declarator>
+	// *                       | <array_declarator>
 	// */ Definition:
 	//	{Module} 'module' name=ID '{' definitions+=Definition+ '}' ';' | {Struct} 'struct' name=ID '{' members+=Member+ '}'
 	//	';' | {StructForward} 'struct' struct=[Struct] ';' | {Union} 'union' name=ID '{' 'switch' '(' 'unsigned' 'short' ')'
 	//	'{' cases+=Case+ '}' ';' '}' ';' | {Enum} 'enum' name=ID '{' literals+=ID (',' literals+=ID)* '}' ';' | {Typedef}
-	//	'typedef' type=Type names+=AnyDeclarator (',' names+=AnyDeclarator)* ';';
+	//	'typedef' type=Type name=ID arraySize=FixedArraySize? ';';
 	public DefinitionElements getDefinitionAccess() {
 		return pDefinition;
 	}
@@ -1231,21 +1197,6 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getCaseRule() {
 		return getCaseAccess().getRule();
-	}
-	
-	///*
-	// * (59) <array_declarator> ::= <identifier> <fixed_array_size>+
-	// * (62) <simple_declarator> ::= <identifier>
-	// * (66) <any_declarator> ::= <simple_declarator>
-	// *                       | <array_declarator>
-	// */ AnyDeclarator:
-	//	name=ID arraySize=FixedArraySize?;
-	public AnyDeclaratorElements getAnyDeclaratorAccess() {
-		return pAnyDeclarator;
-	}
-	
-	public ParserRule getAnyDeclaratorRule() {
-		return getAnyDeclaratorAccess().getRule();
 	}
 	
 	///*

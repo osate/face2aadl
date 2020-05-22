@@ -21,19 +21,13 @@ package org.osate.simpleidl;
 
 import org.eclipse.xtext.linking.ILinkingService;
 import org.eclipse.xtext.naming.IQualifiedNameConverter;
-import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
 import org.osate.simpleidl.linking.SimpleIDLLinkingService;
 import org.osate.simpleidl.naming.SimpleIDLQualifiedNameConverter;
-import org.osate.simpleidl.resource.SimpleIDLResourceDescriptionStrategy;
 
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
 public class SimpleIDLRuntimeModule extends AbstractSimpleIDLRuntimeModule {
-	public Class<? extends IDefaultResourceDescriptionStrategy> bindIDefaultResourceDescriptionStrategy() {
-		return SimpleIDLResourceDescriptionStrategy.class;
-	}
-	
 	@Override
 	public Class<? extends ILinkingService> bindILinkingService() {
 		return SimpleIDLLinkingService.class;

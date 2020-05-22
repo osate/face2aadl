@@ -206,43 +206,6 @@ public interface SimpleIDLPackage extends EPackage
   int CASE_FEATURE_COUNT = 3;
 
   /**
-   * The meta object id for the '{@link org.osate.simpleidl.simpleIDL.impl.AnyDeclaratorImpl <em>Any Declarator</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.osate.simpleidl.simpleIDL.impl.AnyDeclaratorImpl
-   * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getAnyDeclarator()
-   * @generated
-   */
-  int ANY_DECLARATOR = 4;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ANY_DECLARATOR__NAME = 0;
-
-  /**
-   * The feature id for the '<em><b>Array Size</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ANY_DECLARATOR__ARRAY_SIZE = 1;
-
-  /**
-   * The number of structural features of the '<em>Any Declarator</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ANY_DECLARATOR_FEATURE_COUNT = 2;
-
-  /**
    * The meta object id for the '{@link org.osate.simpleidl.simpleIDL.impl.FixedArraySizeImpl <em>Fixed Array Size</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -250,7 +213,7 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getFixedArraySize()
    * @generated
    */
-  int FIXED_ARRAY_SIZE = 5;
+  int FIXED_ARRAY_SIZE = 4;
 
   /**
    * The feature id for the '<em><b>Size</b></em>' attribute.
@@ -278,7 +241,7 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getType()
    * @generated
    */
-  int TYPE = 6;
+  int TYPE = 5;
 
   /**
    * The number of structural features of the '<em>Type</em>' class.
@@ -297,7 +260,7 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getSimpleTypeSpec()
    * @generated
    */
-  int SIMPLE_TYPE_SPEC = 7;
+  int SIMPLE_TYPE_SPEC = 6;
 
   /**
    * The number of structural features of the '<em>Simple Type Spec</em>' class.
@@ -316,7 +279,7 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getModule()
    * @generated
    */
-  int MODULE = 8;
+  int MODULE = 7;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -353,7 +316,7 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getStruct()
    * @generated
    */
-  int STRUCT = 9;
+  int STRUCT = 8;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -390,7 +353,7 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getStructForward()
    * @generated
    */
-  int STRUCT_FORWARD = 10;
+  int STRUCT_FORWARD = 9;
 
   /**
    * The feature id for the '<em><b>Struct</b></em>' reference.
@@ -418,7 +381,7 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getUnion()
    * @generated
    */
-  int UNION = 11;
+  int UNION = 10;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -455,7 +418,7 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getEnum()
    * @generated
    */
-  int ENUM = 12;
+  int ENUM = 11;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -492,7 +455,7 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getTypedef()
    * @generated
    */
-  int TYPEDEF = 13;
+  int TYPEDEF = 12;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' containment reference.
@@ -504,13 +467,22 @@ public interface SimpleIDLPackage extends EPackage
   int TYPEDEF__TYPE = DEFINITION_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Names</b></em>' containment reference list.
+   * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TYPEDEF__NAMES = DEFINITION_FEATURE_COUNT + 1;
+  int TYPEDEF__NAME = DEFINITION_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Array Size</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TYPEDEF__ARRAY_SIZE = DEFINITION_FEATURE_COUNT + 2;
 
   /**
    * The number of structural features of the '<em>Typedef</em>' class.
@@ -519,7 +491,7 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TYPEDEF_FEATURE_COUNT = DEFINITION_FEATURE_COUNT + 2;
+  int TYPEDEF_FEATURE_COUNT = DEFINITION_FEATURE_COUNT + 3;
 
   /**
    * The meta object id for the '{@link org.osate.simpleidl.simpleIDL.impl.BoundedSequenceImpl <em>Bounded Sequence</em>}' class.
@@ -529,7 +501,7 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getBoundedSequence()
    * @generated
    */
-  int BOUNDED_SEQUENCE = 14;
+  int BOUNDED_SEQUENCE = 13;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' containment reference.
@@ -566,7 +538,7 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getUnboundedSequence()
    * @generated
    */
-  int UNBOUNDED_SEQUENCE = 15;
+  int UNBOUNDED_SEQUENCE = 14;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' containment reference.
@@ -594,7 +566,7 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getBoundedString()
    * @generated
    */
-  int BOUNDED_STRING = 16;
+  int BOUNDED_STRING = 15;
 
   /**
    * The feature id for the '<em><b>Size</b></em>' attribute.
@@ -622,7 +594,7 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getUnboundedString()
    * @generated
    */
-  int UNBOUNDED_STRING = 17;
+  int UNBOUNDED_STRING = 16;
 
   /**
    * The number of structural features of the '<em>Unbounded String</em>' class.
@@ -641,7 +613,7 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getBoundedWideString()
    * @generated
    */
-  int BOUNDED_WIDE_STRING = 18;
+  int BOUNDED_WIDE_STRING = 17;
 
   /**
    * The feature id for the '<em><b>Size</b></em>' attribute.
@@ -669,7 +641,7 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getUnboundedWideString()
    * @generated
    */
-  int UNBOUNDED_WIDE_STRING = 19;
+  int UNBOUNDED_WIDE_STRING = 18;
 
   /**
    * The number of structural features of the '<em>Unbounded Wide String</em>' class.
@@ -688,7 +660,7 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getFixedPtType()
    * @generated
    */
-  int FIXED_PT_TYPE = 20;
+  int FIXED_PT_TYPE = 19;
 
   /**
    * The feature id for the '<em><b>Total Digits</b></em>' attribute.
@@ -725,7 +697,7 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getSignedShortInt()
    * @generated
    */
-  int SIGNED_SHORT_INT = 21;
+  int SIGNED_SHORT_INT = 20;
 
   /**
    * The number of structural features of the '<em>Signed Short Int</em>' class.
@@ -744,7 +716,7 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getSignedLongInt()
    * @generated
    */
-  int SIGNED_LONG_INT = 22;
+  int SIGNED_LONG_INT = 21;
 
   /**
    * The number of structural features of the '<em>Signed Long Int</em>' class.
@@ -763,7 +735,7 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getSignedLongLongInt()
    * @generated
    */
-  int SIGNED_LONG_LONG_INT = 23;
+  int SIGNED_LONG_LONG_INT = 22;
 
   /**
    * The number of structural features of the '<em>Signed Long Long Int</em>' class.
@@ -782,7 +754,7 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getUnsignedShortInt()
    * @generated
    */
-  int UNSIGNED_SHORT_INT = 24;
+  int UNSIGNED_SHORT_INT = 23;
 
   /**
    * The number of structural features of the '<em>Unsigned Short Int</em>' class.
@@ -801,7 +773,7 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getUnsignedLongInt()
    * @generated
    */
-  int UNSIGNED_LONG_INT = 25;
+  int UNSIGNED_LONG_INT = 24;
 
   /**
    * The number of structural features of the '<em>Unsigned Long Int</em>' class.
@@ -820,7 +792,7 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getUnsignedLongLongInt()
    * @generated
    */
-  int UNSIGNED_LONG_LONG_INT = 26;
+  int UNSIGNED_LONG_LONG_INT = 25;
 
   /**
    * The number of structural features of the '<em>Unsigned Long Long Int</em>' class.
@@ -839,7 +811,7 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getFloatType()
    * @generated
    */
-  int FLOAT_TYPE = 27;
+  int FLOAT_TYPE = 26;
 
   /**
    * The number of structural features of the '<em>Float Type</em>' class.
@@ -858,7 +830,7 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getDoubleType()
    * @generated
    */
-  int DOUBLE_TYPE = 28;
+  int DOUBLE_TYPE = 27;
 
   /**
    * The number of structural features of the '<em>Double Type</em>' class.
@@ -877,7 +849,7 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getLongDoubleType()
    * @generated
    */
-  int LONG_DOUBLE_TYPE = 29;
+  int LONG_DOUBLE_TYPE = 28;
 
   /**
    * The number of structural features of the '<em>Long Double Type</em>' class.
@@ -896,7 +868,7 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getCharType()
    * @generated
    */
-  int CHAR_TYPE = 30;
+  int CHAR_TYPE = 29;
 
   /**
    * The number of structural features of the '<em>Char Type</em>' class.
@@ -915,7 +887,7 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getWideCharType()
    * @generated
    */
-  int WIDE_CHAR_TYPE = 31;
+  int WIDE_CHAR_TYPE = 30;
 
   /**
    * The number of structural features of the '<em>Wide Char Type</em>' class.
@@ -934,7 +906,7 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getBooleanType()
    * @generated
    */
-  int BOOLEAN_TYPE = 32;
+  int BOOLEAN_TYPE = 31;
 
   /**
    * The number of structural features of the '<em>Boolean Type</em>' class.
@@ -953,7 +925,7 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getOctetType()
    * @generated
    */
-  int OCTET_TYPE = 33;
+  int OCTET_TYPE = 32;
 
   /**
    * The number of structural features of the '<em>Octet Type</em>' class.
@@ -972,7 +944,7 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getReferencedType()
    * @generated
    */
-  int REFERENCED_TYPE = 34;
+  int REFERENCED_TYPE = 33;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' reference.
@@ -1098,38 +1070,6 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    */
   EAttribute getCase_Name();
-
-  /**
-   * Returns the meta object for class '{@link org.osate.simpleidl.simpleIDL.AnyDeclarator <em>Any Declarator</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Any Declarator</em>'.
-   * @see org.osate.simpleidl.simpleIDL.AnyDeclarator
-   * @generated
-   */
-  EClass getAnyDeclarator();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.osate.simpleidl.simpleIDL.AnyDeclarator#getName <em>Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see org.osate.simpleidl.simpleIDL.AnyDeclarator#getName()
-   * @see #getAnyDeclarator()
-   * @generated
-   */
-  EAttribute getAnyDeclarator_Name();
-
-  /**
-   * Returns the meta object for the containment reference '{@link org.osate.simpleidl.simpleIDL.AnyDeclarator#getArraySize <em>Array Size</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Array Size</em>'.
-   * @see org.osate.simpleidl.simpleIDL.AnyDeclarator#getArraySize()
-   * @see #getAnyDeclarator()
-   * @generated
-   */
-  EReference getAnyDeclarator_ArraySize();
 
   /**
    * Returns the meta object for class '{@link org.osate.simpleidl.simpleIDL.FixedArraySize <em>Fixed Array Size</em>}'.
@@ -1343,15 +1283,26 @@ public interface SimpleIDLPackage extends EPackage
   EReference getTypedef_Type();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.osate.simpleidl.simpleIDL.Typedef#getNames <em>Names</em>}'.
+   * Returns the meta object for the attribute '{@link org.osate.simpleidl.simpleIDL.Typedef#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Names</em>'.
-   * @see org.osate.simpleidl.simpleIDL.Typedef#getNames()
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.osate.simpleidl.simpleIDL.Typedef#getName()
    * @see #getTypedef()
    * @generated
    */
-  EReference getTypedef_Names();
+  EAttribute getTypedef_Name();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.osate.simpleidl.simpleIDL.Typedef#getArraySize <em>Array Size</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Array Size</em>'.
+   * @see org.osate.simpleidl.simpleIDL.Typedef#getArraySize()
+   * @see #getTypedef()
+   * @generated
+   */
+  EReference getTypedef_ArraySize();
 
   /**
    * Returns the meta object for class '{@link org.osate.simpleidl.simpleIDL.BoundedSequence <em>Bounded Sequence</em>}'.
@@ -1763,32 +1714,6 @@ public interface SimpleIDLPackage extends EPackage
     EAttribute CASE__NAME = eINSTANCE.getCase_Name();
 
     /**
-     * The meta object literal for the '{@link org.osate.simpleidl.simpleIDL.impl.AnyDeclaratorImpl <em>Any Declarator</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.osate.simpleidl.simpleIDL.impl.AnyDeclaratorImpl
-     * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getAnyDeclarator()
-     * @generated
-     */
-    EClass ANY_DECLARATOR = eINSTANCE.getAnyDeclarator();
-
-    /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute ANY_DECLARATOR__NAME = eINSTANCE.getAnyDeclarator_Name();
-
-    /**
-     * The meta object literal for the '<em><b>Array Size</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference ANY_DECLARATOR__ARRAY_SIZE = eINSTANCE.getAnyDeclarator_ArraySize();
-
-    /**
      * The meta object literal for the '{@link org.osate.simpleidl.simpleIDL.impl.FixedArraySizeImpl <em>Fixed Array Size</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1967,12 +1892,20 @@ public interface SimpleIDLPackage extends EPackage
     EReference TYPEDEF__TYPE = eINSTANCE.getTypedef_Type();
 
     /**
-     * The meta object literal for the '<em><b>Names</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference TYPEDEF__NAMES = eINSTANCE.getTypedef_Names();
+    EAttribute TYPEDEF__NAME = eINSTANCE.getTypedef_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Array Size</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference TYPEDEF__ARRAY_SIZE = eINSTANCE.getTypedef_ArraySize();
 
     /**
      * The meta object literal for the '{@link org.osate.simpleidl.simpleIDL.impl.BoundedSequenceImpl <em>Bounded Sequence</em>}' class.

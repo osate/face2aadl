@@ -78,15 +78,6 @@ public interface SimpleIDLFactory extends EFactory
   Case createCase();
 
   /**
-   * Returns a new object of class '<em>Any Declarator</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Any Declarator</em>'.
-   * @generated
-   */
-  AnyDeclarator createAnyDeclarator();
-
-  /**
    * Returns a new object of class '<em>Fixed Array Size</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

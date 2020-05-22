@@ -21,7 +21,6 @@
  */
 package org.osate.simpleidl.simpleIDL;
 
-import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -33,7 +32,8 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  * <ul>
  *   <li>{@link org.osate.simpleidl.simpleIDL.Typedef#getType <em>Type</em>}</li>
- *   <li>{@link org.osate.simpleidl.simpleIDL.Typedef#getNames <em>Names</em>}</li>
+ *   <li>{@link org.osate.simpleidl.simpleIDL.Typedef#getName <em>Name</em>}</li>
+ *   <li>{@link org.osate.simpleidl.simpleIDL.Typedef#getArraySize <em>Array Size</em>}</li>
  * </ul>
  *
  * @see org.osate.simpleidl.simpleIDL.SimpleIDLPackage#getTypedef()
@@ -65,15 +65,47 @@ public interface Typedef extends Definition
   void setType(Type value);
 
   /**
-   * Returns the value of the '<em><b>Names</b></em>' containment reference list.
-   * The list contents are of type {@link org.osate.simpleidl.simpleIDL.AnyDeclarator}.
+   * Returns the value of the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Names</em>' containment reference list.
-   * @see org.osate.simpleidl.simpleIDL.SimpleIDLPackage#getTypedef_Names()
+   * @return the value of the '<em>Name</em>' attribute.
+   * @see #setName(String)
+   * @see org.osate.simpleidl.simpleIDL.SimpleIDLPackage#getTypedef_Name()
+   * @model
+   * @generated
+   */
+  String getName();
+
+  /**
+   * Sets the value of the '{@link org.osate.simpleidl.simpleIDL.Typedef#getName <em>Name</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Name</em>' attribute.
+   * @see #getName()
+   * @generated
+   */
+  void setName(String value);
+
+  /**
+   * Returns the value of the '<em><b>Array Size</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Array Size</em>' containment reference.
+   * @see #setArraySize(FixedArraySize)
+   * @see org.osate.simpleidl.simpleIDL.SimpleIDLPackage#getTypedef_ArraySize()
    * @model containment="true"
    * @generated
    */
-  EList<AnyDeclarator> getNames();
+  FixedArraySize getArraySize();
+
+  /**
+   * Sets the value of the '{@link org.osate.simpleidl.simpleIDL.Typedef#getArraySize <em>Array Size</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Array Size</em>' containment reference.
+   * @see #getArraySize()
+   * @generated
+   */
+  void setArraySize(FixedArraySize value);
 
 } // Typedef

@@ -69,12 +69,16 @@ Specification:
  * (57) <enum_dcl> ::= "enum" <identifier>
  *                     "{" <enumerator> { "," <enumerator> } * "}"
  * (58) <enumerator> ::= <identifier>
+ * (59) <array_declarator> ::= <identifier> <fixed_array_size>+
+ * (62) <simple_declarator> ::= <identifier>
  * (63) <typedef_dcl> ::= "typedef" <type_declarator>
  * (64) <type_declarator> ::= { <simple_type_spec>
  *                            | <template_type_spec>
  *                            | <constr_type_dcl>
  *                            } <any_declarators>
  * (65) <any_declarators> ::= <any_declarator> { "," <any_declarator> }*
+ * (66) <any_declarator> ::= <simple_declarator>
+ *                       | <array_declarator>
  */
 Definition:
 	{Module} 'module' name=ID '{' definitions+=Definition+ '}' ';' |
@@ -83,7 +87,7 @@ Definition:
 	//The syntax for union follows the FACE standard, not the IDL standard.
 	{Union} 'union' name=ID '{' 'switch' '(' 'unsigned' 'short' ')' '{' cases+=Case+ '}' ';' '}' ';' |
 	{Enum} 'enum' name=ID '{' literals+=ID (',' literals+=ID)* '}' ';' |
-	{Typedef} 'typedef' type=Type names+=AnyDeclarator(',' names+=AnyDeclarator)* ';'
+	{Typedef} 'typedef' type=Type name=ID arraySize=FixedArraySize? ';'
 ;
 
 /*
@@ -108,16 +112,6 @@ Member:
  */
 Case:
 	('case' labels+=INT ':')+ type=SimpleTypeSpec name=ID ';'
-;
-
-/*
- * (59) <array_declarator> ::= <identifier> <fixed_array_size>+
- * (62) <simple_declarator> ::= <identifier>
- * (66) <any_declarator> ::= <simple_declarator>
- *                       | <array_declarator>
- */
-AnyDeclarator:
-	name=ID arraySize=FixedArraySize?
 ;
 
 /*

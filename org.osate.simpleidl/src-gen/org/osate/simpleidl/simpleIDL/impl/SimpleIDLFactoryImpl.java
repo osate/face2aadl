@@ -29,7 +29,6 @@ import org.eclipse.emf.ecore.impl.EFactoryImpl;
 
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
-import org.osate.simpleidl.simpleIDL.AnyDeclarator;
 import org.osate.simpleidl.simpleIDL.BooleanType;
 import org.osate.simpleidl.simpleIDL.BoundedSequence;
 import org.osate.simpleidl.simpleIDL.BoundedString;
@@ -121,7 +120,6 @@ public class SimpleIDLFactoryImpl extends EFactoryImpl implements SimpleIDLFacto
       case SimpleIDLPackage.DEFINITION: return createDefinition();
       case SimpleIDLPackage.MEMBER: return createMember();
       case SimpleIDLPackage.CASE: return createCase();
-      case SimpleIDLPackage.ANY_DECLARATOR: return createAnyDeclarator();
       case SimpleIDLPackage.FIXED_ARRAY_SIZE: return createFixedArraySize();
       case SimpleIDLPackage.TYPE: return createType();
       case SimpleIDLPackage.SIMPLE_TYPE_SPEC: return createSimpleTypeSpec();
@@ -203,18 +201,6 @@ public class SimpleIDLFactoryImpl extends EFactoryImpl implements SimpleIDLFacto
   {
     CaseImpl case_ = new CaseImpl();
     return case_;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public AnyDeclarator createAnyDeclarator()
-  {
-    AnyDeclaratorImpl anyDeclarator = new AnyDeclaratorImpl();
-    return anyDeclarator;
   }
 
   /**

@@ -506,7 +506,7 @@ package class DataModelTranslator {
 				switch typedefType : type.type {
 					BoundedSequence: followReferences(typedefType.type) -> '''[«typedefType.size»]'''
 					UnboundedSequence: followReferences(typedefType.type) -> "[]"
-					case type.names.head.arraySize !== null: followReferences(typedefType) -> '''[«type.names.head.arraySize.size»]'''
+					case type.arraySize !== null: followReferences(typedefType) -> '''[«type.arraySize.size»]'''
 					default: type -> ""
 				}
 			}
@@ -652,7 +652,7 @@ package class DataModelTranslator {
 		switch object {
 			Typedef: {
 				switch type : object.type {
-					ReferencedType case object.names.head.arraySize === null: followReferences(type.type)
+					ReferencedType case object.arraySize === null: followReferences(type.type)
 					default: object
 				}
 			}
@@ -810,7 +810,7 @@ package class DataModelTranslator {
 			Struct: definition.name
 			Union: definition.name
 			Enum: definition.name
-			Typedef: definition.names.head.name
+			Typedef: definition.name
 		}
 	}
 	

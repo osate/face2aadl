@@ -26,7 +26,6 @@ import org.eclipse.emf.ecore.EPackage;
 
 import org.eclipse.emf.ecore.util.Switch;
 
-import org.osate.simpleidl.simpleIDL.AnyDeclarator;
 import org.osate.simpleidl.simpleIDL.BooleanType;
 import org.osate.simpleidl.simpleIDL.BoundedSequence;
 import org.osate.simpleidl.simpleIDL.BoundedString;
@@ -149,13 +148,6 @@ public class SimpleIDLSwitch<T> extends Switch<T>
       {
         Case case_ = (Case)theEObject;
         T result = caseCase(case_);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case SimpleIDLPackage.ANY_DECLARATOR:
-      {
-        AnyDeclarator anyDeclarator = (AnyDeclarator)theEObject;
-        T result = caseAnyDeclarator(anyDeclarator);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -475,22 +467,6 @@ public class SimpleIDLSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseCase(Case object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Any Declarator</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Any Declarator</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseAnyDeclarator(AnyDeclarator object)
   {
     return null;
   }
