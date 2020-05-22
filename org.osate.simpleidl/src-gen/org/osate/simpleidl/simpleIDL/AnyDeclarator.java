@@ -21,8 +21,6 @@
  */
 package org.osate.simpleidl.simpleIDL;
 
-import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -35,7 +33,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link org.osate.simpleidl.simpleIDL.AnyDeclarator#getName <em>Name</em>}</li>
- *   <li>{@link org.osate.simpleidl.simpleIDL.AnyDeclarator#getArraySizes <em>Array Sizes</em>}</li>
+ *   <li>{@link org.osate.simpleidl.simpleIDL.AnyDeclarator#getArraySize <em>Array Size</em>}</li>
  * </ul>
  *
  * @see org.osate.simpleidl.simpleIDL.SimpleIDLPackage#getAnyDeclarator()
@@ -67,15 +65,25 @@ public interface AnyDeclarator extends EObject
   void setName(String value);
 
   /**
-   * Returns the value of the '<em><b>Array Sizes</b></em>' attribute list.
-   * The list contents are of type {@link java.lang.Integer}.
+   * Returns the value of the '<em><b>Array Size</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Array Sizes</em>' attribute list.
-   * @see org.osate.simpleidl.simpleIDL.SimpleIDLPackage#getAnyDeclarator_ArraySizes()
-   * @model unique="false"
+   * @return the value of the '<em>Array Size</em>' containment reference.
+   * @see #setArraySize(FixedArraySize)
+   * @see org.osate.simpleidl.simpleIDL.SimpleIDLPackage#getAnyDeclarator_ArraySize()
+   * @model containment="true"
    * @generated
    */
-  EList<Integer> getArraySizes();
+  FixedArraySize getArraySize();
+
+  /**
+   * Sets the value of the '{@link org.osate.simpleidl.simpleIDL.AnyDeclarator#getArraySize <em>Array Size</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Array Size</em>' containment reference.
+   * @see #getArraySize()
+   * @generated
+   */
+  void setArraySize(FixedArraySize value);
 
 } // AnyDeclarator

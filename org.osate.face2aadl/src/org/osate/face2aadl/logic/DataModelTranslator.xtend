@@ -221,7 +221,7 @@ package class DataModelTranslator {
 										subcomponents
 											«FOR member : object.members»
 											«FOR memberName : member.names»
-											«translateMember(member, memberName, lookupName)»
+											«translateMember(member, memberName)»
 											«ENDFOR»
 											«ENDFOR»
 									end «name».impl;
@@ -502,14 +502,13 @@ package class DataModelTranslator {
 		}
 	}
 	
-	def private getBaseTypeAndArrays(Member member, String memberName, QualifiedName lookupName) {
+	def private getBaseTypeAndArrays(Member member) {
 		switch type : followReferences(member.type) {
 			Typedef: {
 				switch typedefType : type.type {
 					BoundedSequence: followReferences(typedefType.type) -> '''[«typedefType.size»]'''
 					UnboundedSequence: followReferences(typedefType.type) -> "[]"
-					case type.names.head.arraySizes.size == 1: followReferences(typedefType) -> '''[«type.names.head.arraySizes.head»]'''
-					case type.names.head.arraySizes.size > 1: throw new UnsupportedOperationException('''«lookupName.toString("::")».«memberName» is a multi-dimensional array''')
+					case type.names.head.arraySize !== null: followReferences(typedefType) -> '''[«type.names.head.arraySize.size»]'''
 					default: type -> ""
 				}
 			}
@@ -517,8 +516,8 @@ package class DataModelTranslator {
 		}
 	}
 	
-	def private String translateMember(Member member, String memberName, ArchitectureModel architectureModel, Set<Struct> idlOnlyStructs, QualifiedName lookupName) {
-		val baseTypeAndArrays = getBaseTypeAndArrays(member, memberName, lookupName)
+	def private String translateMember(Member member, String memberName, ArchitectureModel architectureModel, Set<Struct> idlOnlyStructs) {
+		val baseTypeAndArrays = getBaseTypeAndArrays(member)
 		val baseType = baseTypeAndArrays.key
 		val arrays = baseTypeAndArrays.value
 		
@@ -545,8 +544,8 @@ package class DataModelTranslator {
 		'''«sanitizeID(memberName)»: data «implName»«arrays»;'''
 	}
 	
-	def private String translateMember(Member member, String memberName, QualifiedName lookupName) {
-		val baseTypeAndArrays = getBaseTypeAndArrays(member, memberName, lookupName)
+	def private String translateMember(Member member, String memberName) {
+		val baseTypeAndArrays = getBaseTypeAndArrays(member)
 		val baseType = baseTypeAndArrays.key
 		val arrays = baseTypeAndArrays.value
 		
@@ -652,17 +651,14 @@ package class DataModelTranslator {
 		if (object.eIsProxy) {
 			throw new UnsupportedOperationException("Found a proxy")
 		}
-		if (object instanceof Typedef) {
-			val type = object.type
-			if (!object.names.head.arraySizes.empty) {
-				object
-			} else if (type instanceof ReferencedType) {
-				followReferences(type.type)
-			} else {
-				object
+		switch object {
+			Typedef: {
+				switch type : object.type {
+					ReferencedType case object.names.head.arraySize === null: followReferences(type.type)
+					default: object
+				}
 			}
-		} else {
-			object
+			default: object
 		}
 	}
 	
@@ -719,7 +715,7 @@ package class DataModelTranslator {
 										subcomponents
 											«FOR member : object.members»
 											«FOR memberName : member.names»
-											«translateMember(member, memberName, view.getContainerOfType(ArchitectureModel), idlOnlyStructs, lookupName)»
+											«translateMember(member, memberName, view.getContainerOfType(ArchitectureModel), idlOnlyStructs)»
 											«ENDFOR»
 											«ENDFOR»
 									end «name».impl;
@@ -734,7 +730,7 @@ package class DataModelTranslator {
 										subcomponents
 											«FOR member : struct.members»
 											«FOR memberName : member.names»
-											«translateMember(member, memberName, lookupName)»
+											«translateMember(member, memberName)»
 											«ENDFOR»
 											«ENDFOR»
 									end «structName»_IDL.impl;

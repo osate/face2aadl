@@ -756,33 +756,69 @@ ruleAnyDeclarator returns [EObject current=null]
 			)
 		)
 		(
-			otherlv_1='['
-			{
-				newLeafNode(otherlv_1, grammarAccess.getAnyDeclaratorAccess().getLeftSquareBracketKeyword_1_0());
-			}
 			(
-				(
-					lv_arraySizes_2_0=RULE_INT
-					{
-						newLeafNode(lv_arraySizes_2_0, grammarAccess.getAnyDeclaratorAccess().getArraySizesINTTerminalRuleCall_1_1_0());
+				{
+					newCompositeNode(grammarAccess.getAnyDeclaratorAccess().getArraySizeFixedArraySizeParserRuleCall_1_0());
+				}
+				lv_arraySize_1_0=ruleFixedArraySize
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getAnyDeclaratorRule());
 					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getAnyDeclaratorRule());
-						}
-						addWithLastConsumed(
-							$current,
-							"arraySizes",
-							lv_arraySizes_2_0,
-							"org.eclipse.xtext.common.Terminals.INT");
-					}
-				)
+					set(
+						$current,
+						"arraySize",
+						lv_arraySize_1_0,
+						"org.osate.simpleidl.SimpleIDL.FixedArraySize");
+					afterParserOrEnumRuleCall();
+				}
 			)
-			otherlv_3=']'
-			{
-				newLeafNode(otherlv_3, grammarAccess.getAnyDeclaratorAccess().getRightSquareBracketKeyword_1_2());
-			}
-		)*
+		)?
+	)
+;
+
+// Entry rule entryRuleFixedArraySize
+entryRuleFixedArraySize returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getFixedArraySizeRule()); }
+	iv_ruleFixedArraySize=ruleFixedArraySize
+	{ $current=$iv_ruleFixedArraySize.current; }
+	EOF;
+
+// Rule FixedArraySize
+ruleFixedArraySize returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		otherlv_0='['
+		{
+			newLeafNode(otherlv_0, grammarAccess.getFixedArraySizeAccess().getLeftSquareBracketKeyword_0());
+		}
+		(
+			(
+				lv_size_1_0=RULE_INT
+				{
+					newLeafNode(lv_size_1_0, grammarAccess.getFixedArraySizeAccess().getSizeINTTerminalRuleCall_1_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getFixedArraySizeRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"size",
+						lv_size_1_0,
+						"org.eclipse.xtext.common.Terminals.INT");
+				}
+			)
+		)
+		otherlv_2=']'
+		{
+			newLeafNode(otherlv_2, grammarAccess.getFixedArraySizeAccess().getRightSquareBracketKeyword_2());
+		}
 	)
 ;
 

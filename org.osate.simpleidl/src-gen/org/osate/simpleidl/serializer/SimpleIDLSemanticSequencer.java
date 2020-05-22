@@ -39,6 +39,7 @@ import org.osate.simpleidl.simpleIDL.BoundedWideString;
 import org.osate.simpleidl.simpleIDL.Case;
 import org.osate.simpleidl.simpleIDL.CharType;
 import org.osate.simpleidl.simpleIDL.DoubleType;
+import org.osate.simpleidl.simpleIDL.FixedArraySize;
 import org.osate.simpleidl.simpleIDL.FixedPtType;
 import org.osate.simpleidl.simpleIDL.FloatType;
 import org.osate.simpleidl.simpleIDL.LongDoubleType;
@@ -102,6 +103,9 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 				return; 
 			case SimpleIDLPackage.ENUM:
 				sequence_Definition(context, (org.osate.simpleidl.simpleIDL.Enum) semanticObject); 
+				return; 
+			case SimpleIDLPackage.FIXED_ARRAY_SIZE:
+				sequence_FixedArraySize(context, (FixedArraySize) semanticObject); 
 				return; 
 			case SimpleIDLPackage.FIXED_PT_TYPE:
 				sequence_Type(context, (FixedPtType) semanticObject); 
@@ -179,7 +183,7 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	 *     AnyDeclarator returns AnyDeclarator
 	 *
 	 * Constraint:
-	 *     (name=ID arraySizes+=INT*)
+	 *     (name=ID arraySize=FixedArraySize?)
 	 */
 	protected void sequence_AnyDeclarator(ISerializationContext context, AnyDeclarator semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -273,6 +277,24 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	 */
 	protected void sequence_Definition(ISerializationContext context, Union semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     FixedArraySize returns FixedArraySize
+	 *
+	 * Constraint:
+	 *     size=INT
+	 */
+	protected void sequence_FixedArraySize(ISerializationContext context, FixedArraySize semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, SimpleIDLPackage.Literals.FIXED_ARRAY_SIZE__SIZE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SimpleIDLPackage.Literals.FIXED_ARRAY_SIZE__SIZE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getFixedArraySizeAccess().getSizeINTTerminalRuleCall_1_0(), semanticObject.getSize());
+		feeder.finish();
 	}
 	
 	

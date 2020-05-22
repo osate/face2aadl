@@ -37,6 +37,7 @@ import org.osate.simpleidl.simpleIDL.Case;
 import org.osate.simpleidl.simpleIDL.CharType;
 import org.osate.simpleidl.simpleIDL.Definition;
 import org.osate.simpleidl.simpleIDL.DoubleType;
+import org.osate.simpleidl.simpleIDL.FixedArraySize;
 import org.osate.simpleidl.simpleIDL.FixedPtType;
 import org.osate.simpleidl.simpleIDL.FloatType;
 import org.osate.simpleidl.simpleIDL.LongDoubleType;
@@ -149,6 +150,11 @@ public class SimpleIDLAdapterFactory extends AdapterFactoryImpl
       public Adapter caseAnyDeclarator(AnyDeclarator object)
       {
         return createAnyDeclaratorAdapter();
+      }
+      @Override
+      public Adapter caseFixedArraySize(FixedArraySize object)
+      {
+        return createFixedArraySizeAdapter();
       }
       @Override
       public Adapter caseType(Type object)
@@ -388,6 +394,21 @@ public class SimpleIDLAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createAnyDeclaratorAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.osate.simpleidl.simpleIDL.FixedArraySize <em>Fixed Array Size</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.osate.simpleidl.simpleIDL.FixedArraySize
+   * @generated
+   */
+  public Adapter createFixedArraySizeAdapter()
   {
     return null;
   }

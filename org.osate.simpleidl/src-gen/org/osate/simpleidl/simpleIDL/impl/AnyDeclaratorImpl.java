@@ -21,20 +21,17 @@
  */
 package org.osate.simpleidl.simpleIDL.impl;
 
-import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
-
-import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.eclipse.emf.ecore.util.EDataTypeEList;
-
 import org.osate.simpleidl.simpleIDL.AnyDeclarator;
+import org.osate.simpleidl.simpleIDL.FixedArraySize;
 import org.osate.simpleidl.simpleIDL.SimpleIDLPackage;
 
 /**
@@ -46,7 +43,7 @@ import org.osate.simpleidl.simpleIDL.SimpleIDLPackage;
  * </p>
  * <ul>
  *   <li>{@link org.osate.simpleidl.simpleIDL.impl.AnyDeclaratorImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.osate.simpleidl.simpleIDL.impl.AnyDeclaratorImpl#getArraySizes <em>Array Sizes</em>}</li>
+ *   <li>{@link org.osate.simpleidl.simpleIDL.impl.AnyDeclaratorImpl#getArraySize <em>Array Size</em>}</li>
  * </ul>
  *
  * @generated
@@ -74,14 +71,14 @@ public class AnyDeclaratorImpl extends MinimalEObjectImpl.Container implements A
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getArraySizes() <em>Array Sizes</em>}' attribute list.
+   * The cached value of the '{@link #getArraySize() <em>Array Size</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getArraySizes()
+   * @see #getArraySize()
    * @generated
    * @ordered
    */
-  protected EList<Integer> arraySizes;
+  protected FixedArraySize arraySize;
 
   /**
    * <!-- begin-user-doc -->
@@ -135,13 +132,64 @@ public class AnyDeclaratorImpl extends MinimalEObjectImpl.Container implements A
    * @generated
    */
   @Override
-  public EList<Integer> getArraySizes()
+  public FixedArraySize getArraySize()
   {
-    if (arraySizes == null)
+    return arraySize;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetArraySize(FixedArraySize newArraySize, NotificationChain msgs)
+  {
+    FixedArraySize oldArraySize = arraySize;
+    arraySize = newArraySize;
+    if (eNotificationRequired())
     {
-      arraySizes = new EDataTypeEList<Integer>(Integer.class, this, SimpleIDLPackage.ANY_DECLARATOR__ARRAY_SIZES);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SimpleIDLPackage.ANY_DECLARATOR__ARRAY_SIZE, oldArraySize, newArraySize);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
     }
-    return arraySizes;
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setArraySize(FixedArraySize newArraySize)
+  {
+    if (newArraySize != arraySize)
+    {
+      NotificationChain msgs = null;
+      if (arraySize != null)
+        msgs = ((InternalEObject)arraySize).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SimpleIDLPackage.ANY_DECLARATOR__ARRAY_SIZE, null, msgs);
+      if (newArraySize != null)
+        msgs = ((InternalEObject)newArraySize).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SimpleIDLPackage.ANY_DECLARATOR__ARRAY_SIZE, null, msgs);
+      msgs = basicSetArraySize(newArraySize, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SimpleIDLPackage.ANY_DECLARATOR__ARRAY_SIZE, newArraySize, newArraySize));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+      case SimpleIDLPackage.ANY_DECLARATOR__ARRAY_SIZE:
+        return basicSetArraySize(null, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
   /**
@@ -156,8 +204,8 @@ public class AnyDeclaratorImpl extends MinimalEObjectImpl.Container implements A
     {
       case SimpleIDLPackage.ANY_DECLARATOR__NAME:
         return getName();
-      case SimpleIDLPackage.ANY_DECLARATOR__ARRAY_SIZES:
-        return getArraySizes();
+      case SimpleIDLPackage.ANY_DECLARATOR__ARRAY_SIZE:
+        return getArraySize();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -167,7 +215,6 @@ public class AnyDeclaratorImpl extends MinimalEObjectImpl.Container implements A
    * <!-- end-user-doc -->
    * @generated
    */
-  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -176,9 +223,8 @@ public class AnyDeclaratorImpl extends MinimalEObjectImpl.Container implements A
       case SimpleIDLPackage.ANY_DECLARATOR__NAME:
         setName((String)newValue);
         return;
-      case SimpleIDLPackage.ANY_DECLARATOR__ARRAY_SIZES:
-        getArraySizes().clear();
-        getArraySizes().addAll((Collection<? extends Integer>)newValue);
+      case SimpleIDLPackage.ANY_DECLARATOR__ARRAY_SIZE:
+        setArraySize((FixedArraySize)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -197,8 +243,8 @@ public class AnyDeclaratorImpl extends MinimalEObjectImpl.Container implements A
       case SimpleIDLPackage.ANY_DECLARATOR__NAME:
         setName(NAME_EDEFAULT);
         return;
-      case SimpleIDLPackage.ANY_DECLARATOR__ARRAY_SIZES:
-        getArraySizes().clear();
+      case SimpleIDLPackage.ANY_DECLARATOR__ARRAY_SIZE:
+        setArraySize((FixedArraySize)null);
         return;
     }
     super.eUnset(featureID);
@@ -216,8 +262,8 @@ public class AnyDeclaratorImpl extends MinimalEObjectImpl.Container implements A
     {
       case SimpleIDLPackage.ANY_DECLARATOR__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-      case SimpleIDLPackage.ANY_DECLARATOR__ARRAY_SIZES:
-        return arraySizes != null && !arraySizes.isEmpty();
+      case SimpleIDLPackage.ANY_DECLARATOR__ARRAY_SIZE:
+        return arraySize != null;
     }
     return super.eIsSet(featureID);
   }
@@ -235,8 +281,6 @@ public class AnyDeclaratorImpl extends MinimalEObjectImpl.Container implements A
     StringBuilder result = new StringBuilder(super.toString());
     result.append(" (name: ");
     result.append(name);
-    result.append(", arraySizes: ");
-    result.append(arraySizes);
     result.append(')');
     return result.toString();
   }

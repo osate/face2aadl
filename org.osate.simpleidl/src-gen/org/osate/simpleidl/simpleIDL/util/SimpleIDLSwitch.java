@@ -35,6 +35,7 @@ import org.osate.simpleidl.simpleIDL.Case;
 import org.osate.simpleidl.simpleIDL.CharType;
 import org.osate.simpleidl.simpleIDL.Definition;
 import org.osate.simpleidl.simpleIDL.DoubleType;
+import org.osate.simpleidl.simpleIDL.FixedArraySize;
 import org.osate.simpleidl.simpleIDL.FixedPtType;
 import org.osate.simpleidl.simpleIDL.FloatType;
 import org.osate.simpleidl.simpleIDL.LongDoubleType;
@@ -155,6 +156,13 @@ public class SimpleIDLSwitch<T> extends Switch<T>
       {
         AnyDeclarator anyDeclarator = (AnyDeclarator)theEObject;
         T result = caseAnyDeclarator(anyDeclarator);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SimpleIDLPackage.FIXED_ARRAY_SIZE:
+      {
+        FixedArraySize fixedArraySize = (FixedArraySize)theEObject;
+        T result = caseFixedArraySize(fixedArraySize);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -483,6 +491,22 @@ public class SimpleIDLSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseAnyDeclarator(AnyDeclarator object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Fixed Array Size</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Fixed Array Size</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseFixedArraySize(FixedArraySize object)
   {
     return null;
   }

@@ -112,13 +112,19 @@ Case:
 
 /*
  * (59) <array_declarator> ::= <identifier> <fixed_array_size>+
- * (60) <fixed_array_size> ::= "[" <positive_int_const> "]"
  * (62) <simple_declarator> ::= <identifier>
  * (66) <any_declarator> ::= <simple_declarator>
  *                       | <array_declarator>
  */
 AnyDeclarator:
-	name=ID ('[' arraySizes+=INT ']')*
+	name=ID arraySize=FixedArraySize?
+;
+
+/*
+ * (60) <fixed_array_size> ::= "[" <positive_int_const> "]"
+ */
+FixedArraySize:
+	'[' size=INT ']'
 ;
 
 /*

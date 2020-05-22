@@ -38,6 +38,7 @@ import org.osate.simpleidl.simpleIDL.Case;
 import org.osate.simpleidl.simpleIDL.CharType;
 import org.osate.simpleidl.simpleIDL.Definition;
 import org.osate.simpleidl.simpleIDL.DoubleType;
+import org.osate.simpleidl.simpleIDL.FixedArraySize;
 import org.osate.simpleidl.simpleIDL.FixedPtType;
 import org.osate.simpleidl.simpleIDL.FloatType;
 import org.osate.simpleidl.simpleIDL.LongDoubleType;
@@ -121,6 +122,7 @@ public class SimpleIDLFactoryImpl extends EFactoryImpl implements SimpleIDLFacto
       case SimpleIDLPackage.MEMBER: return createMember();
       case SimpleIDLPackage.CASE: return createCase();
       case SimpleIDLPackage.ANY_DECLARATOR: return createAnyDeclarator();
+      case SimpleIDLPackage.FIXED_ARRAY_SIZE: return createFixedArraySize();
       case SimpleIDLPackage.TYPE: return createType();
       case SimpleIDLPackage.SIMPLE_TYPE_SPEC: return createSimpleTypeSpec();
       case SimpleIDLPackage.MODULE: return createModule();
@@ -213,6 +215,18 @@ public class SimpleIDLFactoryImpl extends EFactoryImpl implements SimpleIDLFacto
   {
     AnyDeclaratorImpl anyDeclarator = new AnyDeclaratorImpl();
     return anyDeclarator;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public FixedArraySize createFixedArraySize()
+  {
+    FixedArraySizeImpl fixedArraySize = new FixedArraySizeImpl();
+    return fixedArraySize;
   }
 
   /**

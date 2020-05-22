@@ -37,6 +37,7 @@ import org.osate.simpleidl.simpleIDL.Case;
 import org.osate.simpleidl.simpleIDL.CharType;
 import org.osate.simpleidl.simpleIDL.Definition;
 import org.osate.simpleidl.simpleIDL.DoubleType;
+import org.osate.simpleidl.simpleIDL.FixedArraySize;
 import org.osate.simpleidl.simpleIDL.FixedPtType;
 import org.osate.simpleidl.simpleIDL.FloatType;
 import org.osate.simpleidl.simpleIDL.LongDoubleType;
@@ -105,6 +106,13 @@ public class SimpleIDLPackageImpl extends EPackageImpl implements SimpleIDLPacka
    * @generated
    */
   private EClass anyDeclaratorEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass fixedArraySizeEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -510,9 +518,31 @@ public class SimpleIDLPackageImpl extends EPackageImpl implements SimpleIDLPacka
    * @generated
    */
   @Override
-  public EAttribute getAnyDeclarator_ArraySizes()
+  public EReference getAnyDeclarator_ArraySize()
   {
-    return (EAttribute)anyDeclaratorEClass.getEStructuralFeatures().get(1);
+    return (EReference)anyDeclaratorEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getFixedArraySize()
+  {
+    return fixedArraySizeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getFixedArraySize_Size()
+  {
+    return (EAttribute)fixedArraySizeEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1090,7 +1120,10 @@ public class SimpleIDLPackageImpl extends EPackageImpl implements SimpleIDLPacka
 
     anyDeclaratorEClass = createEClass(ANY_DECLARATOR);
     createEAttribute(anyDeclaratorEClass, ANY_DECLARATOR__NAME);
-    createEAttribute(anyDeclaratorEClass, ANY_DECLARATOR__ARRAY_SIZES);
+    createEReference(anyDeclaratorEClass, ANY_DECLARATOR__ARRAY_SIZE);
+
+    fixedArraySizeEClass = createEClass(FIXED_ARRAY_SIZE);
+    createEAttribute(fixedArraySizeEClass, FIXED_ARRAY_SIZE__SIZE);
 
     typeEClass = createEClass(TYPE);
 
@@ -1245,7 +1278,10 @@ public class SimpleIDLPackageImpl extends EPackageImpl implements SimpleIDLPacka
 
     initEClass(anyDeclaratorEClass, AnyDeclarator.class, "AnyDeclarator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getAnyDeclarator_Name(), ecorePackage.getEString(), "name", null, 0, 1, AnyDeclarator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getAnyDeclarator_ArraySizes(), ecorePackage.getEInt(), "arraySizes", null, 0, -1, AnyDeclarator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAnyDeclarator_ArraySize(), this.getFixedArraySize(), null, "arraySize", null, 0, 1, AnyDeclarator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(fixedArraySizeEClass, FixedArraySize.class, "FixedArraySize", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getFixedArraySize_Size(), ecorePackage.getEInt(), "size", null, 0, 1, FixedArraySize.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(typeEClass, Type.class, "Type", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

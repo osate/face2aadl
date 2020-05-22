@@ -87,6 +87,15 @@ public interface SimpleIDLFactory extends EFactory
   AnyDeclarator createAnyDeclarator();
 
   /**
+   * Returns a new object of class '<em>Fixed Array Size</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Fixed Array Size</em>'.
+   * @generated
+   */
+  FixedArraySize createFixedArraySize();
+
+  /**
    * Returns a new object of class '<em>Type</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
