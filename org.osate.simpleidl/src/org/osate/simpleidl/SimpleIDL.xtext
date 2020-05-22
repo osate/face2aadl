@@ -94,7 +94,7 @@ Definition:
  * (68) <declarator> ::= <simple_declarator>
  */
 Member:
-	type=SimpleTypeSpec names+=ID (',' names+=ID)* ';'
+	type=SimpleTypeSpec name=ID ';'
 ;
 
 /*

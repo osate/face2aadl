@@ -142,13 +142,13 @@ public interface SimpleIDLPackage extends EPackage
   int MEMBER__TYPE = 0;
 
   /**
-   * The feature id for the '<em><b>Names</b></em>' attribute list.
+   * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MEMBER__NAMES = 1;
+  int MEMBER__NAME = 1;
 
   /**
    * The number of structural features of the '<em>Member</em>' class.
@@ -1046,15 +1046,15 @@ public interface SimpleIDLPackage extends EPackage
   EReference getMember_Type();
 
   /**
-   * Returns the meta object for the attribute list '{@link org.osate.simpleidl.simpleIDL.Member#getNames <em>Names</em>}'.
+   * Returns the meta object for the attribute '{@link org.osate.simpleidl.simpleIDL.Member#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute list '<em>Names</em>'.
-   * @see org.osate.simpleidl.simpleIDL.Member#getNames()
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.osate.simpleidl.simpleIDL.Member#getName()
    * @see #getMember()
    * @generated
    */
-  EAttribute getMember_Names();
+  EAttribute getMember_Name();
 
   /**
    * Returns the meta object for class '{@link org.osate.simpleidl.simpleIDL.Case <em>Case</em>}'.
@@ -1721,12 +1721,12 @@ public interface SimpleIDLPackage extends EPackage
     EReference MEMBER__TYPE = eINSTANCE.getMember_Type();
 
     /**
-     * The meta object literal for the '<em><b>Names</b></em>' attribute list feature.
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute MEMBER__NAMES = eINSTANCE.getMember_Names();
+    EAttribute MEMBER__NAME = eINSTANCE.getMember_Name();
 
     /**
      * The meta object literal for the '{@link org.osate.simpleidl.simpleIDL.impl.CaseImpl <em>Case</em>}' class.

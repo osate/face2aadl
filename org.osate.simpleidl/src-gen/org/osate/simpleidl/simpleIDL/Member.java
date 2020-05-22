@@ -21,8 +21,6 @@
  */
 package org.osate.simpleidl.simpleIDL;
 
-import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -35,7 +33,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link org.osate.simpleidl.simpleIDL.Member#getType <em>Type</em>}</li>
- *   <li>{@link org.osate.simpleidl.simpleIDL.Member#getNames <em>Names</em>}</li>
+ *   <li>{@link org.osate.simpleidl.simpleIDL.Member#getName <em>Name</em>}</li>
  * </ul>
  *
  * @see org.osate.simpleidl.simpleIDL.SimpleIDLPackage#getMember()
@@ -67,15 +65,25 @@ public interface Member extends EObject
   void setType(SimpleTypeSpec value);
 
   /**
-   * Returns the value of the '<em><b>Names</b></em>' attribute list.
-   * The list contents are of type {@link java.lang.String}.
+   * Returns the value of the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Names</em>' attribute list.
-   * @see org.osate.simpleidl.simpleIDL.SimpleIDLPackage#getMember_Names()
-   * @model unique="false"
+   * @return the value of the '<em>Name</em>' attribute.
+   * @see #setName(String)
+   * @see org.osate.simpleidl.simpleIDL.SimpleIDLPackage#getMember_Name()
+   * @model
    * @generated
    */
-  EList<String> getNames();
+  String getName();
+
+  /**
+   * Sets the value of the '{@link org.osate.simpleidl.simpleIDL.Member#getName <em>Name</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Name</em>' attribute.
+   * @see #getName()
+   * @generated
+   */
+  void setName(String value);
 
 } // Member

@@ -586,49 +586,25 @@ ruleMember returns [EObject current=null]
 		)
 		(
 			(
-				lv_names_1_0=RULE_ID
+				lv_name_1_0=RULE_ID
 				{
-					newLeafNode(lv_names_1_0, grammarAccess.getMemberAccess().getNamesIDTerminalRuleCall_1_0());
+					newLeafNode(lv_name_1_0, grammarAccess.getMemberAccess().getNameIDTerminalRuleCall_1_0());
 				}
 				{
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getMemberRule());
 					}
-					addWithLastConsumed(
+					setWithLastConsumed(
 						$current,
-						"names",
-						lv_names_1_0,
+						"name",
+						lv_name_1_0,
 						"org.osate.simpleidl.SimpleIDL.ID");
 				}
 			)
 		)
-		(
-			otherlv_2=','
-			{
-				newLeafNode(otherlv_2, grammarAccess.getMemberAccess().getCommaKeyword_2_0());
-			}
-			(
-				(
-					lv_names_3_0=RULE_ID
-					{
-						newLeafNode(lv_names_3_0, grammarAccess.getMemberAccess().getNamesIDTerminalRuleCall_2_1_0());
-					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getMemberRule());
-						}
-						addWithLastConsumed(
-							$current,
-							"names",
-							lv_names_3_0,
-							"org.osate.simpleidl.SimpleIDL.ID");
-					}
-				)
-			)
-		)*
-		otherlv_4=';'
+		otherlv_2=';'
 		{
-			newLeafNode(otherlv_4, grammarAccess.getMemberAccess().getSemicolonKeyword_3());
+			newLeafNode(otherlv_2, grammarAccess.getMemberAccess().getSemicolonKeyword_2());
 		}
 	)
 ;

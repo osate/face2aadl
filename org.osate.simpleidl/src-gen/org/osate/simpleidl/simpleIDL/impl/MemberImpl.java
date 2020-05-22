@@ -21,20 +21,14 @@
  */
 package org.osate.simpleidl.simpleIDL.impl;
 
-import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
-import org.eclipse.emf.ecore.util.EDataTypeEList;
 
 import org.osate.simpleidl.simpleIDL.Member;
 import org.osate.simpleidl.simpleIDL.SimpleIDLPackage;
@@ -49,7 +43,7 @@ import org.osate.simpleidl.simpleIDL.SimpleTypeSpec;
  * </p>
  * <ul>
  *   <li>{@link org.osate.simpleidl.simpleIDL.impl.MemberImpl#getType <em>Type</em>}</li>
- *   <li>{@link org.osate.simpleidl.simpleIDL.impl.MemberImpl#getNames <em>Names</em>}</li>
+ *   <li>{@link org.osate.simpleidl.simpleIDL.impl.MemberImpl#getName <em>Name</em>}</li>
  * </ul>
  *
  * @generated
@@ -67,14 +61,24 @@ public class MemberImpl extends MinimalEObjectImpl.Container implements Member
   protected SimpleTypeSpec type;
 
   /**
-   * The cached value of the '{@link #getNames() <em>Names</em>}' attribute list.
+   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getNames()
+   * @see #getName()
    * @generated
    * @ordered
    */
-  protected EList<String> names;
+  protected static final String NAME_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getName()
+   * @generated
+   * @ordered
+   */
+  protected String name = NAME_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -153,13 +157,23 @@ public class MemberImpl extends MinimalEObjectImpl.Container implements Member
    * @generated
    */
   @Override
-  public EList<String> getNames()
+  public String getName()
   {
-    if (names == null)
-    {
-      names = new EDataTypeEList<String>(String.class, this, SimpleIDLPackage.MEMBER__NAMES);
-    }
-    return names;
+    return name;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setName(String newName)
+  {
+    String oldName = name;
+    name = newName;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SimpleIDLPackage.MEMBER__NAME, oldName, name));
   }
 
   /**
@@ -190,8 +204,8 @@ public class MemberImpl extends MinimalEObjectImpl.Container implements Member
     {
       case SimpleIDLPackage.MEMBER__TYPE:
         return getType();
-      case SimpleIDLPackage.MEMBER__NAMES:
-        return getNames();
+      case SimpleIDLPackage.MEMBER__NAME:
+        return getName();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -201,7 +215,6 @@ public class MemberImpl extends MinimalEObjectImpl.Container implements Member
    * <!-- end-user-doc -->
    * @generated
    */
-  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -210,9 +223,8 @@ public class MemberImpl extends MinimalEObjectImpl.Container implements Member
       case SimpleIDLPackage.MEMBER__TYPE:
         setType((SimpleTypeSpec)newValue);
         return;
-      case SimpleIDLPackage.MEMBER__NAMES:
-        getNames().clear();
-        getNames().addAll((Collection<? extends String>)newValue);
+      case SimpleIDLPackage.MEMBER__NAME:
+        setName((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -231,8 +243,8 @@ public class MemberImpl extends MinimalEObjectImpl.Container implements Member
       case SimpleIDLPackage.MEMBER__TYPE:
         setType((SimpleTypeSpec)null);
         return;
-      case SimpleIDLPackage.MEMBER__NAMES:
-        getNames().clear();
+      case SimpleIDLPackage.MEMBER__NAME:
+        setName(NAME_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -250,8 +262,8 @@ public class MemberImpl extends MinimalEObjectImpl.Container implements Member
     {
       case SimpleIDLPackage.MEMBER__TYPE:
         return type != null;
-      case SimpleIDLPackage.MEMBER__NAMES:
-        return names != null && !names.isEmpty();
+      case SimpleIDLPackage.MEMBER__NAME:
+        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
     }
     return super.eIsSet(featureID);
   }
@@ -267,8 +279,8 @@ public class MemberImpl extends MinimalEObjectImpl.Container implements Member
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (names: ");
-    result.append(names);
+    result.append(" (name: ");
+    result.append(name);
     result.append(')');
     return result.toString();
   }

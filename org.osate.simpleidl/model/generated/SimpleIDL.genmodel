@@ -12,7 +12,7 @@
     <genClasses ecoreClass="SimpleIDL.ecore#//Definition"/>
     <genClasses ecoreClass="SimpleIDL.ecore#//Member">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//Member/type"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//Member/names"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//Member/name"/>
     </genClasses>
     <genClasses ecoreClass="SimpleIDL.ecore#//Case">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//Case/labels"/>

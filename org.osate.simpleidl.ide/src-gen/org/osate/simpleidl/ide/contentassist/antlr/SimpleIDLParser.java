@@ -59,7 +59,6 @@ public class SimpleIDLParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getDefinitionAccess().getGroup_5(), "rule__Definition__Group_5__0");
 			builder.put(grammarAccess.getDefinitionAccess().getGroup_5_4(), "rule__Definition__Group_5_4__0");
 			builder.put(grammarAccess.getMemberAccess().getGroup(), "rule__Member__Group__0");
-			builder.put(grammarAccess.getMemberAccess().getGroup_2(), "rule__Member__Group_2__0");
 			builder.put(grammarAccess.getCaseAccess().getGroup(), "rule__Case__Group__0");
 			builder.put(grammarAccess.getCaseAccess().getGroup_0(), "rule__Case__Group_0__0");
 			builder.put(grammarAccess.getAnyDeclaratorAccess().getGroup(), "rule__AnyDeclarator__Group__0");
@@ -102,8 +101,7 @@ public class SimpleIDLParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getDefinitionAccess().getNamesAssignment_5_3(), "rule__Definition__NamesAssignment_5_3");
 			builder.put(grammarAccess.getDefinitionAccess().getNamesAssignment_5_4_1(), "rule__Definition__NamesAssignment_5_4_1");
 			builder.put(grammarAccess.getMemberAccess().getTypeAssignment_0(), "rule__Member__TypeAssignment_0");
-			builder.put(grammarAccess.getMemberAccess().getNamesAssignment_1(), "rule__Member__NamesAssignment_1");
-			builder.put(grammarAccess.getMemberAccess().getNamesAssignment_2_1(), "rule__Member__NamesAssignment_2_1");
+			builder.put(grammarAccess.getMemberAccess().getNameAssignment_1(), "rule__Member__NameAssignment_1");
 			builder.put(grammarAccess.getCaseAccess().getLabelsAssignment_0_1(), "rule__Case__LabelsAssignment_0_1");
 			builder.put(grammarAccess.getCaseAccess().getTypeAssignment_1(), "rule__Case__TypeAssignment_1");
 			builder.put(grammarAccess.getCaseAccess().getNameAssignment_2(), "rule__Case__NameAssignment_2");

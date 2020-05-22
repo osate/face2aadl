@@ -441,7 +441,7 @@ public class SimpleIDLPackageImpl extends EPackageImpl implements SimpleIDLPacka
    * @generated
    */
   @Override
-  public EAttribute getMember_Names()
+  public EAttribute getMember_Name()
   {
     return (EAttribute)memberEClass.getEStructuralFeatures().get(1);
   }
@@ -1111,7 +1111,7 @@ public class SimpleIDLPackageImpl extends EPackageImpl implements SimpleIDLPacka
 
     memberEClass = createEClass(MEMBER);
     createEReference(memberEClass, MEMBER__TYPE);
-    createEAttribute(memberEClass, MEMBER__NAMES);
+    createEAttribute(memberEClass, MEMBER__NAME);
 
     caseEClass = createEClass(CASE);
     createEAttribute(caseEClass, CASE__LABELS);
@@ -1269,7 +1269,7 @@ public class SimpleIDLPackageImpl extends EPackageImpl implements SimpleIDLPacka
 
     initEClass(memberEClass, Member.class, "Member", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getMember_Type(), this.getSimpleTypeSpec(), null, "type", null, 0, 1, Member.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getMember_Names(), ecorePackage.getEString(), "names", null, 0, -1, Member.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getMember_Name(), ecorePackage.getEString(), "name", null, 0, 1, Member.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(caseEClass, Case.class, "Case", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getCase_Labels(), ecorePackage.getEInt(), "labels", null, 0, -1, Case.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

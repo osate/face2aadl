@@ -220,9 +220,7 @@ package class DataModelTranslator {
 									data implementation «name».impl
 										subcomponents
 											«FOR member : object.members»
-											«FOR memberName : member.names»
-											«translateMember(member, memberName)»
-											«ENDFOR»
+											«translateMember(member)»
 											«ENDFOR»
 									end «name».impl;
 								'''
@@ -516,7 +514,7 @@ package class DataModelTranslator {
 		}
 	}
 	
-	def private String translateMember(Member member, String memberName, ArchitectureModel architectureModel, Set<Struct> idlOnlyStructs) {
+	def private String translateMember(Member member, ArchitectureModel architectureModel, Set<Struct> idlOnlyStructs) {
 		val baseTypeAndArrays = getBaseTypeAndArrays(member)
 		val baseType = baseTypeAndArrays.key
 		val arrays = baseTypeAndArrays.value
@@ -541,15 +539,15 @@ package class DataModelTranslator {
 			sanitizeID(baseType.name) + "_Platform.impl"
 		}
 		
-		'''«sanitizeID(memberName)»: data «implName»«arrays»;'''
+		'''«sanitizeID(member.name)»: data «implName»«arrays»;'''
 	}
 	
-	def private String translateMember(Member member, String memberName) {
+	def private String translateMember(Member member) {
 		val baseTypeAndArrays = getBaseTypeAndArrays(member)
 		val baseType = baseTypeAndArrays.key
 		val arrays = baseTypeAndArrays.value
 		
-		'''«sanitizeID(memberName)»: data «sanitizeID(baseType.name)»_Platform.impl«arrays»;'''
+		'''«sanitizeID(member.name)»: data «sanitizeID(baseType.name)»_Platform.impl«arrays»;'''
 	}
 	
 	def private String translateView(face.datamodel.conceptual.View view) {
@@ -714,9 +712,7 @@ package class DataModelTranslator {
 									data implementation «name».impl
 										subcomponents
 											«FOR member : object.members»
-											«FOR memberName : member.names»
-											«translateMember(member, memberName, view.getContainerOfType(ArchitectureModel), idlOnlyStructs)»
-											«ENDFOR»
+											«translateMember(member, view.getContainerOfType(ArchitectureModel), idlOnlyStructs)»
 											«ENDFOR»
 									end «name».impl;
 									«FOR struct : idlOnlyStructs»
@@ -729,9 +725,7 @@ package class DataModelTranslator {
 									data implementation «structName»_IDL.impl
 										subcomponents
 											«FOR member : struct.members»
-											«FOR memberName : member.names»
-											«translateMember(member, memberName)»
-											«ENDFOR»
+											«translateMember(member)»
 											«ENDFOR»
 									end «structName»_IDL.impl;
 									«ENDFOR»

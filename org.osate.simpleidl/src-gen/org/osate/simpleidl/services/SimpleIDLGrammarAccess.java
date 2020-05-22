@@ -407,13 +407,9 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cTypeAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cTypeSimpleTypeSpecParserRuleCall_0_0 = (RuleCall)cTypeAssignment_0.eContents().get(0);
-		private final Assignment cNamesAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cNamesIDTerminalRuleCall_1_0 = (RuleCall)cNamesAssignment_1.eContents().get(0);
-		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cCommaKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cNamesAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cNamesIDTerminalRuleCall_2_1_0 = (RuleCall)cNamesAssignment_2_1.eContents().get(0);
-		private final Keyword cSemicolonKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Keyword cSemicolonKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		
 		///*
 		// * (21) <type_spec> ::= <simple_type_spec>
@@ -422,10 +418,10 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 		// * (67) <declarators> ::= <declarator> { "," <declarator> }*
 		// * (68) <declarator> ::= <simple_declarator>
 		// */ Member:
-		//	type=SimpleTypeSpec names+=ID (',' names+=ID)* ';';
+		//	type=SimpleTypeSpec name=ID ';';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//type=SimpleTypeSpec names+=ID (',' names+=ID)* ';'
+		//type=SimpleTypeSpec name=ID ';'
 		public Group getGroup() { return cGroup; }
 		
 		//type=SimpleTypeSpec
@@ -434,26 +430,14 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 		//SimpleTypeSpec
 		public RuleCall getTypeSimpleTypeSpecParserRuleCall_0_0() { return cTypeSimpleTypeSpecParserRuleCall_0_0; }
 		
-		//names+=ID
-		public Assignment getNamesAssignment_1() { return cNamesAssignment_1; }
+		//name=ID
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
 		
 		//ID
-		public RuleCall getNamesIDTerminalRuleCall_1_0() { return cNamesIDTerminalRuleCall_1_0; }
-		
-		//(',' names+=ID)*
-		public Group getGroup_2() { return cGroup_2; }
-		
-		//','
-		public Keyword getCommaKeyword_2_0() { return cCommaKeyword_2_0; }
-		
-		//names+=ID
-		public Assignment getNamesAssignment_2_1() { return cNamesAssignment_2_1; }
-		
-		//ID
-		public RuleCall getNamesIDTerminalRuleCall_2_1_0() { return cNamesIDTerminalRuleCall_2_1_0; }
+		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 		
 		//';'
-		public Keyword getSemicolonKeyword_3() { return cSemicolonKeyword_3; }
+		public Keyword getSemicolonKeyword_2() { return cSemicolonKeyword_2; }
 	}
 	public class CaseElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.osate.simpleidl.SimpleIDL.Case");
@@ -1222,7 +1206,7 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 	// * (67) <declarators> ::= <declarator> { "," <declarator> }*
 	// * (68) <declarator> ::= <simple_declarator>
 	// */ Member:
-	//	type=SimpleTypeSpec names+=ID (',' names+=ID)* ';';
+	//	type=SimpleTypeSpec name=ID ';';
 	public MemberElements getMemberAccess() {
 		return pMember;
 	}

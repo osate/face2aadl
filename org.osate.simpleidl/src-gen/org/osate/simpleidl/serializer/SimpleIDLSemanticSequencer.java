@@ -303,10 +303,19 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	 *     Member returns Member
 	 *
 	 * Constraint:
-	 *     (type=SimpleTypeSpec names+=ID names+=ID*)
+	 *     (type=SimpleTypeSpec name=ID)
 	 */
 	protected void sequence_Member(ISerializationContext context, Member semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, SimpleIDLPackage.Literals.MEMBER__TYPE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SimpleIDLPackage.Literals.MEMBER__TYPE));
+			if (transientValues.isValueTransient(semanticObject, SimpleIDLPackage.Literals.MEMBER__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SimpleIDLPackage.Literals.MEMBER__NAME));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getMemberAccess().getTypeSimpleTypeSpecParserRuleCall_0_0(), semanticObject.getType());
+		feeder.accept(grammarAccess.getMemberAccess().getNameIDTerminalRuleCall_1_0(), semanticObject.getName());
+		feeder.finish();
 	}
 	
 	
