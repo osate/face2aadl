@@ -23,6 +23,7 @@ import com.google.inject.Injector
 import face.ArchitectureModel
 import face.datamodel.DataModel
 import face.datamodel.Element
+import face.datamodel.PlatformDataModel
 import face.datamodel.conceptual.ComposableElement
 import face.datamodel.conceptual.CompositeQuery
 import face.datamodel.conceptual.Query
@@ -61,6 +62,7 @@ import org.osate.simpleidl.simpleIDL.SignedShortInt
 import org.osate.simpleidl.simpleIDL.SimpleIDLPackage
 import org.osate.simpleidl.simpleIDL.Struct
 import org.osate.simpleidl.simpleIDL.StructForward
+import org.osate.simpleidl.simpleIDL.Type
 import org.osate.simpleidl.simpleIDL.Typedef
 import org.osate.simpleidl.simpleIDL.UnboundedSequence
 import org.osate.simpleidl.simpleIDL.UnboundedString
@@ -218,10 +220,8 @@ package class DataModelTranslator {
 									data implementation «name».impl
 										subcomponents
 											«FOR member : object.members»
-											«val type = (member.type as ReferencedType).type»
-											«if (type.eIsProxy) throw new UnsupportedOperationException("Proxy found")»
 											«FOR memberName : member.names»
-											«sanitizeID(memberName)»: data «sanitizeID(type.name)»_Platform.impl;
+											«translateMember(member, memberName, lookupName)»
 											«ENDFOR»
 											«ENDFOR»
 									end «name».impl;
@@ -502,81 +502,55 @@ package class DataModelTranslator {
 		}
 	}
 	
+	def private getBaseTypeAndArrays(Member member, String memberName, QualifiedName lookupName) {
+		switch type : followReferences(member.type) {
+			Typedef: {
+				switch typedefType : type.type {
+					BoundedSequence: followReferences(typedefType.type) -> '''[«typedefType.size»]'''
+					UnboundedSequence: followReferences(typedefType.type) -> "[]"
+					case type.names.head.arraySizes.size == 1: followReferences(typedefType) -> '''[«type.names.head.arraySizes.head»]'''
+					case type.names.head.arraySizes.size > 1: throw new UnsupportedOperationException('''«lookupName.toString("::")».«memberName» is a multi-dimensional array''')
+					default: type -> ""
+				}
+			}
+			default: type -> ""
+		}
+	}
+	
 	def private String translateMember(Member member, String memberName, ArchitectureModel architectureModel, Set<Struct> idlOnlyStructs, QualifiedName lookupName) {
-		val type = (member.type as ReferencedType).type
-		if (type.eIsProxy) {
-			throw new UnsupportedOperationException("Proxy found")
+		val baseTypeAndArrays = getBaseTypeAndArrays(member, memberName, lookupName)
+		val baseType = baseTypeAndArrays.key
+		val arrays = baseTypeAndArrays.value
+		
+		val isIdlOnlyStruct = baseType instanceof Struct && {
+			val treeIterator = architectureModel.eAllContents
+			val filtered = treeIterator.filter[
+				if (!(it instanceof ArchitectureModel || it instanceof DataModel || it instanceof PlatformDataModel)) {
+					treeIterator.prune
+				}
+				it instanceof PhysicalDataType || it instanceof View
+			]
+			!filtered.exists[(it as face.Element).name == baseType.name]
 		}
-		if (type instanceof Typedef) {
-			val typedefType = type.type
-			if (type.names.head.arraySizes.size == 1) {
-				val arrayType = (typedefType as ReferencedType).type
-				if (arrayType.eIsProxy) {
-					throw new UnsupportedOperationException("Proxy found")
-				}
-				if (arrayType instanceof Struct) {
-					val structName = arrayType.name
-					if (architectureModel.eAllContents.filter(face.Element).filter[it instanceof PhysicalDataType || it instanceof View].exists[it.name == structName]) {
-						'''«sanitizeID(memberName)»: data «sanitizeID(arrayType.name)»_Platform.impl[«type.names.head.arraySizes.head»];'''
-					} else {
-						idlOnlyStructs += arrayType
-						'''«sanitizeID(memberName)»: data «sanitizeID(idlNameProvider.getFullyQualifiedName(arrayType).toString("_"))»_IDL.impl[«type.names.head.arraySizes.head»];'''
-					}
-				} else {
-					'''«sanitizeID(memberName)»: data «sanitizeID(arrayType.name)»_Platform.impl[«type.names.head.arraySizes.head»];'''
-				}
-			} else if (type.names.head.arraySizes.size > 1) {
-				throw new UnsupportedOperationException(lookupName.toString("::") + "." + memberName + " is a multi-dimensional array")
-			} else {
-				if (typedefType instanceof BoundedSequence) {
-					val sequenceType = (typedefType.type as ReferencedType).type
-					if (sequenceType.eIsProxy) {
-						throw new UnsupportedOperationException("Proxy found")
-					}
-					if (sequenceType instanceof Struct) {
-						val structName = sequenceType.name
-						if (architectureModel.eAllContents.filter(face.Element).filter[it instanceof PhysicalDataType || it instanceof View].exists[it.name == structName]) {
-							'''«sanitizeID(memberName)»: data «sanitizeID(structName)»_Platform.impl[«typedefType.size»];'''
-						} else {
-							idlOnlyStructs += sequenceType
-							'''«sanitizeID(memberName)»: data «sanitizeID(idlNameProvider.getFullyQualifiedName(sequenceType).toString("_"))»_IDL.impl[«typedefType.size»];'''
-						}
-					} else {
-						'''«sanitizeID(memberName)»: data «sanitizeID(sequenceType.name)»_Platform.impl[«typedefType.size»];'''
-					}
-				} else if (typedefType instanceof UnboundedSequence) {
-					val sequenceType = (typedefType.type as ReferencedType).type
-					if (sequenceType.eIsProxy) {
-						throw new UnsupportedOperationException("Proxy found")
-					}
-					if (sequenceType instanceof Struct) {
-						val structName = sequenceType.name
-						if (architectureModel.eAllContents.filter(face.Element).filter[it instanceof PhysicalDataType || it instanceof View].exists[it.name == structName]) {
-							'''«sanitizeID(memberName)»: data «sanitizeID(structName)»_Platform.impl[];'''
-						} else {
-							idlOnlyStructs += sequenceType
-							'''«sanitizeID(memberName)»: data «sanitizeID(idlNameProvider.getFullyQualifiedName(sequenceType).toString("_"))»_IDL.impl[];'''
-						}
-					} else {
-						'''«sanitizeID(memberName)»: data «sanitizeID(sequenceType.name)»_Platform.impl[];'''
-					}
-				} else {
-					'''«sanitizeID(memberName)»: data «sanitizeID(type.name)»_Platform.impl;'''
-				}
-			}
+		if (isIdlOnlyStruct) {
+			idlOnlyStructs += baseType as Struct
+		}
+		
+		val implName = if (isIdlOnlyStruct) {
+			sanitizeID(idlNameProvider.getFullyQualifiedName(baseType).toString("_")) + "_IDL.impl"
 		} else {
-			if (type instanceof Struct) {
-				val structName = type.name
-				if (architectureModel.eAllContents.filter(face.Element).filter[it instanceof PhysicalDataType || it instanceof View].exists[it.name == structName]) {
-					'''«sanitizeID(memberName)»: data «sanitizeID(type.name)»_Platform.impl;'''
-				} else {
-					idlOnlyStructs += type
-					'''«sanitizeID(memberName)»: data «sanitizeID(idlNameProvider.getFullyQualifiedName(type).toString("_"))»_IDL.impl;'''
-				}
-			} else {
-				'''«sanitizeID(memberName)»: data «sanitizeID(type.name)»_Platform.impl;'''
-			}
+			sanitizeID(baseType.name) + "_Platform.impl"
 		}
+		
+		'''«sanitizeID(memberName)»: data «implName»«arrays»;'''
+	}
+	
+	def private String translateMember(Member member, String memberName, QualifiedName lookupName) {
+		val baseTypeAndArrays = getBaseTypeAndArrays(member, memberName, lookupName)
+		val baseType = baseTypeAndArrays.key
+		val arrays = baseTypeAndArrays.value
+		
+		'''«sanitizeID(memberName)»: data «sanitizeID(baseType.name)»_Platform.impl«arrays»;'''
 	}
 	
 	def private String translateView(face.datamodel.conceptual.View view) {
@@ -675,19 +649,28 @@ package class DataModelTranslator {
 	
 	//TODO Handle cycles
 	def private Definition followReferences(Definition object) {
+		if (object.eIsProxy) {
+			throw new UnsupportedOperationException("Found a proxy")
+		}
 		if (object instanceof Typedef) {
 			val type = object.type
-			if (type instanceof ReferencedType) {
-				if (type.type.eIsProxy) {
-					throw new UnsupportedOperationException("Found a proxy")
-				} else {
-					followReferences(type.type)
-				}
+			if (!object.names.head.arraySizes.empty) {
+				object
+			} else if (type instanceof ReferencedType) {
+				followReferences(type.type)
 			} else {
 				object
 			}
 		} else {
 			object
+		}
+	}
+	
+	def private Definition followReferences(Type type) {
+		if (type instanceof ReferencedType) {
+			followReferences(type.type)
+		} else {
+			throw new UnsupportedOperationException("Type is not a Referencedtype")
 		}
 	}
 	
@@ -750,27 +733,8 @@ package class DataModelTranslator {
 									data implementation «structName»_IDL.impl
 										subcomponents
 											«FOR member : struct.members»
-											«val type = (member.type as ReferencedType).type»
-											«if (type.eIsProxy) throw new UnsupportedOperationException("Proxy found")»
 											«FOR memberName : member.names»
-											«IF type instanceof Typedef»
-											«val typedefType = type.type»
-											«IF typedefType instanceof BoundedSequence»
-											«val sequenceType = (typedefType.type as ReferencedType).type»
-											«if (sequenceType.eIsProxy) throw new UnsupportedOperationException("Proxy found")»
-											«sanitizeID(memberName)»: data «sanitizeID(sequenceType.name)»_Platform.impl[«typedefType.size»];
-											«ELSE»
-											«IF typedefType instanceof UnboundedSequence»
-											«val sequenceType = (typedefType.type as ReferencedType).type»
-											«if (sequenceType.eIsProxy) throw new UnsupportedOperationException("Proxy found")»
-											«sanitizeID(memberName)»: data «sanitizeID(sequenceType.name)»_Platform.impl[];
-											«ELSE»
-											«sanitizeID(memberName)»: data «sanitizeID(type.name)»_Platform.impl;
-											«ENDIF»
-											«ENDIF»
-											«ELSE»
-											«sanitizeID(memberName)»: data «sanitizeID(type.name)»_Platform.impl;
-											«ENDIF»
+											«translateMember(member, memberName, lookupName)»
 											«ENDFOR»
 											«ENDFOR»
 									end «structName»_IDL.impl;
