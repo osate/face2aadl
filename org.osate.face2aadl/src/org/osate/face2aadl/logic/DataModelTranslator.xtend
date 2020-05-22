@@ -260,8 +260,34 @@ package class DataModelTranslator {
 											end «name».impl;
 										'''
 									}
-									SignedLongInt: throw new UnsupportedOperationException(lookupName.toString("::") + " is a SignedLongInt")
-									SignedLongLongInt: throw new UnsupportedOperationException(lookupName.toString("::") + " is a SignedLongLongInt")
+									SignedLongInt: {
+										val name = translateName(element)
+										'''
+											«translateDescription(element)»
+											data «name» extends Base_Types::Integer_32
+												properties
+													FACE::Realization_Tier => platform;
+													«translateUUID(element)»
+											end «name»;
+											
+											data implementation «name».impl
+											end «name».impl;
+										'''
+									}
+									SignedLongLongInt: {
+										val name = translateName(element)
+										'''
+											«translateDescription(element)»
+											data «name» extends Base_Types::Integer_64
+												properties
+													FACE::Realization_Tier => platform;
+													«translateUUID(element)»
+											end «name»;
+											
+											data implementation «name».impl
+											end «name».impl;
+										'''
+									}
 									UnsignedShortInt: {
 										val name = translateName(element)
 										'''
@@ -290,7 +316,20 @@ package class DataModelTranslator {
 											end «name».impl;
 										'''
 									}
-									UnsignedLongLongInt: throw new UnsupportedOperationException(lookupName.toString("::") + " is a UnsignedLongLongInt")
+									UnsignedLongLongInt: {
+										val name = translateName(element)
+										'''
+											«translateDescription(element)»
+											data «name» extends Base_Types::Unsigned_64
+												properties
+													FACE::Realization_Tier => platform;
+													«translateUUID(element)»
+											end «name»;
+											
+											data implementation «name».impl
+											end «name».impl;
+										'''
+									}
 									FloatType: {
 										val name = translateName(element)
 										'''
@@ -319,8 +358,34 @@ package class DataModelTranslator {
 											end «name».impl;
 										'''
 									}
-									LongDoubleType: throw new UnsupportedOperationException(lookupName.toString("::") + " is a LongDoubleType")
-									CharType: throw new UnsupportedOperationException(lookupName.toString("::") + " is a CharType")
+									LongDoubleType: {
+										val name = translateName(element)
+										'''
+											«translateDescription(element)»
+											data «name» extends Base_Types::Float
+												properties
+													FACE::Realization_Tier => platform;
+													«translateUUID(element)»
+											end «name»;
+											
+											data implementation «name».impl
+											end «name».impl;
+										'''
+									}
+									CharType: {
+										val name = translateName(element)
+										'''
+											«translateDescription(element)»
+											data «name» extends Base_Types::Character
+												properties
+													FACE::Realization_Tier => platform;
+													«translateUUID(element)»
+											end «name»;
+											
+											data implementation «name».impl
+											end «name».impl;
+										'''
+									}
 									WideCharType: throw new UnsupportedOperationException(lookupName.toString("::") + " is a WideCharType")
 									BooleanType: {
 										val name = translateName(element)
@@ -336,7 +401,21 @@ package class DataModelTranslator {
 											end «name».impl;
 										'''
 									}
-									OctetType: throw new UnsupportedOperationException(lookupName.toString("::") + " is a OctetType")
+									OctetType: {
+										val name = translateName(element)
+										'''
+											«translateDescription(element)»
+											data «name»
+												properties
+													Data_Size => 8 bits;
+													FACE::Realization_Tier => platform;
+													«translateUUID(element)»
+											end «name»;
+											
+											data implementation «name».impl
+											end «name».impl;
+										'''
+									}
 									ReferencedType: throw new UnsupportedOperationException(lookupName.toString("::") + " is a ReferencedType")
 									BoundedSequence: throw new UnsupportedOperationException(lookupName.toString("::") + " is a BoundedSequence")
 									UnboundedSequence: throw new UnsupportedOperationException(lookupName.toString("::") + " is a UnboundedSequence")
@@ -371,7 +450,21 @@ package class DataModelTranslator {
 									}
 									BoundedWideString: throw new UnsupportedOperationException(lookupName.toString("::") + " is a BoundedWideString")
 									UnboundedWideString: throw new UnsupportedOperationException(lookupName.toString("::") + " is a UnboundedWideString")
-									FixedPtType: throw new UnsupportedOperationException(lookupName.toString("::") + " is a FixedPtType")
+									FixedPtType: {
+										val name = translateName(element)
+										'''
+											«translateDescription(element)»
+											data «name»
+												properties
+													Data_Model::Data_Representation => Fixed;
+													FACE::Realization_Tier => platform;
+													«translateUUID(element)»
+											end «name»;
+											
+											data implementation «name».impl
+											end «name».impl;
+										'''
+									}
 								}
 							}
 						}
