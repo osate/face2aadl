@@ -41,6 +41,8 @@ import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.resource.IResourceDescriptions
 import org.eclipse.xtext.resource.IResourceDescriptionsProvider
+import org.eclipse.xtext.util.Triple
+import org.eclipse.xtext.util.Tuples
 import org.osate.simpleidl.simpleIDL.BooleanType
 import org.osate.simpleidl.simpleIDL.BoundedSequence
 import org.osate.simpleidl.simpleIDL.BoundedString
@@ -85,9 +87,7 @@ import static extension org.eclipse.xtext.EcoreUtil2.getContainerOfType
 package class DataModelTranslator {
 	val String faceFileName
 	val String packageName
-	//TODO Combine into a triple
-	val Optional<Pair<ResourceSet, IResourceDescriptions>> idlOption
-	val IQualifiedNameProvider idlNameProvider
+	val Optional<Triple<ResourceSet, IResourceDescriptions, IQualifiedNameProvider>> idlOption
 	
 	new(String faceFileName, String packageName, Optional<Pair<Injector, ResourceSet>> idlOption) {
 		this.faceFileName = faceFileName
@@ -95,13 +95,12 @@ package class DataModelTranslator {
 		this.idlOption = idlOption.map[pair |
 			val injector = pair.key
 			val resourceSet = pair.value
-			resourceSet -> injector.getInstance(IResourceDescriptionsProvider).getResourceDescriptions(resourceSet)
+			Tuples.create(
+				resourceSet,
+				injector.getInstance(IResourceDescriptionsProvider).getResourceDescriptions(resourceSet),
+				injector.getInstance(IQualifiedNameProvider)
+			)
 		]
-		if (idlOption.present) {
-			idlNameProvider = idlOption.get.key.getInstance(IQualifiedNameProvider)
-		} else {
-			idlNameProvider = null
-		}
 	}
 	
 	def package Optional<String> translate(ArchitectureModel model, boolean platformOnly) {
@@ -183,8 +182,8 @@ package class DataModelTranslator {
 			//Platform
 			PhysicalDataType: {
 				val idlBasedContents = idlOption.map[option |
-					val resourceSet = option.key
-					val descriptions = option.value
+					val resourceSet = option.first
+					val descriptions = option.second
 					val definitionType = SimpleIDLPackage.eINSTANCE.definition
 					val dataModel = element.getContainerOfType(DataModel)
 					val lookupName = QualifiedName.create("FACE", "DM", dataModel.name, element.name)
@@ -500,7 +499,7 @@ package class DataModelTranslator {
 		}
 	}
 	
-	def private getBaseTypeAndArrays(Member member) {
+	def private Pair<Definition, String> getBaseTypeAndArrays(Member member) {
 		switch type : followReferences(member.type) {
 			Typedef: {
 				switch typedefType : type.type {
@@ -514,7 +513,12 @@ package class DataModelTranslator {
 		}
 	}
 	
-	def private String translateMember(Member member, ArchitectureModel architectureModel, Set<Struct> idlOnlyStructs) {
+	def private String translateMember(
+		Member member,
+		ArchitectureModel architectureModel,
+		IQualifiedNameProvider idlNameProvider,
+		Set<Struct> idlOnlyStructs
+	) {
 		val baseTypeAndArrays = getBaseTypeAndArrays(member)
 		val baseType = baseTypeAndArrays.key
 		val arrays = baseTypeAndArrays.value
@@ -645,18 +649,18 @@ package class DataModelTranslator {
 	}
 	
 	//TODO Handle cycles
-	def private Definition followReferences(Definition object) {
-		if (object.eIsProxy) {
+	def private Definition followReferences(Definition definition) {
+		if (definition.eIsProxy) {
 			throw new UnsupportedOperationException("Found a proxy")
 		}
-		switch object {
+		switch definition {
 			Typedef: {
-				switch type : object.type {
-					ReferencedType case object.arraySize === null: followReferences(type.type)
-					default: object
+				switch type : definition.type {
+					ReferencedType case definition.arraySize === null: followReferences(type.type)
+					default: definition
 				}
 			}
-			default: object
+			default: definition
 		}
 	}
 	
@@ -672,8 +676,9 @@ package class DataModelTranslator {
 		switch view {
 			Template: {
 				val idlBasedContents = idlOption.map[option |
-					val resourceSet = option.key
-					val descriptions = option.value
+					val resourceSet = option.first
+					val descriptions = option.second
+					val idlNameProvider = option.third
 					val definitionType = SimpleIDLPackage.eINSTANCE.definition
 					val dataModel = view.getContainerOfType(DataModel)
 					val lookupName = QualifiedName.create("FACE", "DM", dataModel.name, view.name)
@@ -700,7 +705,7 @@ package class DataModelTranslator {
 							Struct: {
 								val name = translateName(view)
 								val realizes = view.boundQuery?.realizes
-								val idlOnlyStructs = newLinkedHashSet
+								val idlOnlyStructs = <Struct>newLinkedHashSet
 								'''
 									«translateDescription(view)»
 									data «name»«IF realizes !== null» «translateExtends(realizes, platformOnly)»«ENDIF»
@@ -712,7 +717,7 @@ package class DataModelTranslator {
 									data implementation «name».impl
 										subcomponents
 											«FOR member : object.members»
-											«translateMember(member, view.getContainerOfType(ArchitectureModel), idlOnlyStructs)»
+											«translateMember(member, view.getContainerOfType(ArchitectureModel), idlNameProvider, idlOnlyStructs)»
 											«ENDFOR»
 									end «name».impl;
 									«FOR struct : idlOnlyStructs»
