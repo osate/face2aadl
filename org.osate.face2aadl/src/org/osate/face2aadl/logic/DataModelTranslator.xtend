@@ -36,6 +36,7 @@ import face.datamodel.platform.TemplateComposition
 import face.datamodel.platform.View
 import java.util.Optional
 import java.util.Set
+import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.eclipse.xtext.naming.QualifiedName
@@ -85,6 +86,8 @@ import static extension org.eclipse.xtext.EcoreUtil2.getAllContentsOfType
 import static extension org.eclipse.xtext.EcoreUtil2.getContainerOfType
 
 package class DataModelTranslator {
+	val static EClass DEFINITION_TYPE = SimpleIDLPackage.eINSTANCE.definition
+	
 	val String faceFileName
 	val String packageName
 	val Optional<Triple<ResourceSet, IResourceDescriptions, IQualifiedNameProvider>> idlOption
@@ -184,10 +187,9 @@ package class DataModelTranslator {
 				val idlBasedContents = idlOption.map[option |
 					val resourceSet = option.first
 					val descriptions = option.second
-					val definitionType = SimpleIDLPackage.eINSTANCE.definition
 					val dataModel = element.getContainerOfType(DataModel)
 					val lookupName = QualifiedName.create("FACE", "DM", dataModel.name, element.name)
-					val objects = descriptions.getExportedObjects(definitionType, lookupName, true).toList
+					val objects = descriptions.getExportedObjects(DEFINITION_TYPE, lookupName, true).toList
 					if (objects.size == 0) {
 //						println("Could not find " + lookupName.toString("::"))
 						val name = translateName(element)
@@ -675,115 +677,66 @@ package class DataModelTranslator {
 	def private String translateView(View view, boolean platformOnly) {
 		switch view {
 			Template: {
-				val idlBasedContents = idlOption.map[option |
+				val name = translateName(view)
+				val realizes = view.boundQuery?.realizes
+				
+				val subcomponentsAndAdditionalComponents = idlOption.map[option |
 					val resourceSet = option.first
 					val descriptions = option.second
 					val idlNameProvider = option.third
-					val definitionType = SimpleIDLPackage.eINSTANCE.definition
 					val dataModel = view.getContainerOfType(DataModel)
 					val lookupName = QualifiedName.create("FACE", "DM", dataModel.name, view.name)
-					val objects = descriptions.getExportedObjects(definitionType, lookupName, true).toList
-					if (objects.size == 0) {
-//						println("Could not find " + lookupName.toString("::"))
-						val name = translateName(view)
-						val realizes = view.boundQuery?.realizes
-						'''
-							«translateDescription(view)»
-							data «name»«IF realizes !== null» «translateExtends(realizes, platformOnly)»«ENDIF»
-								properties
-									FACE::Realization_Tier => platform;
-									«translateUUID(view)»
-							end «name»;
-							
-							data implementation «name».impl
-							end «name».impl;
-						'''
-					} else if (objects.size == 1) {
-						val object = followReferences(objects.head.EObjectOrProxy.resolve(resourceSet) as Definition)
-						switch object {
-							Module: throw new UnsupportedOperationException(lookupName.toString("::") + " is a Module")
-							Struct: {
-								val name = translateName(view)
-								val realizes = view.boundQuery?.realizes
-								val idlOnlyStructs = <Struct>newLinkedHashSet
-								'''
-									«translateDescription(view)»
-									data «name»«IF realizes !== null» «translateExtends(realizes, platformOnly)»«ENDIF»
-										properties
-											FACE::Realization_Tier => platform;
-											«translateUUID(view)»
-									end «name»;
-									
-									data implementation «name».impl
-										subcomponents
-											«FOR member : object.members»
-											«translateMember(member, view.getContainerOfType(ArchitectureModel), idlNameProvider, idlOnlyStructs)»
-											«ENDFOR»
-									end «name».impl;
-									«FOR struct : idlOnlyStructs»
-									
-									«val structName = sanitizeID(idlNameProvider.getFullyQualifiedName(struct).toString("_"))»
-									--Generated from «idlNameProvider.getFullyQualifiedName(struct).toString("::")»
-									data «structName»_IDL
-									end «structName»_IDL;
-									
-									data implementation «structName»_IDL.impl
-										subcomponents
-											«FOR member : struct.members»
-											«translateMember(member)»
-											«ENDFOR»
-									end «structName»_IDL.impl;
-									«ENDFOR»
-								'''
-							}
-							StructForward: throw new UnsupportedOperationException(lookupName.toString("::") + " is a StructForward")
-							Union: throw new UnsupportedOperationException(lookupName.toString("::") + " is a Union")
-							Enum: throw new UnsupportedOperationException(lookupName.toString("::") + " is an Enum")
-							Typedef: {
-								switch object.type {
-									SignedShortInt: throw new UnsupportedOperationException(lookupName.toString("::") + " is a SignedShortInt")
-									SignedLongInt: throw new UnsupportedOperationException(lookupName.toString("::") + " is a SignedLongInt")
-									SignedLongLongInt: throw new UnsupportedOperationException(lookupName.toString("::") + " is a SignedLongLongInt")
-									UnsignedShortInt: throw new UnsupportedOperationException(lookupName.toString("::") + " is an UnsignedShortInt")
-									UnsignedLongInt: throw new UnsupportedOperationException(lookupName.toString("::") + " is a UnsignedLongInt")
-									UnsignedLongLongInt: throw new UnsupportedOperationException(lookupName.toString("::") + " is a UnsignedLongLongInt")
-									FloatType: throw new UnsupportedOperationException(lookupName.toString("::") + " is a FloatType")
-									DoubleType: throw new UnsupportedOperationException(lookupName.toString("::") + " is a DoubleType")
-									LongDoubleType: throw new UnsupportedOperationException(lookupName.toString("::") + " is a LongDoubleType")
-									CharType: throw new UnsupportedOperationException(lookupName.toString("::") + " is a CharType")
-									WideCharType: throw new UnsupportedOperationException(lookupName.toString("::") + " is a WideCharType")
-									BooleanType: throw new UnsupportedOperationException(lookupName.toString("::") + " is a BooleanType")
-									OctetType: throw new UnsupportedOperationException(lookupName.toString("::") + " is a OctetType")
-									ReferencedType: throw new UnsupportedOperationException(lookupName.toString("::") + " is a ReferencedType")
-									BoundedSequence: throw new UnsupportedOperationException(lookupName.toString("::") + " is a BoundedSequence")
-									UnboundedSequence: throw new UnsupportedOperationException(lookupName.toString("::") + " is a UnboundedSequence")
-									BoundedString: throw new UnsupportedOperationException(lookupName.toString("::") + " is a BoundedString")
-									UnboundedString: throw new UnsupportedOperationException(lookupName.toString("::") + " is a UnboundedString")
-									BoundedWideString: throw new UnsupportedOperationException(lookupName.toString("::") + " is a BoundedWideString")
-									UnboundedWideString: throw new UnsupportedOperationException(lookupName.toString("::") + " is a UnboundedWideString")
-									FixedPtType: throw new UnsupportedOperationException(lookupName.toString("::") + " is a FixedPtType")
-								}
-							}
-						}
-					} else {
-						throw new AssertionError("Multiple definitions found for " + lookupName.toString("::"))
+					val lookupObject = descriptions.getExportedObjects(DEFINITION_TYPE, lookupName, true).head
+					val resolved = if (lookupObject !== null) {
+						followReferences(lookupObject.EObjectOrProxy.resolve(resourceSet) as Definition)
 					}
-				]
-				idlBasedContents.orElseGet[
-					val name = translateName(view)
-					val realizes = view.boundQuery?.realizes
-					'''
-						«translateDescription(view)»
-						data «name»«IF realizes !== null» «translateExtends(realizes, platformOnly)»«ENDIF»
-							properties
-								FACE::Realization_Tier => platform;
-								«translateUUID(view)»
-						end «name»;
-						
-						data implementation «name».impl
-						end «name».impl;
-					'''
-				]
+					if (resolved instanceof Struct) {
+						val architectureModel = view.getContainerOfType(ArchitectureModel)
+						val idlOnlyStructs = <Struct>newLinkedHashSet
+						val subcomponents = '''
+							subcomponents
+								«FOR member : resolved.members»
+								«translateMember(member, architectureModel, idlNameProvider, idlOnlyStructs)»
+								«ENDFOR»
+						'''
+						val additionalComponents = '''
+							«FOR struct : idlOnlyStructs»
+							
+							«val qualifiedName = idlNameProvider.getFullyQualifiedName(struct)»
+							«val structName = sanitizeID(qualifiedName.toString("_")) + "_IDL"»
+							--Generated from «qualifiedName.toString("::")»
+							data «structName»
+							end «structName»;
+							
+							data implementation «structName».impl
+								subcomponents
+									«FOR member : struct.members»
+									«translateMember(member)»
+									«ENDFOR»
+							end «structName».impl;
+							«ENDFOR»
+						'''
+						subcomponents -> additionalComponents
+					} else {
+						null -> null
+					}
+				].orElse(null -> null)
+				val subcomponents = subcomponentsAndAdditionalComponents.key
+				val additionalComponents = subcomponentsAndAdditionalComponents.value
+				
+				'''
+					«translateDescription(view)»
+					data «name»«IF realizes !== null» «translateExtends(realizes, platformOnly)»«ENDIF»
+						properties
+							FACE::Realization_Tier => platform;
+							«translateUUID(view)»
+					end «name»;
+					
+					data implementation «name».impl
+						«subcomponents»
+					end «name».impl;
+					«additionalComponents»
+				'''
 			}
 			CompositeTemplate: {
 				val name = translateName(view)
