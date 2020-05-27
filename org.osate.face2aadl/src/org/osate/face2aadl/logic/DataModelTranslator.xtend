@@ -47,7 +47,6 @@ import org.eclipse.xtext.util.Tuples
 import org.osate.simpleidl.simpleIDL.BooleanType
 import org.osate.simpleidl.simpleIDL.BoundedSequence
 import org.osate.simpleidl.simpleIDL.BoundedString
-import org.osate.simpleidl.simpleIDL.BoundedWideString
 import org.osate.simpleidl.simpleIDL.CharType
 import org.osate.simpleidl.simpleIDL.Definition
 import org.osate.simpleidl.simpleIDL.DoubleType
@@ -64,17 +63,14 @@ import org.osate.simpleidl.simpleIDL.SignedLongLongInt
 import org.osate.simpleidl.simpleIDL.SignedShortInt
 import org.osate.simpleidl.simpleIDL.SimpleIDLPackage
 import org.osate.simpleidl.simpleIDL.Struct
-import org.osate.simpleidl.simpleIDL.StructForward
 import org.osate.simpleidl.simpleIDL.Type
 import org.osate.simpleidl.simpleIDL.Typedef
 import org.osate.simpleidl.simpleIDL.UnboundedSequence
 import org.osate.simpleidl.simpleIDL.UnboundedString
-import org.osate.simpleidl.simpleIDL.UnboundedWideString
 import org.osate.simpleidl.simpleIDL.Union
 import org.osate.simpleidl.simpleIDL.UnsignedLongInt
 import org.osate.simpleidl.simpleIDL.UnsignedLongLongInt
 import org.osate.simpleidl.simpleIDL.UnsignedShortInt
-import org.osate.simpleidl.simpleIDL.WideCharType
 
 import static org.osate.face2aadl.logic.TranslatorUtil.sanitizeID
 import static org.osate.face2aadl.logic.TranslatorUtil.translateDescription
@@ -184,307 +180,72 @@ package class DataModelTranslator {
 			
 			//Platform
 			PhysicalDataType: {
-				val idlBasedContents = idlOption.map[option |
+				val name = translateName(element)
+				
+				val idlContents = idlOption.map[option |
 					val resourceSet = option.first
 					val descriptions = option.second
 					val dataModel = element.getContainerOfType(DataModel)
 					val lookupName = QualifiedName.create("FACE", "DM", dataModel.name, element.name)
-					val objects = descriptions.getExportedObjects(DEFINITION_TYPE, lookupName, true).toList
-					if (objects.size == 0) {
-//						println("Could not find " + lookupName.toString("::"))
-						val name = translateName(element)
-						'''
-							«translateDescription(element)»
-							data «name»
-								properties
-									FACE::Realization_Tier => platform;
-									«translateUUID(element)»
-							end «name»;
-							
-							data implementation «name».impl
-							end «name».impl;
-						'''
-					} else if (objects.size == 1) {
-						val object = objects.head.EObjectOrProxy.resolve(resourceSet)
-						switch object {
-							Module: throw new UnsupportedOperationException(lookupName.toString("::") + " is a Module")
-							Struct: {
-								val name = translateName(element)
-								'''
-									«translateDescription(element)»
-									data «name»
-										properties
-											FACE::Realization_Tier => platform;
-											«translateUUID(element)»
-									end «name»;
-									
-									data implementation «name».impl
-										subcomponents
-											«FOR member : object.members»
-											«translateMember(member)»
-											«ENDFOR»
-									end «name».impl;
-								'''
-							}
-							StructForward: throw new UnsupportedOperationException(lookupName.toString("::") + " is a StructForward")
-							Union: throw new UnsupportedOperationException(lookupName.toString("::") + " is a Union")
-							Enum: {
-								val name = translateName(element)
-								'''
-									«translateDescription(element)»
-									data «name»
-										properties
-											Data_Model::Data_Representation => Enum;
-											FACE::Realization_Tier => platform;
-											«translateUUID(element)»
-									end «name»;
-									
-									data implementation «name».impl
-									end «name».impl;
-								'''
-							}
-							Typedef: {
-								switch type : object.type {
-									SignedShortInt: {
-										val name = translateName(element)
-										'''
-											«translateDescription(element)»
-											data «name» extends Base_Types::Integer_16
-												properties
-													FACE::Realization_Tier => platform;
-													«translateUUID(element)»
-											end «name»;
-											
-											data implementation «name».impl
-											end «name».impl;
-										'''
-									}
-									SignedLongInt: {
-										val name = translateName(element)
-										'''
-											«translateDescription(element)»
-											data «name» extends Base_Types::Integer_32
-												properties
-													FACE::Realization_Tier => platform;
-													«translateUUID(element)»
-											end «name»;
-											
-											data implementation «name».impl
-											end «name».impl;
-										'''
-									}
-									SignedLongLongInt: {
-										val name = translateName(element)
-										'''
-											«translateDescription(element)»
-											data «name» extends Base_Types::Integer_64
-												properties
-													FACE::Realization_Tier => platform;
-													«translateUUID(element)»
-											end «name»;
-											
-											data implementation «name».impl
-											end «name».impl;
-										'''
-									}
-									UnsignedShortInt: {
-										val name = translateName(element)
-										'''
-											«translateDescription(element)»
-											data «name» extends Base_Types::Unsigned_16
-												properties
-													FACE::Realization_Tier => platform;
-													«translateUUID(element)»
-											end «name»;
-											
-											data implementation «name».impl
-											end «name».impl;
-										'''
-									}
-									UnsignedLongInt: {
-										val name = translateName(element)
-										'''
-											«translateDescription(element)»
-											data «name» extends Base_Types::Unsigned_32
-												properties
-													FACE::Realization_Tier => platform;
-													«translateUUID(element)»
-											end «name»;
-											
-											data implementation «name».impl
-											end «name».impl;
-										'''
-									}
-									UnsignedLongLongInt: {
-										val name = translateName(element)
-										'''
-											«translateDescription(element)»
-											data «name» extends Base_Types::Unsigned_64
-												properties
-													FACE::Realization_Tier => platform;
-													«translateUUID(element)»
-											end «name»;
-											
-											data implementation «name».impl
-											end «name».impl;
-										'''
-									}
-									FloatType: {
-										val name = translateName(element)
-										'''
-											«translateDescription(element)»
-											data «name» extends Base_Types::Float_32
-												properties
-													FACE::Realization_Tier => platform;
-													«translateUUID(element)»
-											end «name»;
-											
-											data implementation «name».impl
-											end «name».impl;
-										'''
-									}
-									DoubleType: {
-										val name = translateName(element)
-										'''
-											«translateDescription(element)»
-											data «name» extends Base_Types::Float_64
-												properties
-													FACE::Realization_Tier => platform;
-													«translateUUID(element)»
-											end «name»;
-											
-											data implementation «name».impl
-											end «name».impl;
-										'''
-									}
-									LongDoubleType: {
-										val name = translateName(element)
-										'''
-											«translateDescription(element)»
-											data «name» extends Base_Types::Float
-												properties
-													FACE::Realization_Tier => platform;
-													«translateUUID(element)»
-											end «name»;
-											
-											data implementation «name».impl
-											end «name».impl;
-										'''
-									}
-									CharType: {
-										val name = translateName(element)
-										'''
-											«translateDescription(element)»
-											data «name» extends Base_Types::Character
-												properties
-													FACE::Realization_Tier => platform;
-													«translateUUID(element)»
-											end «name»;
-											
-											data implementation «name».impl
-											end «name».impl;
-										'''
-									}
-									WideCharType: throw new UnsupportedOperationException(lookupName.toString("::") + " is a WideCharType")
-									BooleanType: {
-										val name = translateName(element)
-										'''
-											«translateDescription(element)»
-											data «name» extends Base_Types::Boolean
-												properties
-													FACE::Realization_Tier => platform;
-													«translateUUID(element)»
-											end «name»;
-											
-											data implementation «name».impl
-											end «name».impl;
-										'''
-									}
-									OctetType: {
-										val name = translateName(element)
-										'''
-											«translateDescription(element)»
-											data «name»
-												properties
-													Data_Size => 8 bits;
-													FACE::Realization_Tier => platform;
-													«translateUUID(element)»
-											end «name»;
-											
-											data implementation «name».impl
-											end «name».impl;
-										'''
-									}
-									ReferencedType: throw new UnsupportedOperationException(lookupName.toString("::") + " is a ReferencedType")
-									BoundedSequence: throw new UnsupportedOperationException(lookupName.toString("::") + " is a BoundedSequence")
-									UnboundedSequence: throw new UnsupportedOperationException(lookupName.toString("::") + " is a UnboundedSequence")
-									BoundedString: {
-										val name = translateName(element)
-										'''
-											«translateDescription(element)»
-											data «name» extends Base_Types::String
-												properties
-													Data_Size => «type.size» Bytes;
-													FACE::Realization_Tier => platform;
-													«translateUUID(element)»
-											end «name»;
-											
-											data implementation «name».impl
-											end «name».impl;
-										'''
-									}
-									UnboundedString: {
-										val name = translateName(element)
-										'''
-											«translateDescription(element)»
-											data «name» extends Base_Types::String
-												properties
-													FACE::Realization_Tier => platform;
-													«translateUUID(element)»
-											end «name»;
-											
-											data implementation «name».impl
-											end «name».impl;
-										'''
-									}
-									BoundedWideString: throw new UnsupportedOperationException(lookupName.toString("::") + " is a BoundedWideString")
-									UnboundedWideString: throw new UnsupportedOperationException(lookupName.toString("::") + " is a UnboundedWideString")
-									FixedPtType: {
-										val name = translateName(element)
-										'''
-											«translateDescription(element)»
-											data «name»
-												properties
-													Data_Model::Data_Representation => Fixed;
-													FACE::Realization_Tier => platform;
-													«translateUUID(element)»
-											end «name»;
-											
-											data implementation «name».impl
-											end «name».impl;
-										'''
-									}
-								}
+					val lookupObject = descriptions.getExportedObjects(DEFINITION_TYPE, lookupName, true).head
+					val resolved = if (lookupObject !== null) {
+						lookupObject.EObjectOrProxy.resolve(resourceSet)
+					}
+					val typeExtension = if (resolved instanceof Typedef) {
+						switch resolved.type {
+							SignedShortInt: " extends Base_Types::Integer_16"
+							SignedLongInt: " extends Base_Types::Integer_32"
+							SignedLongLongInt: " extends Base_Types::Integer_64"
+							UnsignedShortInt: " extends Base_Types::Unsigned_16"
+							UnsignedLongInt: " extends Base_Types::Unsigned_32"
+							UnsignedLongLongInt: " extends Base_Types::Unsigned_64"
+							FloatType: " extends Base_Types::Float_32"
+							DoubleType: " extends Base_Types::Float_64"
+							LongDoubleType: " extends Base_Types::Float"
+							CharType: " extends Base_Types::Character"
+							BooleanType: " extends Base_Types::Boolean"
+							BoundedString: " extends Base_Types::String"
+							UnboundedString: " extends Base_Types::String"
+						}
+					}
+					val dataProperty = switch resolved {
+						Enum: "Data_Model::Data_Representation => Enum;"
+						Typedef: {
+							switch type : resolved.type {
+								OctetType: "Data_Size => 8 bits;"
+								BoundedString: '''Data_Size => «type.size» Bytes;'''
+								FixedPtType: "Data_Model::Data_Representation => Fixed;"
 							}
 						}
-					} else {
-						throw new AssertionError("Multiple definitions found for " + lookupName.toString("::"))
 					}
-				]
-				idlBasedContents.orElseGet[
-					val name = translateName(element)
-					'''
-						«translateDescription(element)»
-						data «name»
-							properties
-								FACE::Realization_Tier => platform;
-								«translateUUID(element)»
-						end «name»;
-						
-						data implementation «name».impl
-						end «name».impl;
-					'''
-				]
+					val subcomponents = if (resolved instanceof Struct) {
+						'''
+							subcomponents
+								«FOR member : resolved.members»
+								«translateMember(member)»
+								«ENDFOR»
+						'''
+					}
+					Tuples.create(typeExtension, dataProperty, subcomponents)
+				].orElse(Tuples.create(null, null, null))
+				val typeExtension = idlContents.first
+				val dataProperty = idlContents.second
+				val subcomponents = idlContents.third
+				
+				
+				'''
+					«translateDescription(element)»
+					data «name»«typeExtension»
+						properties
+							«dataProperty»
+							FACE::Realization_Tier => platform;
+							«translateUUID(element)»
+					end «name»;
+					
+					data implementation «name».impl
+						«subcomponents»
+					end «name».impl;
+				'''
 			}
 			face.datamodel.platform.Entity: {
 				val name = translateName(element)
