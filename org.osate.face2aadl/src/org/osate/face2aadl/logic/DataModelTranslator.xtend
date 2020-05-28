@@ -49,14 +49,13 @@ import org.osate.simpleidl.simpleIDL.BooleanType
 import org.osate.simpleidl.simpleIDL.BoundedSequence
 import org.osate.simpleidl.simpleIDL.BoundedString
 import org.osate.simpleidl.simpleIDL.CharType
-import org.osate.simpleidl.simpleIDL.Definition
 import org.osate.simpleidl.simpleIDL.DoubleType
 import org.osate.simpleidl.simpleIDL.Enum
 import org.osate.simpleidl.simpleIDL.FixedPtType
 import org.osate.simpleidl.simpleIDL.FloatType
 import org.osate.simpleidl.simpleIDL.LongDoubleType
 import org.osate.simpleidl.simpleIDL.Member
-import org.osate.simpleidl.simpleIDL.Module
+import org.osate.simpleidl.simpleIDL.NamedDefinition
 import org.osate.simpleidl.simpleIDL.OctetType
 import org.osate.simpleidl.simpleIDL.ReferencedType
 import org.osate.simpleidl.simpleIDL.SignedLongInt
@@ -64,10 +63,8 @@ import org.osate.simpleidl.simpleIDL.SignedLongLongInt
 import org.osate.simpleidl.simpleIDL.SignedShortInt
 import org.osate.simpleidl.simpleIDL.SimpleIDLPackage
 import org.osate.simpleidl.simpleIDL.Struct
-import org.osate.simpleidl.simpleIDL.Typedef
 import org.osate.simpleidl.simpleIDL.UnboundedSequence
 import org.osate.simpleidl.simpleIDL.UnboundedString
-import org.osate.simpleidl.simpleIDL.Union
 import org.osate.simpleidl.simpleIDL.UnsignedLongInt
 import org.osate.simpleidl.simpleIDL.UnsignedLongLongInt
 import org.osate.simpleidl.simpleIDL.UnsignedShortInt
@@ -82,7 +79,7 @@ import static extension org.eclipse.xtext.EcoreUtil2.getAllContentsOfType
 import static extension org.eclipse.xtext.EcoreUtil2.getContainerOfType
 
 package class DataModelTranslator {
-	val static EClass DEFINITION_TYPE = SimpleIDLPackage.eINSTANCE.definition
+	val static EClass NAMED_DEFINITION_TYPE = SimpleIDLPackage.eINSTANCE.namedDefinition
 	
 	val String faceFileName
 	val String packageName
@@ -187,36 +184,30 @@ package class DataModelTranslator {
 					val descriptions = option.second
 					val dataModel = element.getContainerOfType(DataModel)
 					val lookupName = QualifiedName.create("FACE", "DM", dataModel.name, element.name)
-					val lookupObject = descriptions.getExportedObjects(DEFINITION_TYPE, lookupName, true).head
+					val lookupObject = descriptions.getExportedObjects(NAMED_DEFINITION_TYPE, lookupName, true).head
 					val resolved = if (lookupObject !== null) {
-						lookupObject.EObjectOrProxy.resolve(resourceSet)
+						lookupObject.EObjectOrProxy.resolve(resourceSet) as NamedDefinition
 					}
-					val typeExtension = if (resolved instanceof Typedef) {
-						switch resolved.type {
-							SignedShortInt: " extends Base_Types::Integer_16"
-							SignedLongInt: " extends Base_Types::Integer_32"
-							SignedLongLongInt: " extends Base_Types::Integer_64"
-							UnsignedShortInt: " extends Base_Types::Unsigned_16"
-							UnsignedLongInt: " extends Base_Types::Unsigned_32"
-							UnsignedLongLongInt: " extends Base_Types::Unsigned_64"
-							FloatType: " extends Base_Types::Float_32"
-							DoubleType: " extends Base_Types::Float_64"
-							LongDoubleType: " extends Base_Types::Float"
-							CharType: " extends Base_Types::Character"
-							BooleanType: " extends Base_Types::Boolean"
-							BoundedString,
-							UnboundedString: " extends Base_Types::String"
-						}
+					val typeExtension = switch resolved {
+						SignedShortInt: " extends Base_Types::Integer_16"
+						SignedLongInt: " extends Base_Types::Integer_32"
+						SignedLongLongInt: " extends Base_Types::Integer_64"
+						UnsignedShortInt: " extends Base_Types::Unsigned_16"
+						UnsignedLongInt: " extends Base_Types::Unsigned_32"
+						UnsignedLongLongInt: " extends Base_Types::Unsigned_64"
+						FloatType: " extends Base_Types::Float_32"
+						DoubleType: " extends Base_Types::Float_64"
+						LongDoubleType: " extends Base_Types::Float"
+						CharType: " extends Base_Types::Character"
+						BooleanType: " extends Base_Types::Boolean"
+						BoundedString,
+						UnboundedString: " extends Base_Types::String"
 					}
 					val dataProperty = switch resolved {
 						Enum: "Data_Model::Data_Representation => Enum;"
-						Typedef: {
-							switch type : resolved.type {
-								OctetType: "Data_Size => 8 bits;"
-								BoundedString: '''Data_Size => «type.size» Bytes;'''
-								FixedPtType: "Data_Model::Data_Representation => Fixed;"
-							}
-						}
+						OctetType: "Data_Size => 8 bits;"
+						BoundedString: '''Data_Size => «resolved.size» Bytes;'''
+						FixedPtType: "Data_Model::Data_Representation => Fixed;"
 					}
 					val subcomponents = if (resolved instanceof Struct) {
 						'''
@@ -262,15 +253,10 @@ package class DataModelTranslator {
 		}
 	}
 	
-	def private Pair<Definition, String> getBaseTypeAndArrays(Member member) {
+	def private Pair<NamedDefinition, String> getBaseTypeAndArrays(Member member) {
 		switch type : followReferences(member.type) {
-			Typedef: {
-				switch typedefType : type.type {
-					BoundedSequence: followReferences(typedefType.type) -> '''[«typedefType.size»]'''
-					UnboundedSequence: followReferences(typedefType.type) -> "[]"
-					default: type -> ""
-				}
-			}
+			BoundedSequence: followReferences(type.type) -> '''[«type.size»]'''
+			UnboundedSequence: followReferences(type.type) -> "[]"
 			ArrayType: followReferences(type.type) -> '''[«type.size»]'''
 			default: type -> ""
 		}
@@ -412,18 +398,14 @@ package class DataModelTranslator {
 	}
 	
 	//TODO Handle cycles
-	def private Definition followReferences(Definition definition) {
+	def private NamedDefinition followReferences(NamedDefinition definition) {
 		if (definition.eIsProxy) {
 			throw new UnsupportedOperationException("Found a proxy")
 		}
-		switch definition {
-			Typedef: {
-				switch type : definition.type {
-					ReferencedType: followReferences(type.type)
-					default: definition
-				}
-			}
-			default: definition
+		if (definition instanceof ReferencedType) {
+			followReferences(definition.type)
+		} else {
+			definition
 		}
 	}
 	
@@ -439,9 +421,9 @@ package class DataModelTranslator {
 					val idlNameProvider = option.third
 					val dataModel = view.getContainerOfType(DataModel)
 					val lookupName = QualifiedName.create("FACE", "DM", dataModel.name, view.name)
-					val lookupObject = descriptions.getExportedObjects(DEFINITION_TYPE, lookupName, true).head
+					val lookupObject = descriptions.getExportedObjects(NAMED_DEFINITION_TYPE, lookupName, true).head
 					val resolved = if (lookupObject !== null) {
-						followReferences(lookupObject.EObjectOrProxy.resolve(resourceSet) as Definition)
+						followReferences(lookupObject.EObjectOrProxy.resolve(resourceSet) as NamedDefinition)
 					}
 					if (resolved instanceof Struct) {
 						val architectureModel = view.getContainerOfType(ArchitectureModel)
@@ -512,16 +494,6 @@ package class DataModelTranslator {
 					end «name».impl;
 				'''
 			}
-		}
-	}
-	
-	def private String getName(Definition definition) {
-		switch definition {
-			Module: definition.name
-			Struct: definition.name
-			Union: definition.name
-			Enum: definition.name
-			Typedef: definition.name
 		}
 	}
 	

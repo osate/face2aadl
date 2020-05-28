@@ -28,7 +28,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-import org.osate.simpleidl.simpleIDL.Definition;
+import org.osate.simpleidl.simpleIDL.NamedDefinition;
 import org.osate.simpleidl.simpleIDL.SimpleIDLPackage;
 import org.osate.simpleidl.simpleIDL.UnboundedSequence;
 
@@ -45,7 +45,7 @@ import org.osate.simpleidl.simpleIDL.UnboundedSequence;
  *
  * @generated
  */
-public class UnboundedSequenceImpl extends TypeImpl implements UnboundedSequence
+public class UnboundedSequenceImpl extends NamedDefinitionImpl implements UnboundedSequence
 {
   /**
    * The cached value of the '{@link #getType() <em>Type</em>}' reference.
@@ -55,7 +55,7 @@ public class UnboundedSequenceImpl extends TypeImpl implements UnboundedSequence
    * @generated
    * @ordered
    */
-  protected Definition type;
+  protected NamedDefinition type;
 
   /**
    * <!-- begin-user-doc -->
@@ -84,12 +84,12 @@ public class UnboundedSequenceImpl extends TypeImpl implements UnboundedSequence
    * @generated
    */
   @Override
-  public Definition getType()
+  public NamedDefinition getType()
   {
     if (type != null && type.eIsProxy())
     {
       InternalEObject oldType = (InternalEObject)type;
-      type = (Definition)eResolveProxy(oldType);
+      type = (NamedDefinition)eResolveProxy(oldType);
       if (type != oldType)
       {
         if (eNotificationRequired())
@@ -104,7 +104,7 @@ public class UnboundedSequenceImpl extends TypeImpl implements UnboundedSequence
    * <!-- end-user-doc -->
    * @generated
    */
-  public Definition basicGetType()
+  public NamedDefinition basicGetType()
   {
     return type;
   }
@@ -115,9 +115,9 @@ public class UnboundedSequenceImpl extends TypeImpl implements UnboundedSequence
    * @generated
    */
   @Override
-  public void setType(Definition newType)
+  public void setType(NamedDefinition newType)
   {
-    Definition oldType = type;
+    NamedDefinition oldType = type;
     type = newType;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, SimpleIDLPackage.UNBOUNDED_SEQUENCE__TYPE, oldType, type));
@@ -151,7 +151,7 @@ public class UnboundedSequenceImpl extends TypeImpl implements UnboundedSequence
     switch (featureID)
     {
       case SimpleIDLPackage.UNBOUNDED_SEQUENCE__TYPE:
-        setType((Definition)newValue);
+        setType((NamedDefinition)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -168,7 +168,7 @@ public class UnboundedSequenceImpl extends TypeImpl implements UnboundedSequence
     switch (featureID)
     {
       case SimpleIDLPackage.UNBOUNDED_SEQUENCE__TYPE:
-        setType((Definition)null);
+        setType((NamedDefinition)null);
         return;
     }
     super.eUnset(featureID);

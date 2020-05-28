@@ -43,7 +43,7 @@ import org.osate.simpleidl.simpleIDL.SimpleIDLPackage;
  *
  * @generated
  */
-public class BoundedStringImpl extends TypeImpl implements BoundedString
+public class BoundedStringImpl extends NamedDefinitionImpl implements BoundedString
 {
   /**
    * The default value of the '{@link #getSize() <em>Size</em>}' attribute.

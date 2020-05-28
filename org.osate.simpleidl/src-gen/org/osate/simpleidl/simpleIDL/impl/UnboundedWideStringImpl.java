@@ -33,7 +33,7 @@ import org.osate.simpleidl.simpleIDL.UnboundedWideString;
  *
  * @generated
  */
-public class UnboundedWideStringImpl extends TypeImpl implements UnboundedWideString
+public class UnboundedWideStringImpl extends NamedDefinitionImpl implements UnboundedWideString
 {
   /**
    * <!-- begin-user-doc -->

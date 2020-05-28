@@ -39,19 +39,19 @@ package org.osate.simpleidl.simpleIDL;
  * @model
  * @generated
  */
-public interface BoundedSequence extends Type
+public interface BoundedSequence extends NamedDefinition
 {
   /**
    * Returns the value of the '<em><b>Type</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the value of the '<em>Type</em>' reference.
-   * @see #setType(Definition)
+   * @see #setType(NamedDefinition)
    * @see org.osate.simpleidl.simpleIDL.SimpleIDLPackage#getBoundedSequence_Type()
    * @model
    * @generated
    */
-  Definition getType();
+  NamedDefinition getType();
 
   /**
    * Sets the value of the '{@link org.osate.simpleidl.simpleIDL.BoundedSequence#getType <em>Type</em>}' reference.
@@ -61,7 +61,7 @@ public interface BoundedSequence extends Type
    * @see #getType()
    * @generated
    */
-  void setType(Definition value);
+  void setType(NamedDefinition value);
 
   /**
    * Returns the value of the '<em><b>Size</b></em>' attribute.

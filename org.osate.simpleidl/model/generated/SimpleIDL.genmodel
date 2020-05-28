@@ -10,6 +10,9 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//Specification/definitions"/>
     </genClasses>
     <genClasses ecoreClass="SimpleIDL.ecore#//Definition"/>
+    <genClasses ecoreClass="SimpleIDL.ecore#//NamedDefinition">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//NamedDefinition/name"/>
+    </genClasses>
     <genClasses ecoreClass="SimpleIDL.ecore#//Member">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//Member/type"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//Member/name"/>
@@ -19,33 +22,23 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//Case/type"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//Case/name"/>
     </genClasses>
-    <genClasses ecoreClass="SimpleIDL.ecore#//Type"/>
-    <genClasses ecoreClass="SimpleIDL.ecore#//Module">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//Module/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//Module/definitions"/>
-    </genClasses>
-    <genClasses ecoreClass="SimpleIDL.ecore#//Struct">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//Struct/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//Struct/members"/>
-    </genClasses>
     <genClasses ecoreClass="SimpleIDL.ecore#//StructForward">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//StructForward/struct"/>
     </genClasses>
+    <genClasses ecoreClass="SimpleIDL.ecore#//Module">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//Module/definitions"/>
+    </genClasses>
+    <genClasses ecoreClass="SimpleIDL.ecore#//Struct">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//Struct/members"/>
+    </genClasses>
     <genClasses ecoreClass="SimpleIDL.ecore#//Union">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//Union/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//Union/cases"/>
     </genClasses>
     <genClasses ecoreClass="SimpleIDL.ecore#//Enum">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//Enum/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//Enum/literals"/>
-    </genClasses>
-    <genClasses ecoreClass="SimpleIDL.ecore#//Typedef">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//Typedef/type"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//Typedef/name"/>
     </genClasses>
     <genClasses ecoreClass="SimpleIDL.ecore#//ArrayType">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//ArrayType/type"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//ArrayType/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//ArrayType/size"/>
     </genClasses>
     <genClasses ecoreClass="SimpleIDL.ecore#//SignedShortInt"/>

@@ -32,6 +32,6 @@ package org.osate.simpleidl.simpleIDL;
  * @model
  * @generated
  */
-public interface UnboundedWideString extends Type
+public interface UnboundedWideString extends NamedDefinition
 {
 } // UnboundedWideString

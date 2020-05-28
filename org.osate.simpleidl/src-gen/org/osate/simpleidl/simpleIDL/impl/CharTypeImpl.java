@@ -33,7 +33,7 @@ import org.osate.simpleidl.simpleIDL.SimpleIDLPackage;
  *
  * @generated
  */
-public class CharTypeImpl extends TypeImpl implements CharType
+public class CharTypeImpl extends NamedDefinitionImpl implements CharType
 {
   /**
    * <!-- begin-user-doc -->

@@ -32,6 +32,6 @@ package org.osate.simpleidl.simpleIDL;
  * @model
  * @generated
  */
-public interface BooleanType extends Type
+public interface BooleanType extends NamedDefinition
 {
 } // BooleanType

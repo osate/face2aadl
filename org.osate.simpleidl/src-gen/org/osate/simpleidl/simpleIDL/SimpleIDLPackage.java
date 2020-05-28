@@ -123,6 +123,34 @@ public interface SimpleIDLPackage extends EPackage
   int DEFINITION_FEATURE_COUNT = 0;
 
   /**
+   * The meta object id for the '{@link org.osate.simpleidl.simpleIDL.impl.NamedDefinitionImpl <em>Named Definition</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.osate.simpleidl.simpleIDL.impl.NamedDefinitionImpl
+   * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getNamedDefinition()
+   * @generated
+   */
+  int NAMED_DEFINITION = 2;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NAMED_DEFINITION__NAME = DEFINITION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Named Definition</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NAMED_DEFINITION_FEATURE_COUNT = DEFINITION_FEATURE_COUNT + 1;
+
+  /**
    * The meta object id for the '{@link org.osate.simpleidl.simpleIDL.impl.MemberImpl <em>Member</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -130,7 +158,7 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getMember()
    * @generated
    */
-  int MEMBER = 2;
+  int MEMBER = 3;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' reference.
@@ -167,7 +195,7 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getCase()
    * @generated
    */
-  int CASE = 3;
+  int CASE = 4;
 
   /**
    * The feature id for the '<em><b>Labels</b></em>' attribute list.
@@ -206,99 +234,6 @@ public interface SimpleIDLPackage extends EPackage
   int CASE_FEATURE_COUNT = 3;
 
   /**
-   * The meta object id for the '{@link org.osate.simpleidl.simpleIDL.impl.TypeImpl <em>Type</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.osate.simpleidl.simpleIDL.impl.TypeImpl
-   * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getType()
-   * @generated
-   */
-  int TYPE = 4;
-
-  /**
-   * The number of structural features of the '<em>Type</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TYPE_FEATURE_COUNT = 0;
-
-  /**
-   * The meta object id for the '{@link org.osate.simpleidl.simpleIDL.impl.ModuleImpl <em>Module</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.osate.simpleidl.simpleIDL.impl.ModuleImpl
-   * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getModule()
-   * @generated
-   */
-  int MODULE = 5;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MODULE__NAME = DEFINITION_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Definitions</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MODULE__DEFINITIONS = DEFINITION_FEATURE_COUNT + 1;
-
-  /**
-   * The number of structural features of the '<em>Module</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MODULE_FEATURE_COUNT = DEFINITION_FEATURE_COUNT + 2;
-
-  /**
-   * The meta object id for the '{@link org.osate.simpleidl.simpleIDL.impl.StructImpl <em>Struct</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.osate.simpleidl.simpleIDL.impl.StructImpl
-   * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getStruct()
-   * @generated
-   */
-  int STRUCT = 6;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STRUCT__NAME = DEFINITION_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Members</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STRUCT__MEMBERS = DEFINITION_FEATURE_COUNT + 1;
-
-  /**
-   * The number of structural features of the '<em>Struct</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STRUCT_FEATURE_COUNT = DEFINITION_FEATURE_COUNT + 2;
-
-  /**
    * The meta object id for the '{@link org.osate.simpleidl.simpleIDL.impl.StructForwardImpl <em>Struct Forward</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -306,7 +241,7 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getStructForward()
    * @generated
    */
-  int STRUCT_FORWARD = 7;
+  int STRUCT_FORWARD = 5;
 
   /**
    * The feature id for the '<em><b>Struct</b></em>' reference.
@@ -327,6 +262,80 @@ public interface SimpleIDLPackage extends EPackage
   int STRUCT_FORWARD_FEATURE_COUNT = DEFINITION_FEATURE_COUNT + 1;
 
   /**
+   * The meta object id for the '{@link org.osate.simpleidl.simpleIDL.impl.ModuleImpl <em>Module</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.osate.simpleidl.simpleIDL.impl.ModuleImpl
+   * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getModule()
+   * @generated
+   */
+  int MODULE = 6;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MODULE__NAME = NAMED_DEFINITION__NAME;
+
+  /**
+   * The feature id for the '<em><b>Definitions</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MODULE__DEFINITIONS = NAMED_DEFINITION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Module</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MODULE_FEATURE_COUNT = NAMED_DEFINITION_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.osate.simpleidl.simpleIDL.impl.StructImpl <em>Struct</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.osate.simpleidl.simpleIDL.impl.StructImpl
+   * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getStruct()
+   * @generated
+   */
+  int STRUCT = 7;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STRUCT__NAME = NAMED_DEFINITION__NAME;
+
+  /**
+   * The feature id for the '<em><b>Members</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STRUCT__MEMBERS = NAMED_DEFINITION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Struct</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STRUCT_FEATURE_COUNT = NAMED_DEFINITION_FEATURE_COUNT + 1;
+
+  /**
    * The meta object id for the '{@link org.osate.simpleidl.simpleIDL.impl.UnionImpl <em>Union</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -343,7 +352,7 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int UNION__NAME = DEFINITION_FEATURE_COUNT + 0;
+  int UNION__NAME = NAMED_DEFINITION__NAME;
 
   /**
    * The feature id for the '<em><b>Cases</b></em>' containment reference list.
@@ -352,7 +361,7 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int UNION__CASES = DEFINITION_FEATURE_COUNT + 1;
+  int UNION__CASES = NAMED_DEFINITION_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Union</em>' class.
@@ -361,7 +370,7 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int UNION_FEATURE_COUNT = DEFINITION_FEATURE_COUNT + 2;
+  int UNION_FEATURE_COUNT = NAMED_DEFINITION_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link org.osate.simpleidl.simpleIDL.impl.EnumImpl <em>Enum</em>}' class.
@@ -380,7 +389,7 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ENUM__NAME = DEFINITION_FEATURE_COUNT + 0;
+  int ENUM__NAME = NAMED_DEFINITION__NAME;
 
   /**
    * The feature id for the '<em><b>Literals</b></em>' attribute list.
@@ -389,7 +398,7 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ENUM__LITERALS = DEFINITION_FEATURE_COUNT + 1;
+  int ENUM__LITERALS = NAMED_DEFINITION_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Enum</em>' class.
@@ -398,44 +407,7 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ENUM_FEATURE_COUNT = DEFINITION_FEATURE_COUNT + 2;
-
-  /**
-   * The meta object id for the '{@link org.osate.simpleidl.simpleIDL.impl.TypedefImpl <em>Typedef</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.osate.simpleidl.simpleIDL.impl.TypedefImpl
-   * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getTypedef()
-   * @generated
-   */
-  int TYPEDEF = 10;
-
-  /**
-   * The feature id for the '<em><b>Type</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TYPEDEF__TYPE = DEFINITION_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TYPEDEF__NAME = DEFINITION_FEATURE_COUNT + 1;
-
-  /**
-   * The number of structural features of the '<em>Typedef</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TYPEDEF_FEATURE_COUNT = DEFINITION_FEATURE_COUNT + 2;
+  int ENUM_FEATURE_COUNT = NAMED_DEFINITION_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link org.osate.simpleidl.simpleIDL.impl.ArrayTypeImpl <em>Array Type</em>}' class.
@@ -445,16 +417,7 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getArrayType()
    * @generated
    */
-  int ARRAY_TYPE = 11;
-
-  /**
-   * The feature id for the '<em><b>Type</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ARRAY_TYPE__TYPE = DEFINITION_FEATURE_COUNT + 0;
+  int ARRAY_TYPE = 10;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -463,7 +426,16 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ARRAY_TYPE__NAME = DEFINITION_FEATURE_COUNT + 1;
+  int ARRAY_TYPE__NAME = NAMED_DEFINITION__NAME;
+
+  /**
+   * The feature id for the '<em><b>Type</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ARRAY_TYPE__TYPE = NAMED_DEFINITION_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Size</b></em>' attribute.
@@ -472,7 +444,7 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ARRAY_TYPE__SIZE = DEFINITION_FEATURE_COUNT + 2;
+  int ARRAY_TYPE__SIZE = NAMED_DEFINITION_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Array Type</em>' class.
@@ -481,7 +453,7 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ARRAY_TYPE_FEATURE_COUNT = DEFINITION_FEATURE_COUNT + 3;
+  int ARRAY_TYPE_FEATURE_COUNT = NAMED_DEFINITION_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link org.osate.simpleidl.simpleIDL.impl.SignedShortIntImpl <em>Signed Short Int</em>}' class.
@@ -491,7 +463,16 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getSignedShortInt()
    * @generated
    */
-  int SIGNED_SHORT_INT = 12;
+  int SIGNED_SHORT_INT = 11;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SIGNED_SHORT_INT__NAME = NAMED_DEFINITION__NAME;
 
   /**
    * The number of structural features of the '<em>Signed Short Int</em>' class.
@@ -500,7 +481,7 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SIGNED_SHORT_INT_FEATURE_COUNT = TYPE_FEATURE_COUNT + 0;
+  int SIGNED_SHORT_INT_FEATURE_COUNT = NAMED_DEFINITION_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.osate.simpleidl.simpleIDL.impl.SignedLongIntImpl <em>Signed Long Int</em>}' class.
@@ -510,7 +491,16 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getSignedLongInt()
    * @generated
    */
-  int SIGNED_LONG_INT = 13;
+  int SIGNED_LONG_INT = 12;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SIGNED_LONG_INT__NAME = NAMED_DEFINITION__NAME;
 
   /**
    * The number of structural features of the '<em>Signed Long Int</em>' class.
@@ -519,7 +509,7 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SIGNED_LONG_INT_FEATURE_COUNT = TYPE_FEATURE_COUNT + 0;
+  int SIGNED_LONG_INT_FEATURE_COUNT = NAMED_DEFINITION_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.osate.simpleidl.simpleIDL.impl.SignedLongLongIntImpl <em>Signed Long Long Int</em>}' class.
@@ -529,7 +519,16 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getSignedLongLongInt()
    * @generated
    */
-  int SIGNED_LONG_LONG_INT = 14;
+  int SIGNED_LONG_LONG_INT = 13;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SIGNED_LONG_LONG_INT__NAME = NAMED_DEFINITION__NAME;
 
   /**
    * The number of structural features of the '<em>Signed Long Long Int</em>' class.
@@ -538,7 +537,7 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SIGNED_LONG_LONG_INT_FEATURE_COUNT = TYPE_FEATURE_COUNT + 0;
+  int SIGNED_LONG_LONG_INT_FEATURE_COUNT = NAMED_DEFINITION_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.osate.simpleidl.simpleIDL.impl.UnsignedShortIntImpl <em>Unsigned Short Int</em>}' class.
@@ -548,7 +547,16 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getUnsignedShortInt()
    * @generated
    */
-  int UNSIGNED_SHORT_INT = 15;
+  int UNSIGNED_SHORT_INT = 14;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UNSIGNED_SHORT_INT__NAME = NAMED_DEFINITION__NAME;
 
   /**
    * The number of structural features of the '<em>Unsigned Short Int</em>' class.
@@ -557,7 +565,7 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int UNSIGNED_SHORT_INT_FEATURE_COUNT = TYPE_FEATURE_COUNT + 0;
+  int UNSIGNED_SHORT_INT_FEATURE_COUNT = NAMED_DEFINITION_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.osate.simpleidl.simpleIDL.impl.UnsignedLongIntImpl <em>Unsigned Long Int</em>}' class.
@@ -567,7 +575,16 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getUnsignedLongInt()
    * @generated
    */
-  int UNSIGNED_LONG_INT = 16;
+  int UNSIGNED_LONG_INT = 15;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UNSIGNED_LONG_INT__NAME = NAMED_DEFINITION__NAME;
 
   /**
    * The number of structural features of the '<em>Unsigned Long Int</em>' class.
@@ -576,7 +593,7 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int UNSIGNED_LONG_INT_FEATURE_COUNT = TYPE_FEATURE_COUNT + 0;
+  int UNSIGNED_LONG_INT_FEATURE_COUNT = NAMED_DEFINITION_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.osate.simpleidl.simpleIDL.impl.UnsignedLongLongIntImpl <em>Unsigned Long Long Int</em>}' class.
@@ -586,7 +603,16 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getUnsignedLongLongInt()
    * @generated
    */
-  int UNSIGNED_LONG_LONG_INT = 17;
+  int UNSIGNED_LONG_LONG_INT = 16;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UNSIGNED_LONG_LONG_INT__NAME = NAMED_DEFINITION__NAME;
 
   /**
    * The number of structural features of the '<em>Unsigned Long Long Int</em>' class.
@@ -595,7 +621,7 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int UNSIGNED_LONG_LONG_INT_FEATURE_COUNT = TYPE_FEATURE_COUNT + 0;
+  int UNSIGNED_LONG_LONG_INT_FEATURE_COUNT = NAMED_DEFINITION_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.osate.simpleidl.simpleIDL.impl.FloatTypeImpl <em>Float Type</em>}' class.
@@ -605,7 +631,16 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getFloatType()
    * @generated
    */
-  int FLOAT_TYPE = 18;
+  int FLOAT_TYPE = 17;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FLOAT_TYPE__NAME = NAMED_DEFINITION__NAME;
 
   /**
    * The number of structural features of the '<em>Float Type</em>' class.
@@ -614,7 +649,7 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int FLOAT_TYPE_FEATURE_COUNT = TYPE_FEATURE_COUNT + 0;
+  int FLOAT_TYPE_FEATURE_COUNT = NAMED_DEFINITION_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.osate.simpleidl.simpleIDL.impl.DoubleTypeImpl <em>Double Type</em>}' class.
@@ -624,7 +659,16 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getDoubleType()
    * @generated
    */
-  int DOUBLE_TYPE = 19;
+  int DOUBLE_TYPE = 18;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DOUBLE_TYPE__NAME = NAMED_DEFINITION__NAME;
 
   /**
    * The number of structural features of the '<em>Double Type</em>' class.
@@ -633,7 +677,7 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int DOUBLE_TYPE_FEATURE_COUNT = TYPE_FEATURE_COUNT + 0;
+  int DOUBLE_TYPE_FEATURE_COUNT = NAMED_DEFINITION_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.osate.simpleidl.simpleIDL.impl.LongDoubleTypeImpl <em>Long Double Type</em>}' class.
@@ -643,7 +687,16 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getLongDoubleType()
    * @generated
    */
-  int LONG_DOUBLE_TYPE = 20;
+  int LONG_DOUBLE_TYPE = 19;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LONG_DOUBLE_TYPE__NAME = NAMED_DEFINITION__NAME;
 
   /**
    * The number of structural features of the '<em>Long Double Type</em>' class.
@@ -652,7 +705,7 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LONG_DOUBLE_TYPE_FEATURE_COUNT = TYPE_FEATURE_COUNT + 0;
+  int LONG_DOUBLE_TYPE_FEATURE_COUNT = NAMED_DEFINITION_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.osate.simpleidl.simpleIDL.impl.CharTypeImpl <em>Char Type</em>}' class.
@@ -662,7 +715,16 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getCharType()
    * @generated
    */
-  int CHAR_TYPE = 21;
+  int CHAR_TYPE = 20;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CHAR_TYPE__NAME = NAMED_DEFINITION__NAME;
 
   /**
    * The number of structural features of the '<em>Char Type</em>' class.
@@ -671,7 +733,7 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CHAR_TYPE_FEATURE_COUNT = TYPE_FEATURE_COUNT + 0;
+  int CHAR_TYPE_FEATURE_COUNT = NAMED_DEFINITION_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.osate.simpleidl.simpleIDL.impl.WideCharTypeImpl <em>Wide Char Type</em>}' class.
@@ -681,7 +743,16 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getWideCharType()
    * @generated
    */
-  int WIDE_CHAR_TYPE = 22;
+  int WIDE_CHAR_TYPE = 21;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int WIDE_CHAR_TYPE__NAME = NAMED_DEFINITION__NAME;
 
   /**
    * The number of structural features of the '<em>Wide Char Type</em>' class.
@@ -690,7 +761,7 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int WIDE_CHAR_TYPE_FEATURE_COUNT = TYPE_FEATURE_COUNT + 0;
+  int WIDE_CHAR_TYPE_FEATURE_COUNT = NAMED_DEFINITION_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.osate.simpleidl.simpleIDL.impl.BooleanTypeImpl <em>Boolean Type</em>}' class.
@@ -700,7 +771,16 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getBooleanType()
    * @generated
    */
-  int BOOLEAN_TYPE = 23;
+  int BOOLEAN_TYPE = 22;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BOOLEAN_TYPE__NAME = NAMED_DEFINITION__NAME;
 
   /**
    * The number of structural features of the '<em>Boolean Type</em>' class.
@@ -709,7 +789,7 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int BOOLEAN_TYPE_FEATURE_COUNT = TYPE_FEATURE_COUNT + 0;
+  int BOOLEAN_TYPE_FEATURE_COUNT = NAMED_DEFINITION_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.osate.simpleidl.simpleIDL.impl.OctetTypeImpl <em>Octet Type</em>}' class.
@@ -719,7 +799,16 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getOctetType()
    * @generated
    */
-  int OCTET_TYPE = 24;
+  int OCTET_TYPE = 23;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OCTET_TYPE__NAME = NAMED_DEFINITION__NAME;
 
   /**
    * The number of structural features of the '<em>Octet Type</em>' class.
@@ -728,7 +817,7 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int OCTET_TYPE_FEATURE_COUNT = TYPE_FEATURE_COUNT + 0;
+  int OCTET_TYPE_FEATURE_COUNT = NAMED_DEFINITION_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.osate.simpleidl.simpleIDL.impl.ReferencedTypeImpl <em>Referenced Type</em>}' class.
@@ -738,7 +827,16 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getReferencedType()
    * @generated
    */
-  int REFERENCED_TYPE = 25;
+  int REFERENCED_TYPE = 24;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REFERENCED_TYPE__NAME = NAMED_DEFINITION__NAME;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' reference.
@@ -747,7 +845,7 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REFERENCED_TYPE__TYPE = TYPE_FEATURE_COUNT + 0;
+  int REFERENCED_TYPE__TYPE = NAMED_DEFINITION_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Referenced Type</em>' class.
@@ -756,7 +854,7 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REFERENCED_TYPE_FEATURE_COUNT = TYPE_FEATURE_COUNT + 1;
+  int REFERENCED_TYPE_FEATURE_COUNT = NAMED_DEFINITION_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link org.osate.simpleidl.simpleIDL.impl.BoundedSequenceImpl <em>Bounded Sequence</em>}' class.
@@ -766,7 +864,16 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getBoundedSequence()
    * @generated
    */
-  int BOUNDED_SEQUENCE = 26;
+  int BOUNDED_SEQUENCE = 25;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BOUNDED_SEQUENCE__NAME = NAMED_DEFINITION__NAME;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' reference.
@@ -775,7 +882,7 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int BOUNDED_SEQUENCE__TYPE = TYPE_FEATURE_COUNT + 0;
+  int BOUNDED_SEQUENCE__TYPE = NAMED_DEFINITION_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Size</b></em>' attribute.
@@ -784,7 +891,7 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int BOUNDED_SEQUENCE__SIZE = TYPE_FEATURE_COUNT + 1;
+  int BOUNDED_SEQUENCE__SIZE = NAMED_DEFINITION_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Bounded Sequence</em>' class.
@@ -793,7 +900,7 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int BOUNDED_SEQUENCE_FEATURE_COUNT = TYPE_FEATURE_COUNT + 2;
+  int BOUNDED_SEQUENCE_FEATURE_COUNT = NAMED_DEFINITION_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link org.osate.simpleidl.simpleIDL.impl.UnboundedSequenceImpl <em>Unbounded Sequence</em>}' class.
@@ -803,7 +910,16 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getUnboundedSequence()
    * @generated
    */
-  int UNBOUNDED_SEQUENCE = 27;
+  int UNBOUNDED_SEQUENCE = 26;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UNBOUNDED_SEQUENCE__NAME = NAMED_DEFINITION__NAME;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' reference.
@@ -812,7 +928,7 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int UNBOUNDED_SEQUENCE__TYPE = TYPE_FEATURE_COUNT + 0;
+  int UNBOUNDED_SEQUENCE__TYPE = NAMED_DEFINITION_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Unbounded Sequence</em>' class.
@@ -821,7 +937,7 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int UNBOUNDED_SEQUENCE_FEATURE_COUNT = TYPE_FEATURE_COUNT + 1;
+  int UNBOUNDED_SEQUENCE_FEATURE_COUNT = NAMED_DEFINITION_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link org.osate.simpleidl.simpleIDL.impl.BoundedStringImpl <em>Bounded String</em>}' class.
@@ -831,7 +947,16 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getBoundedString()
    * @generated
    */
-  int BOUNDED_STRING = 28;
+  int BOUNDED_STRING = 27;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BOUNDED_STRING__NAME = NAMED_DEFINITION__NAME;
 
   /**
    * The feature id for the '<em><b>Size</b></em>' attribute.
@@ -840,7 +965,7 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int BOUNDED_STRING__SIZE = TYPE_FEATURE_COUNT + 0;
+  int BOUNDED_STRING__SIZE = NAMED_DEFINITION_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Bounded String</em>' class.
@@ -849,7 +974,7 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int BOUNDED_STRING_FEATURE_COUNT = TYPE_FEATURE_COUNT + 1;
+  int BOUNDED_STRING_FEATURE_COUNT = NAMED_DEFINITION_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link org.osate.simpleidl.simpleIDL.impl.UnboundedStringImpl <em>Unbounded String</em>}' class.
@@ -859,7 +984,16 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getUnboundedString()
    * @generated
    */
-  int UNBOUNDED_STRING = 29;
+  int UNBOUNDED_STRING = 28;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UNBOUNDED_STRING__NAME = NAMED_DEFINITION__NAME;
 
   /**
    * The number of structural features of the '<em>Unbounded String</em>' class.
@@ -868,7 +1002,7 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int UNBOUNDED_STRING_FEATURE_COUNT = TYPE_FEATURE_COUNT + 0;
+  int UNBOUNDED_STRING_FEATURE_COUNT = NAMED_DEFINITION_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.osate.simpleidl.simpleIDL.impl.BoundedWideStringImpl <em>Bounded Wide String</em>}' class.
@@ -878,7 +1012,16 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getBoundedWideString()
    * @generated
    */
-  int BOUNDED_WIDE_STRING = 30;
+  int BOUNDED_WIDE_STRING = 29;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BOUNDED_WIDE_STRING__NAME = NAMED_DEFINITION__NAME;
 
   /**
    * The feature id for the '<em><b>Size</b></em>' attribute.
@@ -887,7 +1030,7 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int BOUNDED_WIDE_STRING__SIZE = TYPE_FEATURE_COUNT + 0;
+  int BOUNDED_WIDE_STRING__SIZE = NAMED_DEFINITION_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Bounded Wide String</em>' class.
@@ -896,7 +1039,7 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int BOUNDED_WIDE_STRING_FEATURE_COUNT = TYPE_FEATURE_COUNT + 1;
+  int BOUNDED_WIDE_STRING_FEATURE_COUNT = NAMED_DEFINITION_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link org.osate.simpleidl.simpleIDL.impl.UnboundedWideStringImpl <em>Unbounded Wide String</em>}' class.
@@ -906,7 +1049,16 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getUnboundedWideString()
    * @generated
    */
-  int UNBOUNDED_WIDE_STRING = 31;
+  int UNBOUNDED_WIDE_STRING = 30;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UNBOUNDED_WIDE_STRING__NAME = NAMED_DEFINITION__NAME;
 
   /**
    * The number of structural features of the '<em>Unbounded Wide String</em>' class.
@@ -915,7 +1067,7 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int UNBOUNDED_WIDE_STRING_FEATURE_COUNT = TYPE_FEATURE_COUNT + 0;
+  int UNBOUNDED_WIDE_STRING_FEATURE_COUNT = NAMED_DEFINITION_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.osate.simpleidl.simpleIDL.impl.FixedPtTypeImpl <em>Fixed Pt Type</em>}' class.
@@ -925,7 +1077,16 @@ public interface SimpleIDLPackage extends EPackage
    * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getFixedPtType()
    * @generated
    */
-  int FIXED_PT_TYPE = 32;
+  int FIXED_PT_TYPE = 31;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FIXED_PT_TYPE__NAME = NAMED_DEFINITION__NAME;
 
   /**
    * The feature id for the '<em><b>Total Digits</b></em>' attribute.
@@ -934,7 +1095,7 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int FIXED_PT_TYPE__TOTAL_DIGITS = TYPE_FEATURE_COUNT + 0;
+  int FIXED_PT_TYPE__TOTAL_DIGITS = NAMED_DEFINITION_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Fractional Digits</b></em>' attribute.
@@ -943,7 +1104,7 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int FIXED_PT_TYPE__FRACTIONAL_DIGITS = TYPE_FEATURE_COUNT + 1;
+  int FIXED_PT_TYPE__FRACTIONAL_DIGITS = NAMED_DEFINITION_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Fixed Pt Type</em>' class.
@@ -952,7 +1113,7 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int FIXED_PT_TYPE_FEATURE_COUNT = TYPE_FEATURE_COUNT + 2;
+  int FIXED_PT_TYPE_FEATURE_COUNT = NAMED_DEFINITION_FEATURE_COUNT + 2;
 
 
   /**
@@ -985,6 +1146,27 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    */
   EClass getDefinition();
+
+  /**
+   * Returns the meta object for class '{@link org.osate.simpleidl.simpleIDL.NamedDefinition <em>Named Definition</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Named Definition</em>'.
+   * @see org.osate.simpleidl.simpleIDL.NamedDefinition
+   * @generated
+   */
+  EClass getNamedDefinition();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.osate.simpleidl.simpleIDL.NamedDefinition#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.osate.simpleidl.simpleIDL.NamedDefinition#getName()
+   * @see #getNamedDefinition()
+   * @generated
+   */
+  EAttribute getNamedDefinition_Name();
 
   /**
    * Returns the meta object for class '{@link org.osate.simpleidl.simpleIDL.Member <em>Member</em>}'.
@@ -1062,14 +1244,25 @@ public interface SimpleIDLPackage extends EPackage
   EAttribute getCase_Name();
 
   /**
-   * Returns the meta object for class '{@link org.osate.simpleidl.simpleIDL.Type <em>Type</em>}'.
+   * Returns the meta object for class '{@link org.osate.simpleidl.simpleIDL.StructForward <em>Struct Forward</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Type</em>'.
-   * @see org.osate.simpleidl.simpleIDL.Type
+   * @return the meta object for class '<em>Struct Forward</em>'.
+   * @see org.osate.simpleidl.simpleIDL.StructForward
    * @generated
    */
-  EClass getType();
+  EClass getStructForward();
+
+  /**
+   * Returns the meta object for the reference '{@link org.osate.simpleidl.simpleIDL.StructForward#getStruct <em>Struct</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Struct</em>'.
+   * @see org.osate.simpleidl.simpleIDL.StructForward#getStruct()
+   * @see #getStructForward()
+   * @generated
+   */
+  EReference getStructForward_Struct();
 
   /**
    * Returns the meta object for class '{@link org.osate.simpleidl.simpleIDL.Module <em>Module</em>}'.
@@ -1080,17 +1273,6 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    */
   EClass getModule();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.osate.simpleidl.simpleIDL.Module#getName <em>Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see org.osate.simpleidl.simpleIDL.Module#getName()
-   * @see #getModule()
-   * @generated
-   */
-  EAttribute getModule_Name();
 
   /**
    * Returns the meta object for the containment reference list '{@link org.osate.simpleidl.simpleIDL.Module#getDefinitions <em>Definitions</em>}'.
@@ -1114,17 +1296,6 @@ public interface SimpleIDLPackage extends EPackage
   EClass getStruct();
 
   /**
-   * Returns the meta object for the attribute '{@link org.osate.simpleidl.simpleIDL.Struct#getName <em>Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see org.osate.simpleidl.simpleIDL.Struct#getName()
-   * @see #getStruct()
-   * @generated
-   */
-  EAttribute getStruct_Name();
-
-  /**
    * Returns the meta object for the containment reference list '{@link org.osate.simpleidl.simpleIDL.Struct#getMembers <em>Members</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1136,27 +1307,6 @@ public interface SimpleIDLPackage extends EPackage
   EReference getStruct_Members();
 
   /**
-   * Returns the meta object for class '{@link org.osate.simpleidl.simpleIDL.StructForward <em>Struct Forward</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Struct Forward</em>'.
-   * @see org.osate.simpleidl.simpleIDL.StructForward
-   * @generated
-   */
-  EClass getStructForward();
-
-  /**
-   * Returns the meta object for the reference '{@link org.osate.simpleidl.simpleIDL.StructForward#getStruct <em>Struct</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Struct</em>'.
-   * @see org.osate.simpleidl.simpleIDL.StructForward#getStruct()
-   * @see #getStructForward()
-   * @generated
-   */
-  EReference getStructForward_Struct();
-
-  /**
    * Returns the meta object for class '{@link org.osate.simpleidl.simpleIDL.Union <em>Union</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1165,17 +1315,6 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    */
   EClass getUnion();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.osate.simpleidl.simpleIDL.Union#getName <em>Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see org.osate.simpleidl.simpleIDL.Union#getName()
-   * @see #getUnion()
-   * @generated
-   */
-  EAttribute getUnion_Name();
 
   /**
    * Returns the meta object for the containment reference list '{@link org.osate.simpleidl.simpleIDL.Union#getCases <em>Cases</em>}'.
@@ -1199,17 +1338,6 @@ public interface SimpleIDLPackage extends EPackage
   EClass getEnum();
 
   /**
-   * Returns the meta object for the attribute '{@link org.osate.simpleidl.simpleIDL.Enum#getName <em>Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see org.osate.simpleidl.simpleIDL.Enum#getName()
-   * @see #getEnum()
-   * @generated
-   */
-  EAttribute getEnum_Name();
-
-  /**
    * Returns the meta object for the attribute list '{@link org.osate.simpleidl.simpleIDL.Enum#getLiterals <em>Literals</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1219,38 +1347,6 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    */
   EAttribute getEnum_Literals();
-
-  /**
-   * Returns the meta object for class '{@link org.osate.simpleidl.simpleIDL.Typedef <em>Typedef</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Typedef</em>'.
-   * @see org.osate.simpleidl.simpleIDL.Typedef
-   * @generated
-   */
-  EClass getTypedef();
-
-  /**
-   * Returns the meta object for the containment reference '{@link org.osate.simpleidl.simpleIDL.Typedef#getType <em>Type</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Type</em>'.
-   * @see org.osate.simpleidl.simpleIDL.Typedef#getType()
-   * @see #getTypedef()
-   * @generated
-   */
-  EReference getTypedef_Type();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.osate.simpleidl.simpleIDL.Typedef#getName <em>Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see org.osate.simpleidl.simpleIDL.Typedef#getName()
-   * @see #getTypedef()
-   * @generated
-   */
-  EAttribute getTypedef_Name();
 
   /**
    * Returns the meta object for class '{@link org.osate.simpleidl.simpleIDL.ArrayType <em>Array Type</em>}'.
@@ -1272,17 +1368,6 @@ public interface SimpleIDLPackage extends EPackage
    * @generated
    */
   EReference getArrayType_Type();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.osate.simpleidl.simpleIDL.ArrayType#getName <em>Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see org.osate.simpleidl.simpleIDL.ArrayType#getName()
-   * @see #getArrayType()
-   * @generated
-   */
-  EAttribute getArrayType_Name();
 
   /**
    * Returns the meta object for the attribute '{@link org.osate.simpleidl.simpleIDL.ArrayType#getSize <em>Size</em>}'.
@@ -1645,6 +1730,24 @@ public interface SimpleIDLPackage extends EPackage
     EClass DEFINITION = eINSTANCE.getDefinition();
 
     /**
+     * The meta object literal for the '{@link org.osate.simpleidl.simpleIDL.impl.NamedDefinitionImpl <em>Named Definition</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.osate.simpleidl.simpleIDL.impl.NamedDefinitionImpl
+     * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getNamedDefinition()
+     * @generated
+     */
+    EClass NAMED_DEFINITION = eINSTANCE.getNamedDefinition();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute NAMED_DEFINITION__NAME = eINSTANCE.getNamedDefinition_Name();
+
+    /**
      * The meta object literal for the '{@link org.osate.simpleidl.simpleIDL.impl.MemberImpl <em>Member</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1705,14 +1808,22 @@ public interface SimpleIDLPackage extends EPackage
     EAttribute CASE__NAME = eINSTANCE.getCase_Name();
 
     /**
-     * The meta object literal for the '{@link org.osate.simpleidl.simpleIDL.impl.TypeImpl <em>Type</em>}' class.
+     * The meta object literal for the '{@link org.osate.simpleidl.simpleIDL.impl.StructForwardImpl <em>Struct Forward</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.osate.simpleidl.simpleIDL.impl.TypeImpl
-     * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getType()
+     * @see org.osate.simpleidl.simpleIDL.impl.StructForwardImpl
+     * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getStructForward()
      * @generated
      */
-    EClass TYPE = eINSTANCE.getType();
+    EClass STRUCT_FORWARD = eINSTANCE.getStructForward();
+
+    /**
+     * The meta object literal for the '<em><b>Struct</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference STRUCT_FORWARD__STRUCT = eINSTANCE.getStructForward_Struct();
 
     /**
      * The meta object literal for the '{@link org.osate.simpleidl.simpleIDL.impl.ModuleImpl <em>Module</em>}' class.
@@ -1723,14 +1834,6 @@ public interface SimpleIDLPackage extends EPackage
      * @generated
      */
     EClass MODULE = eINSTANCE.getModule();
-
-    /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute MODULE__NAME = eINSTANCE.getModule_Name();
 
     /**
      * The meta object literal for the '<em><b>Definitions</b></em>' containment reference list feature.
@@ -1751,38 +1854,12 @@ public interface SimpleIDLPackage extends EPackage
     EClass STRUCT = eINSTANCE.getStruct();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute STRUCT__NAME = eINSTANCE.getStruct_Name();
-
-    /**
      * The meta object literal for the '<em><b>Members</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     EReference STRUCT__MEMBERS = eINSTANCE.getStruct_Members();
-
-    /**
-     * The meta object literal for the '{@link org.osate.simpleidl.simpleIDL.impl.StructForwardImpl <em>Struct Forward</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.osate.simpleidl.simpleIDL.impl.StructForwardImpl
-     * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getStructForward()
-     * @generated
-     */
-    EClass STRUCT_FORWARD = eINSTANCE.getStructForward();
-
-    /**
-     * The meta object literal for the '<em><b>Struct</b></em>' reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference STRUCT_FORWARD__STRUCT = eINSTANCE.getStructForward_Struct();
 
     /**
      * The meta object literal for the '{@link org.osate.simpleidl.simpleIDL.impl.UnionImpl <em>Union</em>}' class.
@@ -1793,14 +1870,6 @@ public interface SimpleIDLPackage extends EPackage
      * @generated
      */
     EClass UNION = eINSTANCE.getUnion();
-
-    /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute UNION__NAME = eINSTANCE.getUnion_Name();
 
     /**
      * The meta object literal for the '<em><b>Cases</b></em>' containment reference list feature.
@@ -1821,46 +1890,12 @@ public interface SimpleIDLPackage extends EPackage
     EClass ENUM = eINSTANCE.getEnum();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute ENUM__NAME = eINSTANCE.getEnum_Name();
-
-    /**
      * The meta object literal for the '<em><b>Literals</b></em>' attribute list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     EAttribute ENUM__LITERALS = eINSTANCE.getEnum_Literals();
-
-    /**
-     * The meta object literal for the '{@link org.osate.simpleidl.simpleIDL.impl.TypedefImpl <em>Typedef</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.osate.simpleidl.simpleIDL.impl.TypedefImpl
-     * @see org.osate.simpleidl.simpleIDL.impl.SimpleIDLPackageImpl#getTypedef()
-     * @generated
-     */
-    EClass TYPEDEF = eINSTANCE.getTypedef();
-
-    /**
-     * The meta object literal for the '<em><b>Type</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference TYPEDEF__TYPE = eINSTANCE.getTypedef_Type();
-
-    /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute TYPEDEF__NAME = eINSTANCE.getTypedef_Name();
 
     /**
      * The meta object literal for the '{@link org.osate.simpleidl.simpleIDL.impl.ArrayTypeImpl <em>Array Type</em>}' class.
@@ -1879,14 +1914,6 @@ public interface SimpleIDLPackage extends EPackage
      * @generated
      */
     EReference ARRAY_TYPE__TYPE = eINSTANCE.getArrayType_Type();
-
-    /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute ARRAY_TYPE__NAME = eINSTANCE.getArrayType_Name();
 
     /**
      * The meta object literal for the '<em><b>Size</b></em>' attribute feature.

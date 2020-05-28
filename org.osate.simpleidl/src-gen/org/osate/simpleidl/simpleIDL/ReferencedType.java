@@ -38,19 +38,19 @@ package org.osate.simpleidl.simpleIDL;
  * @model
  * @generated
  */
-public interface ReferencedType extends Type
+public interface ReferencedType extends NamedDefinition
 {
   /**
    * Returns the value of the '<em><b>Type</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the value of the '<em>Type</em>' reference.
-   * @see #setType(Definition)
+   * @see #setType(NamedDefinition)
    * @see org.osate.simpleidl.simpleIDL.SimpleIDLPackage#getReferencedType_Type()
    * @model
    * @generated
    */
-  Definition getType();
+  NamedDefinition getType();
 
   /**
    * Sets the value of the '{@link org.osate.simpleidl.simpleIDL.ReferencedType#getType <em>Type</em>}' reference.
@@ -60,6 +60,6 @@ public interface ReferencedType extends Type
    * @see #getType()
    * @generated
    */
-  void setType(Definition value);
+  void setType(NamedDefinition value);
 
 } // ReferencedType

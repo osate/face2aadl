@@ -36,7 +36,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeEList;
 
 import org.osate.simpleidl.simpleIDL.Case;
-import org.osate.simpleidl.simpleIDL.Definition;
+import org.osate.simpleidl.simpleIDL.NamedDefinition;
 import org.osate.simpleidl.simpleIDL.SimpleIDLPackage;
 
 /**
@@ -74,7 +74,7 @@ public class CaseImpl extends MinimalEObjectImpl.Container implements Case
    * @generated
    * @ordered
    */
-  protected Definition type;
+  protected NamedDefinition type;
 
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -138,12 +138,12 @@ public class CaseImpl extends MinimalEObjectImpl.Container implements Case
    * @generated
    */
   @Override
-  public Definition getType()
+  public NamedDefinition getType()
   {
     if (type != null && type.eIsProxy())
     {
       InternalEObject oldType = (InternalEObject)type;
-      type = (Definition)eResolveProxy(oldType);
+      type = (NamedDefinition)eResolveProxy(oldType);
       if (type != oldType)
       {
         if (eNotificationRequired())
@@ -158,7 +158,7 @@ public class CaseImpl extends MinimalEObjectImpl.Container implements Case
    * <!-- end-user-doc -->
    * @generated
    */
-  public Definition basicGetType()
+  public NamedDefinition basicGetType()
   {
     return type;
   }
@@ -169,9 +169,9 @@ public class CaseImpl extends MinimalEObjectImpl.Container implements Case
    * @generated
    */
   @Override
-  public void setType(Definition newType)
+  public void setType(NamedDefinition newType)
   {
-    Definition oldType = type;
+    NamedDefinition oldType = type;
     type = newType;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, SimpleIDLPackage.CASE__TYPE, oldType, type));
@@ -239,7 +239,7 @@ public class CaseImpl extends MinimalEObjectImpl.Container implements Case
         getLabels().addAll((Collection<? extends Integer>)newValue);
         return;
       case SimpleIDLPackage.CASE__TYPE:
-        setType((Definition)newValue);
+        setType((NamedDefinition)newValue);
         return;
       case SimpleIDLPackage.CASE__NAME:
         setName((String)newValue);
@@ -262,7 +262,7 @@ public class CaseImpl extends MinimalEObjectImpl.Container implements Case
         getLabels().clear();
         return;
       case SimpleIDLPackage.CASE__TYPE:
-        setType((Definition)null);
+        setType((NamedDefinition)null);
         return;
       case SimpleIDLPackage.CASE__NAME:
         setName(NAME_EDEFAULT);

@@ -62,12 +62,12 @@ public interface Case extends EObject
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the value of the '<em>Type</em>' reference.
-   * @see #setType(Definition)
+   * @see #setType(NamedDefinition)
    * @see org.osate.simpleidl.simpleIDL.SimpleIDLPackage#getCase_Type()
    * @model
    * @generated
    */
-  Definition getType();
+  NamedDefinition getType();
 
   /**
    * Sets the value of the '{@link org.osate.simpleidl.simpleIDL.Case#getType <em>Type</em>}' reference.
@@ -77,7 +77,7 @@ public interface Case extends EObject
    * @see #getType()
    * @generated
    */
-  void setType(Definition value);
+  void setType(NamedDefinition value);
 
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.

@@ -29,7 +29,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.osate.simpleidl.simpleIDL.ArrayType;
-import org.osate.simpleidl.simpleIDL.Definition;
+import org.osate.simpleidl.simpleIDL.NamedDefinition;
 import org.osate.simpleidl.simpleIDL.SimpleIDLPackage;
 
 /**
@@ -41,13 +41,12 @@ import org.osate.simpleidl.simpleIDL.SimpleIDLPackage;
  * </p>
  * <ul>
  *   <li>{@link org.osate.simpleidl.simpleIDL.impl.ArrayTypeImpl#getType <em>Type</em>}</li>
- *   <li>{@link org.osate.simpleidl.simpleIDL.impl.ArrayTypeImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.osate.simpleidl.simpleIDL.impl.ArrayTypeImpl#getSize <em>Size</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class ArrayTypeImpl extends DefinitionImpl implements ArrayType
+public class ArrayTypeImpl extends NamedDefinitionImpl implements ArrayType
 {
   /**
    * The cached value of the '{@link #getType() <em>Type</em>}' reference.
@@ -57,27 +56,7 @@ public class ArrayTypeImpl extends DefinitionImpl implements ArrayType
    * @generated
    * @ordered
    */
-  protected Definition type;
-
-  /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected static final String NAME_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected String name = NAME_EDEFAULT;
+  protected NamedDefinition type;
 
   /**
    * The default value of the '{@link #getSize() <em>Size</em>}' attribute.
@@ -126,12 +105,12 @@ public class ArrayTypeImpl extends DefinitionImpl implements ArrayType
    * @generated
    */
   @Override
-  public Definition getType()
+  public NamedDefinition getType()
   {
     if (type != null && type.eIsProxy())
     {
       InternalEObject oldType = (InternalEObject)type;
-      type = (Definition)eResolveProxy(oldType);
+      type = (NamedDefinition)eResolveProxy(oldType);
       if (type != oldType)
       {
         if (eNotificationRequired())
@@ -146,7 +125,7 @@ public class ArrayTypeImpl extends DefinitionImpl implements ArrayType
    * <!-- end-user-doc -->
    * @generated
    */
-  public Definition basicGetType()
+  public NamedDefinition basicGetType()
   {
     return type;
   }
@@ -157,37 +136,12 @@ public class ArrayTypeImpl extends DefinitionImpl implements ArrayType
    * @generated
    */
   @Override
-  public void setType(Definition newType)
+  public void setType(NamedDefinition newType)
   {
-    Definition oldType = type;
+    NamedDefinition oldType = type;
     type = newType;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, SimpleIDLPackage.ARRAY_TYPE__TYPE, oldType, type));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String getName()
-  {
-    return name;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setName(String newName)
-  {
-    String oldName = name;
-    name = newName;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SimpleIDLPackage.ARRAY_TYPE__NAME, oldName, name));
   }
 
   /**
@@ -228,8 +182,6 @@ public class ArrayTypeImpl extends DefinitionImpl implements ArrayType
       case SimpleIDLPackage.ARRAY_TYPE__TYPE:
         if (resolve) return getType();
         return basicGetType();
-      case SimpleIDLPackage.ARRAY_TYPE__NAME:
-        return getName();
       case SimpleIDLPackage.ARRAY_TYPE__SIZE:
         return getSize();
     }
@@ -247,10 +199,7 @@ public class ArrayTypeImpl extends DefinitionImpl implements ArrayType
     switch (featureID)
     {
       case SimpleIDLPackage.ARRAY_TYPE__TYPE:
-        setType((Definition)newValue);
-        return;
-      case SimpleIDLPackage.ARRAY_TYPE__NAME:
-        setName((String)newValue);
+        setType((NamedDefinition)newValue);
         return;
       case SimpleIDLPackage.ARRAY_TYPE__SIZE:
         setSize((Integer)newValue);
@@ -270,10 +219,7 @@ public class ArrayTypeImpl extends DefinitionImpl implements ArrayType
     switch (featureID)
     {
       case SimpleIDLPackage.ARRAY_TYPE__TYPE:
-        setType((Definition)null);
-        return;
-      case SimpleIDLPackage.ARRAY_TYPE__NAME:
-        setName(NAME_EDEFAULT);
+        setType((NamedDefinition)null);
         return;
       case SimpleIDLPackage.ARRAY_TYPE__SIZE:
         setSize(SIZE_EDEFAULT);
@@ -294,8 +240,6 @@ public class ArrayTypeImpl extends DefinitionImpl implements ArrayType
     {
       case SimpleIDLPackage.ARRAY_TYPE__TYPE:
         return type != null;
-      case SimpleIDLPackage.ARRAY_TYPE__NAME:
-        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case SimpleIDLPackage.ARRAY_TYPE__SIZE:
         return size != SIZE_EDEFAULT;
     }
@@ -313,9 +257,7 @@ public class ArrayTypeImpl extends DefinitionImpl implements ArrayType
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (name: ");
-    result.append(name);
-    result.append(", size: ");
+    result.append(" (size: ");
     result.append(size);
     result.append(')');
     return result.toString();

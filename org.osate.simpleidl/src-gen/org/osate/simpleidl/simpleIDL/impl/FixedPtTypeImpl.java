@@ -44,7 +44,7 @@ import org.osate.simpleidl.simpleIDL.SimpleIDLPackage;
  *
  * @generated
  */
-public class FixedPtTypeImpl extends TypeImpl implements FixedPtType
+public class FixedPtTypeImpl extends NamedDefinitionImpl implements FixedPtType
 {
   /**
    * The default value of the '{@link #getTotalDigits() <em>Total Digits</em>}' attribute.

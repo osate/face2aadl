@@ -33,7 +33,7 @@ import org.osate.simpleidl.simpleIDL.SimpleIDLPackage;
  *
  * @generated
  */
-public class FloatTypeImpl extends TypeImpl implements FloatType
+public class FloatTypeImpl extends NamedDefinitionImpl implements FloatType
 {
   /**
    * <!-- begin-user-doc -->

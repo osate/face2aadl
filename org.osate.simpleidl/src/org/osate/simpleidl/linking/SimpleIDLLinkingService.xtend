@@ -55,14 +55,14 @@ class SimpleIDLLinkingService extends DefaultLinkingService {
 					descriptions.getExportedObjects(struct, lookupName, true).head
 				}
 				case arrayType_Type,
-				case member_Type,
-				case case_Type,
 				case referencedType_Type,
 				case boundedSequence_Type,
-				case unboundedSequence_Type: {
+				case unboundedSequence_Type,
+				case member_Type,
+				case case_Type: {
 					if (crossRefString.startsWith("::")) {
 						val lookupName = nameConverter.toQualifiedName(crossRefString.substring(2))
-						descriptions.getExportedObjects(definition, lookupName, true).head
+						descriptions.getExportedObjects(namedDefinition, lookupName, true).head
 					} else {
 						val crossRef = nameConverter.toQualifiedName(crossRefString)
 						val lookupNames = newArrayList
@@ -72,7 +72,7 @@ class SimpleIDLLinkingService extends DefaultLinkingService {
 							module = module.eContainer.getContainerOfType(Module)
 						}
 						lookupNames += crossRef
-						lookupNames.flatMap[descriptions.getExportedObjects(definition, it, true)].head
+						lookupNames.flatMap[descriptions.getExportedObjects(namedDefinition, it, true)].head
 					}
 				}
 				default: null

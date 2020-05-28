@@ -38,7 +38,7 @@ package org.osate.simpleidl.simpleIDL;
  * @model
  * @generated
  */
-public interface BoundedString extends Type
+public interface BoundedString extends NamedDefinition
 {
   /**
    * Returns the value of the '<em><b>Size</b></em>' attribute.

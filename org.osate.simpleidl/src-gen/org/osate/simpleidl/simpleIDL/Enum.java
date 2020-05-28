@@ -32,7 +32,6 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.osate.simpleidl.simpleIDL.Enum#getName <em>Name</em>}</li>
  *   <li>{@link org.osate.simpleidl.simpleIDL.Enum#getLiterals <em>Literals</em>}</li>
  * </ul>
  *
@@ -40,30 +39,8 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface Enum extends Definition
+public interface Enum extends NamedDefinition
 {
-  /**
-   * Returns the value of the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Name</em>' attribute.
-   * @see #setName(String)
-   * @see org.osate.simpleidl.simpleIDL.SimpleIDLPackage#getEnum_Name()
-   * @model
-   * @generated
-   */
-  String getName();
-
-  /**
-   * Sets the value of the '{@link org.osate.simpleidl.simpleIDL.Enum#getName <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Name</em>' attribute.
-   * @see #getName()
-   * @generated
-   */
-  void setName(String value);
-
   /**
    * Returns the value of the '<em><b>Literals</b></em>' attribute list.
    * The list contents are of type {@link java.lang.String}.

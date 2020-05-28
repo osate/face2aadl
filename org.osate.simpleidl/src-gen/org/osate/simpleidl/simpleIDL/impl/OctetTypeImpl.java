@@ -33,7 +33,7 @@ import org.osate.simpleidl.simpleIDL.SimpleIDLPackage;
  *
  * @generated
  */
-public class OctetTypeImpl extends TypeImpl implements OctetType
+public class OctetTypeImpl extends NamedDefinitionImpl implements OctetType
 {
   /**
    * <!-- begin-user-doc -->

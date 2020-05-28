@@ -39,7 +39,7 @@ package org.osate.simpleidl.simpleIDL;
  * @model
  * @generated
  */
-public interface FixedPtType extends Type
+public interface FixedPtType extends NamedDefinition
 {
   /**
    * Returns the value of the '<em><b>Total Digits</b></em>' attribute.

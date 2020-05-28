@@ -39,6 +39,7 @@ import org.osate.simpleidl.simpleIDL.FixedPtType;
 import org.osate.simpleidl.simpleIDL.FloatType;
 import org.osate.simpleidl.simpleIDL.LongDoubleType;
 import org.osate.simpleidl.simpleIDL.Member;
+import org.osate.simpleidl.simpleIDL.NamedDefinition;
 import org.osate.simpleidl.simpleIDL.OctetType;
 import org.osate.simpleidl.simpleIDL.ReferencedType;
 import org.osate.simpleidl.simpleIDL.SignedLongInt;
@@ -48,8 +49,6 @@ import org.osate.simpleidl.simpleIDL.SimpleIDLPackage;
 import org.osate.simpleidl.simpleIDL.Specification;
 import org.osate.simpleidl.simpleIDL.Struct;
 import org.osate.simpleidl.simpleIDL.StructForward;
-import org.osate.simpleidl.simpleIDL.Type;
-import org.osate.simpleidl.simpleIDL.Typedef;
 import org.osate.simpleidl.simpleIDL.UnboundedSequence;
 import org.osate.simpleidl.simpleIDL.UnboundedString;
 import org.osate.simpleidl.simpleIDL.UnboundedWideString;
@@ -136,6 +135,14 @@ public class SimpleIDLSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case SimpleIDLPackage.NAMED_DEFINITION:
+      {
+        NamedDefinition namedDefinition = (NamedDefinition)theEObject;
+        T result = caseNamedDefinition(namedDefinition);
+        if (result == null) result = caseDefinition(namedDefinition);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case SimpleIDLPackage.MEMBER:
       {
         Member member = (Member)theEObject;
@@ -150,29 +157,6 @@ public class SimpleIDLSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case SimpleIDLPackage.TYPE:
-      {
-        Type type = (Type)theEObject;
-        T result = caseType(type);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case SimpleIDLPackage.MODULE:
-      {
-        org.osate.simpleidl.simpleIDL.Module module = (org.osate.simpleidl.simpleIDL.Module)theEObject;
-        T result = caseModule(module);
-        if (result == null) result = caseDefinition(module);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case SimpleIDLPackage.STRUCT:
-      {
-        Struct struct = (Struct)theEObject;
-        T result = caseStruct(struct);
-        if (result == null) result = caseDefinition(struct);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case SimpleIDLPackage.STRUCT_FORWARD:
       {
         StructForward structForward = (StructForward)theEObject;
@@ -181,10 +165,29 @@ public class SimpleIDLSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case SimpleIDLPackage.MODULE:
+      {
+        org.osate.simpleidl.simpleIDL.Module module = (org.osate.simpleidl.simpleIDL.Module)theEObject;
+        T result = caseModule(module);
+        if (result == null) result = caseNamedDefinition(module);
+        if (result == null) result = caseDefinition(module);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SimpleIDLPackage.STRUCT:
+      {
+        Struct struct = (Struct)theEObject;
+        T result = caseStruct(struct);
+        if (result == null) result = caseNamedDefinition(struct);
+        if (result == null) result = caseDefinition(struct);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case SimpleIDLPackage.UNION:
       {
         Union union = (Union)theEObject;
         T result = caseUnion(union);
+        if (result == null) result = caseNamedDefinition(union);
         if (result == null) result = caseDefinition(union);
         if (result == null) result = defaultCase(theEObject);
         return result;
@@ -193,15 +196,8 @@ public class SimpleIDLSwitch<T> extends Switch<T>
       {
         org.osate.simpleidl.simpleIDL.Enum enum_ = (org.osate.simpleidl.simpleIDL.Enum)theEObject;
         T result = caseEnum(enum_);
+        if (result == null) result = caseNamedDefinition(enum_);
         if (result == null) result = caseDefinition(enum_);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case SimpleIDLPackage.TYPEDEF:
-      {
-        Typedef typedef = (Typedef)theEObject;
-        T result = caseTypedef(typedef);
-        if (result == null) result = caseDefinition(typedef);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -209,6 +205,7 @@ public class SimpleIDLSwitch<T> extends Switch<T>
       {
         ArrayType arrayType = (ArrayType)theEObject;
         T result = caseArrayType(arrayType);
+        if (result == null) result = caseNamedDefinition(arrayType);
         if (result == null) result = caseDefinition(arrayType);
         if (result == null) result = defaultCase(theEObject);
         return result;
@@ -217,7 +214,8 @@ public class SimpleIDLSwitch<T> extends Switch<T>
       {
         SignedShortInt signedShortInt = (SignedShortInt)theEObject;
         T result = caseSignedShortInt(signedShortInt);
-        if (result == null) result = caseType(signedShortInt);
+        if (result == null) result = caseNamedDefinition(signedShortInt);
+        if (result == null) result = caseDefinition(signedShortInt);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -225,7 +223,8 @@ public class SimpleIDLSwitch<T> extends Switch<T>
       {
         SignedLongInt signedLongInt = (SignedLongInt)theEObject;
         T result = caseSignedLongInt(signedLongInt);
-        if (result == null) result = caseType(signedLongInt);
+        if (result == null) result = caseNamedDefinition(signedLongInt);
+        if (result == null) result = caseDefinition(signedLongInt);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -233,7 +232,8 @@ public class SimpleIDLSwitch<T> extends Switch<T>
       {
         SignedLongLongInt signedLongLongInt = (SignedLongLongInt)theEObject;
         T result = caseSignedLongLongInt(signedLongLongInt);
-        if (result == null) result = caseType(signedLongLongInt);
+        if (result == null) result = caseNamedDefinition(signedLongLongInt);
+        if (result == null) result = caseDefinition(signedLongLongInt);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -241,7 +241,8 @@ public class SimpleIDLSwitch<T> extends Switch<T>
       {
         UnsignedShortInt unsignedShortInt = (UnsignedShortInt)theEObject;
         T result = caseUnsignedShortInt(unsignedShortInt);
-        if (result == null) result = caseType(unsignedShortInt);
+        if (result == null) result = caseNamedDefinition(unsignedShortInt);
+        if (result == null) result = caseDefinition(unsignedShortInt);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -249,7 +250,8 @@ public class SimpleIDLSwitch<T> extends Switch<T>
       {
         UnsignedLongInt unsignedLongInt = (UnsignedLongInt)theEObject;
         T result = caseUnsignedLongInt(unsignedLongInt);
-        if (result == null) result = caseType(unsignedLongInt);
+        if (result == null) result = caseNamedDefinition(unsignedLongInt);
+        if (result == null) result = caseDefinition(unsignedLongInt);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -257,7 +259,8 @@ public class SimpleIDLSwitch<T> extends Switch<T>
       {
         UnsignedLongLongInt unsignedLongLongInt = (UnsignedLongLongInt)theEObject;
         T result = caseUnsignedLongLongInt(unsignedLongLongInt);
-        if (result == null) result = caseType(unsignedLongLongInt);
+        if (result == null) result = caseNamedDefinition(unsignedLongLongInt);
+        if (result == null) result = caseDefinition(unsignedLongLongInt);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -265,7 +268,8 @@ public class SimpleIDLSwitch<T> extends Switch<T>
       {
         FloatType floatType = (FloatType)theEObject;
         T result = caseFloatType(floatType);
-        if (result == null) result = caseType(floatType);
+        if (result == null) result = caseNamedDefinition(floatType);
+        if (result == null) result = caseDefinition(floatType);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -273,7 +277,8 @@ public class SimpleIDLSwitch<T> extends Switch<T>
       {
         DoubleType doubleType = (DoubleType)theEObject;
         T result = caseDoubleType(doubleType);
-        if (result == null) result = caseType(doubleType);
+        if (result == null) result = caseNamedDefinition(doubleType);
+        if (result == null) result = caseDefinition(doubleType);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -281,7 +286,8 @@ public class SimpleIDLSwitch<T> extends Switch<T>
       {
         LongDoubleType longDoubleType = (LongDoubleType)theEObject;
         T result = caseLongDoubleType(longDoubleType);
-        if (result == null) result = caseType(longDoubleType);
+        if (result == null) result = caseNamedDefinition(longDoubleType);
+        if (result == null) result = caseDefinition(longDoubleType);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -289,7 +295,8 @@ public class SimpleIDLSwitch<T> extends Switch<T>
       {
         CharType charType = (CharType)theEObject;
         T result = caseCharType(charType);
-        if (result == null) result = caseType(charType);
+        if (result == null) result = caseNamedDefinition(charType);
+        if (result == null) result = caseDefinition(charType);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -297,7 +304,8 @@ public class SimpleIDLSwitch<T> extends Switch<T>
       {
         WideCharType wideCharType = (WideCharType)theEObject;
         T result = caseWideCharType(wideCharType);
-        if (result == null) result = caseType(wideCharType);
+        if (result == null) result = caseNamedDefinition(wideCharType);
+        if (result == null) result = caseDefinition(wideCharType);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -305,7 +313,8 @@ public class SimpleIDLSwitch<T> extends Switch<T>
       {
         BooleanType booleanType = (BooleanType)theEObject;
         T result = caseBooleanType(booleanType);
-        if (result == null) result = caseType(booleanType);
+        if (result == null) result = caseNamedDefinition(booleanType);
+        if (result == null) result = caseDefinition(booleanType);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -313,7 +322,8 @@ public class SimpleIDLSwitch<T> extends Switch<T>
       {
         OctetType octetType = (OctetType)theEObject;
         T result = caseOctetType(octetType);
-        if (result == null) result = caseType(octetType);
+        if (result == null) result = caseNamedDefinition(octetType);
+        if (result == null) result = caseDefinition(octetType);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -321,7 +331,8 @@ public class SimpleIDLSwitch<T> extends Switch<T>
       {
         ReferencedType referencedType = (ReferencedType)theEObject;
         T result = caseReferencedType(referencedType);
-        if (result == null) result = caseType(referencedType);
+        if (result == null) result = caseNamedDefinition(referencedType);
+        if (result == null) result = caseDefinition(referencedType);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -329,7 +340,8 @@ public class SimpleIDLSwitch<T> extends Switch<T>
       {
         BoundedSequence boundedSequence = (BoundedSequence)theEObject;
         T result = caseBoundedSequence(boundedSequence);
-        if (result == null) result = caseType(boundedSequence);
+        if (result == null) result = caseNamedDefinition(boundedSequence);
+        if (result == null) result = caseDefinition(boundedSequence);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -337,7 +349,8 @@ public class SimpleIDLSwitch<T> extends Switch<T>
       {
         UnboundedSequence unboundedSequence = (UnboundedSequence)theEObject;
         T result = caseUnboundedSequence(unboundedSequence);
-        if (result == null) result = caseType(unboundedSequence);
+        if (result == null) result = caseNamedDefinition(unboundedSequence);
+        if (result == null) result = caseDefinition(unboundedSequence);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -345,7 +358,8 @@ public class SimpleIDLSwitch<T> extends Switch<T>
       {
         BoundedString boundedString = (BoundedString)theEObject;
         T result = caseBoundedString(boundedString);
-        if (result == null) result = caseType(boundedString);
+        if (result == null) result = caseNamedDefinition(boundedString);
+        if (result == null) result = caseDefinition(boundedString);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -353,7 +367,8 @@ public class SimpleIDLSwitch<T> extends Switch<T>
       {
         UnboundedString unboundedString = (UnboundedString)theEObject;
         T result = caseUnboundedString(unboundedString);
-        if (result == null) result = caseType(unboundedString);
+        if (result == null) result = caseNamedDefinition(unboundedString);
+        if (result == null) result = caseDefinition(unboundedString);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -361,7 +376,8 @@ public class SimpleIDLSwitch<T> extends Switch<T>
       {
         BoundedWideString boundedWideString = (BoundedWideString)theEObject;
         T result = caseBoundedWideString(boundedWideString);
-        if (result == null) result = caseType(boundedWideString);
+        if (result == null) result = caseNamedDefinition(boundedWideString);
+        if (result == null) result = caseDefinition(boundedWideString);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -369,7 +385,8 @@ public class SimpleIDLSwitch<T> extends Switch<T>
       {
         UnboundedWideString unboundedWideString = (UnboundedWideString)theEObject;
         T result = caseUnboundedWideString(unboundedWideString);
-        if (result == null) result = caseType(unboundedWideString);
+        if (result == null) result = caseNamedDefinition(unboundedWideString);
+        if (result == null) result = caseDefinition(unboundedWideString);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -377,7 +394,8 @@ public class SimpleIDLSwitch<T> extends Switch<T>
       {
         FixedPtType fixedPtType = (FixedPtType)theEObject;
         T result = caseFixedPtType(fixedPtType);
-        if (result == null) result = caseType(fixedPtType);
+        if (result == null) result = caseNamedDefinition(fixedPtType);
+        if (result == null) result = caseDefinition(fixedPtType);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -418,6 +436,22 @@ public class SimpleIDLSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Named Definition</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Named Definition</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseNamedDefinition(NamedDefinition object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Member</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -450,17 +484,17 @@ public class SimpleIDLSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Type</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Struct Forward</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Type</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Struct Forward</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseType(Type object)
+  public T caseStructForward(StructForward object)
   {
     return null;
   }
@@ -498,22 +532,6 @@ public class SimpleIDLSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Struct Forward</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Struct Forward</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseStructForward(StructForward object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Union</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -541,22 +559,6 @@ public class SimpleIDLSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseEnum(org.osate.simpleidl.simpleIDL.Enum object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Typedef</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Typedef</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseTypedef(Typedef object)
   {
     return null;
   }

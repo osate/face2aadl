@@ -23,13 +23,9 @@ package org.osate.simpleidl.simpleIDL.impl;
 
 import java.util.Collection;
 
-import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
-
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EDataTypeEList;
 
@@ -43,34 +39,13 @@ import org.osate.simpleidl.simpleIDL.SimpleIDLPackage;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.osate.simpleidl.simpleIDL.impl.EnumImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.osate.simpleidl.simpleIDL.impl.EnumImpl#getLiterals <em>Literals</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class EnumImpl extends DefinitionImpl implements org.osate.simpleidl.simpleIDL.Enum
+public class EnumImpl extends NamedDefinitionImpl implements org.osate.simpleidl.simpleIDL.Enum
 {
-  /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected static final String NAME_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected String name = NAME_EDEFAULT;
-
   /**
    * The cached value of the '{@link #getLiterals() <em>Literals</em>}' attribute list.
    * <!-- begin-user-doc -->
@@ -108,31 +83,6 @@ public class EnumImpl extends DefinitionImpl implements org.osate.simpleidl.simp
    * @generated
    */
   @Override
-  public String getName()
-  {
-    return name;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setName(String newName)
-  {
-    String oldName = name;
-    name = newName;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SimpleIDLPackage.ENUM__NAME, oldName, name));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public EList<String> getLiterals()
   {
     if (literals == null)
@@ -152,8 +102,6 @@ public class EnumImpl extends DefinitionImpl implements org.osate.simpleidl.simp
   {
     switch (featureID)
     {
-      case SimpleIDLPackage.ENUM__NAME:
-        return getName();
       case SimpleIDLPackage.ENUM__LITERALS:
         return getLiterals();
     }
@@ -171,9 +119,6 @@ public class EnumImpl extends DefinitionImpl implements org.osate.simpleidl.simp
   {
     switch (featureID)
     {
-      case SimpleIDLPackage.ENUM__NAME:
-        setName((String)newValue);
-        return;
       case SimpleIDLPackage.ENUM__LITERALS:
         getLiterals().clear();
         getLiterals().addAll((Collection<? extends String>)newValue);
@@ -192,9 +137,6 @@ public class EnumImpl extends DefinitionImpl implements org.osate.simpleidl.simp
   {
     switch (featureID)
     {
-      case SimpleIDLPackage.ENUM__NAME:
-        setName(NAME_EDEFAULT);
-        return;
       case SimpleIDLPackage.ENUM__LITERALS:
         getLiterals().clear();
         return;
@@ -212,8 +154,6 @@ public class EnumImpl extends DefinitionImpl implements org.osate.simpleidl.simp
   {
     switch (featureID)
     {
-      case SimpleIDLPackage.ENUM__NAME:
-        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case SimpleIDLPackage.ENUM__LITERALS:
         return literals != null && !literals.isEmpty();
     }
@@ -231,9 +171,7 @@ public class EnumImpl extends DefinitionImpl implements org.osate.simpleidl.simp
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (name: ");
-    result.append(name);
-    result.append(", literals: ");
+    result.append(" (literals: ");
     result.append(literals);
     result.append(')');
     return result.toString();

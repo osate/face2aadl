@@ -32,6 +32,6 @@ package org.osate.simpleidl.simpleIDL;
  * @model
  * @generated
  */
-public interface UnsignedShortInt extends Type
+public interface UnsignedShortInt extends NamedDefinition
 {
 } // UnsignedShortInt

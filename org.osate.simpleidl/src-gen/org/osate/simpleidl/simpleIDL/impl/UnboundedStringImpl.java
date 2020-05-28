@@ -33,7 +33,7 @@ import org.osate.simpleidl.simpleIDL.UnboundedString;
  *
  * @generated
  */
-public class UnboundedStringImpl extends TypeImpl implements UnboundedString
+public class UnboundedStringImpl extends NamedDefinitionImpl implements UnboundedString
 {
   /**
    * <!-- begin-user-doc -->

@@ -32,6 +32,6 @@ package org.osate.simpleidl.simpleIDL;
  * @model
  * @generated
  */
-public interface OctetType extends Type
+public interface OctetType extends NamedDefinition
 {
 } // OctetType

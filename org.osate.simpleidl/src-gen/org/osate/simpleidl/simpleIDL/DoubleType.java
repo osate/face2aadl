@@ -32,6 +32,6 @@ package org.osate.simpleidl.simpleIDL;
  * @model
  * @generated
  */
-public interface DoubleType extends Type
+public interface DoubleType extends NamedDefinition
 {
 } // DoubleType

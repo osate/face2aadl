@@ -23,15 +23,12 @@ package org.osate.simpleidl.simpleIDL.impl;
 
 import java.util.Collection;
 
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -47,34 +44,13 @@ import org.osate.simpleidl.simpleIDL.SimpleIDLPackage;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.osate.simpleidl.simpleIDL.impl.ModuleImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.osate.simpleidl.simpleIDL.impl.ModuleImpl#getDefinitions <em>Definitions</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class ModuleImpl extends DefinitionImpl implements org.osate.simpleidl.simpleIDL.Module
+public class ModuleImpl extends NamedDefinitionImpl implements org.osate.simpleidl.simpleIDL.Module
 {
-  /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected static final String NAME_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected String name = NAME_EDEFAULT;
-
   /**
    * The cached value of the '{@link #getDefinitions() <em>Definitions</em>}' containment reference list.
    * <!-- begin-user-doc -->
@@ -104,31 +80,6 @@ public class ModuleImpl extends DefinitionImpl implements org.osate.simpleidl.si
   protected EClass eStaticClass()
   {
     return SimpleIDLPackage.Literals.MODULE;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String getName()
-  {
-    return name;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setName(String newName)
-  {
-    String oldName = name;
-    name = newName;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SimpleIDLPackage.MODULE__NAME, oldName, name));
   }
 
   /**
@@ -172,8 +123,6 @@ public class ModuleImpl extends DefinitionImpl implements org.osate.simpleidl.si
   {
     switch (featureID)
     {
-      case SimpleIDLPackage.MODULE__NAME:
-        return getName();
       case SimpleIDLPackage.MODULE__DEFINITIONS:
         return getDefinitions();
     }
@@ -191,9 +140,6 @@ public class ModuleImpl extends DefinitionImpl implements org.osate.simpleidl.si
   {
     switch (featureID)
     {
-      case SimpleIDLPackage.MODULE__NAME:
-        setName((String)newValue);
-        return;
       case SimpleIDLPackage.MODULE__DEFINITIONS:
         getDefinitions().clear();
         getDefinitions().addAll((Collection<? extends Definition>)newValue);
@@ -212,9 +158,6 @@ public class ModuleImpl extends DefinitionImpl implements org.osate.simpleidl.si
   {
     switch (featureID)
     {
-      case SimpleIDLPackage.MODULE__NAME:
-        setName(NAME_EDEFAULT);
-        return;
       case SimpleIDLPackage.MODULE__DEFINITIONS:
         getDefinitions().clear();
         return;
@@ -232,29 +175,10 @@ public class ModuleImpl extends DefinitionImpl implements org.osate.simpleidl.si
   {
     switch (featureID)
     {
-      case SimpleIDLPackage.MODULE__NAME:
-        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case SimpleIDLPackage.MODULE__DEFINITIONS:
         return definitions != null && !definitions.isEmpty();
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (name: ");
-    result.append(name);
-    result.append(')');
-    return result.toString();
   }
 
 } //ModuleImpl

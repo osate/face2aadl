@@ -46,7 +46,6 @@ Specification:
  * (2) <definition> ::= <module_dcl> ";"
  *                  | <const_dcl> ";"
  *                  | <type_dcl> ";"
- * (3) <module_dcl> ::= "module" <identifier> "{" <definition>+ "}"
  * (20) <type_dcl> ::= <constr_type_dcl>
  *                 | <native_dcl>
  *                 | <typedef_dcl>
@@ -55,72 +54,21 @@ Specification:
  *                        | <enum_dcl>
  * (45) <struct_dcl> ::= <struct_def>
  *                   | <struct_forward_dcl>
- * (46) <struct_def> ::= "struct" <identifier> "{" <member>+ "}"
  * (48) <struct_forward_dcl> ::= "struct" <identifier>
- * (49) <union_dcl> ::= <union_def>
- *                  | <union_forward_dcl>
- * (50) <union_def> ::= "union" <identifier> "switch" "(" <switch_type_spec> ")"
- *                      "{" <switch_body> "}"
- * (51) <switch_type_spec> ::= <integer_type>
- *                         | <char_type>
- *                         | <boolean_type>
- *                         | <scoped_name>
- * (52) <switch_body> ::= <case>+
- * (57) <enum_dcl> ::= "enum" <identifier>
- *                     "{" <enumerator> { "," <enumerator> } * "}"
- * (58) <enumerator> ::= <identifier>
- * (59) <array_declarator> ::= <identifier> <fixed_array_size>+
- * (60) <fixed_array_size> ::= "[" <positive_int_const> "]"
- * (62) <simple_declarator> ::= <identifier>
- * (63) <typedef_dcl> ::= "typedef" <type_declarator>
- * (64) <type_declarator> ::= { <simple_type_spec>
- *                            | <template_type_spec>
- *                            | <constr_type_dcl>
- *                            } <any_declarators>
- * (65) <any_declarators> ::= <any_declarator> { "," <any_declarator> }*
- * (66) <any_declarator> ::= <simple_declarator>
- *                       | <array_declarator>
  */
 Definition:
-	{Module} 'module' name=ID '{' definitions+=Definition+ '}' ';' |
-	{Struct} 'struct' name=ID '{' members+=Member+ '}' ';' |
-	{StructForward} 'struct' struct=[Struct] ';' |
-	//The syntax for union follows the FACE standard, not the IDL standard.
-	{Union} 'union' name=ID '{' 'switch' '(' 'unsigned' 'short' ')' '{' cases+=Case+ '}' ';' '}' ';' |
-	{Enum} 'enum' name=ID '{' literals+=ID (',' literals+=ID)* '}' ';' |
-	{Typedef} 'typedef' type=Type name=ID ';' |
-	{ArrayType} 'typedef' type=[Definition|ScopedName] name=ID '[' size=INT ']' ';'
+	NamedDefinition |
+	{StructForward} 'struct' struct=[Struct] ';'
 ;
 
 /*
- * (21) <type_spec> ::= <simple_type_spec>
- * (22) <simple_type_spec> ::= <base_type_spec>
- *                         | <scoped_name>
- * (47) <member> ::= <type_spec> <declarators> ";"
- * (62) <simple_declarator> ::= <identifier>
- * (67) <declarators> ::= <declarator> { "," <declarator> }*
- * (68) <declarator> ::= <simple_declarator>
- */
-Member:
-	type=[Definition|ScopedName] name=ID ';'
-;
-
-/*
- * (21) <type_spec> ::= <simple_type_spec>
- * (22) <simple_type_spec> ::= <base_type_spec>
- *                         | <scoped_name>
- * (53) <case> ::= <case_label>+ <element_spec> ";"
- * (54) <case_label> ::= "case" <const_expr> ":"
- *                   | "default" ":"
- * (55) <element_spec> ::= <type_spec> <declarator>
- * (62) <simple_declarator> ::= <identifier>
- * (68) <declarator> ::= <simple_declarator>
- */
-Case:
-	('case' labels+=INT ':')+ type=[Definition|ScopedName] name=ID ';'
-;
-
-/*
+ * (2) <definition> ::= <module_dcl> ";"
+ *                  | <const_dcl> ";"
+ *                  | <type_dcl> ";"
+ * (3) <module_dcl> ::= "module" <identifier> "{" <definition>+ "}"
+ * (20) <type_dcl> ::= <constr_type_dcl>
+ *                 | <native_dcl>
+ *                 | <typedef_dcl>
  * (21) <type_spec> ::= <simple_type_spec>
  * (22) <simple_type_spec> ::= <base_type_spec>
  *                         | <scoped_name>
@@ -162,33 +110,92 @@ Case:
  * (41) <wide_string_type> ::= "wstring" "<" <positive_int_const> ">"
  *                         | "wstring"
  * (42) <fixed_pt_type> ::= "fixed" "<" <positive_int_const> "," <positive_int_const> ">"
+ * (44) <constr_type_dcl> ::= <struct_dcl>
+ *                        | <union_dcl>
+ *                        | <enum_dcl>
+ * (45) <struct_dcl> ::= <struct_def>
+ *                   | <struct_forward_dcl>
+ * (46) <struct_def> ::= "struct" <identifier> "{" <member>+ "}"
+ * (49) <union_dcl> ::= <union_def>
+ *                  | <union_forward_dcl>
+ * (50) <union_def> ::= "union" <identifier> "switch" "(" <switch_type_spec> ")"
+ *                      "{" <switch_body> "}"
+ * (51) <switch_type_spec> ::= <integer_type>
+ *                         | <char_type>
+ *                         | <boolean_type>
+ *                         | <scoped_name>
+ * (52) <switch_body> ::= <case>+
+ * (57) <enum_dcl> ::= "enum" <identifier>
+ *                     "{" <enumerator> { "," <enumerator> } * "}"
+ * (58) <enumerator> ::= <identifier>
+ * (59) <array_declarator> ::= <identifier> <fixed_array_size>+
+ * (60) <fixed_array_size> ::= "[" <positive_int_const> "]"
+ * (62) <simple_declarator> ::= <identifier>
+ * (63) <typedef_dcl> ::= "typedef" <type_declarator>
  * (64) <type_declarator> ::= { <simple_type_spec>
  *                            | <template_type_spec>
  *                            | <constr_type_dcl>
  *                            } <any_declarators>
+ * (65) <any_declarators> ::= <any_declarator> { "," <any_declarator> }*
+ * (66) <any_declarator> ::= <simple_declarator>
+ *                       | <array_declarator>
  */
-Type:
-	{SignedShortInt} 'short' |
-	{SignedLongInt} 'long' |
-	{SignedLongLongInt} 'long' 'long' |
-	{UnsignedShortInt} 'unsigned' 'short' |
-	{UnsignedLongInt} 'unsigned' 'long' |
-	{UnsignedLongLongInt} 'unsigned' 'long' 'long' |
-	{FloatType} 'float' |
-	{DoubleType} 'double' |
-	{LongDoubleType} 'long' 'double' |
-	{CharType} 'char' |
-	{WideCharType} 'wchar' |
-	{BooleanType} 'boolean' |
-	{OctetType} 'octet' |
-	{ReferencedType} type=[Definition|ScopedName] |
-	{BoundedSequence} 'sequence' '<' type=[Definition|ScopedName] ',' size=INT '>' |
-	{UnboundedSequence} 'sequence' '<' type=[Definition|ScopedName] '>' |
-	{BoundedString} 'string' '<' size=INT '>' |
-	{UnboundedString} 'string' |
-	{BoundedWideString} 'wstring' '<' size=INT '>' |
-	{UnboundedWideString} 'wstring' |
-	{FixedPtType} 'fixed' '<' totalDigits=INT ',' fractionalDigits=INT '>'
+NamedDefinition:
+	{Module} 'module' name=ID '{' definitions+=Definition+ '}' ';' |
+	{Struct} 'struct' name=ID '{' members+=Member+ '}' ';' |
+	//The syntax for union follows the FACE standard, not the IDL standard.
+	{Union} 'union' name=ID '{' 'switch' '(' 'unsigned' 'short' ')' '{' cases+=Case+ '}' ';' '}' ';' |
+	{Enum} 'enum' name=ID '{' literals+=ID (',' literals+=ID)* '}' ';' |
+	{ArrayType} 'typedef' type=[NamedDefinition|ScopedName] name=ID '[' size=INT ']' ';' |
+	{SignedShortInt} 'typedef' 'short' name=ID ';' |
+	{SignedLongInt} 'typedef' 'long' name=ID ';' |
+	{SignedLongLongInt} 'typedef' 'long' 'long' name=ID ';' |
+	{UnsignedShortInt} 'typedef' 'unsigned' 'short' name=ID ';' |
+	{UnsignedLongInt} 'typedef' 'unsigned' 'long' name=ID ';' |
+	{UnsignedLongLongInt} 'typedef' 'unsigned' 'long' 'long' name=ID ';' |
+	{FloatType} 'typedef' 'float' name=ID ';' |
+	{DoubleType} 'typedef' 'double' name=ID ';' |
+	{LongDoubleType} 'typedef' 'long' 'double' name=ID ';' |
+	{CharType} 'typedef' 'char' name=ID ';' |
+	{WideCharType} 'typedef' 'wchar' name=ID ';' |
+	{BooleanType} 'typedef' 'boolean' name=ID ';' |
+	{OctetType} 'typedef' 'octet' name=ID ';' |
+	{ReferencedType} 'typedef' type=[NamedDefinition|ScopedName] name=ID ';' |
+	{BoundedSequence} 'typedef' 'sequence' '<' type=[NamedDefinition|ScopedName] ',' size=INT '>' name=ID ';' |
+	{UnboundedSequence} 'typedef' 'sequence' '<' type=[NamedDefinition|ScopedName] '>' name=ID ';' |
+	{BoundedString} 'typedef' 'string' '<' size=INT '>' name=ID ';' |
+	{UnboundedString} 'typedef' 'string' name=ID ';' |
+	{BoundedWideString} 'typedef' 'wstring' '<' size=INT '>' name=ID ';' |
+	{UnboundedWideString} 'typedef' 'wstring' name=ID ';' |
+	{FixedPtType} 'typedef' 'fixed' '<' totalDigits=INT ',' fractionalDigits=INT '>' name=ID ';'
+;
+
+/*
+ * (21) <type_spec> ::= <simple_type_spec>
+ * (22) <simple_type_spec> ::= <base_type_spec>
+ *                         | <scoped_name>
+ * (47) <member> ::= <type_spec> <declarators> ";"
+ * (62) <simple_declarator> ::= <identifier>
+ * (67) <declarators> ::= <declarator> { "," <declarator> }*
+ * (68) <declarator> ::= <simple_declarator>
+ */
+Member:
+	type=[NamedDefinition|ScopedName] name=ID ';'
+;
+
+/*
+ * (21) <type_spec> ::= <simple_type_spec>
+ * (22) <simple_type_spec> ::= <base_type_spec>
+ *                         | <scoped_name>
+ * (53) <case> ::= <case_label>+ <element_spec> ";"
+ * (54) <case_label> ::= "case" <const_expr> ":"
+ *                   | "default" ":"
+ * (55) <element_spec> ::= <type_spec> <declarator>
+ * (62) <simple_declarator> ::= <identifier>
+ * (68) <declarator> ::= <simple_declarator>
+ */
+Case:
+	('case' labels+=INT ':')+ type=[NamedDefinition|ScopedName] name=ID ';'
 ;
 
 /*

@@ -32,7 +32,6 @@ package org.osate.simpleidl.simpleIDL;
  * </p>
  * <ul>
  *   <li>{@link org.osate.simpleidl.simpleIDL.ArrayType#getType <em>Type</em>}</li>
- *   <li>{@link org.osate.simpleidl.simpleIDL.ArrayType#getName <em>Name</em>}</li>
  *   <li>{@link org.osate.simpleidl.simpleIDL.ArrayType#getSize <em>Size</em>}</li>
  * </ul>
  *
@@ -40,19 +39,19 @@ package org.osate.simpleidl.simpleIDL;
  * @model
  * @generated
  */
-public interface ArrayType extends Definition
+public interface ArrayType extends NamedDefinition
 {
   /**
    * Returns the value of the '<em><b>Type</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the value of the '<em>Type</em>' reference.
-   * @see #setType(Definition)
+   * @see #setType(NamedDefinition)
    * @see org.osate.simpleidl.simpleIDL.SimpleIDLPackage#getArrayType_Type()
    * @model
    * @generated
    */
-  Definition getType();
+  NamedDefinition getType();
 
   /**
    * Sets the value of the '{@link org.osate.simpleidl.simpleIDL.ArrayType#getType <em>Type</em>}' reference.
@@ -62,29 +61,7 @@ public interface ArrayType extends Definition
    * @see #getType()
    * @generated
    */
-  void setType(Definition value);
-
-  /**
-   * Returns the value of the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Name</em>' attribute.
-   * @see #setName(String)
-   * @see org.osate.simpleidl.simpleIDL.SimpleIDLPackage#getArrayType_Name()
-   * @model
-   * @generated
-   */
-  String getName();
-
-  /**
-   * Sets the value of the '{@link org.osate.simpleidl.simpleIDL.ArrayType#getName <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Name</em>' attribute.
-   * @see #getName()
-   * @generated
-   */
-  void setName(String value);
+  void setType(NamedDefinition value);
 
   /**
    * Returns the value of the '<em><b>Size</b></em>' attribute.

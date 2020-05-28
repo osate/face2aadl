@@ -60,6 +60,15 @@ public interface SimpleIDLFactory extends EFactory
   Definition createDefinition();
 
   /**
+   * Returns a new object of class '<em>Named Definition</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Named Definition</em>'.
+   * @generated
+   */
+  NamedDefinition createNamedDefinition();
+
+  /**
    * Returns a new object of class '<em>Member</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -78,13 +87,13 @@ public interface SimpleIDLFactory extends EFactory
   Case createCase();
 
   /**
-   * Returns a new object of class '<em>Type</em>'.
+   * Returns a new object of class '<em>Struct Forward</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Type</em>'.
+   * @return a new object of class '<em>Struct Forward</em>'.
    * @generated
    */
-  Type createType();
+  StructForward createStructForward();
 
   /**
    * Returns a new object of class '<em>Module</em>'.
@@ -105,15 +114,6 @@ public interface SimpleIDLFactory extends EFactory
   Struct createStruct();
 
   /**
-   * Returns a new object of class '<em>Struct Forward</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Struct Forward</em>'.
-   * @generated
-   */
-  StructForward createStructForward();
-
-  /**
    * Returns a new object of class '<em>Union</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -130,15 +130,6 @@ public interface SimpleIDLFactory extends EFactory
    * @generated
    */
   Enum createEnum();
-
-  /**
-   * Returns a new object of class '<em>Typedef</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Typedef</em>'.
-   * @generated
-   */
-  Typedef createTypedef();
 
   /**
    * Returns a new object of class '<em>Array Type</em>'.

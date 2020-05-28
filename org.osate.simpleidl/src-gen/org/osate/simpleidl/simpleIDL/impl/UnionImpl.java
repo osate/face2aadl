@@ -23,15 +23,12 @@ package org.osate.simpleidl.simpleIDL.impl;
 
 import java.util.Collection;
 
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -48,34 +45,13 @@ import org.osate.simpleidl.simpleIDL.Union;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.osate.simpleidl.simpleIDL.impl.UnionImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.osate.simpleidl.simpleIDL.impl.UnionImpl#getCases <em>Cases</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class UnionImpl extends DefinitionImpl implements Union
+public class UnionImpl extends NamedDefinitionImpl implements Union
 {
-  /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected static final String NAME_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected String name = NAME_EDEFAULT;
-
   /**
    * The cached value of the '{@link #getCases() <em>Cases</em>}' containment reference list.
    * <!-- begin-user-doc -->
@@ -105,31 +81,6 @@ public class UnionImpl extends DefinitionImpl implements Union
   protected EClass eStaticClass()
   {
     return SimpleIDLPackage.Literals.UNION;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String getName()
-  {
-    return name;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setName(String newName)
-  {
-    String oldName = name;
-    name = newName;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SimpleIDLPackage.UNION__NAME, oldName, name));
   }
 
   /**
@@ -173,8 +124,6 @@ public class UnionImpl extends DefinitionImpl implements Union
   {
     switch (featureID)
     {
-      case SimpleIDLPackage.UNION__NAME:
-        return getName();
       case SimpleIDLPackage.UNION__CASES:
         return getCases();
     }
@@ -192,9 +141,6 @@ public class UnionImpl extends DefinitionImpl implements Union
   {
     switch (featureID)
     {
-      case SimpleIDLPackage.UNION__NAME:
-        setName((String)newValue);
-        return;
       case SimpleIDLPackage.UNION__CASES:
         getCases().clear();
         getCases().addAll((Collection<? extends Case>)newValue);
@@ -213,9 +159,6 @@ public class UnionImpl extends DefinitionImpl implements Union
   {
     switch (featureID)
     {
-      case SimpleIDLPackage.UNION__NAME:
-        setName(NAME_EDEFAULT);
-        return;
       case SimpleIDLPackage.UNION__CASES:
         getCases().clear();
         return;
@@ -233,29 +176,10 @@ public class UnionImpl extends DefinitionImpl implements Union
   {
     switch (featureID)
     {
-      case SimpleIDLPackage.UNION__NAME:
-        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case SimpleIDLPackage.UNION__CASES:
         return cases != null && !cases.isEmpty();
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (name: ");
-    result.append(name);
-    result.append(')');
-    return result.toString();
   }
 
 } //UnionImpl

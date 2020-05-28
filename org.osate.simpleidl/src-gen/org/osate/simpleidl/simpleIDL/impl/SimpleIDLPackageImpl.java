@@ -41,6 +41,7 @@ import org.osate.simpleidl.simpleIDL.FixedPtType;
 import org.osate.simpleidl.simpleIDL.FloatType;
 import org.osate.simpleidl.simpleIDL.LongDoubleType;
 import org.osate.simpleidl.simpleIDL.Member;
+import org.osate.simpleidl.simpleIDL.NamedDefinition;
 import org.osate.simpleidl.simpleIDL.OctetType;
 import org.osate.simpleidl.simpleIDL.ReferencedType;
 import org.osate.simpleidl.simpleIDL.SignedLongInt;
@@ -51,8 +52,6 @@ import org.osate.simpleidl.simpleIDL.SimpleIDLPackage;
 import org.osate.simpleidl.simpleIDL.Specification;
 import org.osate.simpleidl.simpleIDL.Struct;
 import org.osate.simpleidl.simpleIDL.StructForward;
-import org.osate.simpleidl.simpleIDL.Type;
-import org.osate.simpleidl.simpleIDL.Typedef;
 import org.osate.simpleidl.simpleIDL.UnboundedSequence;
 import org.osate.simpleidl.simpleIDL.UnboundedString;
 import org.osate.simpleidl.simpleIDL.UnboundedWideString;
@@ -89,6 +88,13 @@ public class SimpleIDLPackageImpl extends EPackageImpl implements SimpleIDLPacka
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass namedDefinitionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   private EClass memberEClass = null;
 
   /**
@@ -103,7 +109,7 @@ public class SimpleIDLPackageImpl extends EPackageImpl implements SimpleIDLPacka
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass typeEClass = null;
+  private EClass structForwardEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -124,13 +130,6 @@ public class SimpleIDLPackageImpl extends EPackageImpl implements SimpleIDLPacka
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass structForwardEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   private EClass unionEClass = null;
 
   /**
@@ -139,13 +138,6 @@ public class SimpleIDLPackageImpl extends EPackageImpl implements SimpleIDLPacka
    * @generated
    */
   private EClass enumEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass typedefEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -403,6 +395,28 @@ public class SimpleIDLPackageImpl extends EPackageImpl implements SimpleIDLPacka
    * @generated
    */
   @Override
+  public EClass getNamedDefinition()
+  {
+    return namedDefinitionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getNamedDefinition_Name()
+  {
+    return (EAttribute)namedDefinitionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EClass getMember()
   {
     return memberEClass;
@@ -480,83 +494,6 @@ public class SimpleIDLPackageImpl extends EPackageImpl implements SimpleIDLPacka
    * @generated
    */
   @Override
-  public EClass getType()
-  {
-    return typeEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EClass getModule()
-  {
-    return moduleEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EAttribute getModule_Name()
-  {
-    return (EAttribute)moduleEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EReference getModule_Definitions()
-  {
-    return (EReference)moduleEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EClass getStruct()
-  {
-    return structEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EAttribute getStruct_Name()
-  {
-    return (EAttribute)structEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EReference getStruct_Members()
-  {
-    return (EReference)structEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public EClass getStructForward()
   {
     return structForwardEClass;
@@ -579,6 +516,50 @@ public class SimpleIDLPackageImpl extends EPackageImpl implements SimpleIDLPacka
    * @generated
    */
   @Override
+  public EClass getModule()
+  {
+    return moduleEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getModule_Definitions()
+  {
+    return (EReference)moduleEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getStruct()
+  {
+    return structEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getStruct_Members()
+  {
+    return (EReference)structEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EClass getUnion()
   {
     return unionEClass;
@@ -590,20 +571,9 @@ public class SimpleIDLPackageImpl extends EPackageImpl implements SimpleIDLPacka
    * @generated
    */
   @Override
-  public EAttribute getUnion_Name()
-  {
-    return (EAttribute)unionEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public EReference getUnion_Cases()
   {
-    return (EReference)unionEClass.getEStructuralFeatures().get(1);
+    return (EReference)unionEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -623,53 +593,9 @@ public class SimpleIDLPackageImpl extends EPackageImpl implements SimpleIDLPacka
    * @generated
    */
   @Override
-  public EAttribute getEnum_Name()
-  {
-    return (EAttribute)enumEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public EAttribute getEnum_Literals()
   {
-    return (EAttribute)enumEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EClass getTypedef()
-  {
-    return typedefEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EReference getTypedef_Type()
-  {
-    return (EReference)typedefEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EAttribute getTypedef_Name()
-  {
-    return (EAttribute)typedefEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)enumEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -700,20 +626,9 @@ public class SimpleIDLPackageImpl extends EPackageImpl implements SimpleIDLPacka
    * @generated
    */
   @Override
-  public EAttribute getArrayType_Name()
-  {
-    return (EAttribute)arrayTypeEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public EAttribute getArrayType_Size()
   {
-    return (EAttribute)arrayTypeEClass.getEStructuralFeatures().get(2);
+    return (EAttribute)arrayTypeEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1071,6 +986,9 @@ public class SimpleIDLPackageImpl extends EPackageImpl implements SimpleIDLPacka
 
     definitionEClass = createEClass(DEFINITION);
 
+    namedDefinitionEClass = createEClass(NAMED_DEFINITION);
+    createEAttribute(namedDefinitionEClass, NAMED_DEFINITION__NAME);
+
     memberEClass = createEClass(MEMBER);
     createEReference(memberEClass, MEMBER__TYPE);
     createEAttribute(memberEClass, MEMBER__NAME);
@@ -1080,34 +998,23 @@ public class SimpleIDLPackageImpl extends EPackageImpl implements SimpleIDLPacka
     createEReference(caseEClass, CASE__TYPE);
     createEAttribute(caseEClass, CASE__NAME);
 
-    typeEClass = createEClass(TYPE);
-
-    moduleEClass = createEClass(MODULE);
-    createEAttribute(moduleEClass, MODULE__NAME);
-    createEReference(moduleEClass, MODULE__DEFINITIONS);
-
-    structEClass = createEClass(STRUCT);
-    createEAttribute(structEClass, STRUCT__NAME);
-    createEReference(structEClass, STRUCT__MEMBERS);
-
     structForwardEClass = createEClass(STRUCT_FORWARD);
     createEReference(structForwardEClass, STRUCT_FORWARD__STRUCT);
 
+    moduleEClass = createEClass(MODULE);
+    createEReference(moduleEClass, MODULE__DEFINITIONS);
+
+    structEClass = createEClass(STRUCT);
+    createEReference(structEClass, STRUCT__MEMBERS);
+
     unionEClass = createEClass(UNION);
-    createEAttribute(unionEClass, UNION__NAME);
     createEReference(unionEClass, UNION__CASES);
 
     enumEClass = createEClass(ENUM);
-    createEAttribute(enumEClass, ENUM__NAME);
     createEAttribute(enumEClass, ENUM__LITERALS);
-
-    typedefEClass = createEClass(TYPEDEF);
-    createEReference(typedefEClass, TYPEDEF__TYPE);
-    createEAttribute(typedefEClass, TYPEDEF__NAME);
 
     arrayTypeEClass = createEClass(ARRAY_TYPE);
     createEReference(arrayTypeEClass, ARRAY_TYPE__TYPE);
-    createEAttribute(arrayTypeEClass, ARRAY_TYPE__NAME);
     createEAttribute(arrayTypeEClass, ARRAY_TYPE__SIZE);
 
     signedShortIntEClass = createEClass(SIGNED_SHORT_INT);
@@ -1190,34 +1097,34 @@ public class SimpleIDLPackageImpl extends EPackageImpl implements SimpleIDLPacka
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    moduleEClass.getESuperTypes().add(this.getDefinition());
-    structEClass.getESuperTypes().add(this.getDefinition());
+    namedDefinitionEClass.getESuperTypes().add(this.getDefinition());
     structForwardEClass.getESuperTypes().add(this.getDefinition());
-    unionEClass.getESuperTypes().add(this.getDefinition());
-    enumEClass.getESuperTypes().add(this.getDefinition());
-    typedefEClass.getESuperTypes().add(this.getDefinition());
-    arrayTypeEClass.getESuperTypes().add(this.getDefinition());
-    signedShortIntEClass.getESuperTypes().add(this.getType());
-    signedLongIntEClass.getESuperTypes().add(this.getType());
-    signedLongLongIntEClass.getESuperTypes().add(this.getType());
-    unsignedShortIntEClass.getESuperTypes().add(this.getType());
-    unsignedLongIntEClass.getESuperTypes().add(this.getType());
-    unsignedLongLongIntEClass.getESuperTypes().add(this.getType());
-    floatTypeEClass.getESuperTypes().add(this.getType());
-    doubleTypeEClass.getESuperTypes().add(this.getType());
-    longDoubleTypeEClass.getESuperTypes().add(this.getType());
-    charTypeEClass.getESuperTypes().add(this.getType());
-    wideCharTypeEClass.getESuperTypes().add(this.getType());
-    booleanTypeEClass.getESuperTypes().add(this.getType());
-    octetTypeEClass.getESuperTypes().add(this.getType());
-    referencedTypeEClass.getESuperTypes().add(this.getType());
-    boundedSequenceEClass.getESuperTypes().add(this.getType());
-    unboundedSequenceEClass.getESuperTypes().add(this.getType());
-    boundedStringEClass.getESuperTypes().add(this.getType());
-    unboundedStringEClass.getESuperTypes().add(this.getType());
-    boundedWideStringEClass.getESuperTypes().add(this.getType());
-    unboundedWideStringEClass.getESuperTypes().add(this.getType());
-    fixedPtTypeEClass.getESuperTypes().add(this.getType());
+    moduleEClass.getESuperTypes().add(this.getNamedDefinition());
+    structEClass.getESuperTypes().add(this.getNamedDefinition());
+    unionEClass.getESuperTypes().add(this.getNamedDefinition());
+    enumEClass.getESuperTypes().add(this.getNamedDefinition());
+    arrayTypeEClass.getESuperTypes().add(this.getNamedDefinition());
+    signedShortIntEClass.getESuperTypes().add(this.getNamedDefinition());
+    signedLongIntEClass.getESuperTypes().add(this.getNamedDefinition());
+    signedLongLongIntEClass.getESuperTypes().add(this.getNamedDefinition());
+    unsignedShortIntEClass.getESuperTypes().add(this.getNamedDefinition());
+    unsignedLongIntEClass.getESuperTypes().add(this.getNamedDefinition());
+    unsignedLongLongIntEClass.getESuperTypes().add(this.getNamedDefinition());
+    floatTypeEClass.getESuperTypes().add(this.getNamedDefinition());
+    doubleTypeEClass.getESuperTypes().add(this.getNamedDefinition());
+    longDoubleTypeEClass.getESuperTypes().add(this.getNamedDefinition());
+    charTypeEClass.getESuperTypes().add(this.getNamedDefinition());
+    wideCharTypeEClass.getESuperTypes().add(this.getNamedDefinition());
+    booleanTypeEClass.getESuperTypes().add(this.getNamedDefinition());
+    octetTypeEClass.getESuperTypes().add(this.getNamedDefinition());
+    referencedTypeEClass.getESuperTypes().add(this.getNamedDefinition());
+    boundedSequenceEClass.getESuperTypes().add(this.getNamedDefinition());
+    unboundedSequenceEClass.getESuperTypes().add(this.getNamedDefinition());
+    boundedStringEClass.getESuperTypes().add(this.getNamedDefinition());
+    unboundedStringEClass.getESuperTypes().add(this.getNamedDefinition());
+    boundedWideStringEClass.getESuperTypes().add(this.getNamedDefinition());
+    unboundedWideStringEClass.getESuperTypes().add(this.getNamedDefinition());
+    fixedPtTypeEClass.getESuperTypes().add(this.getNamedDefinition());
 
     // Initialize classes and features; add operations and parameters
     initEClass(specificationEClass, Specification.class, "Specification", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1225,43 +1132,35 @@ public class SimpleIDLPackageImpl extends EPackageImpl implements SimpleIDLPacka
 
     initEClass(definitionEClass, Definition.class, "Definition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
+    initEClass(namedDefinitionEClass, NamedDefinition.class, "NamedDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getNamedDefinition_Name(), ecorePackage.getEString(), "name", null, 0, 1, NamedDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
     initEClass(memberEClass, Member.class, "Member", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getMember_Type(), this.getDefinition(), null, "type", null, 0, 1, Member.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMember_Type(), this.getNamedDefinition(), null, "type", null, 0, 1, Member.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getMember_Name(), ecorePackage.getEString(), "name", null, 0, 1, Member.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(caseEClass, Case.class, "Case", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getCase_Labels(), ecorePackage.getEInt(), "labels", null, 0, -1, Case.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getCase_Type(), this.getDefinition(), null, "type", null, 0, 1, Case.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCase_Type(), this.getNamedDefinition(), null, "type", null, 0, 1, Case.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getCase_Name(), ecorePackage.getEString(), "name", null, 0, 1, Case.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(typeEClass, Type.class, "Type", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-    initEClass(moduleEClass, org.osate.simpleidl.simpleIDL.Module.class, "Module", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getModule_Name(), ecorePackage.getEString(), "name", null, 0, 1, org.osate.simpleidl.simpleIDL.Module.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getModule_Definitions(), this.getDefinition(), null, "definitions", null, 0, -1, org.osate.simpleidl.simpleIDL.Module.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(structEClass, Struct.class, "Struct", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getStruct_Name(), ecorePackage.getEString(), "name", null, 0, 1, Struct.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getStruct_Members(), this.getMember(), null, "members", null, 0, -1, Struct.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(structForwardEClass, StructForward.class, "StructForward", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getStructForward_Struct(), this.getStruct(), null, "struct", null, 0, 1, StructForward.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+    initEClass(moduleEClass, org.osate.simpleidl.simpleIDL.Module.class, "Module", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getModule_Definitions(), this.getDefinition(), null, "definitions", null, 0, -1, org.osate.simpleidl.simpleIDL.Module.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(structEClass, Struct.class, "Struct", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getStruct_Members(), this.getMember(), null, "members", null, 0, -1, Struct.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
     initEClass(unionEClass, Union.class, "Union", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getUnion_Name(), ecorePackage.getEString(), "name", null, 0, 1, Union.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getUnion_Cases(), this.getCase(), null, "cases", null, 0, -1, Union.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(enumEClass, org.osate.simpleidl.simpleIDL.Enum.class, "Enum", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getEnum_Name(), ecorePackage.getEString(), "name", null, 0, 1, org.osate.simpleidl.simpleIDL.Enum.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getEnum_Literals(), ecorePackage.getEString(), "literals", null, 0, -1, org.osate.simpleidl.simpleIDL.Enum.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(typedefEClass, Typedef.class, "Typedef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getTypedef_Type(), this.getType(), null, "type", null, 0, 1, Typedef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getTypedef_Name(), ecorePackage.getEString(), "name", null, 0, 1, Typedef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEClass(arrayTypeEClass, ArrayType.class, "ArrayType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getArrayType_Type(), this.getDefinition(), null, "type", null, 0, 1, ArrayType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getArrayType_Name(), ecorePackage.getEString(), "name", null, 0, 1, ArrayType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getArrayType_Type(), this.getNamedDefinition(), null, "type", null, 0, 1, ArrayType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getArrayType_Size(), ecorePackage.getEInt(), "size", null, 0, 1, ArrayType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(signedShortIntEClass, SignedShortInt.class, "SignedShortInt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1291,14 +1190,14 @@ public class SimpleIDLPackageImpl extends EPackageImpl implements SimpleIDLPacka
     initEClass(octetTypeEClass, OctetType.class, "OctetType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(referencedTypeEClass, ReferencedType.class, "ReferencedType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getReferencedType_Type(), this.getDefinition(), null, "type", null, 0, 1, ReferencedType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getReferencedType_Type(), this.getNamedDefinition(), null, "type", null, 0, 1, ReferencedType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(boundedSequenceEClass, BoundedSequence.class, "BoundedSequence", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getBoundedSequence_Type(), this.getDefinition(), null, "type", null, 0, 1, BoundedSequence.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getBoundedSequence_Type(), this.getNamedDefinition(), null, "type", null, 0, 1, BoundedSequence.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getBoundedSequence_Size(), ecorePackage.getEInt(), "size", null, 0, 1, BoundedSequence.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(unboundedSequenceEClass, UnboundedSequence.class, "UnboundedSequence", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getUnboundedSequence_Type(), this.getDefinition(), null, "type", null, 0, 1, UnboundedSequence.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getUnboundedSequence_Type(), this.getNamedDefinition(), null, "type", null, 0, 1, UnboundedSequence.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(boundedStringEClass, BoundedString.class, "BoundedString", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getBoundedString_Size(), ecorePackage.getEInt(), "size", null, 0, 1, BoundedString.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

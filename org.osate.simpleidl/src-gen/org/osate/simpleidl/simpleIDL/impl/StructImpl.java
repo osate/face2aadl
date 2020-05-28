@@ -23,15 +23,12 @@ package org.osate.simpleidl.simpleIDL.impl;
 
 import java.util.Collection;
 
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -48,34 +45,13 @@ import org.osate.simpleidl.simpleIDL.Struct;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.osate.simpleidl.simpleIDL.impl.StructImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.osate.simpleidl.simpleIDL.impl.StructImpl#getMembers <em>Members</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class StructImpl extends DefinitionImpl implements Struct
+public class StructImpl extends NamedDefinitionImpl implements Struct
 {
-  /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected static final String NAME_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected String name = NAME_EDEFAULT;
-
   /**
    * The cached value of the '{@link #getMembers() <em>Members</em>}' containment reference list.
    * <!-- begin-user-doc -->
@@ -105,31 +81,6 @@ public class StructImpl extends DefinitionImpl implements Struct
   protected EClass eStaticClass()
   {
     return SimpleIDLPackage.Literals.STRUCT;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String getName()
-  {
-    return name;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setName(String newName)
-  {
-    String oldName = name;
-    name = newName;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SimpleIDLPackage.STRUCT__NAME, oldName, name));
   }
 
   /**
@@ -173,8 +124,6 @@ public class StructImpl extends DefinitionImpl implements Struct
   {
     switch (featureID)
     {
-      case SimpleIDLPackage.STRUCT__NAME:
-        return getName();
       case SimpleIDLPackage.STRUCT__MEMBERS:
         return getMembers();
     }
@@ -192,9 +141,6 @@ public class StructImpl extends DefinitionImpl implements Struct
   {
     switch (featureID)
     {
-      case SimpleIDLPackage.STRUCT__NAME:
-        setName((String)newValue);
-        return;
       case SimpleIDLPackage.STRUCT__MEMBERS:
         getMembers().clear();
         getMembers().addAll((Collection<? extends Member>)newValue);
@@ -213,9 +159,6 @@ public class StructImpl extends DefinitionImpl implements Struct
   {
     switch (featureID)
     {
-      case SimpleIDLPackage.STRUCT__NAME:
-        setName(NAME_EDEFAULT);
-        return;
       case SimpleIDLPackage.STRUCT__MEMBERS:
         getMembers().clear();
         return;
@@ -233,29 +176,10 @@ public class StructImpl extends DefinitionImpl implements Struct
   {
     switch (featureID)
     {
-      case SimpleIDLPackage.STRUCT__NAME:
-        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case SimpleIDLPackage.STRUCT__MEMBERS:
         return members != null && !members.isEmpty();
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (name: ");
-    result.append(name);
-    result.append(')');
-    return result.toString();
   }
 
 } //StructImpl

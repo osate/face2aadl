@@ -42,6 +42,7 @@ import org.osate.simpleidl.simpleIDL.FixedPtType;
 import org.osate.simpleidl.simpleIDL.FloatType;
 import org.osate.simpleidl.simpleIDL.LongDoubleType;
 import org.osate.simpleidl.simpleIDL.Member;
+import org.osate.simpleidl.simpleIDL.NamedDefinition;
 import org.osate.simpleidl.simpleIDL.OctetType;
 import org.osate.simpleidl.simpleIDL.ReferencedType;
 import org.osate.simpleidl.simpleIDL.SignedLongInt;
@@ -52,8 +53,6 @@ import org.osate.simpleidl.simpleIDL.SimpleIDLPackage;
 import org.osate.simpleidl.simpleIDL.Specification;
 import org.osate.simpleidl.simpleIDL.Struct;
 import org.osate.simpleidl.simpleIDL.StructForward;
-import org.osate.simpleidl.simpleIDL.Type;
-import org.osate.simpleidl.simpleIDL.Typedef;
 import org.osate.simpleidl.simpleIDL.UnboundedSequence;
 import org.osate.simpleidl.simpleIDL.UnboundedString;
 import org.osate.simpleidl.simpleIDL.UnboundedWideString;
@@ -117,15 +116,14 @@ public class SimpleIDLFactoryImpl extends EFactoryImpl implements SimpleIDLFacto
     {
       case SimpleIDLPackage.SPECIFICATION: return createSpecification();
       case SimpleIDLPackage.DEFINITION: return createDefinition();
+      case SimpleIDLPackage.NAMED_DEFINITION: return createNamedDefinition();
       case SimpleIDLPackage.MEMBER: return createMember();
       case SimpleIDLPackage.CASE: return createCase();
-      case SimpleIDLPackage.TYPE: return createType();
+      case SimpleIDLPackage.STRUCT_FORWARD: return createStructForward();
       case SimpleIDLPackage.MODULE: return createModule();
       case SimpleIDLPackage.STRUCT: return createStruct();
-      case SimpleIDLPackage.STRUCT_FORWARD: return createStructForward();
       case SimpleIDLPackage.UNION: return createUnion();
       case SimpleIDLPackage.ENUM: return createEnum();
-      case SimpleIDLPackage.TYPEDEF: return createTypedef();
       case SimpleIDLPackage.ARRAY_TYPE: return createArrayType();
       case SimpleIDLPackage.SIGNED_SHORT_INT: return createSignedShortInt();
       case SimpleIDLPackage.SIGNED_LONG_INT: return createSignedLongInt();
@@ -183,6 +181,18 @@ public class SimpleIDLFactoryImpl extends EFactoryImpl implements SimpleIDLFacto
    * @generated
    */
   @Override
+  public NamedDefinition createNamedDefinition()
+  {
+    NamedDefinitionImpl namedDefinition = new NamedDefinitionImpl();
+    return namedDefinition;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public Member createMember()
   {
     MemberImpl member = new MemberImpl();
@@ -207,10 +217,10 @@ public class SimpleIDLFactoryImpl extends EFactoryImpl implements SimpleIDLFacto
    * @generated
    */
   @Override
-  public Type createType()
+  public StructForward createStructForward()
   {
-    TypeImpl type = new TypeImpl();
-    return type;
+    StructForwardImpl structForward = new StructForwardImpl();
+    return structForward;
   }
 
   /**
@@ -243,18 +253,6 @@ public class SimpleIDLFactoryImpl extends EFactoryImpl implements SimpleIDLFacto
    * @generated
    */
   @Override
-  public StructForward createStructForward()
-  {
-    StructForwardImpl structForward = new StructForwardImpl();
-    return structForward;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public Union createUnion()
   {
     UnionImpl union = new UnionImpl();
@@ -271,18 +269,6 @@ public class SimpleIDLFactoryImpl extends EFactoryImpl implements SimpleIDLFacto
   {
     EnumImpl enum_ = new EnumImpl();
     return enum_;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Typedef createTypedef()
-  {
-    TypedefImpl typedef = new TypedefImpl();
-    return typedef;
   }
 
   /**

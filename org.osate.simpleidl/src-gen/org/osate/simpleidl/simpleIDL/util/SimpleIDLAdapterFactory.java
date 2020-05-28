@@ -41,6 +41,7 @@ import org.osate.simpleidl.simpleIDL.FixedPtType;
 import org.osate.simpleidl.simpleIDL.FloatType;
 import org.osate.simpleidl.simpleIDL.LongDoubleType;
 import org.osate.simpleidl.simpleIDL.Member;
+import org.osate.simpleidl.simpleIDL.NamedDefinition;
 import org.osate.simpleidl.simpleIDL.OctetType;
 import org.osate.simpleidl.simpleIDL.ReferencedType;
 import org.osate.simpleidl.simpleIDL.SignedLongInt;
@@ -50,8 +51,6 @@ import org.osate.simpleidl.simpleIDL.SimpleIDLPackage;
 import org.osate.simpleidl.simpleIDL.Specification;
 import org.osate.simpleidl.simpleIDL.Struct;
 import org.osate.simpleidl.simpleIDL.StructForward;
-import org.osate.simpleidl.simpleIDL.Type;
-import org.osate.simpleidl.simpleIDL.Typedef;
 import org.osate.simpleidl.simpleIDL.UnboundedSequence;
 import org.osate.simpleidl.simpleIDL.UnboundedString;
 import org.osate.simpleidl.simpleIDL.UnboundedWideString;
@@ -135,6 +134,11 @@ public class SimpleIDLAdapterFactory extends AdapterFactoryImpl
         return createDefinitionAdapter();
       }
       @Override
+      public Adapter caseNamedDefinition(NamedDefinition object)
+      {
+        return createNamedDefinitionAdapter();
+      }
+      @Override
       public Adapter caseMember(Member object)
       {
         return createMemberAdapter();
@@ -145,9 +149,9 @@ public class SimpleIDLAdapterFactory extends AdapterFactoryImpl
         return createCaseAdapter();
       }
       @Override
-      public Adapter caseType(Type object)
+      public Adapter caseStructForward(StructForward object)
       {
-        return createTypeAdapter();
+        return createStructForwardAdapter();
       }
       @Override
       public Adapter caseModule(org.osate.simpleidl.simpleIDL.Module object)
@@ -160,11 +164,6 @@ public class SimpleIDLAdapterFactory extends AdapterFactoryImpl
         return createStructAdapter();
       }
       @Override
-      public Adapter caseStructForward(StructForward object)
-      {
-        return createStructForwardAdapter();
-      }
-      @Override
       public Adapter caseUnion(Union object)
       {
         return createUnionAdapter();
@@ -173,11 +172,6 @@ public class SimpleIDLAdapterFactory extends AdapterFactoryImpl
       public Adapter caseEnum(org.osate.simpleidl.simpleIDL.Enum object)
       {
         return createEnumAdapter();
-      }
-      @Override
-      public Adapter caseTypedef(Typedef object)
-      {
-        return createTypedefAdapter();
       }
       @Override
       public Adapter caseArrayType(ArrayType object)
@@ -342,6 +336,21 @@ public class SimpleIDLAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link org.osate.simpleidl.simpleIDL.NamedDefinition <em>Named Definition</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.osate.simpleidl.simpleIDL.NamedDefinition
+   * @generated
+   */
+  public Adapter createNamedDefinitionAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link org.osate.simpleidl.simpleIDL.Member <em>Member</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -372,16 +381,16 @@ public class SimpleIDLAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.osate.simpleidl.simpleIDL.Type <em>Type</em>}'.
+   * Creates a new adapter for an object of class '{@link org.osate.simpleidl.simpleIDL.StructForward <em>Struct Forward</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.osate.simpleidl.simpleIDL.Type
+   * @see org.osate.simpleidl.simpleIDL.StructForward
    * @generated
    */
-  public Adapter createTypeAdapter()
+  public Adapter createStructForwardAdapter()
   {
     return null;
   }
@@ -417,21 +426,6 @@ public class SimpleIDLAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.osate.simpleidl.simpleIDL.StructForward <em>Struct Forward</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.osate.simpleidl.simpleIDL.StructForward
-   * @generated
-   */
-  public Adapter createStructForwardAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link org.osate.simpleidl.simpleIDL.Union <em>Union</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -457,21 +451,6 @@ public class SimpleIDLAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createEnumAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.osate.simpleidl.simpleIDL.Typedef <em>Typedef</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.osate.simpleidl.simpleIDL.Typedef
-   * @generated
-   */
-  public Adapter createTypedefAdapter()
   {
     return null;
   }

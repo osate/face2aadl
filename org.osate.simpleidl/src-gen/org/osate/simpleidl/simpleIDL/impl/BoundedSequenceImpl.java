@@ -29,7 +29,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.osate.simpleidl.simpleIDL.BoundedSequence;
-import org.osate.simpleidl.simpleIDL.Definition;
+import org.osate.simpleidl.simpleIDL.NamedDefinition;
 import org.osate.simpleidl.simpleIDL.SimpleIDLPackage;
 
 /**
@@ -46,7 +46,7 @@ import org.osate.simpleidl.simpleIDL.SimpleIDLPackage;
  *
  * @generated
  */
-public class BoundedSequenceImpl extends TypeImpl implements BoundedSequence
+public class BoundedSequenceImpl extends NamedDefinitionImpl implements BoundedSequence
 {
   /**
    * The cached value of the '{@link #getType() <em>Type</em>}' reference.
@@ -56,7 +56,7 @@ public class BoundedSequenceImpl extends TypeImpl implements BoundedSequence
    * @generated
    * @ordered
    */
-  protected Definition type;
+  protected NamedDefinition type;
 
   /**
    * The default value of the '{@link #getSize() <em>Size</em>}' attribute.
@@ -105,12 +105,12 @@ public class BoundedSequenceImpl extends TypeImpl implements BoundedSequence
    * @generated
    */
   @Override
-  public Definition getType()
+  public NamedDefinition getType()
   {
     if (type != null && type.eIsProxy())
     {
       InternalEObject oldType = (InternalEObject)type;
-      type = (Definition)eResolveProxy(oldType);
+      type = (NamedDefinition)eResolveProxy(oldType);
       if (type != oldType)
       {
         if (eNotificationRequired())
@@ -125,7 +125,7 @@ public class BoundedSequenceImpl extends TypeImpl implements BoundedSequence
    * <!-- end-user-doc -->
    * @generated
    */
-  public Definition basicGetType()
+  public NamedDefinition basicGetType()
   {
     return type;
   }
@@ -136,9 +136,9 @@ public class BoundedSequenceImpl extends TypeImpl implements BoundedSequence
    * @generated
    */
   @Override
-  public void setType(Definition newType)
+  public void setType(NamedDefinition newType)
   {
-    Definition oldType = type;
+    NamedDefinition oldType = type;
     type = newType;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, SimpleIDLPackage.BOUNDED_SEQUENCE__TYPE, oldType, type));
@@ -199,7 +199,7 @@ public class BoundedSequenceImpl extends TypeImpl implements BoundedSequence
     switch (featureID)
     {
       case SimpleIDLPackage.BOUNDED_SEQUENCE__TYPE:
-        setType((Definition)newValue);
+        setType((NamedDefinition)newValue);
         return;
       case SimpleIDLPackage.BOUNDED_SEQUENCE__SIZE:
         setSize((Integer)newValue);
@@ -219,7 +219,7 @@ public class BoundedSequenceImpl extends TypeImpl implements BoundedSequence
     switch (featureID)
     {
       case SimpleIDLPackage.BOUNDED_SEQUENCE__TYPE:
-        setType((Definition)null);
+        setType((NamedDefinition)null);
         return;
       case SimpleIDLPackage.BOUNDED_SEQUENCE__SIZE:
         setSize(SIZE_EDEFAULT);

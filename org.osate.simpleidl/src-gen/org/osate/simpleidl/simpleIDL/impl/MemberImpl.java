@@ -29,8 +29,8 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.osate.simpleidl.simpleIDL.Definition;
 import org.osate.simpleidl.simpleIDL.Member;
+import org.osate.simpleidl.simpleIDL.NamedDefinition;
 import org.osate.simpleidl.simpleIDL.SimpleIDLPackage;
 
 /**
@@ -57,7 +57,7 @@ public class MemberImpl extends MinimalEObjectImpl.Container implements Member
    * @generated
    * @ordered
    */
-  protected Definition type;
+  protected NamedDefinition type;
 
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -106,12 +106,12 @@ public class MemberImpl extends MinimalEObjectImpl.Container implements Member
    * @generated
    */
   @Override
-  public Definition getType()
+  public NamedDefinition getType()
   {
     if (type != null && type.eIsProxy())
     {
       InternalEObject oldType = (InternalEObject)type;
-      type = (Definition)eResolveProxy(oldType);
+      type = (NamedDefinition)eResolveProxy(oldType);
       if (type != oldType)
       {
         if (eNotificationRequired())
@@ -126,7 +126,7 @@ public class MemberImpl extends MinimalEObjectImpl.Container implements Member
    * <!-- end-user-doc -->
    * @generated
    */
-  public Definition basicGetType()
+  public NamedDefinition basicGetType()
   {
     return type;
   }
@@ -137,9 +137,9 @@ public class MemberImpl extends MinimalEObjectImpl.Container implements Member
    * @generated
    */
   @Override
-  public void setType(Definition newType)
+  public void setType(NamedDefinition newType)
   {
-    Definition oldType = type;
+    NamedDefinition oldType = type;
     type = newType;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, SimpleIDLPackage.MEMBER__TYPE, oldType, type));
@@ -200,7 +200,7 @@ public class MemberImpl extends MinimalEObjectImpl.Container implements Member
     switch (featureID)
     {
       case SimpleIDLPackage.MEMBER__TYPE:
-        setType((Definition)newValue);
+        setType((NamedDefinition)newValue);
         return;
       case SimpleIDLPackage.MEMBER__NAME:
         setName((String)newValue);
@@ -220,7 +220,7 @@ public class MemberImpl extends MinimalEObjectImpl.Container implements Member
     switch (featureID)
     {
       case SimpleIDLPackage.MEMBER__TYPE:
-        setType((Definition)null);
+        setType((NamedDefinition)null);
         return;
       case SimpleIDLPackage.MEMBER__NAME:
         setName(NAME_EDEFAULT);
