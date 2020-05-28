@@ -253,62 +253,6 @@ package class DataModelTranslator {
 		}
 	}
 	
-	def private Pair<NamedDefinition, String> getBaseTypeAndArrays(Member member) {
-		switch type : followReferences(member.type) {
-			BoundedSequence: followReferences(type.type) -> '''[«type.size»]'''
-			UnboundedSequence: followReferences(type.type) -> "[]"
-			ArrayType: followReferences(type.type) -> '''[«type.size»]'''
-			default: type -> ""
-		}
-	}
-	
-	def private String translateMember(
-		Member member,
-		ArchitectureModel architectureModel,
-		IQualifiedNameProvider idlNameProvider,
-		Set<Struct> idlOnlyStructs
-	) {
-		val baseTypeAndArrays = getBaseTypeAndArrays(member)
-		val baseType = baseTypeAndArrays.key
-		val arrays = baseTypeAndArrays.value
-		
-		val isIdlOnlyStruct = baseType instanceof Struct && {
-			val treeIterator = architectureModel.eAllContents
-			val filtered = treeIterator.filter[
-				if (!(it instanceof ArchitectureModel || it instanceof DataModel || it instanceof PlatformDataModel)) {
-					treeIterator.prune
-				}
-				it instanceof PhysicalDataType || it instanceof View
-			]
-			!filtered.exists[(it as face.Element).name == baseType.name]
-		}
-		if (isIdlOnlyStruct) {
-			idlOnlyStructs += baseType as Struct
-		}
-		
-		val implName = if (baseType === null) {
-			null
-		} else if (isIdlOnlyStruct) {
-			''' «sanitizeID(idlNameProvider.getFullyQualifiedName(baseType).toString("_"))»_IDL.impl'''
-		} else {
-			''' «sanitizeID(baseType.name)»_Platform.impl'''
-		}
-		
-		'''«sanitizeID(member.name)»: data«implName»«arrays»;'''
-	}
-	
-	def private String translateMember(Member member) {
-		val baseTypeAndArrays = getBaseTypeAndArrays(member)
-		val baseType = baseTypeAndArrays.key
-		val arrays = baseTypeAndArrays.value
-		
-		val implName = if (baseType !== null) {
-			''' «sanitizeID(baseType.name)»_Platform.impl'''
-		}
-		
-		'''«sanitizeID(member.name)»: data«implName»«arrays»;'''
-	}
-	
 	def private String translateView(face.datamodel.conceptual.View view) {
 		switch view {
 			Query: {
@@ -401,22 +345,6 @@ package class DataModelTranslator {
 			«sanitizeID(composition.rolename)»: data «viewReference»«IF !uuid.empty» {
 				«uuid»
 			}«ENDIF»;'''
-	}
-	
-	def private NamedDefinition followReferences(NamedDefinition definition) {
-		var current = definition
-		val visited = <NamedDefinition>newHashSet
-		
-		while (current instanceof ReferencedType && !visited.contains(current)) {
-			visited += current
-			current = (current as ReferencedType).type
-		}
-		
-		if (visited.contains(current) || current.eIsProxy) {
-			null
-		} else {
-			current
-		}
 	}
 	
 	def private String translateView(View view, boolean platformOnly) {
@@ -536,5 +464,77 @@ package class DataModelTranslator {
 	
 	def private String translateViewReference(View view) {
 		'''«translateName(view)».impl'''
+	}
+	
+	def private NamedDefinition followReferences(NamedDefinition definition) {
+		var current = definition
+		val visited = <NamedDefinition>newHashSet
+		
+		while (current instanceof ReferencedType && !visited.contains(current)) {
+			visited += current
+			current = (current as ReferencedType).type
+		}
+		
+		if (visited.contains(current) || current.eIsProxy) {
+			null
+		} else {
+			current
+		}
+	}
+	
+	def private String translateMember(
+		Member member,
+		ArchitectureModel architectureModel,
+		IQualifiedNameProvider idlNameProvider,
+		Set<Struct> idlOnlyStructs
+	) {
+		val baseTypeAndArrays = getBaseTypeAndArrays(member)
+		val baseType = baseTypeAndArrays.key
+		val arrays = baseTypeAndArrays.value
+		
+		val isIdlOnlyStruct = baseType instanceof Struct && {
+			val treeIterator = architectureModel.eAllContents
+			val filtered = treeIterator.filter[
+				if (!(it instanceof ArchitectureModel || it instanceof DataModel || it instanceof PlatformDataModel)) {
+					treeIterator.prune
+				}
+				it instanceof PhysicalDataType || it instanceof View
+			]
+			!filtered.exists[(it as face.Element).name == baseType.name]
+		}
+		if (isIdlOnlyStruct) {
+			idlOnlyStructs += baseType as Struct
+		}
+		
+		val implName = if (baseType === null) {
+			null
+		} else if (isIdlOnlyStruct) {
+			''' «sanitizeID(idlNameProvider.getFullyQualifiedName(baseType).toString("_"))»_IDL.impl'''
+		} else {
+			''' «sanitizeID(baseType.name)»_Platform.impl'''
+		}
+		
+		'''«sanitizeID(member.name)»: data«implName»«arrays»;'''
+	}
+	
+	def private String translateMember(Member member) {
+		val baseTypeAndArrays = getBaseTypeAndArrays(member)
+		val baseType = baseTypeAndArrays.key
+		val arrays = baseTypeAndArrays.value
+		
+		val implName = if (baseType !== null) {
+			''' «sanitizeID(baseType.name)»_Platform.impl'''
+		}
+		
+		'''«sanitizeID(member.name)»: data«implName»«arrays»;'''
+	}
+	
+	def private Pair<NamedDefinition, String> getBaseTypeAndArrays(Member member) {
+		switch type : followReferences(member.type) {
+			BoundedSequence: followReferences(type.type) -> '''[«type.size»]'''
+			UnboundedSequence: followReferences(type.type) -> "[]"
+			ArrayType: followReferences(type.type) -> '''[«type.size»]'''
+			default: type -> ""
+		}
 	}
 }
