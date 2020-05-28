@@ -49,7 +49,6 @@ public class SimpleIDLParser extends AbstractContentAssistParser {
 		private static void init(ImmutableMap.Builder<AbstractElement, String> builder, SimpleIDLGrammarAccess grammarAccess) {
 			builder.put(grammarAccess.getDefinitionAccess().getAlternatives(), "rule__Definition__Alternatives");
 			builder.put(grammarAccess.getTypeAccess().getAlternatives(), "rule__Type__Alternatives");
-			builder.put(grammarAccess.getSimpleTypeSpecAccess().getAlternatives(), "rule__SimpleTypeSpec__Alternatives");
 			builder.put(grammarAccess.getDefinitionAccess().getGroup_0(), "rule__Definition__Group_0__0");
 			builder.put(grammarAccess.getDefinitionAccess().getGroup_1(), "rule__Definition__Group_1__0");
 			builder.put(grammarAccess.getDefinitionAccess().getGroup_2(), "rule__Definition__Group_2__0");
@@ -57,10 +56,11 @@ public class SimpleIDLParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getDefinitionAccess().getGroup_4(), "rule__Definition__Group_4__0");
 			builder.put(grammarAccess.getDefinitionAccess().getGroup_4_5(), "rule__Definition__Group_4_5__0");
 			builder.put(grammarAccess.getDefinitionAccess().getGroup_5(), "rule__Definition__Group_5__0");
+			builder.put(grammarAccess.getDefinitionAccess().getGroup_6(), "rule__Definition__Group_6__0");
 			builder.put(grammarAccess.getMemberAccess().getGroup(), "rule__Member__Group__0");
 			builder.put(grammarAccess.getCaseAccess().getGroup(), "rule__Case__Group__0");
 			builder.put(grammarAccess.getCaseAccess().getGroup_0(), "rule__Case__Group_0__0");
-			builder.put(grammarAccess.getFixedArraySizeAccess().getGroup(), "rule__FixedArraySize__Group__0");
+			builder.put(grammarAccess.getTypeAccess().getGroup_0(), "rule__Type__Group_0__0");
 			builder.put(grammarAccess.getTypeAccess().getGroup_1(), "rule__Type__Group_1__0");
 			builder.put(grammarAccess.getTypeAccess().getGroup_2(), "rule__Type__Group_2__0");
 			builder.put(grammarAccess.getTypeAccess().getGroup_3(), "rule__Type__Group_3__0");
@@ -68,20 +68,19 @@ public class SimpleIDLParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getTypeAccess().getGroup_5(), "rule__Type__Group_5__0");
 			builder.put(grammarAccess.getTypeAccess().getGroup_6(), "rule__Type__Group_6__0");
 			builder.put(grammarAccess.getTypeAccess().getGroup_7(), "rule__Type__Group_7__0");
-			builder.put(grammarAccess.getSimpleTypeSpecAccess().getGroup_0(), "rule__SimpleTypeSpec__Group_0__0");
-			builder.put(grammarAccess.getSimpleTypeSpecAccess().getGroup_1(), "rule__SimpleTypeSpec__Group_1__0");
-			builder.put(grammarAccess.getSimpleTypeSpecAccess().getGroup_2(), "rule__SimpleTypeSpec__Group_2__0");
-			builder.put(grammarAccess.getSimpleTypeSpecAccess().getGroup_3(), "rule__SimpleTypeSpec__Group_3__0");
-			builder.put(grammarAccess.getSimpleTypeSpecAccess().getGroup_4(), "rule__SimpleTypeSpec__Group_4__0");
-			builder.put(grammarAccess.getSimpleTypeSpecAccess().getGroup_5(), "rule__SimpleTypeSpec__Group_5__0");
-			builder.put(grammarAccess.getSimpleTypeSpecAccess().getGroup_6(), "rule__SimpleTypeSpec__Group_6__0");
-			builder.put(grammarAccess.getSimpleTypeSpecAccess().getGroup_7(), "rule__SimpleTypeSpec__Group_7__0");
-			builder.put(grammarAccess.getSimpleTypeSpecAccess().getGroup_8(), "rule__SimpleTypeSpec__Group_8__0");
-			builder.put(grammarAccess.getSimpleTypeSpecAccess().getGroup_9(), "rule__SimpleTypeSpec__Group_9__0");
-			builder.put(grammarAccess.getSimpleTypeSpecAccess().getGroup_10(), "rule__SimpleTypeSpec__Group_10__0");
-			builder.put(grammarAccess.getSimpleTypeSpecAccess().getGroup_11(), "rule__SimpleTypeSpec__Group_11__0");
-			builder.put(grammarAccess.getSimpleTypeSpecAccess().getGroup_12(), "rule__SimpleTypeSpec__Group_12__0");
-			builder.put(grammarAccess.getSimpleTypeSpecAccess().getGroup_13(), "rule__SimpleTypeSpec__Group_13__0");
+			builder.put(grammarAccess.getTypeAccess().getGroup_8(), "rule__Type__Group_8__0");
+			builder.put(grammarAccess.getTypeAccess().getGroup_9(), "rule__Type__Group_9__0");
+			builder.put(grammarAccess.getTypeAccess().getGroup_10(), "rule__Type__Group_10__0");
+			builder.put(grammarAccess.getTypeAccess().getGroup_11(), "rule__Type__Group_11__0");
+			builder.put(grammarAccess.getTypeAccess().getGroup_12(), "rule__Type__Group_12__0");
+			builder.put(grammarAccess.getTypeAccess().getGroup_13(), "rule__Type__Group_13__0");
+			builder.put(grammarAccess.getTypeAccess().getGroup_14(), "rule__Type__Group_14__0");
+			builder.put(grammarAccess.getTypeAccess().getGroup_15(), "rule__Type__Group_15__0");
+			builder.put(grammarAccess.getTypeAccess().getGroup_16(), "rule__Type__Group_16__0");
+			builder.put(grammarAccess.getTypeAccess().getGroup_17(), "rule__Type__Group_17__0");
+			builder.put(grammarAccess.getTypeAccess().getGroup_18(), "rule__Type__Group_18__0");
+			builder.put(grammarAccess.getTypeAccess().getGroup_19(), "rule__Type__Group_19__0");
+			builder.put(grammarAccess.getTypeAccess().getGroup_20(), "rule__Type__Group_20__0");
 			builder.put(grammarAccess.getScopedNameAccess().getGroup(), "rule__ScopedName__Group__0");
 			builder.put(grammarAccess.getScopedNameAccess().getGroup_1(), "rule__ScopedName__Group_1__0");
 			builder.put(grammarAccess.getSpecificationAccess().getDefinitionsAssignment(), "rule__Specification__DefinitionsAssignment");
@@ -97,21 +96,22 @@ public class SimpleIDLParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getDefinitionAccess().getLiteralsAssignment_4_5_1(), "rule__Definition__LiteralsAssignment_4_5_1");
 			builder.put(grammarAccess.getDefinitionAccess().getTypeAssignment_5_2(), "rule__Definition__TypeAssignment_5_2");
 			builder.put(grammarAccess.getDefinitionAccess().getNameAssignment_5_3(), "rule__Definition__NameAssignment_5_3");
-			builder.put(grammarAccess.getDefinitionAccess().getArraySizeAssignment_5_4(), "rule__Definition__ArraySizeAssignment_5_4");
+			builder.put(grammarAccess.getDefinitionAccess().getTypeAssignment_6_2(), "rule__Definition__TypeAssignment_6_2");
+			builder.put(grammarAccess.getDefinitionAccess().getNameAssignment_6_3(), "rule__Definition__NameAssignment_6_3");
+			builder.put(grammarAccess.getDefinitionAccess().getSizeAssignment_6_5(), "rule__Definition__SizeAssignment_6_5");
 			builder.put(grammarAccess.getMemberAccess().getTypeAssignment_0(), "rule__Member__TypeAssignment_0");
 			builder.put(grammarAccess.getMemberAccess().getNameAssignment_1(), "rule__Member__NameAssignment_1");
 			builder.put(grammarAccess.getCaseAccess().getLabelsAssignment_0_1(), "rule__Case__LabelsAssignment_0_1");
 			builder.put(grammarAccess.getCaseAccess().getTypeAssignment_1(), "rule__Case__TypeAssignment_1");
 			builder.put(grammarAccess.getCaseAccess().getNameAssignment_2(), "rule__Case__NameAssignment_2");
-			builder.put(grammarAccess.getFixedArraySizeAccess().getSizeAssignment_1(), "rule__FixedArraySize__SizeAssignment_1");
-			builder.put(grammarAccess.getTypeAccess().getTypeAssignment_1_3(), "rule__Type__TypeAssignment_1_3");
-			builder.put(grammarAccess.getTypeAccess().getSizeAssignment_1_5(), "rule__Type__SizeAssignment_1_5");
-			builder.put(grammarAccess.getTypeAccess().getTypeAssignment_2_3(), "rule__Type__TypeAssignment_2_3");
-			builder.put(grammarAccess.getTypeAccess().getSizeAssignment_3_3(), "rule__Type__SizeAssignment_3_3");
-			builder.put(grammarAccess.getTypeAccess().getSizeAssignment_5_3(), "rule__Type__SizeAssignment_5_3");
-			builder.put(grammarAccess.getTypeAccess().getTotalDigitsAssignment_7_3(), "rule__Type__TotalDigitsAssignment_7_3");
-			builder.put(grammarAccess.getTypeAccess().getFractionalDigitsAssignment_7_5(), "rule__Type__FractionalDigitsAssignment_7_5");
-			builder.put(grammarAccess.getSimpleTypeSpecAccess().getTypeAssignment_13_1(), "rule__SimpleTypeSpec__TypeAssignment_13_1");
+			builder.put(grammarAccess.getTypeAccess().getTypeAssignment_13_1(), "rule__Type__TypeAssignment_13_1");
+			builder.put(grammarAccess.getTypeAccess().getTypeAssignment_14_3(), "rule__Type__TypeAssignment_14_3");
+			builder.put(grammarAccess.getTypeAccess().getSizeAssignment_14_5(), "rule__Type__SizeAssignment_14_5");
+			builder.put(grammarAccess.getTypeAccess().getTypeAssignment_15_3(), "rule__Type__TypeAssignment_15_3");
+			builder.put(grammarAccess.getTypeAccess().getSizeAssignment_16_3(), "rule__Type__SizeAssignment_16_3");
+			builder.put(grammarAccess.getTypeAccess().getSizeAssignment_18_3(), "rule__Type__SizeAssignment_18_3");
+			builder.put(grammarAccess.getTypeAccess().getTotalDigitsAssignment_20_3(), "rule__Type__TotalDigitsAssignment_20_3");
+			builder.put(grammarAccess.getTypeAccess().getFractionalDigitsAssignment_20_5(), "rule__Type__FractionalDigitsAssignment_20_5");
 		}
 	}
 	

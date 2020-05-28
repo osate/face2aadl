@@ -28,6 +28,7 @@ import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 
 import org.eclipse.emf.ecore.EObject;
 
+import org.osate.simpleidl.simpleIDL.ArrayType;
 import org.osate.simpleidl.simpleIDL.BooleanType;
 import org.osate.simpleidl.simpleIDL.BoundedSequence;
 import org.osate.simpleidl.simpleIDL.BoundedString;
@@ -36,7 +37,6 @@ import org.osate.simpleidl.simpleIDL.Case;
 import org.osate.simpleidl.simpleIDL.CharType;
 import org.osate.simpleidl.simpleIDL.Definition;
 import org.osate.simpleidl.simpleIDL.DoubleType;
-import org.osate.simpleidl.simpleIDL.FixedArraySize;
 import org.osate.simpleidl.simpleIDL.FixedPtType;
 import org.osate.simpleidl.simpleIDL.FloatType;
 import org.osate.simpleidl.simpleIDL.LongDoubleType;
@@ -47,7 +47,6 @@ import org.osate.simpleidl.simpleIDL.SignedLongInt;
 import org.osate.simpleidl.simpleIDL.SignedLongLongInt;
 import org.osate.simpleidl.simpleIDL.SignedShortInt;
 import org.osate.simpleidl.simpleIDL.SimpleIDLPackage;
-import org.osate.simpleidl.simpleIDL.SimpleTypeSpec;
 import org.osate.simpleidl.simpleIDL.Specification;
 import org.osate.simpleidl.simpleIDL.Struct;
 import org.osate.simpleidl.simpleIDL.StructForward;
@@ -146,19 +145,9 @@ public class SimpleIDLAdapterFactory extends AdapterFactoryImpl
         return createCaseAdapter();
       }
       @Override
-      public Adapter caseFixedArraySize(FixedArraySize object)
-      {
-        return createFixedArraySizeAdapter();
-      }
-      @Override
       public Adapter caseType(Type object)
       {
         return createTypeAdapter();
-      }
-      @Override
-      public Adapter caseSimpleTypeSpec(SimpleTypeSpec object)
-      {
-        return createSimpleTypeSpecAdapter();
       }
       @Override
       public Adapter caseModule(org.osate.simpleidl.simpleIDL.Module object)
@@ -191,39 +180,9 @@ public class SimpleIDLAdapterFactory extends AdapterFactoryImpl
         return createTypedefAdapter();
       }
       @Override
-      public Adapter caseBoundedSequence(BoundedSequence object)
+      public Adapter caseArrayType(ArrayType object)
       {
-        return createBoundedSequenceAdapter();
-      }
-      @Override
-      public Adapter caseUnboundedSequence(UnboundedSequence object)
-      {
-        return createUnboundedSequenceAdapter();
-      }
-      @Override
-      public Adapter caseBoundedString(BoundedString object)
-      {
-        return createBoundedStringAdapter();
-      }
-      @Override
-      public Adapter caseUnboundedString(UnboundedString object)
-      {
-        return createUnboundedStringAdapter();
-      }
-      @Override
-      public Adapter caseBoundedWideString(BoundedWideString object)
-      {
-        return createBoundedWideStringAdapter();
-      }
-      @Override
-      public Adapter caseUnboundedWideString(UnboundedWideString object)
-      {
-        return createUnboundedWideStringAdapter();
-      }
-      @Override
-      public Adapter caseFixedPtType(FixedPtType object)
-      {
-        return createFixedPtTypeAdapter();
+        return createArrayTypeAdapter();
       }
       @Override
       public Adapter caseSignedShortInt(SignedShortInt object)
@@ -294,6 +253,41 @@ public class SimpleIDLAdapterFactory extends AdapterFactoryImpl
       public Adapter caseReferencedType(ReferencedType object)
       {
         return createReferencedTypeAdapter();
+      }
+      @Override
+      public Adapter caseBoundedSequence(BoundedSequence object)
+      {
+        return createBoundedSequenceAdapter();
+      }
+      @Override
+      public Adapter caseUnboundedSequence(UnboundedSequence object)
+      {
+        return createUnboundedSequenceAdapter();
+      }
+      @Override
+      public Adapter caseBoundedString(BoundedString object)
+      {
+        return createBoundedStringAdapter();
+      }
+      @Override
+      public Adapter caseUnboundedString(UnboundedString object)
+      {
+        return createUnboundedStringAdapter();
+      }
+      @Override
+      public Adapter caseBoundedWideString(BoundedWideString object)
+      {
+        return createBoundedWideStringAdapter();
+      }
+      @Override
+      public Adapter caseUnboundedWideString(UnboundedWideString object)
+      {
+        return createUnboundedWideStringAdapter();
+      }
+      @Override
+      public Adapter caseFixedPtType(FixedPtType object)
+      {
+        return createFixedPtTypeAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -378,21 +372,6 @@ public class SimpleIDLAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.osate.simpleidl.simpleIDL.FixedArraySize <em>Fixed Array Size</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.osate.simpleidl.simpleIDL.FixedArraySize
-   * @generated
-   */
-  public Adapter createFixedArraySizeAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link org.osate.simpleidl.simpleIDL.Type <em>Type</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -403,21 +382,6 @@ public class SimpleIDLAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createTypeAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.osate.simpleidl.simpleIDL.SimpleTypeSpec <em>Simple Type Spec</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.osate.simpleidl.simpleIDL.SimpleTypeSpec
-   * @generated
-   */
-  public Adapter createSimpleTypeSpecAdapter()
   {
     return null;
   }
@@ -513,106 +477,16 @@ public class SimpleIDLAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.osate.simpleidl.simpleIDL.BoundedSequence <em>Bounded Sequence</em>}'.
+   * Creates a new adapter for an object of class '{@link org.osate.simpleidl.simpleIDL.ArrayType <em>Array Type</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.osate.simpleidl.simpleIDL.BoundedSequence
+   * @see org.osate.simpleidl.simpleIDL.ArrayType
    * @generated
    */
-  public Adapter createBoundedSequenceAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.osate.simpleidl.simpleIDL.UnboundedSequence <em>Unbounded Sequence</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.osate.simpleidl.simpleIDL.UnboundedSequence
-   * @generated
-   */
-  public Adapter createUnboundedSequenceAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.osate.simpleidl.simpleIDL.BoundedString <em>Bounded String</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.osate.simpleidl.simpleIDL.BoundedString
-   * @generated
-   */
-  public Adapter createBoundedStringAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.osate.simpleidl.simpleIDL.UnboundedString <em>Unbounded String</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.osate.simpleidl.simpleIDL.UnboundedString
-   * @generated
-   */
-  public Adapter createUnboundedStringAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.osate.simpleidl.simpleIDL.BoundedWideString <em>Bounded Wide String</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.osate.simpleidl.simpleIDL.BoundedWideString
-   * @generated
-   */
-  public Adapter createBoundedWideStringAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.osate.simpleidl.simpleIDL.UnboundedWideString <em>Unbounded Wide String</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.osate.simpleidl.simpleIDL.UnboundedWideString
-   * @generated
-   */
-  public Adapter createUnboundedWideStringAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.osate.simpleidl.simpleIDL.FixedPtType <em>Fixed Pt Type</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.osate.simpleidl.simpleIDL.FixedPtType
-   * @generated
-   */
-  public Adapter createFixedPtTypeAdapter()
+  public Adapter createArrayTypeAdapter()
   {
     return null;
   }
@@ -823,6 +697,111 @@ public class SimpleIDLAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createReferencedTypeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.osate.simpleidl.simpleIDL.BoundedSequence <em>Bounded Sequence</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.osate.simpleidl.simpleIDL.BoundedSequence
+   * @generated
+   */
+  public Adapter createBoundedSequenceAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.osate.simpleidl.simpleIDL.UnboundedSequence <em>Unbounded Sequence</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.osate.simpleidl.simpleIDL.UnboundedSequence
+   * @generated
+   */
+  public Adapter createUnboundedSequenceAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.osate.simpleidl.simpleIDL.BoundedString <em>Bounded String</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.osate.simpleidl.simpleIDL.BoundedString
+   * @generated
+   */
+  public Adapter createBoundedStringAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.osate.simpleidl.simpleIDL.UnboundedString <em>Unbounded String</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.osate.simpleidl.simpleIDL.UnboundedString
+   * @generated
+   */
+  public Adapter createUnboundedStringAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.osate.simpleidl.simpleIDL.BoundedWideString <em>Bounded Wide String</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.osate.simpleidl.simpleIDL.BoundedWideString
+   * @generated
+   */
+  public Adapter createBoundedWideStringAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.osate.simpleidl.simpleIDL.UnboundedWideString <em>Unbounded Wide String</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.osate.simpleidl.simpleIDL.UnboundedWideString
+   * @generated
+   */
+  public Adapter createUnboundedWideStringAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.osate.simpleidl.simpleIDL.FixedPtType <em>Fixed Pt Type</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.osate.simpleidl.simpleIDL.FixedPtType
+   * @generated
+   */
+  public Adapter createFixedPtTypeAdapter()
   {
     return null;
   }

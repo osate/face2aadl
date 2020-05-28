@@ -32,6 +32,6 @@ package org.osate.simpleidl.simpleIDL;
  * @model
  * @generated
  */
-public interface FloatType extends SimpleTypeSpec
+public interface FloatType extends Type
 {
 } // FloatType

@@ -33,7 +33,7 @@ import org.osate.simpleidl.simpleIDL.WideCharType;
  *
  * @generated
  */
-public class WideCharTypeImpl extends SimpleTypeSpecImpl implements WideCharType
+public class WideCharTypeImpl extends TypeImpl implements WideCharType
 {
   /**
    * <!-- begin-user-doc -->

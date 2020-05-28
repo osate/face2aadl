@@ -32,6 +32,6 @@ package org.osate.simpleidl.simpleIDL;
  * @model
  * @generated
  */
-public interface CharType extends SimpleTypeSpec
+public interface CharType extends Type
 {
 } // CharType

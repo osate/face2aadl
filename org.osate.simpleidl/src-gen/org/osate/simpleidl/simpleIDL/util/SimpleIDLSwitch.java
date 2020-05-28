@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EPackage;
 
 import org.eclipse.emf.ecore.util.Switch;
 
+import org.osate.simpleidl.simpleIDL.ArrayType;
 import org.osate.simpleidl.simpleIDL.BooleanType;
 import org.osate.simpleidl.simpleIDL.BoundedSequence;
 import org.osate.simpleidl.simpleIDL.BoundedString;
@@ -34,7 +35,6 @@ import org.osate.simpleidl.simpleIDL.Case;
 import org.osate.simpleidl.simpleIDL.CharType;
 import org.osate.simpleidl.simpleIDL.Definition;
 import org.osate.simpleidl.simpleIDL.DoubleType;
-import org.osate.simpleidl.simpleIDL.FixedArraySize;
 import org.osate.simpleidl.simpleIDL.FixedPtType;
 import org.osate.simpleidl.simpleIDL.FloatType;
 import org.osate.simpleidl.simpleIDL.LongDoubleType;
@@ -45,7 +45,6 @@ import org.osate.simpleidl.simpleIDL.SignedLongInt;
 import org.osate.simpleidl.simpleIDL.SignedLongLongInt;
 import org.osate.simpleidl.simpleIDL.SignedShortInt;
 import org.osate.simpleidl.simpleIDL.SimpleIDLPackage;
-import org.osate.simpleidl.simpleIDL.SimpleTypeSpec;
 import org.osate.simpleidl.simpleIDL.Specification;
 import org.osate.simpleidl.simpleIDL.Struct;
 import org.osate.simpleidl.simpleIDL.StructForward;
@@ -151,25 +150,10 @@ public class SimpleIDLSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case SimpleIDLPackage.FIXED_ARRAY_SIZE:
-      {
-        FixedArraySize fixedArraySize = (FixedArraySize)theEObject;
-        T result = caseFixedArraySize(fixedArraySize);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case SimpleIDLPackage.TYPE:
       {
         Type type = (Type)theEObject;
         T result = caseType(type);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case SimpleIDLPackage.SIMPLE_TYPE_SPEC:
-      {
-        SimpleTypeSpec simpleTypeSpec = (SimpleTypeSpec)theEObject;
-        T result = caseSimpleTypeSpec(simpleTypeSpec);
-        if (result == null) result = caseType(simpleTypeSpec);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -218,6 +202,126 @@ public class SimpleIDLSwitch<T> extends Switch<T>
         Typedef typedef = (Typedef)theEObject;
         T result = caseTypedef(typedef);
         if (result == null) result = caseDefinition(typedef);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SimpleIDLPackage.ARRAY_TYPE:
+      {
+        ArrayType arrayType = (ArrayType)theEObject;
+        T result = caseArrayType(arrayType);
+        if (result == null) result = caseDefinition(arrayType);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SimpleIDLPackage.SIGNED_SHORT_INT:
+      {
+        SignedShortInt signedShortInt = (SignedShortInt)theEObject;
+        T result = caseSignedShortInt(signedShortInt);
+        if (result == null) result = caseType(signedShortInt);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SimpleIDLPackage.SIGNED_LONG_INT:
+      {
+        SignedLongInt signedLongInt = (SignedLongInt)theEObject;
+        T result = caseSignedLongInt(signedLongInt);
+        if (result == null) result = caseType(signedLongInt);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SimpleIDLPackage.SIGNED_LONG_LONG_INT:
+      {
+        SignedLongLongInt signedLongLongInt = (SignedLongLongInt)theEObject;
+        T result = caseSignedLongLongInt(signedLongLongInt);
+        if (result == null) result = caseType(signedLongLongInt);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SimpleIDLPackage.UNSIGNED_SHORT_INT:
+      {
+        UnsignedShortInt unsignedShortInt = (UnsignedShortInt)theEObject;
+        T result = caseUnsignedShortInt(unsignedShortInt);
+        if (result == null) result = caseType(unsignedShortInt);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SimpleIDLPackage.UNSIGNED_LONG_INT:
+      {
+        UnsignedLongInt unsignedLongInt = (UnsignedLongInt)theEObject;
+        T result = caseUnsignedLongInt(unsignedLongInt);
+        if (result == null) result = caseType(unsignedLongInt);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SimpleIDLPackage.UNSIGNED_LONG_LONG_INT:
+      {
+        UnsignedLongLongInt unsignedLongLongInt = (UnsignedLongLongInt)theEObject;
+        T result = caseUnsignedLongLongInt(unsignedLongLongInt);
+        if (result == null) result = caseType(unsignedLongLongInt);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SimpleIDLPackage.FLOAT_TYPE:
+      {
+        FloatType floatType = (FloatType)theEObject;
+        T result = caseFloatType(floatType);
+        if (result == null) result = caseType(floatType);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SimpleIDLPackage.DOUBLE_TYPE:
+      {
+        DoubleType doubleType = (DoubleType)theEObject;
+        T result = caseDoubleType(doubleType);
+        if (result == null) result = caseType(doubleType);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SimpleIDLPackage.LONG_DOUBLE_TYPE:
+      {
+        LongDoubleType longDoubleType = (LongDoubleType)theEObject;
+        T result = caseLongDoubleType(longDoubleType);
+        if (result == null) result = caseType(longDoubleType);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SimpleIDLPackage.CHAR_TYPE:
+      {
+        CharType charType = (CharType)theEObject;
+        T result = caseCharType(charType);
+        if (result == null) result = caseType(charType);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SimpleIDLPackage.WIDE_CHAR_TYPE:
+      {
+        WideCharType wideCharType = (WideCharType)theEObject;
+        T result = caseWideCharType(wideCharType);
+        if (result == null) result = caseType(wideCharType);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SimpleIDLPackage.BOOLEAN_TYPE:
+      {
+        BooleanType booleanType = (BooleanType)theEObject;
+        T result = caseBooleanType(booleanType);
+        if (result == null) result = caseType(booleanType);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SimpleIDLPackage.OCTET_TYPE:
+      {
+        OctetType octetType = (OctetType)theEObject;
+        T result = caseOctetType(octetType);
+        if (result == null) result = caseType(octetType);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SimpleIDLPackage.REFERENCED_TYPE:
+      {
+        ReferencedType referencedType = (ReferencedType)theEObject;
+        T result = caseReferencedType(referencedType);
+        if (result == null) result = caseType(referencedType);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -274,132 +378,6 @@ public class SimpleIDLSwitch<T> extends Switch<T>
         FixedPtType fixedPtType = (FixedPtType)theEObject;
         T result = caseFixedPtType(fixedPtType);
         if (result == null) result = caseType(fixedPtType);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case SimpleIDLPackage.SIGNED_SHORT_INT:
-      {
-        SignedShortInt signedShortInt = (SignedShortInt)theEObject;
-        T result = caseSignedShortInt(signedShortInt);
-        if (result == null) result = caseSimpleTypeSpec(signedShortInt);
-        if (result == null) result = caseType(signedShortInt);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case SimpleIDLPackage.SIGNED_LONG_INT:
-      {
-        SignedLongInt signedLongInt = (SignedLongInt)theEObject;
-        T result = caseSignedLongInt(signedLongInt);
-        if (result == null) result = caseSimpleTypeSpec(signedLongInt);
-        if (result == null) result = caseType(signedLongInt);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case SimpleIDLPackage.SIGNED_LONG_LONG_INT:
-      {
-        SignedLongLongInt signedLongLongInt = (SignedLongLongInt)theEObject;
-        T result = caseSignedLongLongInt(signedLongLongInt);
-        if (result == null) result = caseSimpleTypeSpec(signedLongLongInt);
-        if (result == null) result = caseType(signedLongLongInt);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case SimpleIDLPackage.UNSIGNED_SHORT_INT:
-      {
-        UnsignedShortInt unsignedShortInt = (UnsignedShortInt)theEObject;
-        T result = caseUnsignedShortInt(unsignedShortInt);
-        if (result == null) result = caseSimpleTypeSpec(unsignedShortInt);
-        if (result == null) result = caseType(unsignedShortInt);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case SimpleIDLPackage.UNSIGNED_LONG_INT:
-      {
-        UnsignedLongInt unsignedLongInt = (UnsignedLongInt)theEObject;
-        T result = caseUnsignedLongInt(unsignedLongInt);
-        if (result == null) result = caseSimpleTypeSpec(unsignedLongInt);
-        if (result == null) result = caseType(unsignedLongInt);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case SimpleIDLPackage.UNSIGNED_LONG_LONG_INT:
-      {
-        UnsignedLongLongInt unsignedLongLongInt = (UnsignedLongLongInt)theEObject;
-        T result = caseUnsignedLongLongInt(unsignedLongLongInt);
-        if (result == null) result = caseSimpleTypeSpec(unsignedLongLongInt);
-        if (result == null) result = caseType(unsignedLongLongInt);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case SimpleIDLPackage.FLOAT_TYPE:
-      {
-        FloatType floatType = (FloatType)theEObject;
-        T result = caseFloatType(floatType);
-        if (result == null) result = caseSimpleTypeSpec(floatType);
-        if (result == null) result = caseType(floatType);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case SimpleIDLPackage.DOUBLE_TYPE:
-      {
-        DoubleType doubleType = (DoubleType)theEObject;
-        T result = caseDoubleType(doubleType);
-        if (result == null) result = caseSimpleTypeSpec(doubleType);
-        if (result == null) result = caseType(doubleType);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case SimpleIDLPackage.LONG_DOUBLE_TYPE:
-      {
-        LongDoubleType longDoubleType = (LongDoubleType)theEObject;
-        T result = caseLongDoubleType(longDoubleType);
-        if (result == null) result = caseSimpleTypeSpec(longDoubleType);
-        if (result == null) result = caseType(longDoubleType);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case SimpleIDLPackage.CHAR_TYPE:
-      {
-        CharType charType = (CharType)theEObject;
-        T result = caseCharType(charType);
-        if (result == null) result = caseSimpleTypeSpec(charType);
-        if (result == null) result = caseType(charType);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case SimpleIDLPackage.WIDE_CHAR_TYPE:
-      {
-        WideCharType wideCharType = (WideCharType)theEObject;
-        T result = caseWideCharType(wideCharType);
-        if (result == null) result = caseSimpleTypeSpec(wideCharType);
-        if (result == null) result = caseType(wideCharType);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case SimpleIDLPackage.BOOLEAN_TYPE:
-      {
-        BooleanType booleanType = (BooleanType)theEObject;
-        T result = caseBooleanType(booleanType);
-        if (result == null) result = caseSimpleTypeSpec(booleanType);
-        if (result == null) result = caseType(booleanType);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case SimpleIDLPackage.OCTET_TYPE:
-      {
-        OctetType octetType = (OctetType)theEObject;
-        T result = caseOctetType(octetType);
-        if (result == null) result = caseSimpleTypeSpec(octetType);
-        if (result == null) result = caseType(octetType);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case SimpleIDLPackage.REFERENCED_TYPE:
-      {
-        ReferencedType referencedType = (ReferencedType)theEObject;
-        T result = caseReferencedType(referencedType);
-        if (result == null) result = caseSimpleTypeSpec(referencedType);
-        if (result == null) result = caseType(referencedType);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -472,22 +450,6 @@ public class SimpleIDLSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Fixed Array Size</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Fixed Array Size</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseFixedArraySize(FixedArraySize object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Type</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -499,22 +461,6 @@ public class SimpleIDLSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseType(Type object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Simple Type Spec</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Simple Type Spec</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseSimpleTypeSpec(SimpleTypeSpec object)
   {
     return null;
   }
@@ -616,113 +562,17 @@ public class SimpleIDLSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Bounded Sequence</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Array Type</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Bounded Sequence</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Array Type</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseBoundedSequence(BoundedSequence object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Unbounded Sequence</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Unbounded Sequence</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseUnboundedSequence(UnboundedSequence object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Bounded String</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Bounded String</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseBoundedString(BoundedString object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Unbounded String</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Unbounded String</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseUnboundedString(UnboundedString object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Bounded Wide String</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Bounded Wide String</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseBoundedWideString(BoundedWideString object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Unbounded Wide String</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Unbounded Wide String</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseUnboundedWideString(UnboundedWideString object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Fixed Pt Type</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Fixed Pt Type</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseFixedPtType(FixedPtType object)
+  public T caseArrayType(ArrayType object)
   {
     return null;
   }
@@ -947,6 +797,118 @@ public class SimpleIDLSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseReferencedType(ReferencedType object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Bounded Sequence</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Bounded Sequence</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseBoundedSequence(BoundedSequence object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Unbounded Sequence</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Unbounded Sequence</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseUnboundedSequence(UnboundedSequence object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Bounded String</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Bounded String</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseBoundedString(BoundedString object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Unbounded String</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Unbounded String</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseUnboundedString(UnboundedString object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Bounded Wide String</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Bounded Wide String</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseBoundedWideString(BoundedWideString object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Unbounded Wide String</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Unbounded Wide String</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseUnboundedWideString(UnboundedWideString object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Fixed Pt Type</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Fixed Pt Type</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseFixedPtType(FixedPtType object)
   {
     return null;
   }

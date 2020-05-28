@@ -78,15 +78,6 @@ public interface SimpleIDLFactory extends EFactory
   Case createCase();
 
   /**
-   * Returns a new object of class '<em>Fixed Array Size</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Fixed Array Size</em>'.
-   * @generated
-   */
-  FixedArraySize createFixedArraySize();
-
-  /**
    * Returns a new object of class '<em>Type</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -94,15 +85,6 @@ public interface SimpleIDLFactory extends EFactory
    * @generated
    */
   Type createType();
-
-  /**
-   * Returns a new object of class '<em>Simple Type Spec</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Simple Type Spec</em>'.
-   * @generated
-   */
-  SimpleTypeSpec createSimpleTypeSpec();
 
   /**
    * Returns a new object of class '<em>Module</em>'.
@@ -159,67 +141,13 @@ public interface SimpleIDLFactory extends EFactory
   Typedef createTypedef();
 
   /**
-   * Returns a new object of class '<em>Bounded Sequence</em>'.
+   * Returns a new object of class '<em>Array Type</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Bounded Sequence</em>'.
+   * @return a new object of class '<em>Array Type</em>'.
    * @generated
    */
-  BoundedSequence createBoundedSequence();
-
-  /**
-   * Returns a new object of class '<em>Unbounded Sequence</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Unbounded Sequence</em>'.
-   * @generated
-   */
-  UnboundedSequence createUnboundedSequence();
-
-  /**
-   * Returns a new object of class '<em>Bounded String</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Bounded String</em>'.
-   * @generated
-   */
-  BoundedString createBoundedString();
-
-  /**
-   * Returns a new object of class '<em>Unbounded String</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Unbounded String</em>'.
-   * @generated
-   */
-  UnboundedString createUnboundedString();
-
-  /**
-   * Returns a new object of class '<em>Bounded Wide String</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Bounded Wide String</em>'.
-   * @generated
-   */
-  BoundedWideString createBoundedWideString();
-
-  /**
-   * Returns a new object of class '<em>Unbounded Wide String</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Unbounded Wide String</em>'.
-   * @generated
-   */
-  UnboundedWideString createUnboundedWideString();
-
-  /**
-   * Returns a new object of class '<em>Fixed Pt Type</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Fixed Pt Type</em>'.
-   * @generated
-   */
-  FixedPtType createFixedPtType();
+  ArrayType createArrayType();
 
   /**
    * Returns a new object of class '<em>Signed Short Int</em>'.
@@ -346,6 +274,69 @@ public interface SimpleIDLFactory extends EFactory
    * @generated
    */
   ReferencedType createReferencedType();
+
+  /**
+   * Returns a new object of class '<em>Bounded Sequence</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Bounded Sequence</em>'.
+   * @generated
+   */
+  BoundedSequence createBoundedSequence();
+
+  /**
+   * Returns a new object of class '<em>Unbounded Sequence</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Unbounded Sequence</em>'.
+   * @generated
+   */
+  UnboundedSequence createUnboundedSequence();
+
+  /**
+   * Returns a new object of class '<em>Bounded String</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Bounded String</em>'.
+   * @generated
+   */
+  BoundedString createBoundedString();
+
+  /**
+   * Returns a new object of class '<em>Unbounded String</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Unbounded String</em>'.
+   * @generated
+   */
+  UnboundedString createUnboundedString();
+
+  /**
+   * Returns a new object of class '<em>Bounded Wide String</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Bounded Wide String</em>'.
+   * @generated
+   */
+  BoundedWideString createBoundedWideString();
+
+  /**
+   * Returns a new object of class '<em>Unbounded Wide String</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Unbounded Wide String</em>'.
+   * @generated
+   */
+  UnboundedWideString createUnboundedWideString();
+
+  /**
+   * Returns a new object of class '<em>Fixed Pt Type</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Fixed Pt Type</em>'.
+   * @generated
+   */
+  FixedPtType createFixedPtType();
 
   /**
    * Returns the package supported by this factory.

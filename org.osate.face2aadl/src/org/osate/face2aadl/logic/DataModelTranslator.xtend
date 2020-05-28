@@ -44,6 +44,7 @@ import org.eclipse.xtext.resource.IResourceDescriptions
 import org.eclipse.xtext.resource.IResourceDescriptionsProvider
 import org.eclipse.xtext.util.Triple
 import org.eclipse.xtext.util.Tuples
+import org.osate.simpleidl.simpleIDL.ArrayType
 import org.osate.simpleidl.simpleIDL.BooleanType
 import org.osate.simpleidl.simpleIDL.BoundedSequence
 import org.osate.simpleidl.simpleIDL.BoundedString
@@ -63,7 +64,6 @@ import org.osate.simpleidl.simpleIDL.SignedLongLongInt
 import org.osate.simpleidl.simpleIDL.SignedShortInt
 import org.osate.simpleidl.simpleIDL.SimpleIDLPackage
 import org.osate.simpleidl.simpleIDL.Struct
-import org.osate.simpleidl.simpleIDL.Type
 import org.osate.simpleidl.simpleIDL.Typedef
 import org.osate.simpleidl.simpleIDL.UnboundedSequence
 import org.osate.simpleidl.simpleIDL.UnboundedString
@@ -204,7 +204,7 @@ package class DataModelTranslator {
 							LongDoubleType: " extends Base_Types::Float"
 							CharType: " extends Base_Types::Character"
 							BooleanType: " extends Base_Types::Boolean"
-							BoundedString: " extends Base_Types::String"
+							BoundedString,
 							UnboundedString: " extends Base_Types::String"
 						}
 					}
@@ -268,10 +268,10 @@ package class DataModelTranslator {
 				switch typedefType : type.type {
 					BoundedSequence: followReferences(typedefType.type) -> '''[«typedefType.size»]'''
 					UnboundedSequence: followReferences(typedefType.type) -> "[]"
-					case type.arraySize !== null: followReferences(typedefType) -> '''[«type.arraySize.size»]'''
 					default: type -> ""
 				}
 			}
+			ArrayType: followReferences(type.type) -> '''[«type.size»]'''
 			default: type -> ""
 		}
 	}
@@ -419,19 +419,11 @@ package class DataModelTranslator {
 		switch definition {
 			Typedef: {
 				switch type : definition.type {
-					ReferencedType case definition.arraySize === null: followReferences(type.type)
+					ReferencedType: followReferences(type.type)
 					default: definition
 				}
 			}
 			default: definition
-		}
-	}
-	
-	def private Definition followReferences(Type type) {
-		if (type instanceof ReferencedType) {
-			followReferences(type.type)
-		} else {
-			throw new UnsupportedOperationException("Type is not a Referencedtype")
 		}
 	}
 	

@@ -45,7 +45,7 @@ import org.osate.simpleidl.simpleIDL.SimpleIDLPackage;
  *
  * @generated
  */
-public class ReferencedTypeImpl extends SimpleTypeSpecImpl implements ReferencedType
+public class ReferencedTypeImpl extends TypeImpl implements ReferencedType
 {
   /**
    * The cached value of the '{@link #getType() <em>Type</em>}' reference.

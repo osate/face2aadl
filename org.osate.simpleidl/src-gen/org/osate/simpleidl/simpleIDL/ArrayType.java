@@ -24,44 +24,45 @@ package org.osate.simpleidl.simpleIDL;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Typedef</b></em>'.
+ * A representation of the model object '<em><b>Array Type</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.osate.simpleidl.simpleIDL.Typedef#getType <em>Type</em>}</li>
- *   <li>{@link org.osate.simpleidl.simpleIDL.Typedef#getName <em>Name</em>}</li>
+ *   <li>{@link org.osate.simpleidl.simpleIDL.ArrayType#getType <em>Type</em>}</li>
+ *   <li>{@link org.osate.simpleidl.simpleIDL.ArrayType#getName <em>Name</em>}</li>
+ *   <li>{@link org.osate.simpleidl.simpleIDL.ArrayType#getSize <em>Size</em>}</li>
  * </ul>
  *
- * @see org.osate.simpleidl.simpleIDL.SimpleIDLPackage#getTypedef()
+ * @see org.osate.simpleidl.simpleIDL.SimpleIDLPackage#getArrayType()
  * @model
  * @generated
  */
-public interface Typedef extends Definition
+public interface ArrayType extends Definition
 {
   /**
-   * Returns the value of the '<em><b>Type</b></em>' containment reference.
+   * Returns the value of the '<em><b>Type</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Type</em>' containment reference.
-   * @see #setType(Type)
-   * @see org.osate.simpleidl.simpleIDL.SimpleIDLPackage#getTypedef_Type()
-   * @model containment="true"
+   * @return the value of the '<em>Type</em>' reference.
+   * @see #setType(Definition)
+   * @see org.osate.simpleidl.simpleIDL.SimpleIDLPackage#getArrayType_Type()
+   * @model
    * @generated
    */
-  Type getType();
+  Definition getType();
 
   /**
-   * Sets the value of the '{@link org.osate.simpleidl.simpleIDL.Typedef#getType <em>Type</em>}' containment reference.
+   * Sets the value of the '{@link org.osate.simpleidl.simpleIDL.ArrayType#getType <em>Type</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Type</em>' containment reference.
+   * @param value the new value of the '<em>Type</em>' reference.
    * @see #getType()
    * @generated
    */
-  void setType(Type value);
+  void setType(Definition value);
 
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.
@@ -69,14 +70,14 @@ public interface Typedef extends Definition
    * <!-- end-user-doc -->
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
-   * @see org.osate.simpleidl.simpleIDL.SimpleIDLPackage#getTypedef_Name()
+   * @see org.osate.simpleidl.simpleIDL.SimpleIDLPackage#getArrayType_Name()
    * @model
    * @generated
    */
   String getName();
 
   /**
-   * Sets the value of the '{@link org.osate.simpleidl.simpleIDL.Typedef#getName <em>Name</em>}' attribute.
+   * Sets the value of the '{@link org.osate.simpleidl.simpleIDL.ArrayType#getName <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Name</em>' attribute.
@@ -85,4 +86,26 @@ public interface Typedef extends Definition
    */
   void setName(String value);
 
-} // Typedef
+  /**
+   * Returns the value of the '<em><b>Size</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Size</em>' attribute.
+   * @see #setSize(int)
+   * @see org.osate.simpleidl.simpleIDL.SimpleIDLPackage#getArrayType_Size()
+   * @model
+   * @generated
+   */
+  int getSize();
+
+  /**
+   * Sets the value of the '{@link org.osate.simpleidl.simpleIDL.ArrayType#getSize <em>Size</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Size</em>' attribute.
+   * @see #getSize()
+   * @generated
+   */
+  void setSize(int value);
+
+} // ArrayType

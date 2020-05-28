@@ -31,6 +31,7 @@ import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
 import org.eclipse.xtext.serializer.sequencer.AbstractDelegatingSemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
 import org.osate.simpleidl.services.SimpleIDLGrammarAccess;
+import org.osate.simpleidl.simpleIDL.ArrayType;
 import org.osate.simpleidl.simpleIDL.BooleanType;
 import org.osate.simpleidl.simpleIDL.BoundedSequence;
 import org.osate.simpleidl.simpleIDL.BoundedString;
@@ -38,7 +39,6 @@ import org.osate.simpleidl.simpleIDL.BoundedWideString;
 import org.osate.simpleidl.simpleIDL.Case;
 import org.osate.simpleidl.simpleIDL.CharType;
 import org.osate.simpleidl.simpleIDL.DoubleType;
-import org.osate.simpleidl.simpleIDL.FixedArraySize;
 import org.osate.simpleidl.simpleIDL.FixedPtType;
 import org.osate.simpleidl.simpleIDL.FloatType;
 import org.osate.simpleidl.simpleIDL.LongDoubleType;
@@ -76,8 +76,11 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 		Set<Parameter> parameters = context.getEnabledBooleanParameters();
 		if (epackage == SimpleIDLPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
+			case SimpleIDLPackage.ARRAY_TYPE:
+				sequence_Definition(context, (ArrayType) semanticObject); 
+				return; 
 			case SimpleIDLPackage.BOOLEAN_TYPE:
-				sequence_SimpleTypeSpec(context, (BooleanType) semanticObject); 
+				sequence_Type(context, (BooleanType) semanticObject); 
 				return; 
 			case SimpleIDLPackage.BOUNDED_SEQUENCE:
 				sequence_Type(context, (BoundedSequence) semanticObject); 
@@ -92,25 +95,22 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 				sequence_Case(context, (Case) semanticObject); 
 				return; 
 			case SimpleIDLPackage.CHAR_TYPE:
-				sequence_SimpleTypeSpec(context, (CharType) semanticObject); 
+				sequence_Type(context, (CharType) semanticObject); 
 				return; 
 			case SimpleIDLPackage.DOUBLE_TYPE:
-				sequence_SimpleTypeSpec(context, (DoubleType) semanticObject); 
+				sequence_Type(context, (DoubleType) semanticObject); 
 				return; 
 			case SimpleIDLPackage.ENUM:
 				sequence_Definition(context, (org.osate.simpleidl.simpleIDL.Enum) semanticObject); 
-				return; 
-			case SimpleIDLPackage.FIXED_ARRAY_SIZE:
-				sequence_FixedArraySize(context, (FixedArraySize) semanticObject); 
 				return; 
 			case SimpleIDLPackage.FIXED_PT_TYPE:
 				sequence_Type(context, (FixedPtType) semanticObject); 
 				return; 
 			case SimpleIDLPackage.FLOAT_TYPE:
-				sequence_SimpleTypeSpec(context, (FloatType) semanticObject); 
+				sequence_Type(context, (FloatType) semanticObject); 
 				return; 
 			case SimpleIDLPackage.LONG_DOUBLE_TYPE:
-				sequence_SimpleTypeSpec(context, (LongDoubleType) semanticObject); 
+				sequence_Type(context, (LongDoubleType) semanticObject); 
 				return; 
 			case SimpleIDLPackage.MEMBER:
 				sequence_Member(context, (Member) semanticObject); 
@@ -119,19 +119,19 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 				sequence_Definition(context, (org.osate.simpleidl.simpleIDL.Module) semanticObject); 
 				return; 
 			case SimpleIDLPackage.OCTET_TYPE:
-				sequence_SimpleTypeSpec(context, (OctetType) semanticObject); 
+				sequence_Type(context, (OctetType) semanticObject); 
 				return; 
 			case SimpleIDLPackage.REFERENCED_TYPE:
-				sequence_SimpleTypeSpec(context, (ReferencedType) semanticObject); 
+				sequence_Type(context, (ReferencedType) semanticObject); 
 				return; 
 			case SimpleIDLPackage.SIGNED_LONG_INT:
-				sequence_SimpleTypeSpec(context, (SignedLongInt) semanticObject); 
+				sequence_Type(context, (SignedLongInt) semanticObject); 
 				return; 
 			case SimpleIDLPackage.SIGNED_LONG_LONG_INT:
-				sequence_SimpleTypeSpec(context, (SignedLongLongInt) semanticObject); 
+				sequence_Type(context, (SignedLongLongInt) semanticObject); 
 				return; 
 			case SimpleIDLPackage.SIGNED_SHORT_INT:
-				sequence_SimpleTypeSpec(context, (SignedShortInt) semanticObject); 
+				sequence_Type(context, (SignedShortInt) semanticObject); 
 				return; 
 			case SimpleIDLPackage.SPECIFICATION:
 				sequence_Specification(context, (Specification) semanticObject); 
@@ -158,16 +158,16 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 				sequence_Definition(context, (Union) semanticObject); 
 				return; 
 			case SimpleIDLPackage.UNSIGNED_LONG_INT:
-				sequence_SimpleTypeSpec(context, (UnsignedLongInt) semanticObject); 
+				sequence_Type(context, (UnsignedLongInt) semanticObject); 
 				return; 
 			case SimpleIDLPackage.UNSIGNED_LONG_LONG_INT:
-				sequence_SimpleTypeSpec(context, (UnsignedLongLongInt) semanticObject); 
+				sequence_Type(context, (UnsignedLongLongInt) semanticObject); 
 				return; 
 			case SimpleIDLPackage.UNSIGNED_SHORT_INT:
-				sequence_SimpleTypeSpec(context, (UnsignedShortInt) semanticObject); 
+				sequence_Type(context, (UnsignedShortInt) semanticObject); 
 				return; 
 			case SimpleIDLPackage.WIDE_CHAR_TYPE:
-				sequence_SimpleTypeSpec(context, (WideCharType) semanticObject); 
+				sequence_Type(context, (WideCharType) semanticObject); 
 				return; 
 			}
 		if (errorAcceptor != null)
@@ -179,10 +179,34 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	 *     Case returns Case
 	 *
 	 * Constraint:
-	 *     (labels+=INT+ type=SimpleTypeSpec name=ID)
+	 *     (labels+=INT+ type=[Definition|ScopedName] name=ID)
 	 */
 	protected void sequence_Case(ISerializationContext context, Case semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Definition returns ArrayType
+	 *
+	 * Constraint:
+	 *     (type=[Definition|ScopedName] name=ID size=INT)
+	 */
+	protected void sequence_Definition(ISerializationContext context, ArrayType semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, SimpleIDLPackage.Literals.ARRAY_TYPE__TYPE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SimpleIDLPackage.Literals.ARRAY_TYPE__TYPE));
+			if (transientValues.isValueTransient(semanticObject, SimpleIDLPackage.Literals.ARRAY_TYPE__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SimpleIDLPackage.Literals.ARRAY_TYPE__NAME));
+			if (transientValues.isValueTransient(semanticObject, SimpleIDLPackage.Literals.ARRAY_TYPE__SIZE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SimpleIDLPackage.Literals.ARRAY_TYPE__SIZE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getDefinitionAccess().getTypeDefinitionScopedNameParserRuleCall_6_2_0_1(), semanticObject.eGet(SimpleIDLPackage.Literals.ARRAY_TYPE__TYPE, false));
+		feeder.accept(grammarAccess.getDefinitionAccess().getNameIDTerminalRuleCall_6_3_0(), semanticObject.getName());
+		feeder.accept(grammarAccess.getDefinitionAccess().getSizeINTTerminalRuleCall_6_5_0(), semanticObject.getSize());
+		feeder.finish();
 	}
 	
 	
@@ -245,10 +269,19 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	 *     Definition returns Typedef
 	 *
 	 * Constraint:
-	 *     (type=Type name=ID arraySize=FixedArraySize?)
+	 *     (type=Type name=ID)
 	 */
 	protected void sequence_Definition(ISerializationContext context, Typedef semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, SimpleIDLPackage.Literals.TYPEDEF__TYPE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SimpleIDLPackage.Literals.TYPEDEF__TYPE));
+			if (transientValues.isValueTransient(semanticObject, SimpleIDLPackage.Literals.TYPEDEF__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SimpleIDLPackage.Literals.TYPEDEF__NAME));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getDefinitionAccess().getTypeTypeParserRuleCall_5_2_0(), semanticObject.getType());
+		feeder.accept(grammarAccess.getDefinitionAccess().getNameIDTerminalRuleCall_5_3_0(), semanticObject.getName());
+		feeder.finish();
 	}
 	
 	
@@ -266,28 +299,10 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	
 	/**
 	 * Contexts:
-	 *     FixedArraySize returns FixedArraySize
-	 *
-	 * Constraint:
-	 *     size=INT
-	 */
-	protected void sequence_FixedArraySize(ISerializationContext context, FixedArraySize semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, SimpleIDLPackage.Literals.FIXED_ARRAY_SIZE__SIZE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SimpleIDLPackage.Literals.FIXED_ARRAY_SIZE__SIZE));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getFixedArraySizeAccess().getSizeINTTerminalRuleCall_1_0(), semanticObject.getSize());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
 	 *     Member returns Member
 	 *
 	 * Constraint:
-	 *     (type=SimpleTypeSpec name=ID)
+	 *     (type=[Definition|ScopedName] name=ID)
 	 */
 	protected void sequence_Member(ISerializationContext context, Member semanticObject) {
 		if (errorAcceptor != null) {
@@ -297,197 +312,9 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SimpleIDLPackage.Literals.MEMBER__NAME));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getMemberAccess().getTypeSimpleTypeSpecParserRuleCall_0_0(), semanticObject.getType());
+		feeder.accept(grammarAccess.getMemberAccess().getTypeDefinitionScopedNameParserRuleCall_0_0_1(), semanticObject.eGet(SimpleIDLPackage.Literals.MEMBER__TYPE, false));
 		feeder.accept(grammarAccess.getMemberAccess().getNameIDTerminalRuleCall_1_0(), semanticObject.getName());
 		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Type returns BooleanType
-	 *     SimpleTypeSpec returns BooleanType
-	 *
-	 * Constraint:
-	 *     {BooleanType}
-	 */
-	protected void sequence_SimpleTypeSpec(ISerializationContext context, BooleanType semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Type returns CharType
-	 *     SimpleTypeSpec returns CharType
-	 *
-	 * Constraint:
-	 *     {CharType}
-	 */
-	protected void sequence_SimpleTypeSpec(ISerializationContext context, CharType semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Type returns DoubleType
-	 *     SimpleTypeSpec returns DoubleType
-	 *
-	 * Constraint:
-	 *     {DoubleType}
-	 */
-	protected void sequence_SimpleTypeSpec(ISerializationContext context, DoubleType semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Type returns FloatType
-	 *     SimpleTypeSpec returns FloatType
-	 *
-	 * Constraint:
-	 *     {FloatType}
-	 */
-	protected void sequence_SimpleTypeSpec(ISerializationContext context, FloatType semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Type returns LongDoubleType
-	 *     SimpleTypeSpec returns LongDoubleType
-	 *
-	 * Constraint:
-	 *     {LongDoubleType}
-	 */
-	protected void sequence_SimpleTypeSpec(ISerializationContext context, LongDoubleType semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Type returns OctetType
-	 *     SimpleTypeSpec returns OctetType
-	 *
-	 * Constraint:
-	 *     {OctetType}
-	 */
-	protected void sequence_SimpleTypeSpec(ISerializationContext context, OctetType semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Type returns ReferencedType
-	 *     SimpleTypeSpec returns ReferencedType
-	 *
-	 * Constraint:
-	 *     type=[Definition|ScopedName]
-	 */
-	protected void sequence_SimpleTypeSpec(ISerializationContext context, ReferencedType semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, SimpleIDLPackage.Literals.REFERENCED_TYPE__TYPE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SimpleIDLPackage.Literals.REFERENCED_TYPE__TYPE));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getSimpleTypeSpecAccess().getTypeDefinitionScopedNameParserRuleCall_13_1_0_1(), semanticObject.eGet(SimpleIDLPackage.Literals.REFERENCED_TYPE__TYPE, false));
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Type returns SignedLongInt
-	 *     SimpleTypeSpec returns SignedLongInt
-	 *
-	 * Constraint:
-	 *     {SignedLongInt}
-	 */
-	protected void sequence_SimpleTypeSpec(ISerializationContext context, SignedLongInt semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Type returns SignedLongLongInt
-	 *     SimpleTypeSpec returns SignedLongLongInt
-	 *
-	 * Constraint:
-	 *     {SignedLongLongInt}
-	 */
-	protected void sequence_SimpleTypeSpec(ISerializationContext context, SignedLongLongInt semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Type returns SignedShortInt
-	 *     SimpleTypeSpec returns SignedShortInt
-	 *
-	 * Constraint:
-	 *     {SignedShortInt}
-	 */
-	protected void sequence_SimpleTypeSpec(ISerializationContext context, SignedShortInt semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Type returns UnsignedLongInt
-	 *     SimpleTypeSpec returns UnsignedLongInt
-	 *
-	 * Constraint:
-	 *     {UnsignedLongInt}
-	 */
-	protected void sequence_SimpleTypeSpec(ISerializationContext context, UnsignedLongInt semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Type returns UnsignedLongLongInt
-	 *     SimpleTypeSpec returns UnsignedLongLongInt
-	 *
-	 * Constraint:
-	 *     {UnsignedLongLongInt}
-	 */
-	protected void sequence_SimpleTypeSpec(ISerializationContext context, UnsignedLongLongInt semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Type returns UnsignedShortInt
-	 *     SimpleTypeSpec returns UnsignedShortInt
-	 *
-	 * Constraint:
-	 *     {UnsignedShortInt}
-	 */
-	protected void sequence_SimpleTypeSpec(ISerializationContext context, UnsignedShortInt semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Type returns WideCharType
-	 *     SimpleTypeSpec returns WideCharType
-	 *
-	 * Constraint:
-	 *     {WideCharType}
-	 */
-	protected void sequence_SimpleTypeSpec(ISerializationContext context, WideCharType semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -505,10 +332,22 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	
 	/**
 	 * Contexts:
+	 *     Type returns BooleanType
+	 *
+	 * Constraint:
+	 *     {BooleanType}
+	 */
+	protected void sequence_Type(ISerializationContext context, BooleanType semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Type returns BoundedSequence
 	 *
 	 * Constraint:
-	 *     (type=SimpleTypeSpec size=INT)
+	 *     (type=[Definition|ScopedName] size=INT)
 	 */
 	protected void sequence_Type(ISerializationContext context, BoundedSequence semanticObject) {
 		if (errorAcceptor != null) {
@@ -518,8 +357,8 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SimpleIDLPackage.Literals.BOUNDED_SEQUENCE__SIZE));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getTypeAccess().getTypeSimpleTypeSpecParserRuleCall_1_3_0(), semanticObject.getType());
-		feeder.accept(grammarAccess.getTypeAccess().getSizeINTTerminalRuleCall_1_5_0(), semanticObject.getSize());
+		feeder.accept(grammarAccess.getTypeAccess().getTypeDefinitionScopedNameParserRuleCall_14_3_0_1(), semanticObject.eGet(SimpleIDLPackage.Literals.BOUNDED_SEQUENCE__TYPE, false));
+		feeder.accept(grammarAccess.getTypeAccess().getSizeINTTerminalRuleCall_14_5_0(), semanticObject.getSize());
 		feeder.finish();
 	}
 	
@@ -537,7 +376,7 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SimpleIDLPackage.Literals.BOUNDED_STRING__SIZE));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getTypeAccess().getSizeINTTerminalRuleCall_3_3_0(), semanticObject.getSize());
+		feeder.accept(grammarAccess.getTypeAccess().getSizeINTTerminalRuleCall_16_3_0(), semanticObject.getSize());
 		feeder.finish();
 	}
 	
@@ -555,8 +394,32 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SimpleIDLPackage.Literals.BOUNDED_WIDE_STRING__SIZE));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getTypeAccess().getSizeINTTerminalRuleCall_5_3_0(), semanticObject.getSize());
+		feeder.accept(grammarAccess.getTypeAccess().getSizeINTTerminalRuleCall_18_3_0(), semanticObject.getSize());
 		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Type returns CharType
+	 *
+	 * Constraint:
+	 *     {CharType}
+	 */
+	protected void sequence_Type(ISerializationContext context, CharType semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Type returns DoubleType
+	 *
+	 * Constraint:
+	 *     {DoubleType}
+	 */
+	protected void sequence_Type(ISerializationContext context, DoubleType semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -575,9 +438,99 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SimpleIDLPackage.Literals.FIXED_PT_TYPE__FRACTIONAL_DIGITS));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getTypeAccess().getTotalDigitsINTTerminalRuleCall_7_3_0(), semanticObject.getTotalDigits());
-		feeder.accept(grammarAccess.getTypeAccess().getFractionalDigitsINTTerminalRuleCall_7_5_0(), semanticObject.getFractionalDigits());
+		feeder.accept(grammarAccess.getTypeAccess().getTotalDigitsINTTerminalRuleCall_20_3_0(), semanticObject.getTotalDigits());
+		feeder.accept(grammarAccess.getTypeAccess().getFractionalDigitsINTTerminalRuleCall_20_5_0(), semanticObject.getFractionalDigits());
 		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Type returns FloatType
+	 *
+	 * Constraint:
+	 *     {FloatType}
+	 */
+	protected void sequence_Type(ISerializationContext context, FloatType semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Type returns LongDoubleType
+	 *
+	 * Constraint:
+	 *     {LongDoubleType}
+	 */
+	protected void sequence_Type(ISerializationContext context, LongDoubleType semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Type returns OctetType
+	 *
+	 * Constraint:
+	 *     {OctetType}
+	 */
+	protected void sequence_Type(ISerializationContext context, OctetType semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Type returns ReferencedType
+	 *
+	 * Constraint:
+	 *     type=[Definition|ScopedName]
+	 */
+	protected void sequence_Type(ISerializationContext context, ReferencedType semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, SimpleIDLPackage.Literals.REFERENCED_TYPE__TYPE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SimpleIDLPackage.Literals.REFERENCED_TYPE__TYPE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getTypeAccess().getTypeDefinitionScopedNameParserRuleCall_13_1_0_1(), semanticObject.eGet(SimpleIDLPackage.Literals.REFERENCED_TYPE__TYPE, false));
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Type returns SignedLongInt
+	 *
+	 * Constraint:
+	 *     {SignedLongInt}
+	 */
+	protected void sequence_Type(ISerializationContext context, SignedLongInt semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Type returns SignedLongLongInt
+	 *
+	 * Constraint:
+	 *     {SignedLongLongInt}
+	 */
+	protected void sequence_Type(ISerializationContext context, SignedLongLongInt semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Type returns SignedShortInt
+	 *
+	 * Constraint:
+	 *     {SignedShortInt}
+	 */
+	protected void sequence_Type(ISerializationContext context, SignedShortInt semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -586,7 +539,7 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	 *     Type returns UnboundedSequence
 	 *
 	 * Constraint:
-	 *     type=SimpleTypeSpec
+	 *     type=[Definition|ScopedName]
 	 */
 	protected void sequence_Type(ISerializationContext context, UnboundedSequence semanticObject) {
 		if (errorAcceptor != null) {
@@ -594,7 +547,7 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SimpleIDLPackage.Literals.UNBOUNDED_SEQUENCE__TYPE));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getTypeAccess().getTypeSimpleTypeSpecParserRuleCall_2_3_0(), semanticObject.getType());
+		feeder.accept(grammarAccess.getTypeAccess().getTypeDefinitionScopedNameParserRuleCall_15_3_0_1(), semanticObject.eGet(SimpleIDLPackage.Literals.UNBOUNDED_SEQUENCE__TYPE, false));
 		feeder.finish();
 	}
 	
@@ -619,6 +572,54 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	 *     {UnboundedWideString}
 	 */
 	protected void sequence_Type(ISerializationContext context, UnboundedWideString semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Type returns UnsignedLongInt
+	 *
+	 * Constraint:
+	 *     {UnsignedLongInt}
+	 */
+	protected void sequence_Type(ISerializationContext context, UnsignedLongInt semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Type returns UnsignedLongLongInt
+	 *
+	 * Constraint:
+	 *     {UnsignedLongLongInt}
+	 */
+	protected void sequence_Type(ISerializationContext context, UnsignedLongLongInt semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Type returns UnsignedShortInt
+	 *
+	 * Constraint:
+	 *     {UnsignedShortInt}
+	 */
+	protected void sequence_Type(ISerializationContext context, UnsignedShortInt semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Type returns WideCharType
+	 *
+	 * Constraint:
+	 *     {WideCharType}
+	 */
+	protected void sequence_Type(ISerializationContext context, WideCharType semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

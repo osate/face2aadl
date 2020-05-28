@@ -22,7 +22,6 @@
 package org.osate.simpleidl.simpleIDL.impl;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -30,9 +29,9 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
+import org.osate.simpleidl.simpleIDL.Definition;
 import org.osate.simpleidl.simpleIDL.Member;
 import org.osate.simpleidl.simpleIDL.SimpleIDLPackage;
-import org.osate.simpleidl.simpleIDL.SimpleTypeSpec;
 
 /**
  * <!-- begin-user-doc -->
@@ -51,14 +50,14 @@ import org.osate.simpleidl.simpleIDL.SimpleTypeSpec;
 public class MemberImpl extends MinimalEObjectImpl.Container implements Member
 {
   /**
-   * The cached value of the '{@link #getType() <em>Type</em>}' containment reference.
+   * The cached value of the '{@link #getType() <em>Type</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getType()
    * @generated
    * @ordered
    */
-  protected SimpleTypeSpec type;
+  protected Definition type;
 
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -107,7 +106,27 @@ public class MemberImpl extends MinimalEObjectImpl.Container implements Member
    * @generated
    */
   @Override
-  public SimpleTypeSpec getType()
+  public Definition getType()
+  {
+    if (type != null && type.eIsProxy())
+    {
+      InternalEObject oldType = (InternalEObject)type;
+      type = (Definition)eResolveProxy(oldType);
+      if (type != oldType)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SimpleIDLPackage.MEMBER__TYPE, oldType, type));
+      }
+    }
+    return type;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Definition basicGetType()
   {
     return type;
   }
@@ -117,38 +136,13 @@ public class MemberImpl extends MinimalEObjectImpl.Container implements Member
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetType(SimpleTypeSpec newType, NotificationChain msgs)
+  @Override
+  public void setType(Definition newType)
   {
-    SimpleTypeSpec oldType = type;
+    Definition oldType = type;
     type = newType;
     if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SimpleIDLPackage.MEMBER__TYPE, oldType, newType);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setType(SimpleTypeSpec newType)
-  {
-    if (newType != type)
-    {
-      NotificationChain msgs = null;
-      if (type != null)
-        msgs = ((InternalEObject)type).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SimpleIDLPackage.MEMBER__TYPE, null, msgs);
-      if (newType != null)
-        msgs = ((InternalEObject)newType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SimpleIDLPackage.MEMBER__TYPE, null, msgs);
-      msgs = basicSetType(newType, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SimpleIDLPackage.MEMBER__TYPE, newType, newType));
+      eNotify(new ENotificationImpl(this, Notification.SET, SimpleIDLPackage.MEMBER__TYPE, oldType, type));
   }
 
   /**
@@ -182,28 +176,13 @@ public class MemberImpl extends MinimalEObjectImpl.Container implements Member
    * @generated
    */
   @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-  {
-    switch (featureID)
-    {
-      case SimpleIDLPackage.MEMBER__TYPE:
-        return basicSetType(null, msgs);
-    }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
     switch (featureID)
     {
       case SimpleIDLPackage.MEMBER__TYPE:
-        return getType();
+        if (resolve) return getType();
+        return basicGetType();
       case SimpleIDLPackage.MEMBER__NAME:
         return getName();
     }
@@ -221,7 +200,7 @@ public class MemberImpl extends MinimalEObjectImpl.Container implements Member
     switch (featureID)
     {
       case SimpleIDLPackage.MEMBER__TYPE:
-        setType((SimpleTypeSpec)newValue);
+        setType((Definition)newValue);
         return;
       case SimpleIDLPackage.MEMBER__NAME:
         setName((String)newValue);
@@ -241,7 +220,7 @@ public class MemberImpl extends MinimalEObjectImpl.Container implements Member
     switch (featureID)
     {
       case SimpleIDLPackage.MEMBER__TYPE:
-        setType((SimpleTypeSpec)null);
+        setType((Definition)null);
         return;
       case SimpleIDLPackage.MEMBER__NAME:
         setName(NAME_EDEFAULT);

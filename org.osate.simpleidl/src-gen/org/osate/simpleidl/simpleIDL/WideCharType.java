@@ -32,6 +32,6 @@ package org.osate.simpleidl.simpleIDL;
  * @model
  * @generated
  */
-public interface WideCharType extends SimpleTypeSpec
+public interface WideCharType extends Type
 {
 } // WideCharType

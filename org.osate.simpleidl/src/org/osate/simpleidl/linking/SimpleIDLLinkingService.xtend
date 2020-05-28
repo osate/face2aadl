@@ -49,7 +49,17 @@ class SimpleIDLLinkingService extends DefaultLinkingService {
 		val result = if (!crossRefString.nullOrEmpty) {
 			val descriptions = descriptionsProvider.getResourceDescriptions(context.eResource.resourceSet)
 			switch ref {
-				case referencedType_Type: {
+				case structForward_Struct: {
+					val module = context.getContainerOfType(Module)
+					val lookupName = nameProvider.getFullyQualifiedName(module).append(crossRefString)
+					descriptions.getExportedObjects(struct, lookupName, true).head
+				}
+				case arrayType_Type,
+				case member_Type,
+				case case_Type,
+				case referencedType_Type,
+				case boundedSequence_Type,
+				case unboundedSequence_Type: {
 					if (crossRefString.startsWith("::")) {
 						val lookupName = nameConverter.toQualifiedName(crossRefString.substring(2))
 						descriptions.getExportedObjects(definition, lookupName, true).head
@@ -64,11 +74,6 @@ class SimpleIDLLinkingService extends DefaultLinkingService {
 						lookupNames += crossRef
 						lookupNames.flatMap[descriptions.getExportedObjects(definition, it, true)].head
 					}
-				}
-				case structForward_Struct: {
-					val module = context.getContainerOfType(Module)
-					val lookupName = nameProvider.getFullyQualifiedName(module).append(crossRefString)
-					descriptions.getExportedObjects(struct, lookupName, true).head
 				}
 				default: null
 			}

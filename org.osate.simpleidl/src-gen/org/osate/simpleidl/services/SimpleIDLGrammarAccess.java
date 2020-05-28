@@ -137,9 +137,20 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cTypeTypeParserRuleCall_5_2_0 = (RuleCall)cTypeAssignment_5_2.eContents().get(0);
 		private final Assignment cNameAssignment_5_3 = (Assignment)cGroup_5.eContents().get(3);
 		private final RuleCall cNameIDTerminalRuleCall_5_3_0 = (RuleCall)cNameAssignment_5_3.eContents().get(0);
-		private final Assignment cArraySizeAssignment_5_4 = (Assignment)cGroup_5.eContents().get(4);
-		private final RuleCall cArraySizeFixedArraySizeParserRuleCall_5_4_0 = (RuleCall)cArraySizeAssignment_5_4.eContents().get(0);
-		private final Keyword cSemicolonKeyword_5_5 = (Keyword)cGroup_5.eContents().get(5);
+		private final Keyword cSemicolonKeyword_5_4 = (Keyword)cGroup_5.eContents().get(4);
+		private final Group cGroup_6 = (Group)cAlternatives.eContents().get(6);
+		private final Action cArrayTypeAction_6_0 = (Action)cGroup_6.eContents().get(0);
+		private final Keyword cTypedefKeyword_6_1 = (Keyword)cGroup_6.eContents().get(1);
+		private final Assignment cTypeAssignment_6_2 = (Assignment)cGroup_6.eContents().get(2);
+		private final CrossReference cTypeDefinitionCrossReference_6_2_0 = (CrossReference)cTypeAssignment_6_2.eContents().get(0);
+		private final RuleCall cTypeDefinitionScopedNameParserRuleCall_6_2_0_1 = (RuleCall)cTypeDefinitionCrossReference_6_2_0.eContents().get(1);
+		private final Assignment cNameAssignment_6_3 = (Assignment)cGroup_6.eContents().get(3);
+		private final RuleCall cNameIDTerminalRuleCall_6_3_0 = (RuleCall)cNameAssignment_6_3.eContents().get(0);
+		private final Keyword cLeftSquareBracketKeyword_6_4 = (Keyword)cGroup_6.eContents().get(4);
+		private final Assignment cSizeAssignment_6_5 = (Assignment)cGroup_6.eContents().get(5);
+		private final RuleCall cSizeINTTerminalRuleCall_6_5_0 = (RuleCall)cSizeAssignment_6_5.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_6_6 = (Keyword)cGroup_6.eContents().get(6);
+		private final Keyword cSemicolonKeyword_6_7 = (Keyword)cGroup_6.eContents().get(7);
 		
 		///*
 		// * (2) <definition> ::= <module_dcl> ";"
@@ -169,6 +180,7 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 		// *                     "{" <enumerator> { "," <enumerator> } * "}"
 		// * (58) <enumerator> ::= <identifier>
 		// * (59) <array_declarator> ::= <identifier> <fixed_array_size>+
+		// * (60) <fixed_array_size> ::= "[" <positive_int_const> "]"
 		// * (62) <simple_declarator> ::= <identifier>
 		// * (63) <typedef_dcl> ::= "typedef" <type_declarator>
 		// * (64) <type_declarator> ::= { <simple_type_spec>
@@ -182,13 +194,13 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 		//	{Module} 'module' name=ID '{' definitions+=Definition+ '}' ';' | {Struct} 'struct' name=ID '{' members+=Member+ '}'
 		//	';' | {StructForward} 'struct' struct=[Struct] ';' | {Union} 'union' name=ID '{' 'switch' '(' 'unsigned' 'short' ')'
 		//	'{' cases+=Case+ '}' ';' '}' ';' | {Enum} 'enum' name=ID '{' literals+=ID (',' literals+=ID)* '}' ';' | {Typedef}
-		//	'typedef' type=Type name=ID arraySize=FixedArraySize? ';';
+		//	'typedef' type=Type name=ID ';' | {ArrayType} 'typedef' type=[Definition|ScopedName] name=ID '[' size=INT ']' ';';
 		@Override public ParserRule getRule() { return rule; }
 		
 		//{Module} 'module' name=ID '{' definitions+=Definition+ '}' ';' | {Struct} 'struct' name=ID '{' members+=Member+ '}' ';'
 		//| {StructForward} 'struct' struct=[Struct] ';' | {Union} 'union' name=ID '{' 'switch' '(' 'unsigned' 'short' ')' '{'
 		//cases+=Case+ '}' ';' '}' ';' | {Enum} 'enum' name=ID '{' literals+=ID (',' literals+=ID)* '}' ';' | {Typedef} 'typedef'
-		//type=Type name=ID arraySize=FixedArraySize? ';'
+		//type=Type name=ID ';' | {ArrayType} 'typedef' type=[Definition|ScopedName] name=ID '[' size=INT ']' ';'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//{Module} 'module' name=ID '{' definitions+=Definition+ '}' ';'
@@ -368,7 +380,7 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 		//';'
 		public Keyword getSemicolonKeyword_4_7() { return cSemicolonKeyword_4_7; }
 		
-		//{Typedef} 'typedef' type=Type name=ID arraySize=FixedArraySize? ';'
+		//{Typedef} 'typedef' type=Type name=ID ';'
 		public Group getGroup_5() { return cGroup_5; }
 		
 		//{Typedef}
@@ -389,42 +401,81 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_5_3_0() { return cNameIDTerminalRuleCall_5_3_0; }
 		
-		//arraySize=FixedArraySize?
-		public Assignment getArraySizeAssignment_5_4() { return cArraySizeAssignment_5_4; }
+		//';'
+		public Keyword getSemicolonKeyword_5_4() { return cSemicolonKeyword_5_4; }
 		
-		//FixedArraySize
-		public RuleCall getArraySizeFixedArraySizeParserRuleCall_5_4_0() { return cArraySizeFixedArraySizeParserRuleCall_5_4_0; }
+		//{ArrayType} 'typedef' type=[Definition|ScopedName] name=ID '[' size=INT ']' ';'
+		public Group getGroup_6() { return cGroup_6; }
+		
+		//{ArrayType}
+		public Action getArrayTypeAction_6_0() { return cArrayTypeAction_6_0; }
+		
+		//'typedef'
+		public Keyword getTypedefKeyword_6_1() { return cTypedefKeyword_6_1; }
+		
+		//type=[Definition|ScopedName]
+		public Assignment getTypeAssignment_6_2() { return cTypeAssignment_6_2; }
+		
+		//[Definition|ScopedName]
+		public CrossReference getTypeDefinitionCrossReference_6_2_0() { return cTypeDefinitionCrossReference_6_2_0; }
+		
+		//ScopedName
+		public RuleCall getTypeDefinitionScopedNameParserRuleCall_6_2_0_1() { return cTypeDefinitionScopedNameParserRuleCall_6_2_0_1; }
+		
+		//name=ID
+		public Assignment getNameAssignment_6_3() { return cNameAssignment_6_3; }
+		
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_6_3_0() { return cNameIDTerminalRuleCall_6_3_0; }
+		
+		//'['
+		public Keyword getLeftSquareBracketKeyword_6_4() { return cLeftSquareBracketKeyword_6_4; }
+		
+		//size=INT
+		public Assignment getSizeAssignment_6_5() { return cSizeAssignment_6_5; }
+		
+		//INT
+		public RuleCall getSizeINTTerminalRuleCall_6_5_0() { return cSizeINTTerminalRuleCall_6_5_0; }
+		
+		//']'
+		public Keyword getRightSquareBracketKeyword_6_6() { return cRightSquareBracketKeyword_6_6; }
 		
 		//';'
-		public Keyword getSemicolonKeyword_5_5() { return cSemicolonKeyword_5_5; }
+		public Keyword getSemicolonKeyword_6_7() { return cSemicolonKeyword_6_7; }
 	}
 	public class MemberElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.osate.simpleidl.SimpleIDL.Member");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cTypeAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cTypeSimpleTypeSpecParserRuleCall_0_0 = (RuleCall)cTypeAssignment_0.eContents().get(0);
+		private final CrossReference cTypeDefinitionCrossReference_0_0 = (CrossReference)cTypeAssignment_0.eContents().get(0);
+		private final RuleCall cTypeDefinitionScopedNameParserRuleCall_0_0_1 = (RuleCall)cTypeDefinitionCrossReference_0_0.eContents().get(1);
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		private final Keyword cSemicolonKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		
 		///*
 		// * (21) <type_spec> ::= <simple_type_spec>
+		// * (22) <simple_type_spec> ::= <base_type_spec>
+		// *                         | <scoped_name>
 		// * (47) <member> ::= <type_spec> <declarators> ";"
 		// * (62) <simple_declarator> ::= <identifier>
 		// * (67) <declarators> ::= <declarator> { "," <declarator> }*
 		// * (68) <declarator> ::= <simple_declarator>
 		// */ Member:
-		//	type=SimpleTypeSpec name=ID ';';
+		//	type=[Definition|ScopedName] name=ID ';';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//type=SimpleTypeSpec name=ID ';'
+		//type=[Definition|ScopedName] name=ID ';'
 		public Group getGroup() { return cGroup; }
 		
-		//type=SimpleTypeSpec
+		//type=[Definition|ScopedName]
 		public Assignment getTypeAssignment_0() { return cTypeAssignment_0; }
 		
-		//SimpleTypeSpec
-		public RuleCall getTypeSimpleTypeSpecParserRuleCall_0_0() { return cTypeSimpleTypeSpecParserRuleCall_0_0; }
+		//[Definition|ScopedName]
+		public CrossReference getTypeDefinitionCrossReference_0_0() { return cTypeDefinitionCrossReference_0_0; }
+		
+		//ScopedName
+		public RuleCall getTypeDefinitionScopedNameParserRuleCall_0_0_1() { return cTypeDefinitionScopedNameParserRuleCall_0_0_1; }
 		
 		//name=ID
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
@@ -444,13 +495,16 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cLabelsINTTerminalRuleCall_0_1_0 = (RuleCall)cLabelsAssignment_0_1.eContents().get(0);
 		private final Keyword cColonKeyword_0_2 = (Keyword)cGroup_0.eContents().get(2);
 		private final Assignment cTypeAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cTypeSimpleTypeSpecParserRuleCall_1_0 = (RuleCall)cTypeAssignment_1.eContents().get(0);
+		private final CrossReference cTypeDefinitionCrossReference_1_0 = (CrossReference)cTypeAssignment_1.eContents().get(0);
+		private final RuleCall cTypeDefinitionScopedNameParserRuleCall_1_0_1 = (RuleCall)cTypeDefinitionCrossReference_1_0.eContents().get(1);
 		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cNameIDTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
 		private final Keyword cSemicolonKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		///*
 		// * (21) <type_spec> ::= <simple_type_spec>
+		// * (22) <simple_type_spec> ::= <base_type_spec>
+		// *                         | <scoped_name>
 		// * (53) <case> ::= <case_label>+ <element_spec> ";"
 		// * (54) <case_label> ::= "case" <const_expr> ":"
 		// *                   | "default" ":"
@@ -458,10 +512,10 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 		// * (62) <simple_declarator> ::= <identifier>
 		// * (68) <declarator> ::= <simple_declarator>
 		// */ Case:
-		//	('case' labels+=INT ':')+ type=SimpleTypeSpec name=ID ';';
+		//	('case' labels+=INT ':')+ type=[Definition|ScopedName] name=ID ';';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//('case' labels+=INT ':')+ type=SimpleTypeSpec name=ID ';'
+		//('case' labels+=INT ':')+ type=[Definition|ScopedName] name=ID ';'
 		public Group getGroup() { return cGroup; }
 		
 		//('case' labels+=INT ':')+
@@ -479,11 +533,14 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 		//':'
 		public Keyword getColonKeyword_0_2() { return cColonKeyword_0_2; }
 		
-		//type=SimpleTypeSpec
+		//type=[Definition|ScopedName]
 		public Assignment getTypeAssignment_1() { return cTypeAssignment_1; }
 		
-		//SimpleTypeSpec
-		public RuleCall getTypeSimpleTypeSpecParserRuleCall_1_0() { return cTypeSimpleTypeSpecParserRuleCall_1_0; }
+		//[Definition|ScopedName]
+		public CrossReference getTypeDefinitionCrossReference_1_0() { return cTypeDefinitionCrossReference_1_0; }
+		
+		//ScopedName
+		public RuleCall getTypeDefinitionScopedNameParserRuleCall_1_0_1() { return cTypeDefinitionScopedNameParserRuleCall_1_0_1; }
 		
 		//name=ID
 		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
@@ -494,263 +551,8 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 		//';'
 		public Keyword getSemicolonKeyword_3() { return cSemicolonKeyword_3; }
 	}
-	public class FixedArraySizeElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.osate.simpleidl.SimpleIDL.FixedArraySize");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cLeftSquareBracketKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cSizeAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cSizeINTTerminalRuleCall_1_0 = (RuleCall)cSizeAssignment_1.eContents().get(0);
-		private final Keyword cRightSquareBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		
-		///*
-		// * (60) <fixed_array_size> ::= "[" <positive_int_const> "]"
-		// */ FixedArraySize:
-		//	'[' size=INT ']';
-		@Override public ParserRule getRule() { return rule; }
-		
-		//'[' size=INT ']'
-		public Group getGroup() { return cGroup; }
-		
-		//'['
-		public Keyword getLeftSquareBracketKeyword_0() { return cLeftSquareBracketKeyword_0; }
-		
-		//size=INT
-		public Assignment getSizeAssignment_1() { return cSizeAssignment_1; }
-		
-		//INT
-		public RuleCall getSizeINTTerminalRuleCall_1_0() { return cSizeINTTerminalRuleCall_1_0; }
-		
-		//']'
-		public Keyword getRightSquareBracketKeyword_2() { return cRightSquareBracketKeyword_2; }
-	}
 	public class TypeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.osate.simpleidl.SimpleIDL.Type");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cSimpleTypeSpecParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
-		private final Action cBoundedSequenceAction_1_0 = (Action)cGroup_1.eContents().get(0);
-		private final Keyword cSequenceKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
-		private final Keyword cLessThanSignKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
-		private final Assignment cTypeAssignment_1_3 = (Assignment)cGroup_1.eContents().get(3);
-		private final RuleCall cTypeSimpleTypeSpecParserRuleCall_1_3_0 = (RuleCall)cTypeAssignment_1_3.eContents().get(0);
-		private final Keyword cCommaKeyword_1_4 = (Keyword)cGroup_1.eContents().get(4);
-		private final Assignment cSizeAssignment_1_5 = (Assignment)cGroup_1.eContents().get(5);
-		private final RuleCall cSizeINTTerminalRuleCall_1_5_0 = (RuleCall)cSizeAssignment_1_5.eContents().get(0);
-		private final Keyword cGreaterThanSignKeyword_1_6 = (Keyword)cGroup_1.eContents().get(6);
-		private final Group cGroup_2 = (Group)cAlternatives.eContents().get(2);
-		private final Action cUnboundedSequenceAction_2_0 = (Action)cGroup_2.eContents().get(0);
-		private final Keyword cSequenceKeyword_2_1 = (Keyword)cGroup_2.eContents().get(1);
-		private final Keyword cLessThanSignKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
-		private final Assignment cTypeAssignment_2_3 = (Assignment)cGroup_2.eContents().get(3);
-		private final RuleCall cTypeSimpleTypeSpecParserRuleCall_2_3_0 = (RuleCall)cTypeAssignment_2_3.eContents().get(0);
-		private final Keyword cGreaterThanSignKeyword_2_4 = (Keyword)cGroup_2.eContents().get(4);
-		private final Group cGroup_3 = (Group)cAlternatives.eContents().get(3);
-		private final Action cBoundedStringAction_3_0 = (Action)cGroup_3.eContents().get(0);
-		private final Keyword cStringKeyword_3_1 = (Keyword)cGroup_3.eContents().get(1);
-		private final Keyword cLessThanSignKeyword_3_2 = (Keyword)cGroup_3.eContents().get(2);
-		private final Assignment cSizeAssignment_3_3 = (Assignment)cGroup_3.eContents().get(3);
-		private final RuleCall cSizeINTTerminalRuleCall_3_3_0 = (RuleCall)cSizeAssignment_3_3.eContents().get(0);
-		private final Keyword cGreaterThanSignKeyword_3_4 = (Keyword)cGroup_3.eContents().get(4);
-		private final Group cGroup_4 = (Group)cAlternatives.eContents().get(4);
-		private final Action cUnboundedStringAction_4_0 = (Action)cGroup_4.eContents().get(0);
-		private final Keyword cStringKeyword_4_1 = (Keyword)cGroup_4.eContents().get(1);
-		private final Group cGroup_5 = (Group)cAlternatives.eContents().get(5);
-		private final Action cBoundedWideStringAction_5_0 = (Action)cGroup_5.eContents().get(0);
-		private final Keyword cWstringKeyword_5_1 = (Keyword)cGroup_5.eContents().get(1);
-		private final Keyword cLessThanSignKeyword_5_2 = (Keyword)cGroup_5.eContents().get(2);
-		private final Assignment cSizeAssignment_5_3 = (Assignment)cGroup_5.eContents().get(3);
-		private final RuleCall cSizeINTTerminalRuleCall_5_3_0 = (RuleCall)cSizeAssignment_5_3.eContents().get(0);
-		private final Keyword cGreaterThanSignKeyword_5_4 = (Keyword)cGroup_5.eContents().get(4);
-		private final Group cGroup_6 = (Group)cAlternatives.eContents().get(6);
-		private final Action cUnboundedWideStringAction_6_0 = (Action)cGroup_6.eContents().get(0);
-		private final Keyword cWstringKeyword_6_1 = (Keyword)cGroup_6.eContents().get(1);
-		private final Group cGroup_7 = (Group)cAlternatives.eContents().get(7);
-		private final Action cFixedPtTypeAction_7_0 = (Action)cGroup_7.eContents().get(0);
-		private final Keyword cFixedKeyword_7_1 = (Keyword)cGroup_7.eContents().get(1);
-		private final Keyword cLessThanSignKeyword_7_2 = (Keyword)cGroup_7.eContents().get(2);
-		private final Assignment cTotalDigitsAssignment_7_3 = (Assignment)cGroup_7.eContents().get(3);
-		private final RuleCall cTotalDigitsINTTerminalRuleCall_7_3_0 = (RuleCall)cTotalDigitsAssignment_7_3.eContents().get(0);
-		private final Keyword cCommaKeyword_7_4 = (Keyword)cGroup_7.eContents().get(4);
-		private final Assignment cFractionalDigitsAssignment_7_5 = (Assignment)cGroup_7.eContents().get(5);
-		private final RuleCall cFractionalDigitsINTTerminalRuleCall_7_5_0 = (RuleCall)cFractionalDigitsAssignment_7_5.eContents().get(0);
-		private final Keyword cGreaterThanSignKeyword_7_6 = (Keyword)cGroup_7.eContents().get(6);
-		
-		///*
-		// * (21) <type_spec> ::= <simple_type_spec>
-		// * (38) <template_type_spec> ::= <sequence_type>
-		// *                           | <string_type>
-		// *                           | <wide_string_type>
-		// *                           | <fixed_pt_type>
-		// * (39) <sequence_type> ::= "sequence" "<" <type_spec> "," <positive_int_const> ">"
-		// *                      | "sequence" "<" <type_spec> ">"
-		// * (40) <string_type> ::= "string" "<" <positive_int_const> ">"
-		// *                    | "string"
-		// * (41) <wide_string_type> ::= "wstring" "<" <positive_int_const> ">"
-		// *                         | "wstring"
-		// * (42) <fixed_pt_type> ::= "fixed" "<" <positive_int_const> "," <positive_int_const> ">"
-		// * (64) <type_declarator> ::= { <simple_type_spec>
-		// *                            | <template_type_spec>
-		// *                            | <constr_type_dcl>
-		// *                            } <any_declarators>
-		// */ Type:
-		//	SimpleTypeSpec | {BoundedSequence} 'sequence' '<' type=SimpleTypeSpec ',' size=INT '>' | {UnboundedSequence}
-		//	'sequence' '<' type=SimpleTypeSpec '>' | {BoundedString} 'string' '<' size=INT '>' | {UnboundedString} 'string' |
-		//	{BoundedWideString} 'wstring' '<' size=INT '>' | {UnboundedWideString} 'wstring' | {FixedPtType} 'fixed' '<'
-		//	totalDigits=INT ',' fractionalDigits=INT '>';
-		@Override public ParserRule getRule() { return rule; }
-		
-		//SimpleTypeSpec | {BoundedSequence} 'sequence' '<' type=SimpleTypeSpec ',' size=INT '>' | {UnboundedSequence} 'sequence'
-		//'<' type=SimpleTypeSpec '>' | {BoundedString} 'string' '<' size=INT '>' | {UnboundedString} 'string' |
-		//{BoundedWideString} 'wstring' '<' size=INT '>' | {UnboundedWideString} 'wstring' | {FixedPtType} 'fixed' '<'
-		//totalDigits=INT ',' fractionalDigits=INT '>'
-		public Alternatives getAlternatives() { return cAlternatives; }
-		
-		//SimpleTypeSpec
-		public RuleCall getSimpleTypeSpecParserRuleCall_0() { return cSimpleTypeSpecParserRuleCall_0; }
-		
-		//{BoundedSequence} 'sequence' '<' type=SimpleTypeSpec ',' size=INT '>'
-		public Group getGroup_1() { return cGroup_1; }
-		
-		//{BoundedSequence}
-		public Action getBoundedSequenceAction_1_0() { return cBoundedSequenceAction_1_0; }
-		
-		//'sequence'
-		public Keyword getSequenceKeyword_1_1() { return cSequenceKeyword_1_1; }
-		
-		//'<'
-		public Keyword getLessThanSignKeyword_1_2() { return cLessThanSignKeyword_1_2; }
-		
-		//type=SimpleTypeSpec
-		public Assignment getTypeAssignment_1_3() { return cTypeAssignment_1_3; }
-		
-		//SimpleTypeSpec
-		public RuleCall getTypeSimpleTypeSpecParserRuleCall_1_3_0() { return cTypeSimpleTypeSpecParserRuleCall_1_3_0; }
-		
-		//','
-		public Keyword getCommaKeyword_1_4() { return cCommaKeyword_1_4; }
-		
-		//size=INT
-		public Assignment getSizeAssignment_1_5() { return cSizeAssignment_1_5; }
-		
-		//INT
-		public RuleCall getSizeINTTerminalRuleCall_1_5_0() { return cSizeINTTerminalRuleCall_1_5_0; }
-		
-		//'>'
-		public Keyword getGreaterThanSignKeyword_1_6() { return cGreaterThanSignKeyword_1_6; }
-		
-		//{UnboundedSequence} 'sequence' '<' type=SimpleTypeSpec '>'
-		public Group getGroup_2() { return cGroup_2; }
-		
-		//{UnboundedSequence}
-		public Action getUnboundedSequenceAction_2_0() { return cUnboundedSequenceAction_2_0; }
-		
-		//'sequence'
-		public Keyword getSequenceKeyword_2_1() { return cSequenceKeyword_2_1; }
-		
-		//'<'
-		public Keyword getLessThanSignKeyword_2_2() { return cLessThanSignKeyword_2_2; }
-		
-		//type=SimpleTypeSpec
-		public Assignment getTypeAssignment_2_3() { return cTypeAssignment_2_3; }
-		
-		//SimpleTypeSpec
-		public RuleCall getTypeSimpleTypeSpecParserRuleCall_2_3_0() { return cTypeSimpleTypeSpecParserRuleCall_2_3_0; }
-		
-		//'>'
-		public Keyword getGreaterThanSignKeyword_2_4() { return cGreaterThanSignKeyword_2_4; }
-		
-		//{BoundedString} 'string' '<' size=INT '>'
-		public Group getGroup_3() { return cGroup_3; }
-		
-		//{BoundedString}
-		public Action getBoundedStringAction_3_0() { return cBoundedStringAction_3_0; }
-		
-		//'string'
-		public Keyword getStringKeyword_3_1() { return cStringKeyword_3_1; }
-		
-		//'<'
-		public Keyword getLessThanSignKeyword_3_2() { return cLessThanSignKeyword_3_2; }
-		
-		//size=INT
-		public Assignment getSizeAssignment_3_3() { return cSizeAssignment_3_3; }
-		
-		//INT
-		public RuleCall getSizeINTTerminalRuleCall_3_3_0() { return cSizeINTTerminalRuleCall_3_3_0; }
-		
-		//'>'
-		public Keyword getGreaterThanSignKeyword_3_4() { return cGreaterThanSignKeyword_3_4; }
-		
-		//{UnboundedString} 'string'
-		public Group getGroup_4() { return cGroup_4; }
-		
-		//{UnboundedString}
-		public Action getUnboundedStringAction_4_0() { return cUnboundedStringAction_4_0; }
-		
-		//'string'
-		public Keyword getStringKeyword_4_1() { return cStringKeyword_4_1; }
-		
-		//{BoundedWideString} 'wstring' '<' size=INT '>'
-		public Group getGroup_5() { return cGroup_5; }
-		
-		//{BoundedWideString}
-		public Action getBoundedWideStringAction_5_0() { return cBoundedWideStringAction_5_0; }
-		
-		//'wstring'
-		public Keyword getWstringKeyword_5_1() { return cWstringKeyword_5_1; }
-		
-		//'<'
-		public Keyword getLessThanSignKeyword_5_2() { return cLessThanSignKeyword_5_2; }
-		
-		//size=INT
-		public Assignment getSizeAssignment_5_3() { return cSizeAssignment_5_3; }
-		
-		//INT
-		public RuleCall getSizeINTTerminalRuleCall_5_3_0() { return cSizeINTTerminalRuleCall_5_3_0; }
-		
-		//'>'
-		public Keyword getGreaterThanSignKeyword_5_4() { return cGreaterThanSignKeyword_5_4; }
-		
-		//{UnboundedWideString} 'wstring'
-		public Group getGroup_6() { return cGroup_6; }
-		
-		//{UnboundedWideString}
-		public Action getUnboundedWideStringAction_6_0() { return cUnboundedWideStringAction_6_0; }
-		
-		//'wstring'
-		public Keyword getWstringKeyword_6_1() { return cWstringKeyword_6_1; }
-		
-		//{FixedPtType} 'fixed' '<' totalDigits=INT ',' fractionalDigits=INT '>'
-		public Group getGroup_7() { return cGroup_7; }
-		
-		//{FixedPtType}
-		public Action getFixedPtTypeAction_7_0() { return cFixedPtTypeAction_7_0; }
-		
-		//'fixed'
-		public Keyword getFixedKeyword_7_1() { return cFixedKeyword_7_1; }
-		
-		//'<'
-		public Keyword getLessThanSignKeyword_7_2() { return cLessThanSignKeyword_7_2; }
-		
-		//totalDigits=INT
-		public Assignment getTotalDigitsAssignment_7_3() { return cTotalDigitsAssignment_7_3; }
-		
-		//INT
-		public RuleCall getTotalDigitsINTTerminalRuleCall_7_3_0() { return cTotalDigitsINTTerminalRuleCall_7_3_0; }
-		
-		//','
-		public Keyword getCommaKeyword_7_4() { return cCommaKeyword_7_4; }
-		
-		//fractionalDigits=INT
-		public Assignment getFractionalDigitsAssignment_7_5() { return cFractionalDigitsAssignment_7_5; }
-		
-		//INT
-		public RuleCall getFractionalDigitsINTTerminalRuleCall_7_5_0() { return cFractionalDigitsINTTerminalRuleCall_7_5_0; }
-		
-		//'>'
-		public Keyword getGreaterThanSignKeyword_7_6() { return cGreaterThanSignKeyword_7_6; }
-	}
-	public class SimpleTypeSpecElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.osate.simpleidl.SimpleIDL.SimpleTypeSpec");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
 		private final Action cSignedShortIntAction_0_0 = (Action)cGroup_0.eContents().get(0);
@@ -802,8 +604,58 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cTypeAssignment_13_1 = (Assignment)cGroup_13.eContents().get(1);
 		private final CrossReference cTypeDefinitionCrossReference_13_1_0 = (CrossReference)cTypeAssignment_13_1.eContents().get(0);
 		private final RuleCall cTypeDefinitionScopedNameParserRuleCall_13_1_0_1 = (RuleCall)cTypeDefinitionCrossReference_13_1_0.eContents().get(1);
+		private final Group cGroup_14 = (Group)cAlternatives.eContents().get(14);
+		private final Action cBoundedSequenceAction_14_0 = (Action)cGroup_14.eContents().get(0);
+		private final Keyword cSequenceKeyword_14_1 = (Keyword)cGroup_14.eContents().get(1);
+		private final Keyword cLessThanSignKeyword_14_2 = (Keyword)cGroup_14.eContents().get(2);
+		private final Assignment cTypeAssignment_14_3 = (Assignment)cGroup_14.eContents().get(3);
+		private final CrossReference cTypeDefinitionCrossReference_14_3_0 = (CrossReference)cTypeAssignment_14_3.eContents().get(0);
+		private final RuleCall cTypeDefinitionScopedNameParserRuleCall_14_3_0_1 = (RuleCall)cTypeDefinitionCrossReference_14_3_0.eContents().get(1);
+		private final Keyword cCommaKeyword_14_4 = (Keyword)cGroup_14.eContents().get(4);
+		private final Assignment cSizeAssignment_14_5 = (Assignment)cGroup_14.eContents().get(5);
+		private final RuleCall cSizeINTTerminalRuleCall_14_5_0 = (RuleCall)cSizeAssignment_14_5.eContents().get(0);
+		private final Keyword cGreaterThanSignKeyword_14_6 = (Keyword)cGroup_14.eContents().get(6);
+		private final Group cGroup_15 = (Group)cAlternatives.eContents().get(15);
+		private final Action cUnboundedSequenceAction_15_0 = (Action)cGroup_15.eContents().get(0);
+		private final Keyword cSequenceKeyword_15_1 = (Keyword)cGroup_15.eContents().get(1);
+		private final Keyword cLessThanSignKeyword_15_2 = (Keyword)cGroup_15.eContents().get(2);
+		private final Assignment cTypeAssignment_15_3 = (Assignment)cGroup_15.eContents().get(3);
+		private final CrossReference cTypeDefinitionCrossReference_15_3_0 = (CrossReference)cTypeAssignment_15_3.eContents().get(0);
+		private final RuleCall cTypeDefinitionScopedNameParserRuleCall_15_3_0_1 = (RuleCall)cTypeDefinitionCrossReference_15_3_0.eContents().get(1);
+		private final Keyword cGreaterThanSignKeyword_15_4 = (Keyword)cGroup_15.eContents().get(4);
+		private final Group cGroup_16 = (Group)cAlternatives.eContents().get(16);
+		private final Action cBoundedStringAction_16_0 = (Action)cGroup_16.eContents().get(0);
+		private final Keyword cStringKeyword_16_1 = (Keyword)cGroup_16.eContents().get(1);
+		private final Keyword cLessThanSignKeyword_16_2 = (Keyword)cGroup_16.eContents().get(2);
+		private final Assignment cSizeAssignment_16_3 = (Assignment)cGroup_16.eContents().get(3);
+		private final RuleCall cSizeINTTerminalRuleCall_16_3_0 = (RuleCall)cSizeAssignment_16_3.eContents().get(0);
+		private final Keyword cGreaterThanSignKeyword_16_4 = (Keyword)cGroup_16.eContents().get(4);
+		private final Group cGroup_17 = (Group)cAlternatives.eContents().get(17);
+		private final Action cUnboundedStringAction_17_0 = (Action)cGroup_17.eContents().get(0);
+		private final Keyword cStringKeyword_17_1 = (Keyword)cGroup_17.eContents().get(1);
+		private final Group cGroup_18 = (Group)cAlternatives.eContents().get(18);
+		private final Action cBoundedWideStringAction_18_0 = (Action)cGroup_18.eContents().get(0);
+		private final Keyword cWstringKeyword_18_1 = (Keyword)cGroup_18.eContents().get(1);
+		private final Keyword cLessThanSignKeyword_18_2 = (Keyword)cGroup_18.eContents().get(2);
+		private final Assignment cSizeAssignment_18_3 = (Assignment)cGroup_18.eContents().get(3);
+		private final RuleCall cSizeINTTerminalRuleCall_18_3_0 = (RuleCall)cSizeAssignment_18_3.eContents().get(0);
+		private final Keyword cGreaterThanSignKeyword_18_4 = (Keyword)cGroup_18.eContents().get(4);
+		private final Group cGroup_19 = (Group)cAlternatives.eContents().get(19);
+		private final Action cUnboundedWideStringAction_19_0 = (Action)cGroup_19.eContents().get(0);
+		private final Keyword cWstringKeyword_19_1 = (Keyword)cGroup_19.eContents().get(1);
+		private final Group cGroup_20 = (Group)cAlternatives.eContents().get(20);
+		private final Action cFixedPtTypeAction_20_0 = (Action)cGroup_20.eContents().get(0);
+		private final Keyword cFixedKeyword_20_1 = (Keyword)cGroup_20.eContents().get(1);
+		private final Keyword cLessThanSignKeyword_20_2 = (Keyword)cGroup_20.eContents().get(2);
+		private final Assignment cTotalDigitsAssignment_20_3 = (Assignment)cGroup_20.eContents().get(3);
+		private final RuleCall cTotalDigitsINTTerminalRuleCall_20_3_0 = (RuleCall)cTotalDigitsAssignment_20_3.eContents().get(0);
+		private final Keyword cCommaKeyword_20_4 = (Keyword)cGroup_20.eContents().get(4);
+		private final Assignment cFractionalDigitsAssignment_20_5 = (Assignment)cGroup_20.eContents().get(5);
+		private final RuleCall cFractionalDigitsINTTerminalRuleCall_20_5_0 = (RuleCall)cFractionalDigitsAssignment_20_5.eContents().get(0);
+		private final Keyword cGreaterThanSignKeyword_20_6 = (Keyword)cGroup_20.eContents().get(6);
 		
 		///*
+		// * (21) <type_spec> ::= <simple_type_spec>
 		// * (22) <simple_type_spec> ::= <base_type_spec>
 		// *                         | <scoped_name>
 		// * (23) <base_type_spec> ::= <integer_type>
@@ -833,17 +685,38 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 		// * (35) <wide_char_type> ::= "wchar"
 		// * (36) <boolean_type> ::= "boolean"
 		// * (37) <octet_type> ::= "octet"
-		// */ SimpleTypeSpec:
+		// * (38) <template_type_spec> ::= <sequence_type>
+		// *                           | <string_type>
+		// *                           | <wide_string_type>
+		// *                           | <fixed_pt_type>
+		// * (39) <sequence_type> ::= "sequence" "<" <type_spec> "," <positive_int_const> ">"
+		// *                      | "sequence" "<" <type_spec> ">"
+		// * (40) <string_type> ::= "string" "<" <positive_int_const> ">"
+		// *                    | "string"
+		// * (41) <wide_string_type> ::= "wstring" "<" <positive_int_const> ">"
+		// *                         | "wstring"
+		// * (42) <fixed_pt_type> ::= "fixed" "<" <positive_int_const> "," <positive_int_const> ">"
+		// * (64) <type_declarator> ::= { <simple_type_spec>
+		// *                            | <template_type_spec>
+		// *                            | <constr_type_dcl>
+		// *                            } <any_declarators>
+		// */ Type:
 		//	{SignedShortInt} 'short' | {SignedLongInt} 'long' | {SignedLongLongInt} 'long' 'long' | {UnsignedShortInt} 'unsigned'
 		//	'short' | {UnsignedLongInt} 'unsigned' 'long' | {UnsignedLongLongInt} 'unsigned' 'long' 'long' | {FloatType} 'float' |
 		//	{DoubleType} 'double' | {LongDoubleType} 'long' 'double' | {CharType} 'char' | {WideCharType} 'wchar' | {BooleanType}
-		//	'boolean' | {OctetType} 'octet' | {ReferencedType} type=[Definition|ScopedName];
+		//	'boolean' | {OctetType} 'octet' | {ReferencedType} type=[Definition|ScopedName] | {BoundedSequence} 'sequence' '<'
+		//	type=[Definition|ScopedName] ',' size=INT '>' | {UnboundedSequence} 'sequence' '<' type=[Definition|ScopedName] '>' |
+		//	{BoundedString} 'string' '<' size=INT '>' | {UnboundedString} 'string' | {BoundedWideString} 'wstring' '<' size=INT
+		//	'>' | {UnboundedWideString} 'wstring' | {FixedPtType} 'fixed' '<' totalDigits=INT ',' fractionalDigits=INT '>';
 		@Override public ParserRule getRule() { return rule; }
 		
 		//{SignedShortInt} 'short' | {SignedLongInt} 'long' | {SignedLongLongInt} 'long' 'long' | {UnsignedShortInt} 'unsigned'
 		//'short' | {UnsignedLongInt} 'unsigned' 'long' | {UnsignedLongLongInt} 'unsigned' 'long' 'long' | {FloatType} 'float' |
 		//{DoubleType} 'double' | {LongDoubleType} 'long' 'double' | {CharType} 'char' | {WideCharType} 'wchar' | {BooleanType}
-		//'boolean' | {OctetType} 'octet' | {ReferencedType} type=[Definition|ScopedName]
+		//'boolean' | {OctetType} 'octet' | {ReferencedType} type=[Definition|ScopedName] | {BoundedSequence} 'sequence' '<'
+		//type=[Definition|ScopedName] ',' size=INT '>' | {UnboundedSequence} 'sequence' '<' type=[Definition|ScopedName] '>' |
+		//{BoundedString} 'string' '<' size=INT '>' | {UnboundedString} 'string' | {BoundedWideString} 'wstring' '<' size=INT '>'
+		//| {UnboundedWideString} 'wstring' | {FixedPtType} 'fixed' '<' totalDigits=INT ',' fractionalDigits=INT '>'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//{SignedShortInt} 'short'
@@ -995,6 +868,153 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ScopedName
 		public RuleCall getTypeDefinitionScopedNameParserRuleCall_13_1_0_1() { return cTypeDefinitionScopedNameParserRuleCall_13_1_0_1; }
+		
+		//{BoundedSequence} 'sequence' '<' type=[Definition|ScopedName] ',' size=INT '>'
+		public Group getGroup_14() { return cGroup_14; }
+		
+		//{BoundedSequence}
+		public Action getBoundedSequenceAction_14_0() { return cBoundedSequenceAction_14_0; }
+		
+		//'sequence'
+		public Keyword getSequenceKeyword_14_1() { return cSequenceKeyword_14_1; }
+		
+		//'<'
+		public Keyword getLessThanSignKeyword_14_2() { return cLessThanSignKeyword_14_2; }
+		
+		//type=[Definition|ScopedName]
+		public Assignment getTypeAssignment_14_3() { return cTypeAssignment_14_3; }
+		
+		//[Definition|ScopedName]
+		public CrossReference getTypeDefinitionCrossReference_14_3_0() { return cTypeDefinitionCrossReference_14_3_0; }
+		
+		//ScopedName
+		public RuleCall getTypeDefinitionScopedNameParserRuleCall_14_3_0_1() { return cTypeDefinitionScopedNameParserRuleCall_14_3_0_1; }
+		
+		//','
+		public Keyword getCommaKeyword_14_4() { return cCommaKeyword_14_4; }
+		
+		//size=INT
+		public Assignment getSizeAssignment_14_5() { return cSizeAssignment_14_5; }
+		
+		//INT
+		public RuleCall getSizeINTTerminalRuleCall_14_5_0() { return cSizeINTTerminalRuleCall_14_5_0; }
+		
+		//'>'
+		public Keyword getGreaterThanSignKeyword_14_6() { return cGreaterThanSignKeyword_14_6; }
+		
+		//{UnboundedSequence} 'sequence' '<' type=[Definition|ScopedName] '>'
+		public Group getGroup_15() { return cGroup_15; }
+		
+		//{UnboundedSequence}
+		public Action getUnboundedSequenceAction_15_0() { return cUnboundedSequenceAction_15_0; }
+		
+		//'sequence'
+		public Keyword getSequenceKeyword_15_1() { return cSequenceKeyword_15_1; }
+		
+		//'<'
+		public Keyword getLessThanSignKeyword_15_2() { return cLessThanSignKeyword_15_2; }
+		
+		//type=[Definition|ScopedName]
+		public Assignment getTypeAssignment_15_3() { return cTypeAssignment_15_3; }
+		
+		//[Definition|ScopedName]
+		public CrossReference getTypeDefinitionCrossReference_15_3_0() { return cTypeDefinitionCrossReference_15_3_0; }
+		
+		//ScopedName
+		public RuleCall getTypeDefinitionScopedNameParserRuleCall_15_3_0_1() { return cTypeDefinitionScopedNameParserRuleCall_15_3_0_1; }
+		
+		//'>'
+		public Keyword getGreaterThanSignKeyword_15_4() { return cGreaterThanSignKeyword_15_4; }
+		
+		//{BoundedString} 'string' '<' size=INT '>'
+		public Group getGroup_16() { return cGroup_16; }
+		
+		//{BoundedString}
+		public Action getBoundedStringAction_16_0() { return cBoundedStringAction_16_0; }
+		
+		//'string'
+		public Keyword getStringKeyword_16_1() { return cStringKeyword_16_1; }
+		
+		//'<'
+		public Keyword getLessThanSignKeyword_16_2() { return cLessThanSignKeyword_16_2; }
+		
+		//size=INT
+		public Assignment getSizeAssignment_16_3() { return cSizeAssignment_16_3; }
+		
+		//INT
+		public RuleCall getSizeINTTerminalRuleCall_16_3_0() { return cSizeINTTerminalRuleCall_16_3_0; }
+		
+		//'>'
+		public Keyword getGreaterThanSignKeyword_16_4() { return cGreaterThanSignKeyword_16_4; }
+		
+		//{UnboundedString} 'string'
+		public Group getGroup_17() { return cGroup_17; }
+		
+		//{UnboundedString}
+		public Action getUnboundedStringAction_17_0() { return cUnboundedStringAction_17_0; }
+		
+		//'string'
+		public Keyword getStringKeyword_17_1() { return cStringKeyword_17_1; }
+		
+		//{BoundedWideString} 'wstring' '<' size=INT '>'
+		public Group getGroup_18() { return cGroup_18; }
+		
+		//{BoundedWideString}
+		public Action getBoundedWideStringAction_18_0() { return cBoundedWideStringAction_18_0; }
+		
+		//'wstring'
+		public Keyword getWstringKeyword_18_1() { return cWstringKeyword_18_1; }
+		
+		//'<'
+		public Keyword getLessThanSignKeyword_18_2() { return cLessThanSignKeyword_18_2; }
+		
+		//size=INT
+		public Assignment getSizeAssignment_18_3() { return cSizeAssignment_18_3; }
+		
+		//INT
+		public RuleCall getSizeINTTerminalRuleCall_18_3_0() { return cSizeINTTerminalRuleCall_18_3_0; }
+		
+		//'>'
+		public Keyword getGreaterThanSignKeyword_18_4() { return cGreaterThanSignKeyword_18_4; }
+		
+		//{UnboundedWideString} 'wstring'
+		public Group getGroup_19() { return cGroup_19; }
+		
+		//{UnboundedWideString}
+		public Action getUnboundedWideStringAction_19_0() { return cUnboundedWideStringAction_19_0; }
+		
+		//'wstring'
+		public Keyword getWstringKeyword_19_1() { return cWstringKeyword_19_1; }
+		
+		//{FixedPtType} 'fixed' '<' totalDigits=INT ',' fractionalDigits=INT '>'
+		public Group getGroup_20() { return cGroup_20; }
+		
+		//{FixedPtType}
+		public Action getFixedPtTypeAction_20_0() { return cFixedPtTypeAction_20_0; }
+		
+		//'fixed'
+		public Keyword getFixedKeyword_20_1() { return cFixedKeyword_20_1; }
+		
+		//'<'
+		public Keyword getLessThanSignKeyword_20_2() { return cLessThanSignKeyword_20_2; }
+		
+		//totalDigits=INT
+		public Assignment getTotalDigitsAssignment_20_3() { return cTotalDigitsAssignment_20_3; }
+		
+		//INT
+		public RuleCall getTotalDigitsINTTerminalRuleCall_20_3_0() { return cTotalDigitsINTTerminalRuleCall_20_3_0; }
+		
+		//','
+		public Keyword getCommaKeyword_20_4() { return cCommaKeyword_20_4; }
+		
+		//fractionalDigits=INT
+		public Assignment getFractionalDigitsAssignment_20_5() { return cFractionalDigitsAssignment_20_5; }
+		
+		//INT
+		public RuleCall getFractionalDigitsINTTerminalRuleCall_20_5_0() { return cFractionalDigitsINTTerminalRuleCall_20_5_0; }
+		
+		//'>'
+		public Keyword getGreaterThanSignKeyword_20_6() { return cGreaterThanSignKeyword_20_6; }
 	}
 	public class ScopedNameElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.osate.simpleidl.SimpleIDL.ScopedName");
@@ -1037,9 +1057,7 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 	private final DefinitionElements pDefinition;
 	private final MemberElements pMember;
 	private final CaseElements pCase;
-	private final FixedArraySizeElements pFixedArraySize;
 	private final TypeElements pType;
-	private final SimpleTypeSpecElements pSimpleTypeSpec;
 	private final ScopedNameElements pScopedName;
 	private final TerminalRule tID;
 	private final TerminalRule tPREPROCESSOR;
@@ -1057,9 +1075,7 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 		this.pDefinition = new DefinitionElements();
 		this.pMember = new MemberElements();
 		this.pCase = new CaseElements();
-		this.pFixedArraySize = new FixedArraySizeElements();
 		this.pType = new TypeElements();
-		this.pSimpleTypeSpec = new SimpleTypeSpecElements();
 		this.pScopedName = new ScopedNameElements();
 		this.tID = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.osate.simpleidl.SimpleIDL.ID");
 		this.tPREPROCESSOR = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.osate.simpleidl.SimpleIDL.PREPROCESSOR");
@@ -1143,6 +1159,7 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 	// *                     "{" <enumerator> { "," <enumerator> } * "}"
 	// * (58) <enumerator> ::= <identifier>
 	// * (59) <array_declarator> ::= <identifier> <fixed_array_size>+
+	// * (60) <fixed_array_size> ::= "[" <positive_int_const> "]"
 	// * (62) <simple_declarator> ::= <identifier>
 	// * (63) <typedef_dcl> ::= "typedef" <type_declarator>
 	// * (64) <type_declarator> ::= { <simple_type_spec>
@@ -1156,7 +1173,7 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 	//	{Module} 'module' name=ID '{' definitions+=Definition+ '}' ';' | {Struct} 'struct' name=ID '{' members+=Member+ '}'
 	//	';' | {StructForward} 'struct' struct=[Struct] ';' | {Union} 'union' name=ID '{' 'switch' '(' 'unsigned' 'short' ')'
 	//	'{' cases+=Case+ '}' ';' '}' ';' | {Enum} 'enum' name=ID '{' literals+=ID (',' literals+=ID)* '}' ';' | {Typedef}
-	//	'typedef' type=Type name=ID arraySize=FixedArraySize? ';';
+	//	'typedef' type=Type name=ID ';' | {ArrayType} 'typedef' type=[Definition|ScopedName] name=ID '[' size=INT ']' ';';
 	public DefinitionElements getDefinitionAccess() {
 		return pDefinition;
 	}
@@ -1167,12 +1184,14 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 	
 	///*
 	// * (21) <type_spec> ::= <simple_type_spec>
+	// * (22) <simple_type_spec> ::= <base_type_spec>
+	// *                         | <scoped_name>
 	// * (47) <member> ::= <type_spec> <declarators> ";"
 	// * (62) <simple_declarator> ::= <identifier>
 	// * (67) <declarators> ::= <declarator> { "," <declarator> }*
 	// * (68) <declarator> ::= <simple_declarator>
 	// */ Member:
-	//	type=SimpleTypeSpec name=ID ';';
+	//	type=[Definition|ScopedName] name=ID ';';
 	public MemberElements getMemberAccess() {
 		return pMember;
 	}
@@ -1183,6 +1202,8 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 	
 	///*
 	// * (21) <type_spec> ::= <simple_type_spec>
+	// * (22) <simple_type_spec> ::= <base_type_spec>
+	// *                         | <scoped_name>
 	// * (53) <case> ::= <case_label>+ <element_spec> ";"
 	// * (54) <case_label> ::= "case" <const_expr> ":"
 	// *                   | "default" ":"
@@ -1190,7 +1211,7 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 	// * (62) <simple_declarator> ::= <identifier>
 	// * (68) <declarator> ::= <simple_declarator>
 	// */ Case:
-	//	('case' labels+=INT ':')+ type=SimpleTypeSpec name=ID ';';
+	//	('case' labels+=INT ':')+ type=[Definition|ScopedName] name=ID ';';
 	public CaseElements getCaseAccess() {
 		return pCase;
 	}
@@ -1200,48 +1221,7 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	///*
-	// * (60) <fixed_array_size> ::= "[" <positive_int_const> "]"
-	// */ FixedArraySize:
-	//	'[' size=INT ']';
-	public FixedArraySizeElements getFixedArraySizeAccess() {
-		return pFixedArraySize;
-	}
-	
-	public ParserRule getFixedArraySizeRule() {
-		return getFixedArraySizeAccess().getRule();
-	}
-	
-	///*
 	// * (21) <type_spec> ::= <simple_type_spec>
-	// * (38) <template_type_spec> ::= <sequence_type>
-	// *                           | <string_type>
-	// *                           | <wide_string_type>
-	// *                           | <fixed_pt_type>
-	// * (39) <sequence_type> ::= "sequence" "<" <type_spec> "," <positive_int_const> ">"
-	// *                      | "sequence" "<" <type_spec> ">"
-	// * (40) <string_type> ::= "string" "<" <positive_int_const> ">"
-	// *                    | "string"
-	// * (41) <wide_string_type> ::= "wstring" "<" <positive_int_const> ">"
-	// *                         | "wstring"
-	// * (42) <fixed_pt_type> ::= "fixed" "<" <positive_int_const> "," <positive_int_const> ">"
-	// * (64) <type_declarator> ::= { <simple_type_spec>
-	// *                            | <template_type_spec>
-	// *                            | <constr_type_dcl>
-	// *                            } <any_declarators>
-	// */ Type:
-	//	SimpleTypeSpec | {BoundedSequence} 'sequence' '<' type=SimpleTypeSpec ',' size=INT '>' | {UnboundedSequence}
-	//	'sequence' '<' type=SimpleTypeSpec '>' | {BoundedString} 'string' '<' size=INT '>' | {UnboundedString} 'string' |
-	//	{BoundedWideString} 'wstring' '<' size=INT '>' | {UnboundedWideString} 'wstring' | {FixedPtType} 'fixed' '<'
-	//	totalDigits=INT ',' fractionalDigits=INT '>';
-	public TypeElements getTypeAccess() {
-		return pType;
-	}
-	
-	public ParserRule getTypeRule() {
-		return getTypeAccess().getRule();
-	}
-	
-	///*
 	// * (22) <simple_type_spec> ::= <base_type_spec>
 	// *                         | <scoped_name>
 	// * (23) <base_type_spec> ::= <integer_type>
@@ -1271,17 +1251,35 @@ public class SimpleIDLGrammarAccess extends AbstractGrammarElementFinder {
 	// * (35) <wide_char_type> ::= "wchar"
 	// * (36) <boolean_type> ::= "boolean"
 	// * (37) <octet_type> ::= "octet"
-	// */ SimpleTypeSpec:
+	// * (38) <template_type_spec> ::= <sequence_type>
+	// *                           | <string_type>
+	// *                           | <wide_string_type>
+	// *                           | <fixed_pt_type>
+	// * (39) <sequence_type> ::= "sequence" "<" <type_spec> "," <positive_int_const> ">"
+	// *                      | "sequence" "<" <type_spec> ">"
+	// * (40) <string_type> ::= "string" "<" <positive_int_const> ">"
+	// *                    | "string"
+	// * (41) <wide_string_type> ::= "wstring" "<" <positive_int_const> ">"
+	// *                         | "wstring"
+	// * (42) <fixed_pt_type> ::= "fixed" "<" <positive_int_const> "," <positive_int_const> ">"
+	// * (64) <type_declarator> ::= { <simple_type_spec>
+	// *                            | <template_type_spec>
+	// *                            | <constr_type_dcl>
+	// *                            } <any_declarators>
+	// */ Type:
 	//	{SignedShortInt} 'short' | {SignedLongInt} 'long' | {SignedLongLongInt} 'long' 'long' | {UnsignedShortInt} 'unsigned'
 	//	'short' | {UnsignedLongInt} 'unsigned' 'long' | {UnsignedLongLongInt} 'unsigned' 'long' 'long' | {FloatType} 'float' |
 	//	{DoubleType} 'double' | {LongDoubleType} 'long' 'double' | {CharType} 'char' | {WideCharType} 'wchar' | {BooleanType}
-	//	'boolean' | {OctetType} 'octet' | {ReferencedType} type=[Definition|ScopedName];
-	public SimpleTypeSpecElements getSimpleTypeSpecAccess() {
-		return pSimpleTypeSpec;
+	//	'boolean' | {OctetType} 'octet' | {ReferencedType} type=[Definition|ScopedName] | {BoundedSequence} 'sequence' '<'
+	//	type=[Definition|ScopedName] ',' size=INT '>' | {UnboundedSequence} 'sequence' '<' type=[Definition|ScopedName] '>' |
+	//	{BoundedString} 'string' '<' size=INT '>' | {UnboundedString} 'string' | {BoundedWideString} 'wstring' '<' size=INT
+	//	'>' | {UnboundedWideString} 'wstring' | {FixedPtType} 'fixed' '<' totalDigits=INT ',' fractionalDigits=INT '>';
+	public TypeElements getTypeAccess() {
+		return pType;
 	}
 	
-	public ParserRule getSimpleTypeSpecRule() {
-		return getSimpleTypeSpecAccess().getRule();
+	public ParserRule getTypeRule() {
+		return getTypeAccess().getRule();
 	}
 	
 	///*

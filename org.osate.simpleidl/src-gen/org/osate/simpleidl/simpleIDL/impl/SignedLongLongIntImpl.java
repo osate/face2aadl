@@ -33,7 +33,7 @@ import org.osate.simpleidl.simpleIDL.SimpleIDLPackage;
  *
  * @generated
  */
-public class SignedLongLongIntImpl extends SimpleTypeSpecImpl implements SignedLongLongInt
+public class SignedLongLongIntImpl extends TypeImpl implements SignedLongLongInt
 {
   /**
    * <!-- begin-user-doc -->

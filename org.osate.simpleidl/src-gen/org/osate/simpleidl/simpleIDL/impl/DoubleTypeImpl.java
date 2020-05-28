@@ -33,7 +33,7 @@ import org.osate.simpleidl.simpleIDL.SimpleIDLPackage;
  *
  * @generated
  */
-public class DoubleTypeImpl extends SimpleTypeSpecImpl implements DoubleType
+public class DoubleTypeImpl extends TypeImpl implements DoubleType
 {
   /**
    * <!-- begin-user-doc -->

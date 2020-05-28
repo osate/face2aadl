@@ -22,7 +22,6 @@
 package org.osate.simpleidl.simpleIDL.impl;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -30,8 +29,8 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.osate.simpleidl.simpleIDL.BoundedSequence;
+import org.osate.simpleidl.simpleIDL.Definition;
 import org.osate.simpleidl.simpleIDL.SimpleIDLPackage;
-import org.osate.simpleidl.simpleIDL.SimpleTypeSpec;
 
 /**
  * <!-- begin-user-doc -->
@@ -50,14 +49,14 @@ import org.osate.simpleidl.simpleIDL.SimpleTypeSpec;
 public class BoundedSequenceImpl extends TypeImpl implements BoundedSequence
 {
   /**
-   * The cached value of the '{@link #getType() <em>Type</em>}' containment reference.
+   * The cached value of the '{@link #getType() <em>Type</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getType()
    * @generated
    * @ordered
    */
-  protected SimpleTypeSpec type;
+  protected Definition type;
 
   /**
    * The default value of the '{@link #getSize() <em>Size</em>}' attribute.
@@ -106,7 +105,27 @@ public class BoundedSequenceImpl extends TypeImpl implements BoundedSequence
    * @generated
    */
   @Override
-  public SimpleTypeSpec getType()
+  public Definition getType()
+  {
+    if (type != null && type.eIsProxy())
+    {
+      InternalEObject oldType = (InternalEObject)type;
+      type = (Definition)eResolveProxy(oldType);
+      if (type != oldType)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SimpleIDLPackage.BOUNDED_SEQUENCE__TYPE, oldType, type));
+      }
+    }
+    return type;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Definition basicGetType()
   {
     return type;
   }
@@ -116,38 +135,13 @@ public class BoundedSequenceImpl extends TypeImpl implements BoundedSequence
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetType(SimpleTypeSpec newType, NotificationChain msgs)
+  @Override
+  public void setType(Definition newType)
   {
-    SimpleTypeSpec oldType = type;
+    Definition oldType = type;
     type = newType;
     if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SimpleIDLPackage.BOUNDED_SEQUENCE__TYPE, oldType, newType);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setType(SimpleTypeSpec newType)
-  {
-    if (newType != type)
-    {
-      NotificationChain msgs = null;
-      if (type != null)
-        msgs = ((InternalEObject)type).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SimpleIDLPackage.BOUNDED_SEQUENCE__TYPE, null, msgs);
-      if (newType != null)
-        msgs = ((InternalEObject)newType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SimpleIDLPackage.BOUNDED_SEQUENCE__TYPE, null, msgs);
-      msgs = basicSetType(newType, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SimpleIDLPackage.BOUNDED_SEQUENCE__TYPE, newType, newType));
+      eNotify(new ENotificationImpl(this, Notification.SET, SimpleIDLPackage.BOUNDED_SEQUENCE__TYPE, oldType, type));
   }
 
   /**
@@ -181,28 +175,13 @@ public class BoundedSequenceImpl extends TypeImpl implements BoundedSequence
    * @generated
    */
   @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-  {
-    switch (featureID)
-    {
-      case SimpleIDLPackage.BOUNDED_SEQUENCE__TYPE:
-        return basicSetType(null, msgs);
-    }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
     switch (featureID)
     {
       case SimpleIDLPackage.BOUNDED_SEQUENCE__TYPE:
-        return getType();
+        if (resolve) return getType();
+        return basicGetType();
       case SimpleIDLPackage.BOUNDED_SEQUENCE__SIZE:
         return getSize();
     }
@@ -220,7 +199,7 @@ public class BoundedSequenceImpl extends TypeImpl implements BoundedSequence
     switch (featureID)
     {
       case SimpleIDLPackage.BOUNDED_SEQUENCE__TYPE:
-        setType((SimpleTypeSpec)newValue);
+        setType((Definition)newValue);
         return;
       case SimpleIDLPackage.BOUNDED_SEQUENCE__SIZE:
         setSize((Integer)newValue);
@@ -240,7 +219,7 @@ public class BoundedSequenceImpl extends TypeImpl implements BoundedSequence
     switch (featureID)
     {
       case SimpleIDLPackage.BOUNDED_SEQUENCE__TYPE:
-        setType((SimpleTypeSpec)null);
+        setType((Definition)null);
         return;
       case SimpleIDLPackage.BOUNDED_SEQUENCE__SIZE:
         setSize(SIZE_EDEFAULT);

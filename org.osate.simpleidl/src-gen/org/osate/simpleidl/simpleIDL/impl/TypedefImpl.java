@@ -29,7 +29,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-import org.osate.simpleidl.simpleIDL.FixedArraySize;
 import org.osate.simpleidl.simpleIDL.SimpleIDLPackage;
 import org.osate.simpleidl.simpleIDL.Type;
 import org.osate.simpleidl.simpleIDL.Typedef;
@@ -44,7 +43,6 @@ import org.osate.simpleidl.simpleIDL.Typedef;
  * <ul>
  *   <li>{@link org.osate.simpleidl.simpleIDL.impl.TypedefImpl#getType <em>Type</em>}</li>
  *   <li>{@link org.osate.simpleidl.simpleIDL.impl.TypedefImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.osate.simpleidl.simpleIDL.impl.TypedefImpl#getArraySize <em>Array Size</em>}</li>
  * </ul>
  *
  * @generated
@@ -80,16 +78,6 @@ public class TypedefImpl extends DefinitionImpl implements Typedef
    * @ordered
    */
   protected String name = NAME_EDEFAULT;
-
-  /**
-   * The cached value of the '{@link #getArraySize() <em>Array Size</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getArraySize()
-   * @generated
-   * @ordered
-   */
-  protected FixedArraySize arraySize;
 
   /**
    * <!-- begin-user-doc -->
@@ -193,64 +181,12 @@ public class TypedefImpl extends DefinitionImpl implements Typedef
    * @generated
    */
   @Override
-  public FixedArraySize getArraySize()
-  {
-    return arraySize;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetArraySize(FixedArraySize newArraySize, NotificationChain msgs)
-  {
-    FixedArraySize oldArraySize = arraySize;
-    arraySize = newArraySize;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SimpleIDLPackage.TYPEDEF__ARRAY_SIZE, oldArraySize, newArraySize);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setArraySize(FixedArraySize newArraySize)
-  {
-    if (newArraySize != arraySize)
-    {
-      NotificationChain msgs = null;
-      if (arraySize != null)
-        msgs = ((InternalEObject)arraySize).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SimpleIDLPackage.TYPEDEF__ARRAY_SIZE, null, msgs);
-      if (newArraySize != null)
-        msgs = ((InternalEObject)newArraySize).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SimpleIDLPackage.TYPEDEF__ARRAY_SIZE, null, msgs);
-      msgs = basicSetArraySize(newArraySize, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SimpleIDLPackage.TYPEDEF__ARRAY_SIZE, newArraySize, newArraySize));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
     {
       case SimpleIDLPackage.TYPEDEF__TYPE:
         return basicSetType(null, msgs);
-      case SimpleIDLPackage.TYPEDEF__ARRAY_SIZE:
-        return basicSetArraySize(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -269,8 +205,6 @@ public class TypedefImpl extends DefinitionImpl implements Typedef
         return getType();
       case SimpleIDLPackage.TYPEDEF__NAME:
         return getName();
-      case SimpleIDLPackage.TYPEDEF__ARRAY_SIZE:
-        return getArraySize();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -290,9 +224,6 @@ public class TypedefImpl extends DefinitionImpl implements Typedef
         return;
       case SimpleIDLPackage.TYPEDEF__NAME:
         setName((String)newValue);
-        return;
-      case SimpleIDLPackage.TYPEDEF__ARRAY_SIZE:
-        setArraySize((FixedArraySize)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -314,9 +245,6 @@ public class TypedefImpl extends DefinitionImpl implements Typedef
       case SimpleIDLPackage.TYPEDEF__NAME:
         setName(NAME_EDEFAULT);
         return;
-      case SimpleIDLPackage.TYPEDEF__ARRAY_SIZE:
-        setArraySize((FixedArraySize)null);
-        return;
     }
     super.eUnset(featureID);
   }
@@ -335,8 +263,6 @@ public class TypedefImpl extends DefinitionImpl implements Typedef
         return type != null;
       case SimpleIDLPackage.TYPEDEF__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-      case SimpleIDLPackage.TYPEDEF__ARRAY_SIZE:
-        return arraySize != null;
     }
     return super.eIsSet(featureID);
   }

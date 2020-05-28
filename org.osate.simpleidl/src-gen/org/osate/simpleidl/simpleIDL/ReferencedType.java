@@ -38,7 +38,7 @@ package org.osate.simpleidl.simpleIDL;
  * @model
  * @generated
  */
-public interface ReferencedType extends SimpleTypeSpec
+public interface ReferencedType extends Type
 {
   /**
    * Returns the value of the '<em><b>Type</b></em>' reference.

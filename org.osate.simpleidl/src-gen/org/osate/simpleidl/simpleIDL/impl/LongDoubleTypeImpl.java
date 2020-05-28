@@ -33,7 +33,7 @@ import org.osate.simpleidl.simpleIDL.SimpleIDLPackage;
  *
  * @generated
  */
-public class LongDoubleTypeImpl extends SimpleTypeSpecImpl implements LongDoubleType
+public class LongDoubleTypeImpl extends TypeImpl implements LongDoubleType
 {
   /**
    * <!-- begin-user-doc -->

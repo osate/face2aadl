@@ -24,7 +24,6 @@ package org.osate.simpleidl.simpleIDL.impl;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -37,8 +36,8 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeEList;
 
 import org.osate.simpleidl.simpleIDL.Case;
+import org.osate.simpleidl.simpleIDL.Definition;
 import org.osate.simpleidl.simpleIDL.SimpleIDLPackage;
-import org.osate.simpleidl.simpleIDL.SimpleTypeSpec;
 
 /**
  * <!-- begin-user-doc -->
@@ -68,14 +67,14 @@ public class CaseImpl extends MinimalEObjectImpl.Container implements Case
   protected EList<Integer> labels;
 
   /**
-   * The cached value of the '{@link #getType() <em>Type</em>}' containment reference.
+   * The cached value of the '{@link #getType() <em>Type</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getType()
    * @generated
    * @ordered
    */
-  protected SimpleTypeSpec type;
+  protected Definition type;
 
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -139,7 +138,27 @@ public class CaseImpl extends MinimalEObjectImpl.Container implements Case
    * @generated
    */
   @Override
-  public SimpleTypeSpec getType()
+  public Definition getType()
+  {
+    if (type != null && type.eIsProxy())
+    {
+      InternalEObject oldType = (InternalEObject)type;
+      type = (Definition)eResolveProxy(oldType);
+      if (type != oldType)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SimpleIDLPackage.CASE__TYPE, oldType, type));
+      }
+    }
+    return type;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Definition basicGetType()
   {
     return type;
   }
@@ -149,38 +168,13 @@ public class CaseImpl extends MinimalEObjectImpl.Container implements Case
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetType(SimpleTypeSpec newType, NotificationChain msgs)
+  @Override
+  public void setType(Definition newType)
   {
-    SimpleTypeSpec oldType = type;
+    Definition oldType = type;
     type = newType;
     if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SimpleIDLPackage.CASE__TYPE, oldType, newType);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setType(SimpleTypeSpec newType)
-  {
-    if (newType != type)
-    {
-      NotificationChain msgs = null;
-      if (type != null)
-        msgs = ((InternalEObject)type).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SimpleIDLPackage.CASE__TYPE, null, msgs);
-      if (newType != null)
-        msgs = ((InternalEObject)newType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SimpleIDLPackage.CASE__TYPE, null, msgs);
-      msgs = basicSetType(newType, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SimpleIDLPackage.CASE__TYPE, newType, newType));
+      eNotify(new ENotificationImpl(this, Notification.SET, SimpleIDLPackage.CASE__TYPE, oldType, type));
   }
 
   /**
@@ -214,22 +208,6 @@ public class CaseImpl extends MinimalEObjectImpl.Container implements Case
    * @generated
    */
   @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-  {
-    switch (featureID)
-    {
-      case SimpleIDLPackage.CASE__TYPE:
-        return basicSetType(null, msgs);
-    }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
     switch (featureID)
@@ -237,7 +215,8 @@ public class CaseImpl extends MinimalEObjectImpl.Container implements Case
       case SimpleIDLPackage.CASE__LABELS:
         return getLabels();
       case SimpleIDLPackage.CASE__TYPE:
-        return getType();
+        if (resolve) return getType();
+        return basicGetType();
       case SimpleIDLPackage.CASE__NAME:
         return getName();
     }
@@ -260,7 +239,7 @@ public class CaseImpl extends MinimalEObjectImpl.Container implements Case
         getLabels().addAll((Collection<? extends Integer>)newValue);
         return;
       case SimpleIDLPackage.CASE__TYPE:
-        setType((SimpleTypeSpec)newValue);
+        setType((Definition)newValue);
         return;
       case SimpleIDLPackage.CASE__NAME:
         setName((String)newValue);
@@ -283,7 +262,7 @@ public class CaseImpl extends MinimalEObjectImpl.Container implements Case
         getLabels().clear();
         return;
       case SimpleIDLPackage.CASE__TYPE:
-        setType((SimpleTypeSpec)null);
+        setType((Definition)null);
         return;
       case SimpleIDLPackage.CASE__NAME:
         setName(NAME_EDEFAULT);

@@ -11,19 +11,15 @@
     </genClasses>
     <genClasses ecoreClass="SimpleIDL.ecore#//Definition"/>
     <genClasses ecoreClass="SimpleIDL.ecore#//Member">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//Member/type"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//Member/type"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//Member/name"/>
     </genClasses>
     <genClasses ecoreClass="SimpleIDL.ecore#//Case">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//Case/labels"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//Case/type"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//Case/type"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//Case/name"/>
     </genClasses>
-    <genClasses ecoreClass="SimpleIDL.ecore#//FixedArraySize">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//FixedArraySize/size"/>
-    </genClasses>
     <genClasses ecoreClass="SimpleIDL.ecore#//Type"/>
-    <genClasses ecoreClass="SimpleIDL.ecore#//SimpleTypeSpec"/>
     <genClasses ecoreClass="SimpleIDL.ecore#//Module">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//Module/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//Module/definitions"/>
@@ -46,26 +42,11 @@
     <genClasses ecoreClass="SimpleIDL.ecore#//Typedef">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//Typedef/type"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//Typedef/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//Typedef/arraySize"/>
     </genClasses>
-    <genClasses ecoreClass="SimpleIDL.ecore#//BoundedSequence">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//BoundedSequence/type"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//BoundedSequence/size"/>
-    </genClasses>
-    <genClasses ecoreClass="SimpleIDL.ecore#//UnboundedSequence">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//UnboundedSequence/type"/>
-    </genClasses>
-    <genClasses ecoreClass="SimpleIDL.ecore#//BoundedString">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//BoundedString/size"/>
-    </genClasses>
-    <genClasses ecoreClass="SimpleIDL.ecore#//UnboundedString"/>
-    <genClasses ecoreClass="SimpleIDL.ecore#//BoundedWideString">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//BoundedWideString/size"/>
-    </genClasses>
-    <genClasses ecoreClass="SimpleIDL.ecore#//UnboundedWideString"/>
-    <genClasses ecoreClass="SimpleIDL.ecore#//FixedPtType">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//FixedPtType/totalDigits"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//FixedPtType/fractionalDigits"/>
+    <genClasses ecoreClass="SimpleIDL.ecore#//ArrayType">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//ArrayType/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//ArrayType/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//ArrayType/size"/>
     </genClasses>
     <genClasses ecoreClass="SimpleIDL.ecore#//SignedShortInt"/>
     <genClasses ecoreClass="SimpleIDL.ecore#//SignedLongInt"/>
@@ -82,6 +63,25 @@
     <genClasses ecoreClass="SimpleIDL.ecore#//OctetType"/>
     <genClasses ecoreClass="SimpleIDL.ecore#//ReferencedType">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//ReferencedType/type"/>
+    </genClasses>
+    <genClasses ecoreClass="SimpleIDL.ecore#//BoundedSequence">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//BoundedSequence/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//BoundedSequence/size"/>
+    </genClasses>
+    <genClasses ecoreClass="SimpleIDL.ecore#//UnboundedSequence">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SimpleIDL.ecore#//UnboundedSequence/type"/>
+    </genClasses>
+    <genClasses ecoreClass="SimpleIDL.ecore#//BoundedString">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//BoundedString/size"/>
+    </genClasses>
+    <genClasses ecoreClass="SimpleIDL.ecore#//UnboundedString"/>
+    <genClasses ecoreClass="SimpleIDL.ecore#//BoundedWideString">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//BoundedWideString/size"/>
+    </genClasses>
+    <genClasses ecoreClass="SimpleIDL.ecore#//UnboundedWideString"/>
+    <genClasses ecoreClass="SimpleIDL.ecore#//FixedPtType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//FixedPtType/totalDigits"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SimpleIDL.ecore#//FixedPtType/fractionalDigits"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

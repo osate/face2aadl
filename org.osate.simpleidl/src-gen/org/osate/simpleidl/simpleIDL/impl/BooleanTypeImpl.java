@@ -33,7 +33,7 @@ import org.osate.simpleidl.simpleIDL.SimpleIDLPackage;
  *
  * @generated
  */
-public class BooleanTypeImpl extends SimpleTypeSpecImpl implements BooleanType
+public class BooleanTypeImpl extends TypeImpl implements BooleanType
 {
   /**
    * <!-- begin-user-doc -->

@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.impl.EFactoryImpl;
 
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
+import org.osate.simpleidl.simpleIDL.ArrayType;
 import org.osate.simpleidl.simpleIDL.BooleanType;
 import org.osate.simpleidl.simpleIDL.BoundedSequence;
 import org.osate.simpleidl.simpleIDL.BoundedString;
@@ -37,7 +38,6 @@ import org.osate.simpleidl.simpleIDL.Case;
 import org.osate.simpleidl.simpleIDL.CharType;
 import org.osate.simpleidl.simpleIDL.Definition;
 import org.osate.simpleidl.simpleIDL.DoubleType;
-import org.osate.simpleidl.simpleIDL.FixedArraySize;
 import org.osate.simpleidl.simpleIDL.FixedPtType;
 import org.osate.simpleidl.simpleIDL.FloatType;
 import org.osate.simpleidl.simpleIDL.LongDoubleType;
@@ -49,7 +49,6 @@ import org.osate.simpleidl.simpleIDL.SignedLongLongInt;
 import org.osate.simpleidl.simpleIDL.SignedShortInt;
 import org.osate.simpleidl.simpleIDL.SimpleIDLFactory;
 import org.osate.simpleidl.simpleIDL.SimpleIDLPackage;
-import org.osate.simpleidl.simpleIDL.SimpleTypeSpec;
 import org.osate.simpleidl.simpleIDL.Specification;
 import org.osate.simpleidl.simpleIDL.Struct;
 import org.osate.simpleidl.simpleIDL.StructForward;
@@ -120,22 +119,14 @@ public class SimpleIDLFactoryImpl extends EFactoryImpl implements SimpleIDLFacto
       case SimpleIDLPackage.DEFINITION: return createDefinition();
       case SimpleIDLPackage.MEMBER: return createMember();
       case SimpleIDLPackage.CASE: return createCase();
-      case SimpleIDLPackage.FIXED_ARRAY_SIZE: return createFixedArraySize();
       case SimpleIDLPackage.TYPE: return createType();
-      case SimpleIDLPackage.SIMPLE_TYPE_SPEC: return createSimpleTypeSpec();
       case SimpleIDLPackage.MODULE: return createModule();
       case SimpleIDLPackage.STRUCT: return createStruct();
       case SimpleIDLPackage.STRUCT_FORWARD: return createStructForward();
       case SimpleIDLPackage.UNION: return createUnion();
       case SimpleIDLPackage.ENUM: return createEnum();
       case SimpleIDLPackage.TYPEDEF: return createTypedef();
-      case SimpleIDLPackage.BOUNDED_SEQUENCE: return createBoundedSequence();
-      case SimpleIDLPackage.UNBOUNDED_SEQUENCE: return createUnboundedSequence();
-      case SimpleIDLPackage.BOUNDED_STRING: return createBoundedString();
-      case SimpleIDLPackage.UNBOUNDED_STRING: return createUnboundedString();
-      case SimpleIDLPackage.BOUNDED_WIDE_STRING: return createBoundedWideString();
-      case SimpleIDLPackage.UNBOUNDED_WIDE_STRING: return createUnboundedWideString();
-      case SimpleIDLPackage.FIXED_PT_TYPE: return createFixedPtType();
+      case SimpleIDLPackage.ARRAY_TYPE: return createArrayType();
       case SimpleIDLPackage.SIGNED_SHORT_INT: return createSignedShortInt();
       case SimpleIDLPackage.SIGNED_LONG_INT: return createSignedLongInt();
       case SimpleIDLPackage.SIGNED_LONG_LONG_INT: return createSignedLongLongInt();
@@ -150,6 +141,13 @@ public class SimpleIDLFactoryImpl extends EFactoryImpl implements SimpleIDLFacto
       case SimpleIDLPackage.BOOLEAN_TYPE: return createBooleanType();
       case SimpleIDLPackage.OCTET_TYPE: return createOctetType();
       case SimpleIDLPackage.REFERENCED_TYPE: return createReferencedType();
+      case SimpleIDLPackage.BOUNDED_SEQUENCE: return createBoundedSequence();
+      case SimpleIDLPackage.UNBOUNDED_SEQUENCE: return createUnboundedSequence();
+      case SimpleIDLPackage.BOUNDED_STRING: return createBoundedString();
+      case SimpleIDLPackage.UNBOUNDED_STRING: return createUnboundedString();
+      case SimpleIDLPackage.BOUNDED_WIDE_STRING: return createBoundedWideString();
+      case SimpleIDLPackage.UNBOUNDED_WIDE_STRING: return createUnboundedWideString();
+      case SimpleIDLPackage.FIXED_PT_TYPE: return createFixedPtType();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -209,34 +207,10 @@ public class SimpleIDLFactoryImpl extends EFactoryImpl implements SimpleIDLFacto
    * @generated
    */
   @Override
-  public FixedArraySize createFixedArraySize()
-  {
-    FixedArraySizeImpl fixedArraySize = new FixedArraySizeImpl();
-    return fixedArraySize;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public Type createType()
   {
     TypeImpl type = new TypeImpl();
     return type;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public SimpleTypeSpec createSimpleTypeSpec()
-  {
-    SimpleTypeSpecImpl simpleTypeSpec = new SimpleTypeSpecImpl();
-    return simpleTypeSpec;
   }
 
   /**
@@ -317,82 +291,10 @@ public class SimpleIDLFactoryImpl extends EFactoryImpl implements SimpleIDLFacto
    * @generated
    */
   @Override
-  public BoundedSequence createBoundedSequence()
+  public ArrayType createArrayType()
   {
-    BoundedSequenceImpl boundedSequence = new BoundedSequenceImpl();
-    return boundedSequence;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public UnboundedSequence createUnboundedSequence()
-  {
-    UnboundedSequenceImpl unboundedSequence = new UnboundedSequenceImpl();
-    return unboundedSequence;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public BoundedString createBoundedString()
-  {
-    BoundedStringImpl boundedString = new BoundedStringImpl();
-    return boundedString;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public UnboundedString createUnboundedString()
-  {
-    UnboundedStringImpl unboundedString = new UnboundedStringImpl();
-    return unboundedString;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public BoundedWideString createBoundedWideString()
-  {
-    BoundedWideStringImpl boundedWideString = new BoundedWideStringImpl();
-    return boundedWideString;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public UnboundedWideString createUnboundedWideString()
-  {
-    UnboundedWideStringImpl unboundedWideString = new UnboundedWideStringImpl();
-    return unboundedWideString;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public FixedPtType createFixedPtType()
-  {
-    FixedPtTypeImpl fixedPtType = new FixedPtTypeImpl();
-    return fixedPtType;
+    ArrayTypeImpl arrayType = new ArrayTypeImpl();
+    return arrayType;
   }
 
   /**
@@ -561,6 +463,90 @@ public class SimpleIDLFactoryImpl extends EFactoryImpl implements SimpleIDLFacto
   {
     ReferencedTypeImpl referencedType = new ReferencedTypeImpl();
     return referencedType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public BoundedSequence createBoundedSequence()
+  {
+    BoundedSequenceImpl boundedSequence = new BoundedSequenceImpl();
+    return boundedSequence;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public UnboundedSequence createUnboundedSequence()
+  {
+    UnboundedSequenceImpl unboundedSequence = new UnboundedSequenceImpl();
+    return unboundedSequence;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public BoundedString createBoundedString()
+  {
+    BoundedStringImpl boundedString = new BoundedStringImpl();
+    return boundedString;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public UnboundedString createUnboundedString()
+  {
+    UnboundedStringImpl unboundedString = new UnboundedStringImpl();
+    return unboundedString;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public BoundedWideString createBoundedWideString()
+  {
+    BoundedWideStringImpl boundedWideString = new BoundedWideStringImpl();
+    return boundedWideString;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public UnboundedWideString createUnboundedWideString()
+  {
+    UnboundedWideStringImpl unboundedWideString = new UnboundedWideStringImpl();
+    return unboundedWideString;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public FixedPtType createFixedPtType()
+  {
+    FixedPtTypeImpl fixedPtType = new FixedPtTypeImpl();
+    return fixedPtType;
   }
 
   /**
