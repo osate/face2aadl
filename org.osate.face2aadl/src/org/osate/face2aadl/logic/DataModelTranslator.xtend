@@ -186,7 +186,7 @@ package class DataModelTranslator {
 					val lookupName = QualifiedName.create("FACE", "DM", dataModel.name, element.name)
 					val lookupObject = descriptions.getExportedObjects(NAMED_DEFINITION_TYPE, lookupName, true).head
 					val resolved = if (lookupObject !== null) {
-						lookupObject.EObjectOrProxy.resolve(resourceSet) as NamedDefinition
+						followReferences(lookupObject.EObjectOrProxy.resolve(resourceSet) as NamedDefinition)
 					}
 					val typeExtension = switch resolved {
 						SignedShortInt: " extends Base_Types::Integer_16"
@@ -286,13 +286,15 @@ package class DataModelTranslator {
 			idlOnlyStructs += baseType as Struct
 		}
 		
-		val implName = if (isIdlOnlyStruct) {
-			sanitizeID(idlNameProvider.getFullyQualifiedName(baseType).toString("_")) + "_IDL.impl"
+		val implName = if (baseType === null) {
+			null
+		} else if (isIdlOnlyStruct) {
+			''' «sanitizeID(idlNameProvider.getFullyQualifiedName(baseType).toString("_"))»_IDL.impl'''
 		} else {
-			sanitizeID(baseType.name) + "_Platform.impl"
+			''' «sanitizeID(baseType.name)»_Platform.impl'''
 		}
 		
-		'''«sanitizeID(member.name)»: data «implName»«arrays»;'''
+		'''«sanitizeID(member.name)»: data«implName»«arrays»;'''
 	}
 	
 	def private String translateMember(Member member) {
@@ -300,7 +302,11 @@ package class DataModelTranslator {
 		val baseType = baseTypeAndArrays.key
 		val arrays = baseTypeAndArrays.value
 		
-		'''«sanitizeID(member.name)»: data «sanitizeID(baseType.name)»_Platform.impl«arrays»;'''
+		val implName = if (baseType !== null) {
+			''' «sanitizeID(baseType.name)»_Platform.impl'''
+		}
+		
+		'''«sanitizeID(member.name)»: data«implName»«arrays»;'''
 	}
 	
 	def private String translateView(face.datamodel.conceptual.View view) {
@@ -397,15 +403,19 @@ package class DataModelTranslator {
 			}«ENDIF»;'''
 	}
 	
-	//TODO Handle cycles
 	def private NamedDefinition followReferences(NamedDefinition definition) {
-		if (definition.eIsProxy) {
-			throw new UnsupportedOperationException("Found a proxy")
+		var current = definition
+		val visited = <NamedDefinition>newHashSet
+		
+		while (current instanceof ReferencedType && !visited.contains(current)) {
+			visited += current
+			current = (current as ReferencedType).type
 		}
-		if (definition instanceof ReferencedType) {
-			followReferences(definition.type)
+		
+		if (visited.contains(current) || current.eIsProxy) {
+			null
 		} else {
-			definition
+			current
 		}
 	}
 	
