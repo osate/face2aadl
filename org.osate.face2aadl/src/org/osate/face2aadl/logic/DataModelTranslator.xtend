@@ -36,6 +36,8 @@ import face.datamodel.platform.TemplateComposition
 import face.datamodel.platform.View
 import java.util.Optional
 import java.util.Set
+import org.eclipse.core.runtime.IStatus
+import org.eclipse.core.runtime.Status
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.xtext.naming.IQualifiedNameProvider
@@ -44,6 +46,7 @@ import org.eclipse.xtext.resource.IResourceDescriptions
 import org.eclipse.xtext.resource.IResourceDescriptionsProvider
 import org.eclipse.xtext.util.Triple
 import org.eclipse.xtext.util.Tuples
+import org.osate.face2aadl.Activator
 import org.osate.simpleidl.simpleIDL.ArrayType
 import org.osate.simpleidl.simpleIDL.BooleanType
 import org.osate.simpleidl.simpleIDL.BoundedSequence
@@ -179,53 +182,58 @@ package class DataModelTranslator {
 			PhysicalDataType: {
 				val name = translateName(element)
 				
-				val idlContents = idlOption.map[option |
-					val resourceSet = option.first
-					val descriptions = option.second
+				var String errorComment = null
+				var String typeExtension = null
+				var String dataProperty = null
+				var String subcomponents = null
+				if (idlOption.present) {
+					val resourceSet = idlOption.get.first
+					val descriptions = idlOption.get.second
 					val dataModel = element.getContainerOfType(DataModel)
 					val lookupName = QualifiedName.create("FACE", "DM", dataModel.name, element.name)
 					val lookupObject = descriptions.getExportedObjects(NAMED_DEFINITION_TYPE, lookupName, true).head
-					val resolved = if (lookupObject !== null) {
-						followReferences(lookupObject.EObjectOrProxy.resolve(resourceSet) as NamedDefinition)
+					if (lookupObject === null) {
+						val message = "Unable to find IDL definition for " + lookupName.toString("::")
+						log(message)
+						errorComment = "--" + message
+					} else {
+						val resolved = lookupObject.EObjectOrProxy.resolve(resourceSet) as NamedDefinition
+						val definition = followReferences(resolved)
+						typeExtension = switch definition {
+							SignedShortInt: " extends Base_Types::Integer_16"
+							SignedLongInt: " extends Base_Types::Integer_32"
+							SignedLongLongInt: " extends Base_Types::Integer_64"
+							UnsignedShortInt: " extends Base_Types::Unsigned_16"
+							UnsignedLongInt: " extends Base_Types::Unsigned_32"
+							UnsignedLongLongInt: " extends Base_Types::Unsigned_64"
+							FloatType: " extends Base_Types::Float_32"
+							DoubleType: " extends Base_Types::Float_64"
+							LongDoubleType: " extends Base_Types::Float"
+							CharType: " extends Base_Types::Character"
+							BooleanType: " extends Base_Types::Boolean"
+							BoundedString,
+							UnboundedString: " extends Base_Types::String"
+						}
+						dataProperty = switch definition {
+							Enum: "Data_Model::Data_Representation => Enum;"
+							OctetType: "Data_Size => 8 bits;"
+							BoundedString: '''Data_Size => «definition.size» Bytes;'''
+							FixedPtType: "Data_Model::Data_Representation => Fixed;"
+						}
+						if (definition instanceof Struct) {
+							subcomponents = '''
+								subcomponents
+									«FOR member : definition.members»
+									«translateMember(member)»
+									«ENDFOR»
+							'''
+						}
 					}
-					val typeExtension = switch resolved {
-						SignedShortInt: " extends Base_Types::Integer_16"
-						SignedLongInt: " extends Base_Types::Integer_32"
-						SignedLongLongInt: " extends Base_Types::Integer_64"
-						UnsignedShortInt: " extends Base_Types::Unsigned_16"
-						UnsignedLongInt: " extends Base_Types::Unsigned_32"
-						UnsignedLongLongInt: " extends Base_Types::Unsigned_64"
-						FloatType: " extends Base_Types::Float_32"
-						DoubleType: " extends Base_Types::Float_64"
-						LongDoubleType: " extends Base_Types::Float"
-						CharType: " extends Base_Types::Character"
-						BooleanType: " extends Base_Types::Boolean"
-						BoundedString,
-						UnboundedString: " extends Base_Types::String"
-					}
-					val dataProperty = switch resolved {
-						Enum: "Data_Model::Data_Representation => Enum;"
-						OctetType: "Data_Size => 8 bits;"
-						BoundedString: '''Data_Size => «resolved.size» Bytes;'''
-						FixedPtType: "Data_Model::Data_Representation => Fixed;"
-					}
-					val subcomponents = if (resolved instanceof Struct) {
-						'''
-							subcomponents
-								«FOR member : resolved.members»
-								«translateMember(member)»
-								«ENDFOR»
-						'''
-					}
-					Tuples.create(typeExtension, dataProperty, subcomponents)
-				].orElse(Tuples.create(null, null, null))
-				val typeExtension = idlContents.first
-				val dataProperty = idlContents.second
-				val subcomponents = idlContents.third
-				
+				}
 				
 				'''
 					«translateDescription(element)»
+					«errorComment»
 					data «name»«typeExtension»
 						properties
 							«dataProperty»
@@ -353,52 +361,56 @@ package class DataModelTranslator {
 				val name = translateName(view)
 				val realizes = view.boundQuery?.realizes
 				
-				val subcomponentsAndAdditionalComponents = idlOption.map[option |
-					val resourceSet = option.first
-					val descriptions = option.second
-					val idlNameProvider = option.third
+				var String errorComment = null
+				var String subcomponents = null
+				var String additionalComponents = null
+				if (idlOption.present) {
+					val resourceSet = idlOption.get.first
+					val descriptions = idlOption.get.second
+					val idlNameProvider = idlOption.get.third
 					val dataModel = view.getContainerOfType(DataModel)
 					val lookupName = QualifiedName.create("FACE", "DM", dataModel.name, view.name)
 					val lookupObject = descriptions.getExportedObjects(NAMED_DEFINITION_TYPE, lookupName, true).head
-					val resolved = if (lookupObject !== null) {
-						followReferences(lookupObject.EObjectOrProxy.resolve(resourceSet) as NamedDefinition)
-					}
-					if (resolved instanceof Struct) {
-						val architectureModel = view.getContainerOfType(ArchitectureModel)
-						val idlOnlyStructs = <Struct>newLinkedHashSet
-						val subcomponents = '''
-							subcomponents
-								«FOR member : resolved.members»
-								«translateMember(member, architectureModel, idlNameProvider, idlOnlyStructs)»
-								«ENDFOR»
-						'''
-						val additionalComponents = '''
-							«FOR struct : idlOnlyStructs»
-							
-							«val qualifiedName = idlNameProvider.getFullyQualifiedName(struct)»
-							«val structName = sanitizeID(qualifiedName.toString("_")) + "_IDL"»
-							--Generated from «qualifiedName.toString("::")»
-							data «structName»
-							end «structName»;
-							
-							data implementation «structName».impl
-								subcomponents
-									«FOR member : struct.members»
-									«translateMember(member)»
-									«ENDFOR»
-							end «structName».impl;
-							«ENDFOR»
-						'''
-						subcomponents -> additionalComponents
+					if (lookupObject === null) {
+						val message = "Unable to find IDL definition for " + lookupName.toString("::")
+						log(message)
+						errorComment = "--" + message
 					} else {
-						null -> null
+						val resolved = lookupObject.EObjectOrProxy.resolve(resourceSet) as NamedDefinition
+						val definition = followReferences(resolved)
+						if (definition instanceof Struct) {
+							val architectureModel = view.getContainerOfType(ArchitectureModel)
+							val idlOnlyStructs = <Struct>newLinkedHashSet
+							subcomponents = '''
+								subcomponents
+									«FOR member : definition.members»
+									«translateMember(member, architectureModel, idlNameProvider, idlOnlyStructs)»
+									«ENDFOR»
+							'''
+							additionalComponents = '''
+								«FOR struct : idlOnlyStructs»
+								
+								«val qualifiedName = idlNameProvider.getFullyQualifiedName(struct)»
+								«val structName = sanitizeID(qualifiedName.toString("_")) + "_IDL"»
+								--Generated from «qualifiedName.toString("::")»
+								data «structName»
+								end «structName»;
+								
+								data implementation «structName».impl
+									subcomponents
+										«FOR member : struct.members»
+										«translateMember(member)»
+										«ENDFOR»
+								end «structName».impl;
+								«ENDFOR»
+							'''
+						}
 					}
-				].orElse(null -> null)
-				val subcomponents = subcomponentsAndAdditionalComponents.key
-				val additionalComponents = subcomponentsAndAdditionalComponents.value
+				}
 				
 				'''
 					«translateDescription(view)»
+					«errorComment»
 					data «name»«IF realizes !== null» «translateExtends(realizes, platformOnly)»«ENDIF»
 						properties
 							FACE::Realization_Tier => platform;
@@ -535,6 +547,13 @@ package class DataModelTranslator {
 			UnboundedSequence: followReferences(type.type) -> "[]"
 			ArrayType: followReferences(type.type) -> '''[«type.size»]'''
 			default: type -> ""
+		}
+	}
+	
+	def private void log(String message) {
+		val activator = Activator.^default
+		if (activator !== null) {
+			activator.log.log(new Status(IStatus.INFO, activator.bundle.symbolicName, message))
 		}
 	}
 }
