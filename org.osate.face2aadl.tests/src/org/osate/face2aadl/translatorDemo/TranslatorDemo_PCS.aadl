@@ -6,7 +6,7 @@ public
 	
 	thread group Altitude_Sensor
 		features
-			Altitude_output: out event data port TranslatorDemo_data_model::Altitude_ft_Platform {
+			Altitude_output: out event data port TranslatorDemo_data_model::Altitude_ft_Platform.impl {
 				Output_Rate => [Value_Range => 8.0 .. 8.0; Rate_Unit => PerSecond;];
 				Queue_Size => 10;
 			};
@@ -26,7 +26,7 @@ public
 	
 	process Altitude_Sensor_process
 		features
-			Altitude_output: out event data port TranslatorDemo_data_model::Altitude_ft_Platform {
+			Altitude_output: out event data port TranslatorDemo_data_model::Altitude_ft_Platform.impl {
 				Output_Rate => [Value_Range => 8.0 .. 8.0; Rate_Unit => PerSecond;];
 				Queue_Size => 10;
 			};
@@ -45,7 +45,7 @@ public
 	
 	thread group Autopilot
 		features
-			Altitude_input: in event data port TranslatorDemo_data_model::Altitude_m_Platform {
+			Altitude_input: in event data port TranslatorDemo_data_model::Altitude_m_Platform.impl {
 				Input_Rate => [Value_Range => 8.0 .. 8.0; Rate_Unit => PerSecond;];
 				Queue_Size => 10;
 			};
@@ -65,7 +65,7 @@ public
 	
 	process Autopilot_process
 		features
-			Altitude_input: in event data port TranslatorDemo_data_model::Altitude_m_Platform {
+			Altitude_input: in event data port TranslatorDemo_data_model::Altitude_m_Platform.impl {
 				Input_Rate => [Value_Range => 8.0 .. 8.0; Rate_Unit => PerSecond;];
 				Queue_Size => 10;
 			};

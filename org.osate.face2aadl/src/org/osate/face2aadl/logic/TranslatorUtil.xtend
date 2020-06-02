@@ -20,7 +20,6 @@
 package org.osate.face2aadl.logic
 
 import face.Element
-import face.datamodel.platform.CompositeTemplate
 import face.datamodel.platform.View
 import java.util.regex.Pattern
 import org.eclipse.emf.ecore.EObject
@@ -100,6 +99,6 @@ package class TranslatorUtil {
 	}
 	
 	def package static String translateViewReference(String dataModelPackageName, View view) {
-		'''«dataModelPackageName»::«translateName(view)»«IF view instanceof CompositeTemplate».impl«ENDIF»'''
+		'''«dataModelPackageName»::«translateName(view)».impl'''
 	}
 }

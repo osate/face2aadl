@@ -8,38 +8,62 @@ public
 			FACE::Realization_Tier => platform;
 	end view1_Platform;
 	
+	data implementation view1_Platform.impl
+	end view1_Platform.impl;
+	
 	data view2_Platform
 		properties
 			FACE::Realization_Tier => platform;
 	end view2_Platform;
+	
+	data implementation view2_Platform.impl
+	end view2_Platform.impl;
 	
 	data view3_Platform
 		properties
 			FACE::Realization_Tier => platform;
 	end view3_Platform;
 	
+	data implementation view3_Platform.impl
+	end view3_Platform.impl;
+	
 	data view4_Platform
 		properties
 			FACE::Realization_Tier => platform;
 	end view4_Platform;
+	
+	data implementation view4_Platform.impl
+	end view4_Platform.impl;
 	
 	data view5_Platform
 		properties
 			FACE::Realization_Tier => platform;
 	end view5_Platform;
 	
+	data implementation view5_Platform.impl
+	end view5_Platform.impl;
+	
 	data view6_Platform
 		properties
 			FACE::Realization_Tier => platform;
 	end view6_Platform;
+	
+	data implementation view6_Platform.impl
+	end view6_Platform.impl;
 	
 	data view7_Platform
 		properties
 			FACE::Realization_Tier => platform;
 	end view7_Platform;
 	
+	data implementation view7_Platform.impl
+	end view7_Platform.impl;
+	
 	data view8_Platform
 		properties
 			FACE::Realization_Tier => platform;
 	end view8_Platform;
+	
+	data implementation view8_Platform.impl
+	end view8_Platform.impl;
 end K_connections_data_model;

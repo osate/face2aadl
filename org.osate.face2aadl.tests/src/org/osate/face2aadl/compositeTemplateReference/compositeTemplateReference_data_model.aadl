@@ -8,10 +8,16 @@ public
 			FACE::Realization_Tier => platform;
 	end Template1_Platform;
 	
+	data implementation Template1_Platform.impl
+	end Template1_Platform.impl;
+	
 	data Template2_Platform
 		properties
 			FACE::Realization_Tier => platform;
 	end Template2_Platform;
+	
+	data implementation Template2_Platform.impl
+	end Template2_Platform.impl;
 	
 	data CompositeTemplate1_Platform
 		properties
@@ -20,7 +26,7 @@ public
 	
 	data implementation CompositeTemplate1_Platform.impl
 		subcomponents
-			TemplateComposition1: data Template1_Platform;
-			TemplateComposition2: data Template2_Platform;
+			TemplateComposition1: data Template1_Platform.impl;
+			TemplateComposition2: data Template2_Platform.impl;
 	end CompositeTemplate1_Platform.impl;
 end compositeTemplateReference_data_model;

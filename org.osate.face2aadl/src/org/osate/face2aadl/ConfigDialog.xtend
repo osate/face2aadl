@@ -1,3 +1,22 @@
+/*******************************************************************************
+ * FACE Data Model to AADL Translator
+ * 
+ * Copyright 2018 Carnegie Mellon University. All Rights Reserved.
+ * 
+ * NO WARRANTY. THIS CARNEGIE MELLON UNIVERSITY AND SOFTWARE ENGINEERING INSTITUTE MATERIAL IS FURNISHED ON
+ * AN "AS-IS" BASIS. CARNEGIE MELLON UNIVERSITY MAKES NO WARRANTIES OF ANY KIND, EITHER EXPRESSED OR IMPLIED,
+ * AS TO ANY MATTER INCLUDING, BUT NOT LIMITED TO, WARRANTY OF FITNESS FOR PURPOSE OR MERCHANTABILITY,
+ * EXCLUSIVITY, OR RESULTS OBTAINED FROM USE OF THE MATERIAL. CARNEGIE MELLON UNIVERSITY DOES NOT MAKE ANY
+ * WARRANTY OF ANY KIND WITH RESPECT TO FREEDOM FROM PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.
+ * 
+ * Released under an Eclipse Public License - v1.0-style license, please see license.txt or contact
+ * permission@sei.cmu.edu for full terms.
+ * 
+ * [DISTRIBUTION STATEMENT A] This material has been approved for public release and unlimited distribution.
+ * Please see Copyright notice for non-US Government use and distribution.
+ * 
+ * DM18-0762
+ *******************************************************************************/
 package org.osate.face2aadl
 
 import face.Element
@@ -31,6 +50,7 @@ class ConfigDialog extends TitleAreaDialog {
 	val static FILTER_SETTING = "FILTER_SETTING"
 	val static CHECKED_ELEMENTS_SETTING = "CHECKED_ELEMENTS_SETTING"
 	val static CREATE_FLOWS_SETTING = "CREATE_FLOWS_SETTING"
+	val static PROCESS_IDL_SETTING = "PROCESS_IDL_SETTING"
 	
 	val List<Element> uopsAndIntegrationModels
 	
@@ -43,6 +63,7 @@ class ConfigDialog extends TitleAreaDialog {
 	Button selectAllButton
 	Button deselectAllButton
 	Button createFlowsButton
+	Button processIdlButton
 	
 	@Accessors(PUBLIC_GETTER)
 	boolean platformOnly
@@ -54,6 +75,8 @@ class ConfigDialog extends TitleAreaDialog {
 	List<IntegrationModel> selectedIntegrationModels
 	@Accessors(PUBLIC_GETTER)
 	boolean createFlows
+	@Accessors(PUBLIC_GETTER)
+	boolean processIdl
 	
 	new(Shell parentShell, List<Element> uopsAndIntegrationModels) {
 		super(parentShell)
@@ -140,12 +163,16 @@ class ConfigDialog extends TitleAreaDialog {
 						button.layoutData = new GridData(SWT.FILL, SWT.TOP, false, false)
 					]
 				]
-				new Group(innerComposite, SWT.SHADOW_NONE) => [flowGroup |
-					flowGroup.text = "Flows"
-					flowGroup.layout = new GridLayout()
-					flowGroup.layoutData = new GridData(SWT.FILL, SWT.TOP, true, false)
-					createFlowsButton = new Button(flowGroup, SWT.CHECK) => [button |
+				new Group(innerComposite, SWT.SHADOW_NONE) => [otherGroup |
+					otherGroup.text = "Other options"
+					otherGroup.layout = new GridLayout()
+					otherGroup.layoutData = new GridData(SWT.FILL, SWT.TOP, true, false)
+					createFlowsButton = new Button(otherGroup, SWT.CHECK) => [button |
 						button.text = "Create flow sinks and sources for each UoP's inputs and outputs"
+						button.layoutData = new GridData(SWT.LEFT, SWT.CENTER, false, false)
+					]
+					processIdlButton = new Button(otherGroup, SWT.CHECK) => [button |
+						button.text = "Process IDL files discovered in the project (experimental)"
 						button.layoutData = new GridData(SWT.LEFT, SWT.CENTER, false, false)
 					]
 				]
@@ -168,6 +195,9 @@ class ConfigDialog extends TitleAreaDialog {
 		
 		createFlows = createFlowsButton.selection
 		dialogSettings.put(CREATE_FLOWS_SETTING, createFlows)
+		
+		processIdl = processIdlButton.selection
+		dialogSettings.put(PROCESS_IDL_SETTING, processIdl)
 		
 		super.okPressed
 	}
@@ -234,6 +264,11 @@ class ConfigDialog extends TitleAreaDialog {
 			createFlowsButton.selection = true
 		} else {
 			createFlowsButton.selection = dialogSettings.getBoolean(CREATE_FLOWS_SETTING)
+		}
+		if (dialogSettings.get(PROCESS_IDL_SETTING) === null) {
+			processIdlButton.selection = false
+		} else {
+			processIdlButton.selection = dialogSettings.getBoolean(PROCESS_IDL_SETTING)
 		}
 	}
 }

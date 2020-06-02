@@ -8,15 +8,24 @@ public
 			FACE::Realization_Tier => platform;
 	end UsedTemplate1_Platform;
 	
+	data implementation UsedTemplate1_Platform.impl
+	end UsedTemplate1_Platform.impl;
+	
 	data UsedTemplate2_Platform
 		properties
 			FACE::Realization_Tier => platform;
 	end UsedTemplate2_Platform;
 	
+	data implementation UsedTemplate2_Platform.impl
+	end UsedTemplate2_Platform.impl;
+	
 	data UsedTemplate3_Platform --extension of UsedQuery3_Logical not translated
 		properties
 			FACE::Realization_Tier => platform;
 	end UsedTemplate3_Platform;
+	
+	data implementation UsedTemplate3_Platform.impl
+	end UsedTemplate3_Platform.impl;
 	
 	data UsedCompositeTemplate1_Platform --extension of UsedCompositeQuery1_Logical not translated
 		properties
@@ -25,8 +34,8 @@ public
 	
 	data implementation UsedCompositeTemplate1_Platform.impl
 		subcomponents
-			Role1: data UsedTemplate1_Platform;
-			Role2: data UsedTemplate2_Platform;
+			Role1: data UsedTemplate1_Platform.impl;
+			Role2: data UsedTemplate2_Platform.impl;
 	end UsedCompositeTemplate1_Platform.impl;
 	
 	data UsedCompositeTemplate2_Platform
@@ -36,7 +45,7 @@ public
 	
 	data implementation UsedCompositeTemplate2_Platform.impl
 		subcomponents
-			Role1: data UsedTemplate1_Platform;
+			Role1: data UsedTemplate1_Platform.impl;
 			Role2: data UsedCompositeTemplate3_Platform.impl;
 	end UsedCompositeTemplate2_Platform.impl;
 	
@@ -47,7 +56,7 @@ public
 	
 	data implementation UsedCompositeTemplate3_Platform.impl
 		subcomponents
-			Role1: data UsedTemplate1_Platform;
+			Role1: data UsedTemplate1_Platform.impl;
 			Role2: data UsedCompositeTemplate4_Platform.impl;
 	end UsedCompositeTemplate3_Platform.impl;
 	
@@ -58,7 +67,7 @@ public
 	
 	data implementation UsedCompositeTemplate4_Platform.impl
 		subcomponents
-			Role1: data UsedTemplate1_Platform;
-			Role2: data UsedTemplate2_Platform;
+			Role1: data UsedTemplate1_Platform.impl;
+			Role2: data UsedTemplate2_Platform.impl;
 	end UsedCompositeTemplate4_Platform.impl;
 end filteringPlatformOnly_data_model;

@@ -6,30 +6,30 @@ public
 	
 	thread group PortableComponent1
 		features
-			conn1_request: out event data port K_connections_data_model::view1_Platform {
+			conn1_request: out event data port K_connections_data_model::view1_Platform.impl {
 				Output_Rate => [Value_Range => 1.0 .. 1.0; Rate_Unit => PerSecond;];
 			};
-			conn1_response: in event data port K_connections_data_model::view2_Platform {
+			conn1_response: in event data port K_connections_data_model::view2_Platform.impl {
 				Input_Rate => [Value_Range => 1.0 .. 1.0; Rate_Unit => PerSecond;];
 			};
-			conn2_request: in event data port K_connections_data_model::view3_Platform {
+			conn2_request: in event data port K_connections_data_model::view3_Platform.impl {
 				Input_Rate => [Value_Range => 1.0 .. 1.0; Rate_Unit => PerSecond;];
 			};
-			conn2_response: out event data port K_connections_data_model::view4_Platform {
+			conn2_response: out event data port K_connections_data_model::view4_Platform.impl {
 				Output_Rate => [Value_Range => 1.0 .. 1.0; Rate_Unit => PerSecond;];
 			};
-			conn3: in event data port K_connections_data_model::view5_Platform {
+			conn3: in event data port K_connections_data_model::view5_Platform.impl {
 				Input_Rate => [Value_Range => 1.0 .. 1.0; Rate_Unit => PerSecond;];
 				Queue_Size => 1;
 			};
-			conn4: out event data port K_connections_data_model::view6_Platform {
+			conn4: out event data port K_connections_data_model::view6_Platform.impl {
 				Output_Rate => [Value_Range => 1.0 .. 1.0; Rate_Unit => PerSecond;];
 				Queue_Size => 2;
 			};
-			conn5: in data port K_connections_data_model::view7_Platform {
+			conn5: in data port K_connections_data_model::view7_Platform.impl {
 				Input_Rate => [Value_Range => 1.0 .. 1.0; Rate_Unit => PerSecond;];
 			};
-			conn6: out data port K_connections_data_model::view8_Platform {
+			conn6: out data port K_connections_data_model::view8_Platform.impl {
 				Output_Rate => [Value_Range => 1.0 .. 1.0; Rate_Unit => PerSecond;];
 			};
 		properties
@@ -48,30 +48,30 @@ public
 	
 	process PortableComponent1_process
 		features
-			conn1_request: out event data port K_connections_data_model::view1_Platform {
+			conn1_request: out event data port K_connections_data_model::view1_Platform.impl {
 				Output_Rate => [Value_Range => 1.0 .. 1.0; Rate_Unit => PerSecond;];
 			};
-			conn1_response: in event data port K_connections_data_model::view2_Platform {
+			conn1_response: in event data port K_connections_data_model::view2_Platform.impl {
 				Input_Rate => [Value_Range => 1.0 .. 1.0; Rate_Unit => PerSecond;];
 			};
-			conn2_request: in event data port K_connections_data_model::view3_Platform {
+			conn2_request: in event data port K_connections_data_model::view3_Platform.impl {
 				Input_Rate => [Value_Range => 1.0 .. 1.0; Rate_Unit => PerSecond;];
 			};
-			conn2_response: out event data port K_connections_data_model::view4_Platform {
+			conn2_response: out event data port K_connections_data_model::view4_Platform.impl {
 				Output_Rate => [Value_Range => 1.0 .. 1.0; Rate_Unit => PerSecond;];
 			};
-			conn3: in event data port K_connections_data_model::view5_Platform {
+			conn3: in event data port K_connections_data_model::view5_Platform.impl {
 				Input_Rate => [Value_Range => 1.0 .. 1.0; Rate_Unit => PerSecond;];
 				Queue_Size => 1;
 			};
-			conn4: out event data port K_connections_data_model::view6_Platform {
+			conn4: out event data port K_connections_data_model::view6_Platform.impl {
 				Output_Rate => [Value_Range => 1.0 .. 1.0; Rate_Unit => PerSecond;];
 				Queue_Size => 2;
 			};
-			conn5: in data port K_connections_data_model::view7_Platform {
+			conn5: in data port K_connections_data_model::view7_Platform.impl {
 				Input_Rate => [Value_Range => 1.0 .. 1.0; Rate_Unit => PerSecond;];
 			};
-			conn6: out data port K_connections_data_model::view8_Platform {
+			conn6: out data port K_connections_data_model::view8_Platform.impl {
 				Output_Rate => [Value_Range => 1.0 .. 1.0; Rate_Unit => PerSecond;];
 			};
 		flows

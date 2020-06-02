@@ -19,11 +19,13 @@
  *******************************************************************************/
 package org.osate.face2aadl
 
+import com.google.inject.Injector
 import face.ArchitectureModel
 import face.integration.IntegrationModel
 import face.uop.UnitOfPortability
 import java.io.ByteArrayInputStream
 import java.lang.reflect.InvocationTargetException
+import java.util.Optional
 import org.eclipse.core.commands.AbstractHandler
 import org.eclipse.core.commands.ExecutionEvent
 import org.eclipse.core.commands.ExecutionException
@@ -48,6 +50,8 @@ import org.eclipse.jface.window.Window
 import org.eclipse.ui.IWorkbenchWindow
 import org.eclipse.ui.actions.WorkspaceModifyOperation
 import org.eclipse.ui.statushandlers.StatusManager
+import org.eclipse.xtext.resource.IResourceServiceProvider
+import org.eclipse.xtext.ui.resource.IResourceSetProvider
 import org.osate.face2aadl.logic.ArchitectureModelTranslator
 import org.osate.face2aadl.logic.ArchitectureModelTranslator.TranslatedPackage
 
@@ -102,14 +106,22 @@ class TranslatorHandler extends AbstractHandler {
 			}
 			subMonitor.workRemaining = 4
 			
+			val idlOption = if (configDialog.processIdl) {
+				val uri = URI.createFileURI("dummy.idl")
+				val injector = IResourceServiceProvider.Registry.INSTANCE.getResourceServiceProvider(uri).get(Injector)
+				val resourceSet = injector.getInstance(IResourceSetProvider).get(faceFile.project)
+				Optional.of(injector -> resourceSet)
+			} else {
+				Optional.empty
+			}
 			val translator = if (configDialog.filter) {
 				ArchitectureModelTranslator.create(root, configDialog.selectedUoPs,
 					configDialog.selectedIntegrationModels, faceFile.name, configDialog.platformOnly,
-					configDialog.createFlows
+					configDialog.createFlows, idlOption
 				)
 			} else {
 				ArchitectureModelTranslator.create(root, faceFile.name, configDialog.platformOnly,
-					configDialog.createFlows
+					configDialog.createFlows, idlOption
 				)
 			}
 			

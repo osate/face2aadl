@@ -1,5 +1,25 @@
+/*******************************************************************************
+ * FACE Data Model to AADL Translator
+ * 
+ * Copyright 2018 Carnegie Mellon University. All Rights Reserved.
+ * 
+ * NO WARRANTY. THIS CARNEGIE MELLON UNIVERSITY AND SOFTWARE ENGINEERING INSTITUTE MATERIAL IS FURNISHED ON
+ * AN "AS-IS" BASIS. CARNEGIE MELLON UNIVERSITY MAKES NO WARRANTIES OF ANY KIND, EITHER EXPRESSED OR IMPLIED,
+ * AS TO ANY MATTER INCLUDING, BUT NOT LIMITED TO, WARRANTY OF FITNESS FOR PURPOSE OR MERCHANTABILITY,
+ * EXCLUSIVITY, OR RESULTS OBTAINED FROM USE OF THE MATERIAL. CARNEGIE MELLON UNIVERSITY DOES NOT MAKE ANY
+ * WARRANTY OF ANY KIND WITH RESPECT TO FREEDOM FROM PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.
+ * 
+ * Released under an Eclipse Public License - v1.0-style license, please see license.txt or contact
+ * permission@sei.cmu.edu for full terms.
+ * 
+ * [DISTRIBUTION STATEMENT A] This material has been approved for public release and unlimited distribution.
+ * Please see Copyright notice for non-US Government use and distribution.
+ * 
+ * DM18-0762
+ *******************************************************************************/
 package org.osate.face2aadl.logic
 
+import com.google.inject.Injector
 import face.ArchitectureModel
 import face.Element
 import face.datamodel.logical.CompositeQuery
@@ -18,6 +38,7 @@ import face.uop.UnitOfPortability
 import java.util.List
 import java.util.Optional
 import java.util.Set
+import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 
@@ -34,10 +55,13 @@ class ArchitectureModelTranslator {
 	val String integrationModelPackageName
 	
 	val boolean createFlows
+	val Optional<Pair<Injector, ResourceSet>> idlOption
 	
 	val TranslationInput translationInput
 	
-	private new(String faceFileName, boolean createFlows, TranslationInput translationInput) {
+	private new(String faceFileName, boolean createFlows, Optional<Pair<Injector, ResourceSet>> idlOption,
+		TranslationInput translationInput
+	) {
 		this.faceFileName = faceFileName
 		
 		val baseFileName = sanitizeID(removeExtension(faceFileName))
@@ -47,19 +71,20 @@ class ArchitectureModelTranslator {
 		integrationModelPackageName = baseFileName + "_integration_model"
 		
 		this.createFlows = createFlows
+		this.idlOption = idlOption
 		
 		this.translationInput = translationInput
 	}
 	
 	def static ArchitectureModelTranslator create(ArchitectureModel model, String faceFileName, boolean platformOnly,
-		boolean createFlows
+		boolean createFlows, Optional<Pair<Injector, ResourceSet>> idlOption
 	) {
-		new ArchitectureModelTranslator(faceFileName, createFlows, new WholeModel(model, platformOnly))
+		new ArchitectureModelTranslator(faceFileName, createFlows, idlOption, new WholeModel(model, platformOnly))
 	}
 	
 	def static ArchitectureModelTranslator create(ArchitectureModel model, Iterable<UnitOfPortability> selectedUoPs,
 		Iterable<IntegrationModel> selectedIntegrationModels, String faceFileName, boolean platformOnly,
-		boolean createFlows
+		boolean createFlows, Optional<Pair<Injector, ResourceSet>> idlOption
 	) {
 		val requiredIntegrationModels = selectedIntegrationModels.toSet
 		val orderedIntegrationModels = requiredIntegrationModels.sort(model, IntegrationModel)
@@ -86,11 +111,11 @@ class ArchitectureModelTranslator {
 			)
 		}
 		
-		new ArchitectureModelTranslator(faceFileName, createFlows, translationInput)
+		new ArchitectureModelTranslator(faceFileName, createFlows, idlOption, translationInput)
 	}
 	
 	def TranslatedPackage translateDataModel() {
-		val dataModelTranslator = new DataModelTranslator(faceFileName, dataModelPackageName)
+		val dataModelTranslator = new DataModelTranslator(faceFileName, dataModelPackageName, idlOption)
 		val result = switch translationInput {
 			WholeModel: dataModelTranslator.translate(translationInput.model, translationInput.platformOnly)
 			FilteredAllLevels: dataModelTranslator.translate(translationInput.conceptualViews,

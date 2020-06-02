@@ -1,0 +1,29 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: org.osate.simpleidl
+Bundle-ManifestVersion: 2
+Bundle-Name: org.osate.simpleidl
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: org.osate.simpleidl; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.xtext,
+ org.eclipse.xtext.xbase,
+ org.eclipse.equinox.common;bundle-version="3.5.0",
+ org.eclipse.emf.ecore,
+ org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
+ org.eclipse.xtext.util,
+ org.eclipse.emf.common,
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: org.osate.simpleidl.parser.antlr.internal,
+ org.osate.simpleidl.simpleIDL.util,
+ org.osate.simpleidl.generator,
+ org.osate.simpleidl.services,
+ org.osate.simpleidl.simpleIDL,
+ org.osate.simpleidl.simpleIDL.impl,
+ org.osate.simpleidl.validation,
+ org.osate.simpleidl.scoping,
+ org.osate.simpleidl,
+ org.osate.simpleidl.parser.antlr,
+ org.osate.simpleidl.serializer
+Import-Package: org.apache.log4j

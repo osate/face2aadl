@@ -27,9 +27,15 @@ public
 			FACE::Realization_Tier => platform;
 	end Altitude_m_Platform;
 	
+	data implementation Altitude_m_Platform.impl
+	end Altitude_m_Platform.impl;
+	
 	--Double precision floating point in feet
 	data Altitude_ft_Platform extends Altitude_ft_Logical
 		properties
 			FACE::Realization_Tier => platform;
 	end Altitude_ft_Platform;
+	
+	data implementation Altitude_ft_Platform.impl
+	end Altitude_ft_Platform.impl;
 end noFlows_data_model;

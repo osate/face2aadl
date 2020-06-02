@@ -19,8 +19,11 @@
  *******************************************************************************/
 package org.osate.face2aadl.logic
 
+import com.google.inject.Injector
 import face.ArchitectureModel
+import face.datamodel.DataModel
 import face.datamodel.Element
+import face.datamodel.PlatformDataModel
 import face.datamodel.conceptual.ComposableElement
 import face.datamodel.conceptual.CompositeQuery
 import face.datamodel.conceptual.Query
@@ -32,19 +35,72 @@ import face.datamodel.platform.Template
 import face.datamodel.platform.TemplateComposition
 import face.datamodel.platform.View
 import java.util.Optional
-import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
+import java.util.Set
+import org.eclipse.core.runtime.IStatus
+import org.eclipse.core.runtime.Status
+import org.eclipse.emf.ecore.EClass
+import org.eclipse.emf.ecore.resource.ResourceSet
+import org.eclipse.xtext.naming.IQualifiedNameProvider
+import org.eclipse.xtext.naming.QualifiedName
+import org.eclipse.xtext.resource.IResourceDescriptions
+import org.eclipse.xtext.resource.IResourceDescriptionsProvider
+import org.eclipse.xtext.util.Triple
+import org.eclipse.xtext.util.Tuples
+import org.osate.face2aadl.Activator
+import org.osate.simpleidl.simpleIDL.ArrayType
+import org.osate.simpleidl.simpleIDL.BooleanType
+import org.osate.simpleidl.simpleIDL.BoundedSequence
+import org.osate.simpleidl.simpleIDL.BoundedString
+import org.osate.simpleidl.simpleIDL.CharType
+import org.osate.simpleidl.simpleIDL.DoubleType
+import org.osate.simpleidl.simpleIDL.Enum
+import org.osate.simpleidl.simpleIDL.FixedPtType
+import org.osate.simpleidl.simpleIDL.FloatType
+import org.osate.simpleidl.simpleIDL.LongDoubleType
+import org.osate.simpleidl.simpleIDL.Member
+import org.osate.simpleidl.simpleIDL.NamedDefinition
+import org.osate.simpleidl.simpleIDL.OctetType
+import org.osate.simpleidl.simpleIDL.ReferencedType
+import org.osate.simpleidl.simpleIDL.SignedLongInt
+import org.osate.simpleidl.simpleIDL.SignedLongLongInt
+import org.osate.simpleidl.simpleIDL.SignedShortInt
+import org.osate.simpleidl.simpleIDL.SimpleIDLPackage
+import org.osate.simpleidl.simpleIDL.Struct
+import org.osate.simpleidl.simpleIDL.UnboundedSequence
+import org.osate.simpleidl.simpleIDL.UnboundedString
+import org.osate.simpleidl.simpleIDL.UnsignedLongInt
+import org.osate.simpleidl.simpleIDL.UnsignedLongLongInt
+import org.osate.simpleidl.simpleIDL.UnsignedShortInt
 
 import static org.osate.face2aadl.logic.TranslatorUtil.sanitizeID
 import static org.osate.face2aadl.logic.TranslatorUtil.translateDescription
 import static org.osate.face2aadl.logic.TranslatorUtil.translateName
 import static org.osate.face2aadl.logic.TranslatorUtil.translateUUID
 
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.resolve
 import static extension org.eclipse.xtext.EcoreUtil2.getAllContentsOfType
+import static extension org.eclipse.xtext.EcoreUtil2.getContainerOfType
 
-@FinalFieldsConstructor
 package class DataModelTranslator {
+	val static EClass NAMED_DEFINITION_TYPE = SimpleIDLPackage.eINSTANCE.namedDefinition
+	
 	val String faceFileName
 	val String packageName
+	val Optional<Triple<ResourceSet, IResourceDescriptions, IQualifiedNameProvider>> idlOption
+	
+	new(String faceFileName, String packageName, Optional<Pair<Injector, ResourceSet>> idlOption) {
+		this.faceFileName = faceFileName
+		this.packageName = packageName
+		this.idlOption = idlOption.map[pair |
+			val injector = pair.key
+			val resourceSet = pair.value
+			Tuples.create(
+				resourceSet,
+				injector.getInstance(IResourceDescriptionsProvider).getResourceDescriptions(resourceSet),
+				injector.getInstance(IQualifiedNameProvider)
+			)
+		]
+	}
 	
 	def package Optional<String> translate(ArchitectureModel model, boolean platformOnly) {
 		val elements = if (platformOnly) {
@@ -79,6 +135,12 @@ package class DataModelTranslator {
 				--Generated from "«faceFileName»"
 				package «packageName»
 				public
+					«IF classifiersString.contains("Base_Types::")»
+					with Base_Types;
+					«ENDIF»
+					«IF classifiersString.contains("Data_Model::")»
+					with Data_Model;
+					«ENDIF»
 					with FACE;
 					
 					«classifiersString»
@@ -119,13 +181,69 @@ package class DataModelTranslator {
 			//Platform
 			PhysicalDataType: {
 				val name = translateName(element)
+				
+				var String errorComment = null
+				var String typeExtension = null
+				var String dataProperty = null
+				var String subcomponents = null
+				if (idlOption.present) {
+					val resourceSet = idlOption.get.first
+					val descriptions = idlOption.get.second
+					val dataModel = element.getContainerOfType(DataModel)
+					val lookupName = QualifiedName.create("FACE", "DM", dataModel.name, element.name)
+					val lookupObject = descriptions.getExportedObjects(NAMED_DEFINITION_TYPE, lookupName, true).head
+					if (lookupObject === null) {
+						val message = "Unable to find IDL definition for " + lookupName.toString("::")
+						log(message)
+						errorComment = "--" + message
+					} else {
+						val resolved = lookupObject.EObjectOrProxy.resolve(resourceSet) as NamedDefinition
+						val definition = followReferences(resolved)
+						typeExtension = switch definition {
+							SignedShortInt: " extends Base_Types::Integer_16"
+							SignedLongInt: " extends Base_Types::Integer_32"
+							SignedLongLongInt: " extends Base_Types::Integer_64"
+							UnsignedShortInt: " extends Base_Types::Unsigned_16"
+							UnsignedLongInt: " extends Base_Types::Unsigned_32"
+							UnsignedLongLongInt: " extends Base_Types::Unsigned_64"
+							FloatType: " extends Base_Types::Float_32"
+							DoubleType: " extends Base_Types::Float_64"
+							LongDoubleType: " extends Base_Types::Float"
+							CharType: " extends Base_Types::Character"
+							BooleanType: " extends Base_Types::Boolean"
+							BoundedString,
+							UnboundedString: " extends Base_Types::String"
+						}
+						dataProperty = switch definition {
+							Enum: "Data_Model::Data_Representation => Enum;"
+							OctetType: "Data_Size => 8 bits;"
+							BoundedString: '''Data_Size => «definition.size» Bytes;'''
+							FixedPtType: "Data_Model::Data_Representation => Fixed;"
+						}
+						if (definition instanceof Struct) {
+							subcomponents = '''
+								subcomponents
+									«FOR member : definition.members»
+									«translateMember(member)»
+									«ENDFOR»
+							'''
+						}
+					}
+				}
+				
 				'''
 					«translateDescription(element)»
-					data «name»
+					«errorComment»
+					data «name»«typeExtension»
 						properties
+							«dataProperty»
 							FACE::Realization_Tier => platform;
 							«translateUUID(element)»
 					end «name»;
+					
+					data implementation «name».impl
+						«subcomponents»
+					end «name».impl;
 				'''
 			}
 			face.datamodel.platform.Entity: {
@@ -242,13 +360,67 @@ package class DataModelTranslator {
 			Template: {
 				val name = translateName(view)
 				val realizes = view.boundQuery?.realizes
+				
+				var String errorComment = null
+				var String subcomponents = null
+				var String additionalComponents = null
+				if (idlOption.present) {
+					val resourceSet = idlOption.get.first
+					val descriptions = idlOption.get.second
+					val idlNameProvider = idlOption.get.third
+					val dataModel = view.getContainerOfType(DataModel)
+					val lookupName = QualifiedName.create("FACE", "DM", dataModel.name, view.name)
+					val lookupObject = descriptions.getExportedObjects(NAMED_DEFINITION_TYPE, lookupName, true).head
+					if (lookupObject === null) {
+						val message = "Unable to find IDL definition for " + lookupName.toString("::")
+						log(message)
+						errorComment = "--" + message
+					} else {
+						val resolved = lookupObject.EObjectOrProxy.resolve(resourceSet) as NamedDefinition
+						val definition = followReferences(resolved)
+						if (definition instanceof Struct) {
+							val architectureModel = view.getContainerOfType(ArchitectureModel)
+							val idlOnlyStructs = <Struct>newLinkedHashSet
+							subcomponents = '''
+								subcomponents
+									«FOR member : definition.members»
+									«translateMember(member, architectureModel, idlNameProvider, idlOnlyStructs)»
+									«ENDFOR»
+							'''
+							additionalComponents = '''
+								«FOR struct : idlOnlyStructs»
+								
+								«val qualifiedName = idlNameProvider.getFullyQualifiedName(struct)»
+								«val structName = sanitizeID(qualifiedName.toString("_")) + "_IDL"»
+								--Generated from «qualifiedName.toString("::")»
+								data «structName»
+								end «structName»;
+								
+								data implementation «structName».impl
+									subcomponents
+										«FOR member : struct.members»
+										«translateMember(member)»
+										«ENDFOR»
+								end «structName».impl;
+								«ENDFOR»
+							'''
+						}
+					}
+				}
+				
 				'''
 					«translateDescription(view)»
+					«errorComment»
 					data «name»«IF realizes !== null» «translateExtends(realizes, platformOnly)»«ENDIF»
 						properties
 							FACE::Realization_Tier => platform;
 							«translateUUID(view)»
 					end «name»;
+					
+					data implementation «name».impl
+						«subcomponents»
+					end «name».impl;
+					«additionalComponents»
 				'''
 			}
 			CompositeTemplate: {
@@ -303,6 +475,85 @@ package class DataModelTranslator {
 	}
 	
 	def private String translateViewReference(View view) {
-		'''«translateName(view)»«IF view instanceof CompositeTemplate».impl«ENDIF»'''
+		'''«translateName(view)».impl'''
+	}
+	
+	def private NamedDefinition followReferences(NamedDefinition definition) {
+		var current = definition
+		val visited = <NamedDefinition>newHashSet
+		
+		while (current instanceof ReferencedType && !visited.contains(current)) {
+			visited += current
+			current = (current as ReferencedType).type
+		}
+		
+		if (visited.contains(current) || current.eIsProxy) {
+			null
+		} else {
+			current
+		}
+	}
+	
+	def private String translateMember(
+		Member member,
+		ArchitectureModel architectureModel,
+		IQualifiedNameProvider idlNameProvider,
+		Set<Struct> idlOnlyStructs
+	) {
+		val baseTypeAndArrays = getBaseTypeAndArrays(member)
+		val baseType = baseTypeAndArrays.key
+		val arrays = baseTypeAndArrays.value
+		
+		val isIdlOnlyStruct = baseType instanceof Struct && {
+			val treeIterator = architectureModel.eAllContents
+			val filtered = treeIterator.filter[
+				if (!(it instanceof ArchitectureModel || it instanceof DataModel || it instanceof PlatformDataModel)) {
+					treeIterator.prune
+				}
+				it instanceof PhysicalDataType || it instanceof View
+			]
+			!filtered.exists[(it as face.Element).name == baseType.name]
+		}
+		if (isIdlOnlyStruct) {
+			idlOnlyStructs += baseType as Struct
+		}
+		
+		val implName = if (baseType === null) {
+			null
+		} else if (isIdlOnlyStruct) {
+			''' «sanitizeID(idlNameProvider.getFullyQualifiedName(baseType).toString("_"))»_IDL.impl'''
+		} else {
+			''' «sanitizeID(baseType.name)»_Platform.impl'''
+		}
+		
+		'''«sanitizeID(member.name)»: data«implName»«arrays»;'''
+	}
+	
+	def private String translateMember(Member member) {
+		val baseTypeAndArrays = getBaseTypeAndArrays(member)
+		val baseType = baseTypeAndArrays.key
+		val arrays = baseTypeAndArrays.value
+		
+		val implName = if (baseType !== null) {
+			''' «sanitizeID(baseType.name)»_Platform.impl'''
+		}
+		
+		'''«sanitizeID(member.name)»: data«implName»«arrays»;'''
+	}
+	
+	def private Pair<NamedDefinition, String> getBaseTypeAndArrays(Member member) {
+		switch type : followReferences(member.type) {
+			BoundedSequence: followReferences(type.type) -> '''[«type.size»]'''
+			UnboundedSequence: followReferences(type.type) -> "[]"
+			ArrayType: followReferences(type.type) -> '''[«type.size»]'''
+			default: type -> ""
+		}
+	}
+	
+	def private void log(String message) {
+		val activator = Activator.^default
+		if (activator !== null) {
+			activator.log.log(new Status(IStatus.INFO, activator.bundle.symbolicName, message))
+		}
 	}
 }

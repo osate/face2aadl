@@ -5,6 +5,7 @@ import face.FacePackage
 import face.integration.IntegrationModel
 import face.uop.UnitOfPortability
 import java.util.List
+import java.util.Optional
 import org.apache.commons.io.IOUtils
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
@@ -51,13 +52,15 @@ abstract class AbstractTranslatorTest {
 		resource.load(class.getResourceAsStream(faceFileName), null)
 		val model = resource.contents.head as ArchitectureModel
 		translator = if (uopNames === null) {
-			ArchitectureModelTranslator.create(model, faceFileName, platformOnly, createFlows)
+			ArchitectureModelTranslator.create(model, faceFileName, platformOnly, createFlows, Optional.empty)
 		} else {
 			val allUoPs = model.getAllContentsOfType(UnitOfPortability)
 			val allIntegrationModels = model.getAllContentsOfType(IntegrationModel)
 			val uops = uopNames.map[name | allUoPs.findFirst[it.name == name]]
 			val integrationModels = integrationModelNames.map[name | allIntegrationModels.findFirst[it.name == name]]
-			ArchitectureModelTranslator.create(model, uops, integrationModels, faceFileName, platformOnly, createFlows)
+			ArchitectureModelTranslator.create(model, uops, integrationModels, faceFileName, platformOnly, createFlows,
+				Optional.empty
+			)
 		}
 	}
 	

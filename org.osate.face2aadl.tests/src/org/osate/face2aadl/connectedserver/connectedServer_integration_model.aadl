@@ -20,14 +20,14 @@ public
 	
 	abstract ViewSource1
 		features
-			output: out feature connectedServer_data_model::Template1_Platform;
+			output: out feature connectedServer_data_model::Template1_Platform.impl;
 		properties
 			FACE::Segment => TSS;
 	end ViewSource1;
 	
 	abstract ViewSink1
 		features
-			input0: in feature connectedServer_data_model::Template1_Platform;
+			input0: in feature connectedServer_data_model::Template1_Platform.impl;
 		properties
 			FACE::Segment => TSS;
 	end ViewSink1;

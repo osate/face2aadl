@@ -6,7 +6,7 @@ public
 	
 	thread group PortableComponent1
 		features
-			conn1: in data port threads_data_model::Template1_Platform {
+			conn1: in data port threads_data_model::Template1_Platform.impl {
 				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
 			};
 		properties
@@ -55,7 +55,7 @@ public
 	
 	process PortableComponent1_process
 		features
-			conn1: in data port threads_data_model::Template1_Platform {
+			conn1: in data port threads_data_model::Template1_Platform.impl {
 				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
 			};
 		flows

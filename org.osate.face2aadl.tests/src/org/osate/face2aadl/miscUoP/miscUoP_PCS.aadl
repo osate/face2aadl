@@ -6,7 +6,7 @@ public
 	
 	thread group PortableComponent1
 		features
-			QueuingConnection1: in event data port miscUoP_data_model::Template1_Platform {
+			QueuingConnection1: in event data port miscUoP_data_model::Template1_Platform.impl {
 				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
 				Queue_Size => 1;
 			};
@@ -26,7 +26,7 @@ public
 	
 	process PortableComponent1_process
 		features
-			QueuingConnection1: in event data port miscUoP_data_model::Template1_Platform {
+			QueuingConnection1: in event data port miscUoP_data_model::Template1_Platform.impl {
 				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
 				Queue_Size => 1;
 			};
@@ -45,7 +45,7 @@ public
 	
 	thread group PortableComponent2
 		features
-			SIMC1: in data port miscUoP_data_model::Template1_Platform {
+			SIMC1: in data port miscUoP_data_model::Template1_Platform.impl {
 				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
 			};
 		properties
@@ -64,7 +64,7 @@ public
 	
 	process PortableComponent2_process
 		features
-			SIMC1: in data port miscUoP_data_model::Template1_Platform {
+			SIMC1: in data port miscUoP_data_model::Template1_Platform.impl {
 				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
 			};
 		flows
@@ -82,7 +82,7 @@ public
 	
 	thread group PortableComponent3
 		features
-			SIMC2: in data port miscUoP_data_model::Template1_Platform {
+			SIMC2: in data port miscUoP_data_model::Template1_Platform.impl {
 				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
 			};
 		properties
@@ -101,7 +101,7 @@ public
 	
 	process PortableComponent3_process
 		features
-			SIMC2: in data port miscUoP_data_model::Template1_Platform {
+			SIMC2: in data port miscUoP_data_model::Template1_Platform.impl {
 				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
 			};
 		flows

@@ -23,16 +23,16 @@ public
 	
 	abstract Converter_ft_to_m
 		features
-			input0: in feature TranslatorDemo_data_model::Altitude_ft_Platform;
-			output: out feature TranslatorDemo_data_model::Altitude_m_Platform;
+			input0: in feature TranslatorDemo_data_model::Altitude_ft_Platform.impl;
+			output: out feature TranslatorDemo_data_model::Altitude_m_Platform.impl;
 		properties
 			FACE::Segment => TSS;
 	end Converter_ft_to_m;
 	
 	abstract Transporter
 		features
-			input0: in feature TranslatorDemo_data_model::Altitude_m_Platform;
-			output: out feature TranslatorDemo_data_model::Altitude_m_Platform;
+			input0: in feature TranslatorDemo_data_model::Altitude_m_Platform.impl;
+			output: out feature TranslatorDemo_data_model::Altitude_m_Platform.impl;
 		properties
 			FACE::Segment => TSS;
 	end Transporter;
