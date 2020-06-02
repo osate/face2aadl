@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Automatic-Module-Name: org.osate.simpleidl.ui
 Bundle-ManifestVersion: 2
 Bundle-Name: org.osate.simpleidl.ui
-Bundle-Vendor: My Company
+Bundle-Vendor: CMU/SEI
 Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: org.osate.simpleidl.ui; singleton:=true
 Bundle-ActivationPolicy: lazy
