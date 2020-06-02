@@ -22,5 +22,8 @@
 		<module>../org.osate.face2aadl.repository</module>
 		<module>../org.osate.face2aadl.tests</module>
 		<module>../org.osate.face2aadl.help</module>
+		<module>../org.osate.simpleidl</module>
+		<module>../org.osate.simpleidl.ide</module>
+		<module>../org.osate.simpleidl.ui</module>
 	</modules>
 </project>
