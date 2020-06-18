@@ -25,5 +25,6 @@
 		<module>../org.osate.simpleidl</module>
 		<module>../org.osate.simpleidl.ide</module>
 		<module>../org.osate.simpleidl.ui</module>
+		<module>../org.jgrapht</module>
 	</modules>
 </project>
