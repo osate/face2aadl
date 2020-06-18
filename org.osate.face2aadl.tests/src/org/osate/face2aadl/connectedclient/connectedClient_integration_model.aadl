@@ -14,20 +14,20 @@ public
 			ViewSource1: abstract ViewSource1;
 			ViewSink1: abstract ViewSink1;
 		connections
-			connection0: feature ViewSource1.output -> UoPInstance1.conn1_response;
-			connection1: feature UoPInstance1.conn1_request -> ViewSink1.input0;
+			connection0: port ViewSource1.output -> UoPInstance1.conn1_response;
+			connection1: port UoPInstance1.conn1_request -> ViewSink1.input0;
 	end IntegrationModel1.impl;
 	
 	abstract ViewSource1
 		features
-			output: out feature connectedClient_data_model::Template1_Platform.impl;
+			output: out event data port connectedClient_data_model::Template1_Platform.impl;
 		properties
 			FACE::Segment => TSS;
 	end ViewSource1;
 	
 	abstract ViewSink1
 		features
-			input0: in feature connectedClient_data_model::Template1_Platform.impl;
+			input0: in event data port connectedClient_data_model::Template1_Platform.impl;
 		properties
 			FACE::Segment => TSS;
 	end ViewSink1;
