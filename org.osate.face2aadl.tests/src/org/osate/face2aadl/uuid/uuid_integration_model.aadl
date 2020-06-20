@@ -21,17 +21,17 @@ public
 			ViewSource1: abstract ViewSource1;
 			ViewSink1: abstract ViewSink1;
 		connections
-			connection0: feature ViewSource1.output -> PortableComponentInstance.Input {
+			connection0: port ViewSource1.output -> PortableComponentInstance.Input {
 				FACE::UUID => "_jZKyEGRREeiJQvh_fVqImg";
 			};
-			connection1: feature PortableComponentInstance.Output -> ViewSink1.input0 {
+			connection1: port PortableComponentInstance.Output -> ViewSink1.input0 {
 				FACE::UUID => "_ltPtgGRREeiJQvh_fVqImg";
 			};
 	end IntegrationModel1.impl;
 	
 	abstract ViewSource1
 		features
-			output: out feature uuid_data_model::CompositeTemplate1_Platform.impl {
+			output: out data port uuid_data_model::CompositeTemplate1_Platform.impl {
 				FACE::UUID => "_es4pIGRREeiJQvh_fVqImg";
 			};
 		properties
@@ -41,7 +41,7 @@ public
 	
 	abstract ViewSink1
 		features
-			input0: in feature uuid_data_model::CompositeTemplate1_Platform.impl {
+			input0: in data port uuid_data_model::CompositeTemplate1_Platform.impl {
 				FACE::UUID => "_hzChwGRREeiJQvh_fVqImg";
 			};
 		properties

@@ -14,20 +14,20 @@ public
 			Source1: abstract Source1;
 			Sink1: abstract Sink1;
 		connections
-			connection0: feature PCS1Instance.Port1_and_2_request -> Sink1.input0;
-			connection1: feature Source1.output -> PCS1Instance.Port1_and_2_response;
+			connection0: port PCS1Instance.Port1_and_2_request -> Sink1.input0;
+			connection1: port Source1.output -> PCS1Instance.Port1_and_2_response;
 	end SelectedIntegrationModel.impl;
 	
 	abstract Source1
 		features
-			output: out feature filteringNoFlows_data_model::UsedTemplate2_Platform.impl;
+			output: out event data port filteringNoFlows_data_model::UsedTemplate2_Platform.impl;
 		properties
 			FACE::Segment => TSS;
 	end Source1;
 	
 	abstract Sink1
 		features
-			input0: in feature filteringNoFlows_data_model::UsedTemplate1_Platform.impl;
+			input0: in event data port filteringNoFlows_data_model::UsedTemplate1_Platform.impl;
 		properties
 			FACE::Segment => TSS;
 	end Sink1;

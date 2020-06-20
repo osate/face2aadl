@@ -26,6 +26,7 @@ import face.integration.IntegrationModel
 import face.integration.TSNodeConnection
 import face.integration.TSNodeInputPort
 import face.integration.TSNodeOutputPort
+import face.integration.TSNodePort
 import face.integration.TSNodePortBase
 import face.integration.TransportChannel
 import face.integration.TransportNode
@@ -37,9 +38,14 @@ import face.uop.ClientServerConnection
 import face.uop.PlatformSpecificComponent
 import face.uop.PortableComponent
 import face.uop.PubSubConnection
+import face.uop.QueuingConnection
+import face.uop.SingleInstanceMessageConnection
 import face.uop.UnitOfPortability
 import java.util.Optional
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
+import org.jgrapht.alg.connectivity.BiconnectivityInspector
+import org.jgrapht.graph.SimpleGraph
+import org.jgrapht.graph.builder.GraphBuilder
 
 import static org.osate.face2aadl.logic.TranslatorUtil.sanitizeID
 import static org.osate.face2aadl.logic.TranslatorUtil.translateDescription
@@ -115,6 +121,36 @@ package class IntegrationModelTranslator {
 		
 		val tsNodeConnections = model.element.filter(IntegrationContext).flatMap[it.connection].toList
 		
+		val featureKinds = <TransportNode, String>newHashMap
+		val connectionKinds = <TSNodeConnection, String>newHashMap
+		
+		// Vertex type is either TransportNode or UoPEndPoint
+		val graphBuilder = new GraphBuilder(new SimpleGraph(TSNodeConnection))
+		tsNodeConnections.forEach[tsNodeConnection |
+			val sourceVertex = switch source : tsNodeConnection.source {
+				TSNodePort: source.getContainerOfType(TransportNode)
+				UoPEndPoint: source
+			}
+			val destinationVertex = switch destination : tsNodeConnection.destination {
+				TSNodePort: destination.getContainerOfType(TransportNode)
+				UoPEndPoint: destination
+			}
+			graphBuilder.addEdge(sourceVertex, destinationVertex, tsNodeConnection)
+		]
+		for (subgraph : new BiconnectivityInspector(graphBuilder.buildAsUnmodifiable).connectedComponents) {
+			val portKindsSet = subgraph.vertexSet.filter(UoPEndPoint).map[vertex |
+				switch vertex.connection {
+					ClientServerConnection,
+					QueuingConnection: "event data port"
+					SingleInstanceMessageConnection: "data port"
+				}
+			].toSet
+			if (portKindsSet.size == 1) {
+				featureKinds.putAll(subgraph.vertexSet.filter(TransportNode).toInvertedMap[portKindsSet.head])
+				connectionKinds.putAll(subgraph.edgeSet.toInvertedMap["port"])
+			}
+		}
+		
 		'''
 			«translateDescription(model)»
 			system «name»
@@ -131,14 +167,16 @@ package class IntegrationModelTranslator {
 				«ENDIF»
 				«IF !tsNodeConnections.empty»
 				connections
-					«FOR connection : tsNodeConnections.indexed»
-					«translateTSNodeConnection(connection.value, connection.key)»
+					«FOR tsNodeConnection : tsNodeConnections.indexed»
+					«val index = tsNodeConnection.key»
+					«val connection = tsNodeConnection.value»
+					«translateTSNodeConnection(connection, index, connectionKinds.getOrDefault(connection, "feature"))»
 					«ENDFOR»
 				«ENDIF»
 			end «name».impl;
 			«FOR node : transportNodes»
 			
-			«translateTransportNode(node)»
+			«translateTransportNode(node, featureKinds.getOrDefault(node, "feature"))»
 			«ENDFOR»
 		'''
 	}
@@ -173,7 +211,7 @@ package class IntegrationModelTranslator {
 			}«ENDIF»;'''
 	}
 	
-	def private String translateTransportNode(TransportNode node) {
+	def private String translateTransportNode(TransportNode node, String featureKind) {
 		val name = sanitizeID(node.name)
 		
 		'''
@@ -182,10 +220,10 @@ package class IntegrationModelTranslator {
 				«IF !node.inPort.empty || node.outPort !== null»
 				features
 					«FOR inPort : node.inPort.indexed»
-					«translateTSNodePort(inPort.value, inPort.key)»
+					«translateTSNodePort(inPort.value, inPort.key, featureKind)»
 					«ENDFOR»
 					«IF node.outPort !== null»
-					«translateTSNodePort(node.outPort)»
+					«translateTSNodePort(node.outPort, featureKind)»
 					«ENDIF»
 				«ENDIF»
 				properties
@@ -195,20 +233,20 @@ package class IntegrationModelTranslator {
 		'''
 	}
 	
-	def private String translateTSNodePort(TSNodeInputPort port, int index) {
+	def private String translateTSNodePort(TSNodeInputPort port, int index, String featureKind) {
 		val uuid = translateUUID(port)
 		
 		'''
-			input«index»: in feature «translateViewReference(port.view)»«IF !uuid.empty» {
+			input«index»: in «featureKind» «translateViewReference(port.view)»«IF !uuid.empty» {
 				«uuid»
 			}«ENDIF»;'''
 	}
 	
-	def private String translateTSNodePort(TSNodeOutputPort port) {
+	def private String translateTSNodePort(TSNodeOutputPort port, String featureKind) {
 		val uuid = translateUUID(port)
 		
 		'''
-			output: out feature «translateViewReference(port.view)»«IF !uuid.empty» {
+			output: out «featureKind» «translateViewReference(port.view)»«IF !uuid.empty» {
 				«uuid»
 			}«ENDIF»;'''
 	}
@@ -223,13 +261,13 @@ package class IntegrationModelTranslator {
 		translateViewReference(dataModelPackageName, view)
 	}
 	
-	def private String translateTSNodeConnection(TSNodeConnection connection, int index) {
+	def private String translateTSNodeConnection(TSNodeConnection connection, int index, String connectionKind) {
 		val uuid = translateUUID(connection)
 		val src = translatePortBaseReference(connection.source)
 		val dst = translatePortBaseReference(connection.destination)
 		
 		'''
-			connection«index»: feature «src» -> «dst»«IF !uuid.empty» {
+			connection«index»: «connectionKind» «src» -> «dst»«IF !uuid.empty» {
 				«uuid»
 			}«ENDIF»;'''
 	}

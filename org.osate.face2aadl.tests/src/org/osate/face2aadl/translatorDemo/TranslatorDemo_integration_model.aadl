@@ -16,23 +16,23 @@ public
 			Converter_ft_to_m: abstract Converter_ft_to_m;
 			Transporter: abstract Transporter;
 		connections
-			connection0: feature Altitude_Sensor.Altitude_output -> Converter_ft_to_m.input0;
-			connection1: feature Converter_ft_to_m.output -> Transporter.input0;
-			connection2: feature Transporter.output -> Autopilot.Altitude_input;
+			connection0: port Altitude_Sensor.Altitude_output -> Converter_ft_to_m.input0;
+			connection1: port Converter_ft_to_m.output -> Transporter.input0;
+			connection2: port Transporter.output -> Autopilot.Altitude_input;
 	end im.impl;
 	
 	abstract Converter_ft_to_m
 		features
-			input0: in feature TranslatorDemo_data_model::Altitude_ft_Platform.impl;
-			output: out feature TranslatorDemo_data_model::Altitude_m_Platform.impl;
+			input0: in event data port TranslatorDemo_data_model::Altitude_ft_Platform.impl;
+			output: out event data port TranslatorDemo_data_model::Altitude_m_Platform.impl;
 		properties
 			FACE::Segment => TSS;
 	end Converter_ft_to_m;
 	
 	abstract Transporter
 		features
-			input0: in feature TranslatorDemo_data_model::Altitude_m_Platform.impl;
-			output: out feature TranslatorDemo_data_model::Altitude_m_Platform.impl;
+			input0: in event data port TranslatorDemo_data_model::Altitude_m_Platform.impl;
+			output: out event data port TranslatorDemo_data_model::Altitude_m_Platform.impl;
 		properties
 			FACE::Segment => TSS;
 	end Transporter;

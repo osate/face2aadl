@@ -13,12 +13,12 @@ public
 			UoPInstance1: process viewSink_PSSS::PlatformSpecificComponent1_process.impl;
 			ViewSink1: abstract ViewSink1;
 		connections
-			connection0: feature UoPInstance1.conn1 -> ViewSink1.input0;
+			connection0: port UoPInstance1.conn1 -> ViewSink1.input0;
 	end IntegrationModel1.impl;
 	
 	abstract ViewSink1
 		features
-			input0: in feature viewSink_data_model::Template1_Platform.impl;
+			input0: in data port viewSink_data_model::Template1_Platform.impl;
 		properties
 			FACE::Segment => TSS;
 	end ViewSink1;

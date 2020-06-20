@@ -540,9 +540,16 @@ The following describes how integration models are translated.
 		* The **name** field is translated into the name of the abstract subcomponent.
 		* The **name** field is translated into the subcomponent's abstract classifier reference.
 	* Each **face.integration.TSNodeConnection** of each **face.integration.IntegrationContext** of the
-	  **IntegrationModel** is translated into a feature connection.
-		* The name of the feature connection is generated from the index of the **TSNodeConnection** in the
+	  **IntegrationModel** is translated into a connection.
+		* The name of the connection is generated from the index of the **TSNodeConnection** in the
 		  **IntegrationModel**. The name is **connection\<index\>**.
+		* Every path between UoPs that includes the **TSNodeConnection** is analyzed to determine the connection kind.
+			* If the UoP endpoints for the paths are all translated as data ports, then this connection will be a port
+			  connection.
+			* If the UoP endpoints for the paths are all translated as event data ports, then this connection will be a
+			  port connection.
+			* If the UoP endpoints for the paths are not all of the same kind, then this feature will be a feature
+			  connection.
 		* The **source** field is translated into the source of the connection.
 		* The **destination** field is translated into the destination of the connection.
 		* IF the FACE file was generated using UUIDs, then the property **FACE::UUID** is set to the ID of
@@ -559,12 +566,24 @@ The following describes how integration models are translated.
 * Each **inPort** *(face.integration.TSNodeInputPort)* is translated into an in feature of the abstract type.
 	* The name of the feature is generated from the index of the **TSNodeInputPort** in the
 	  **TransportNode**.
+	* Every path between UoPs that includes the **TransportNode** is analyzed to determine the feature kind.
+		* If the UoP endpoints for the paths are all translated as data ports, then this feature will be a data port.
+		* If the UoP endpoints for the paths are all translated as event data ports, then this feature will be an event
+		  data port.
+		* If the UoP endpoints for the paths are not all of the same kind, then this feature will be an abstract
+		  feature.
 	* The **view** field is translated into the feature's data classifier reference.
 	* If the FACE file was generated using UUIDs, then the property **FACE::UUID** is set to the ID of the
 	  **TSNodeInputPort**.
 * If the **TransportNode** has an **outPort** *(face.integration.TSNodeOutputPort)*, then the **outPort** is
   translated into an out feature of the abstract type.
 	* The name of the feature is **output**.
+	* Every path between UoPs that includes the **TransportNode** is analyzed to determine the feature kind.
+		* If the UoP endpoints for the paths are all translated as data ports, then this feature will be a data port.
+		* If the UoP endpoints for the paths are all translated as event data ports, then this feature will be an event
+		  data port.
+		* If the UoP endpoints for the paths are not all of the same kind, then this feature will be an abstract
+		  feature.
 	* The **view** field is translated into the feature's data classifier reference.
 	* IF the FACE file was generated using UUIDs, then the property **FACE::UUID** is set to the ID of the
 	  **TSNodeOutputPort**.
@@ -591,23 +610,23 @@ The following is an example of a translated integration model:
 	      Converter_ft_to_m: abstract Converter_ft_to_m;
 	      Transporter: abstract Transporter;
 	    connections
-	      connection0: feature Altitude_Sensor.Altitude_output -> Converter_ft_to_m.input0;
-	      connection1: feature Converter_ft_to_m.output -> Transporter.input0;
-	      connection2: feature Transporter.output -> Autopilot.Altitude_input;
+	      connection0: port Altitude_Sensor.Altitude_output -> Converter_ft_to_m.input0;
+	      connection1: port Converter_ft_to_m.output -> Transporter.input0;
+	      connection2: port Transporter.output -> Autopilot.Altitude_input;
 	  end im.impl;
 	
 	  abstract Converter_ft_to_m
 	    features
-	      input0: in feature TranslatorDemo_data_model::Altitude_ft_Platform;
-	      output: out feature TranslatorDemo_data_model::Altitude_m_Platform;
+	      input0: in event data port TranslatorDemo_data_model::Altitude_ft_Platform;
+	      output: out event data port TranslatorDemo_data_model::Altitude_m_Platform;
 	    properties
 	      FACE::Segment => TSS;
 	  end Converter_ft_to_m;
 	
 	  abstract Transporter
 	    features
-	      input0: in feature TranslatorDemo_data_model::Altitude_m_Platform;
-	      output: out feature TranslatorDemo_data_model::Altitude_m_Platform;
+	      input0: in event data port TranslatorDemo_data_model::Altitude_m_Platform;
+	      output: out event data port TranslatorDemo_data_model::Altitude_m_Platform;
 	    properties
 	      FACE::Segment => TSS;
 	  end Transporter;
