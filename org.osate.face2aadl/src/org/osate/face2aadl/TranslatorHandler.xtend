@@ -24,6 +24,7 @@ import face.ArchitectureModel
 import face.integration.IntegrationModel
 import face.uop.UnitOfPortability
 import java.io.ByteArrayInputStream
+import java.io.IOException
 import java.lang.reflect.InvocationTargetException
 import java.util.Optional
 import org.eclipse.core.commands.AbstractHandler
@@ -74,21 +75,26 @@ class TranslatorHandler extends AbstractHandler {
 		
 		val faceURI = URI.createPlatformResourceURI(faceFile.fullPath.toString, true)
 		val faceResource = new ResourceSetImpl().createResource(faceURI)
-		faceResource.load(#{XMLResource.OPTION_DEFER_IDREF_RESOLUTION -> true})
-		val root = faceResource.contents.head as ArchitectureModel
-		
-		val diagnostic = DIAGNOSTICIAN.validate(root)
-		if (diagnostic.severity == Diagnostic.ERROR) {
-			DiagnosticDialog.open(event.activeShell, "Translate to AADL",
-				'''Unable to translate due to errors discovered in "«faceFile.name»".''', diagnostic, Diagnostic.ERROR
-			)
-		} else {
-			val uops = root.um.flatMap[it.getAllContentsOfType(UnitOfPortability)]
-			val integrationModels = root.im.flatMap[it.eAllOfType(IntegrationModel)]
-			val configDialog = new ConfigDialog(event.activeShell, uops, integrationModels)
-			if (configDialog.open == Window.OK) {
-				translate(root, faceFile, configDialog, event.activeWorkbenchWindow)
+		try {
+			faceResource.load(#{XMLResource.OPTION_DEFER_IDREF_RESOLUTION -> true})
+			val root = faceResource.contents.head as ArchitectureModel
+			
+			val diagnostic = DIAGNOSTICIAN.validate(root)
+			if (diagnostic.severity == Diagnostic.ERROR) {
+				val message = '''Unable to translate due to errors discovered in "«faceFile.name»".'''
+				DiagnosticDialog.open(event.activeShell, "Translate to AADL", message, diagnostic, Diagnostic.ERROR)
+			} else {
+				val uops = root.um.flatMap[it.getAllContentsOfType(UnitOfPortability)]
+				val integrationModels = root.im.flatMap[it.eAllOfType(IntegrationModel)]
+				val configDialog = new ConfigDialog(event.activeShell, uops, integrationModels)
+				if (configDialog.open == Window.OK) {
+					translate(root, faceFile, configDialog, event.activeWorkbenchWindow)
+				}
 			}
+		} catch (IOException e) {
+			val message = '''Unable to load "«faceFile.name»".'''
+			val status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, message, e)
+			StatusManager.manager.handle(status, StatusManager.LOG.bitwiseOr(StatusManager.SHOW))
 		}
 		
 		null
