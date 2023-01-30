@@ -13,8 +13,8 @@
 		<tycho-extras.version>2.7.3</tycho-extras.version>
 		
 		<osate.stable.version>2.3.7</osate.stable.version>
-		<xtext.stable.version>2.18.0</xtext.stable.version>
-		<xtext.testing.version>2.18.0</xtext.testing.version>
+		<xtext.stable.version>2.27.0</xtext.stable.version>
+		<xtext.testing.version>2.27.0</xtext.testing.version>
 
 		<osate.stable.url>http://osate-build.sei.cmu.edu/download/osate/stable/${osate.stable.version}/updates/</osate.stable.url>
 		<eclipse.stable.url>http://download.eclipse.org/releases/2022-06</eclipse.stable.url>
@@ -123,7 +123,7 @@
 			<plugin>
 				<groupId>org.eclipse.xtend</groupId>
 				<artifactId>xtend-maven-plugin</artifactId>
-				<version>${xtext.version}</version>
+				<version>${xtext.stable.version}</version>
 				<executions>
 					<execution>
 						<goals>
