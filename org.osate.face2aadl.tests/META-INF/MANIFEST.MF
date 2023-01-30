@@ -4,7 +4,7 @@ Bundle-Name: Tests
 Bundle-SymbolicName: org.osate.face2aadl.tests
 Bundle-Version: 1.0.0.qualifier
 Fragment-Host: org.osate.face2aadl;bundle-version="1.0.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Require-Bundle: org.apache.log4j;bundle-version="1.2.15",
  org.junit,
  org.apache.commons.io

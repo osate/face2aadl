@@ -7,7 +7,7 @@ Bundle-ClassPath: .
 Bundle-Activator: face.presentation.Face30EditorPlugin$Implementation
 Bundle-Vendor: CMU/SEI
 Bundle-Localization: plugin
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Export-Package: face.datamodel.conceptual.presentation,
  face.datamodel.logical.presentation,
  face.datamodel.platform.presentation,

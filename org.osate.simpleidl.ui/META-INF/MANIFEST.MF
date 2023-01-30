@@ -17,7 +17,7 @@ Require-Bundle: org.osate.simpleidl,
  org.eclipse.compare,
  org.eclipse.xtext.builder
 Import-Package: org.apache.log4j
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Export-Package: org.osate.simpleidl.ui.quickfix,
  org.osate.simpleidl.ui.internal,
  org.osate.simpleidl.ui.contentassist

@@ -13,7 +13,7 @@ Require-Bundle: org.eclipse.xtext,
  org.eclipse.xtext.util,
  org.eclipse.emf.common,
  org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Export-Package: org.osate.simpleidl.parser.antlr.internal,
  org.osate.simpleidl.simpleIDL.util,
  org.osate.simpleidl.generator,
