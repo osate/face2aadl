@@ -87,7 +87,7 @@ abstract class AbstractTranslatorTest {
 	def private void testModel(TranslatedPackage translated) {
 		val expected = class.getResourceAsStream(translated.name + ".aadl")
 		if (translated.contents.present) {
-			IOUtils.toString(expected).assertEquals(translated.contents.get.replace("\r", ""))
+			IOUtils.toString(expected).replace("\r", "").assertEquals(translated.contents.get.replace("\r", ""))
 		} else {
 			expected.assertNull
 		}
