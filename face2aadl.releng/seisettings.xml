@@ -85,65 +85,9 @@ censes only apply to the Third Party Software and not any other portion of this 
   <mirrors>
 
     <mirror>
-      <id>eclipse-mirror</id>
-      <mirrorOf>http://download.eclipse.org</mirrorOf>
-      <url>file:/var/cache/p2mirror/current</url>
-      <layout>p2</layout>
-      <mirrorOfLayouts>p2</mirrorOfLayouts>
-    </mirror>
-
-    <mirror>
-      <id>eclipse-mirror1</id>
-      <mirrorOf>https://download.eclipse.org</mirrorOf>
-      <url>file:/var/cache/p2mirror/current</url>
-      <layout>p2</layout>
-      <mirrorOfLayouts>p2</mirrorOfLayouts>
-    </mirror>
-
-    <mirror>
-      <id>py4j-mirror</id>
-      <mirrorOf>http://eclipse.py4j.org</mirrorOf>
-      <url>file:/var/cache/p2mirror/current/py4j</url>
-      <layout>p2</layout>
-      <mirrorOfLayouts>p2</mirrorOfLayouts>
-    </mirror>
-
-    <mirror>
-      <id>py4j-mirror1</id>
-      <mirrorOf>https://eclipse.py4j.org</mirrorOf>
-      <url>file:/var/cache/p2mirror/current/py4j</url>
-      <layout>p2</layout>
-      <mirrorOfLayouts>p2</mirrorOfLayouts>
-    </mirror>
-
-    <mirror>
-      <id>yakindu-mirror</id>
-      <mirrorOf>http://updates.yakindu.com/statecharts/releases/3.5.9</mirrorOf>
-      <url>file:/var/cache/p2mirror/current/yakindu</url>
-      <layout>p2</layout>
-      <mirrorOfLayouts>p2</mirrorOfLayouts>
-    </mirror>
-
-    <mirror>
-      <id>openjfx-17-mirror</id>
-      <mirrorOf>https://downloads.efxclipse.bestsolution.at/p2-repos/openjfx-17.0.2</mirrorOf>
-      <url>file:/var/cache/p2mirror/current/openjfx-17.0.2</url>
-      <layout>p2</layout>
-      <mirrorOfLayouts>p2</mirrorOfLayouts>
-    </mirror>
-
-    <mirror>
-      <id>resolute-mirror</id>
-      <mirrorOf>http://osate-build.sei.cmu.edu/download/osate/stable/2.3.7/updates</mirrorOf>
-      <url>file:/var/cache/p2mirror/current/resolute</url>
-      <layout>p2</layout>
-      <mirrorOfLayouts>p2</mirrorOfLayouts>
-    </mirror>
-
-    <mirror>
-      <id>ocarina-mirror</id>
-      <mirrorOf>http://osate-build.sei.cmu.edu/p2/ocarina</mirrorOf>
-      <url>file:/var/cache/p2mirror/current/ocarina</url>
+      <id>eclipse-osuosl</id>
+      <mirrorOf>http://download.eclipse.org/</mirrorOf>
+      <url>http://ftp.osuosl.org/pub/eclipse/</url>
       <layout>p2</layout>
       <mirrorOfLayouts>p2</mirrorOfLayouts>
     </mirror>
