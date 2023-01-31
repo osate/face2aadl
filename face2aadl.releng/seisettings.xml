@@ -83,7 +83,7 @@ censes only apply to the Third Party Software and not any other portion of this 
   </proxies>
 
   <mirrors>
-<!--
+
     <mirror>
       <id>eclipse-mirror</id>
       <mirrorOf>http://download.eclipse.org</mirrorOf>
@@ -147,7 +147,7 @@ censes only apply to the Third Party Software and not any other portion of this 
       <layout>p2</layout>
       <mirrorOfLayouts>p2</mirrorOfLayouts>
     </mirror>
--->
+
     <mirror>
       <id>osate-build-jericho-http</id>
       <mirrorOf>http://osate-build.sei.cmu.edu/</mirrorOf>
