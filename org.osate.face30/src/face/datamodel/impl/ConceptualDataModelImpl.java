@@ -1,7 +1,7 @@
-/*******************************************************************************
+/**
  * FACE Data Model to AADL Translator
  * 
- * Copyright 2018 Carnegie Mellon University. All Rights Reserved.
+ * Copyright 2023 Carnegie Mellon University.
  * 
  * NO WARRANTY. THIS CARNEGIE MELLON UNIVERSITY AND SOFTWARE ENGINEERING INSTITUTE MATERIAL IS FURNISHED ON
  * AN "AS-IS" BASIS. CARNEGIE MELLON UNIVERSITY MAKES NO WARRANTIES OF ANY KIND, EITHER EXPRESSED OR IMPLIED,
@@ -15,8 +15,8 @@
  * [DISTRIBUTION STATEMENT A] This material has been approved for public release and unlimited distribution.
  * Please see Copyright notice for non-US Government use and distribution.
  * 
- * DM18-0762
- *******************************************************************************/
+ * DM23-0412
+ */
 package face.datamodel.impl;
 
 import face.datamodel.ConceptualDataModel;

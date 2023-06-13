@@ -1,0 +1,55 @@
+--Generated from "filteringNoFlows.face"
+package filteringNoFlows_PSSS
+public
+	with FACE;
+	with filteringNoFlows_data_model;
+	
+	thread group SelectedPSSS1
+		features
+			Port3: in event data port filteringNoFlows_data_model::UsedTemplate3_Platform.impl {
+				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+				Queue_Size => 10;
+			};
+			CompositePort1: in data port filteringNoFlows_data_model::UsedCompositeTemplate1_Platform.impl {
+				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+			};
+			CompositePort2: in data port filteringNoFlows_data_model::UsedCompositeTemplate2_Platform.impl {
+				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+			};
+		properties
+			FACE::Profile => general;
+			FACE::Segment => PSSS;
+	end SelectedPSSS1;
+	
+	thread group implementation SelectedPSSS1.impl
+		subcomponents
+			thread0: thread {
+				Compute_Execution_Time => 0 sec .. 0 sec;
+				Period => 0 sec;
+				Priority => 0;
+			};
+	end SelectedPSSS1.impl;
+	
+	process SelectedPSSS1_process
+		features
+			Port3: in event data port filteringNoFlows_data_model::UsedTemplate3_Platform.impl {
+				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+				Queue_Size => 10;
+			};
+			CompositePort1: in data port filteringNoFlows_data_model::UsedCompositeTemplate1_Platform.impl {
+				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+			};
+			CompositePort2: in data port filteringNoFlows_data_model::UsedCompositeTemplate2_Platform.impl {
+				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+			};
+	end SelectedPSSS1_process;
+	
+	process implementation SelectedPSSS1_process.impl
+		subcomponents
+			SelectedPSSS1: thread group SelectedPSSS1.impl;
+		connections
+			Port3_connection: port Port3 -> SelectedPSSS1.Port3;
+			CompositePort1_connection: port CompositePort1 -> SelectedPSSS1.CompositePort1;
+			CompositePort2_connection: port CompositePort2 -> SelectedPSSS1.CompositePort2;
+	end SelectedPSSS1_process.impl;
+end filteringNoFlows_PSSS;

@@ -1,7 +1,7 @@
-/*******************************************************************************
+/**
  * FACE Data Model to AADL Translator
  * 
- * Copyright 2018 Carnegie Mellon University. All Rights Reserved.
+ * Copyright 2023 Carnegie Mellon University.
  * 
  * NO WARRANTY. THIS CARNEGIE MELLON UNIVERSITY AND SOFTWARE ENGINEERING INSTITUTE MATERIAL IS FURNISHED ON
  * AN "AS-IS" BASIS. CARNEGIE MELLON UNIVERSITY MAKES NO WARRANTIES OF ANY KIND, EITHER EXPRESSED OR IMPLIED,
@@ -15,8 +15,8 @@
  * [DISTRIBUTION STATEMENT A] This material has been approved for public release and unlimited distribution.
  * Please see Copyright notice for non-US Government use and distribution.
  * 
- * DM18-0762
- *******************************************************************************/
+ * DM23-0412
+ */
 package org.osate.face2aadl
 
 import com.google.inject.Injector
@@ -39,7 +39,6 @@ import org.eclipse.core.runtime.SubMonitor
 import org.eclipse.emf.common.ui.dialogs.DiagnosticDialog
 import org.eclipse.emf.common.util.Diagnostic
 import org.eclipse.emf.common.util.URI
-import org.eclipse.emf.common.util.WrappedException
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.emf.ecore.util.Diagnostician
@@ -53,8 +52,9 @@ import org.eclipse.ui.actions.WorkspaceModifyOperation
 import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.ui.resource.IResourceSetProvider
-import org.osate.face2aadl.logic.ArchitectureModelTranslator
-import org.osate.face2aadl.logic.ArchitectureModelTranslator.TranslatedPackage
+import org.osate.face2aadl.common.TranslatedPackage
+import org.osate.face2aadl.logic30.ArchitectureModelTranslator
+import org.osate.face2aadl.ui30.ConfigDialog
 
 import static extension org.eclipse.ui.handlers.HandlerUtil.getActiveShell
 import static extension org.eclipse.ui.handlers.HandlerUtil.getActiveWorkbenchWindow
@@ -77,24 +77,55 @@ class TranslatorHandler extends AbstractHandler {
 		val faceResource = new ResourceSetImpl().createResource(faceURI)
 		try {
 			faceResource.load(#{XMLResource.OPTION_DEFER_IDREF_RESOLUTION -> true})
-			val root = faceResource.contents.head as ArchitectureModel
+			val root = faceResource.contents.head
 			
 			val diagnostic = DIAGNOSTICIAN.validate(root)
 			if (diagnostic.severity == Diagnostic.ERROR) {
 				val message = '''Unable to translate due to errors discovered in "«faceFile.name»".'''
 				DiagnosticDialog.open(event.activeShell, "Translate to AADL", message, diagnostic, Diagnostic.ERROR)
 			} else {
-				val uops = root.um.flatMap[it.getAllContentsOfType(UnitOfPortability)]
-				val integrationModels = root.im.flatMap[it.eAllOfType(IntegrationModel)]
-				val configDialog = new ConfigDialog(event.activeShell, uops, integrationModels)
-				if (configDialog.open == Window.OK) {
-					translate(root, faceFile, configDialog, event.activeWorkbenchWindow)
+				switch root {
+					ArchitectureModel: {
+						val uops = root.um.flatMap[it.getAllContentsOfType(UnitOfPortability)]
+						val integrationModels = root.im.flatMap[it.eAllOfType(IntegrationModel)]
+						val configDialog = new ConfigDialog(event.activeShell, uops, integrationModels)
+						if (configDialog.open == Window.OK) {
+							translate(root, faceFile, configDialog, event.activeWorkbenchWindow)
+						}
+					}
+					org.osate.face31.ArchitectureModel: {
+						val uops = root.um.flatMap[it.getAllContentsOfType(org.osate.face31.uop.UnitOfPortability)]
+						val integrationModels = root.im.flatMap[
+							it.eAllOfType(org.osate.face31.integration.IntegrationModel)
+						]
+						val configDialog = new org.osate.face2aadl.ui31.ConfigDialog(
+							event.activeShell, uops, integrationModels
+						)
+						if (configDialog.open == Window.OK) {
+							translate(root, faceFile, configDialog, event.activeWorkbenchWindow)
+						}
+					}
+					default: {
+						val message = '''The root object in "«faceFile.name»" is not a FACE 3.0 or 3.1 ArchitectureModel.'''
+						val status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, message)
+						StatusManager.manager.handle(status, StatusManager.LOG.bitwiseOr(StatusManager.SHOW))
+					}
 				}
 			}
 		} catch (IOException e) {
-			val message = '''Unable to load "«faceFile.name»".'''
-			val status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, message, e)
-			StatusManager.manager.handle(status, StatusManager.LOG.bitwiseOr(StatusManager.SHOW))
+			if (e.cause instanceof PackageNotFoundException) {
+				val message = '''"«faceFile.name»" is not a FACE 3.0 or 3.1 Data Model.'''
+				
+				val logStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID, message, e)
+				StatusManager.manager.handle(logStatus, StatusManager.LOG)
+				
+				val dialogStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID, message)
+				StatusManager.manager.handle(dialogStatus, StatusManager.SHOW)
+			} else {
+				val message = '''Unable to load "«faceFile.name»".'''
+				val status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, message, e)
+				StatusManager.manager.handle(status, StatusManager.LOG.bitwiseOr(StatusManager.SHOW))
+			}
 		}
 		
 		null
@@ -139,20 +170,48 @@ class TranslatorHandler extends AbstractHandler {
 		try {
 			workbenchWindow.run(true, true, operation)
 		} catch (InvocationTargetException e) {
-			val target = e.targetException
+			val status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Error while translating.", e.targetException)
+			StatusManager.manager.handle(status, StatusManager.LOG.bitwiseOr(StatusManager.SHOW))
+		} catch (InterruptedException e) {
+			//Do nothing.
+		}
+	}
+	
+	def private void translate(org.osate.face31.ArchitectureModel root, IFile faceFile,
+		org.osate.face2aadl.ui31.ConfigDialog configDialog, IWorkbenchWindow workbenchWindow
+	) {
+		val WorkspaceModifyOperation operation = [monitor |
+			val subMonitor = SubMonitor.convert(monitor, 5)
 			
-			if (target instanceof WrappedException && target.cause instanceof PackageNotFoundException) {
-				val message = '''"«faceFile.name»" is not a FACE 3.0 Data Model.'''
-				
-				val logStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID, message, target)
-				StatusManager.manager.handle(logStatus, StatusManager.LOG)
-				
-				val dialogStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID, message)
-				StatusManager.manager.handle(dialogStatus, StatusManager.SHOW)
-			} else {
-				val status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Error while translating.", target)
-				StatusManager.manager.handle(status, StatusManager.LOG.bitwiseOr(StatusManager.SHOW))
+			val modelGenDirectory = faceFile.project.getFolder("model-gen")
+			if (!modelGenDirectory.exists) {
+				modelGenDirectory.create(false, true, subMonitor.split(1))
 			}
+			subMonitor.workRemaining = 4
+			
+			//TODO Give a value for idlOption if we decide to support IDL processing for 3.1
+			val idlOption = Optional.empty
+			val translator = if (configDialog.filter) {
+				org.osate.face2aadl.logic31.ArchitectureModelTranslator.create(root, configDialog.selectedUoPs,
+					configDialog.selectedIntegrationModels, faceFile.name, configDialog.platformOnly,
+					configDialog.createFlows, idlOption
+				)
+			} else {
+				org.osate.face2aadl.logic31.ArchitectureModelTranslator.create(root, faceFile.name,
+					configDialog.platformOnly, configDialog.createFlows, idlOption
+				)
+			}
+			
+			writePackage(translator.translateDataModel, modelGenDirectory, subMonitor.split(1))
+			writePackage(translator.translatePSSS, modelGenDirectory, subMonitor.split(1))
+			writePackage(translator.translatePCS, modelGenDirectory, subMonitor.split(1))
+			writePackage(translator.translateIntegrationModel, modelGenDirectory, subMonitor.split(1))
+		]
+		try {
+			workbenchWindow.run(true, true, operation)
+		} catch (InvocationTargetException e) {
+			val status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Error while translating.", e.targetException)
+			StatusManager.manager.handle(status, StatusManager.LOG.bitwiseOr(StatusManager.SHOW))
 		} catch (InterruptedException e) {
 			//Do nothing.
 		}

@@ -1,0 +1,34 @@
+--Generated from "filteringPlatformOnly.face"
+package filteringPlatformOnly_integration_model
+public
+	with FACE;
+	with filteringPlatformOnly_data_model;
+	with filteringPlatformOnly_PCS;
+	
+	system SelectedIntegrationModel
+	end SelectedIntegrationModel;
+	
+	system implementation SelectedIntegrationModel.impl
+		subcomponents
+			PCS1Instance: process filteringPlatformOnly_PCS::UsedPCS1_process.impl;
+			Source1: abstract Source1;
+			Sink1: abstract Sink1;
+		connections
+			connection0: port PCS1Instance.Port1_and_2_request -> Sink1.input0;
+			connection1: port Source1.output -> PCS1Instance.Port1_and_2_response;
+	end SelectedIntegrationModel.impl;
+	
+	abstract Source1
+		features
+			output: out event data port filteringPlatformOnly_data_model::UsedTemplate2_Platform.impl;
+		properties
+			FACE::Segment => TSS;
+	end Source1;
+	
+	abstract Sink1
+		features
+			input0: in event data port filteringPlatformOnly_data_model::UsedTemplate1_Platform.impl;
+		properties
+			FACE::Segment => TSS;
+	end Sink1;
+end filteringPlatformOnly_integration_model;

@@ -1,0 +1,39 @@
+--Generated from "uuidPlatformOnly.face"
+package uuidPlatformOnly_data_model
+public
+	with FACE;
+	
+	data Template1_Platform --extension of Query1_Logical not translated
+		properties
+			FACE::Realization_Tier => platform;
+			FACE::UUID => "_7cbGwK2LEe26NcS3vZp1iQ";
+	end Template1_Platform;
+	
+	data implementation Template1_Platform.impl
+	end Template1_Platform.impl;
+	
+	data Template2_Platform --extension of Query2_Logical not translated
+		properties
+			FACE::Realization_Tier => platform;
+			FACE::UUID => "_-rhgAK2LEe26NcS3vZp1iQ";
+	end Template2_Platform;
+	
+	data implementation Template2_Platform.impl
+	end Template2_Platform.impl;
+	
+	data CompositeTemplate1_Platform --extension of CompositeQuery1_Logical not translated
+		properties
+			FACE::Realization_Tier => platform;
+			FACE::UUID => "_EN15EK2MEe26NcS3vZp1iQ";
+	end CompositeTemplate1_Platform;
+	
+	data implementation CompositeTemplate1_Platform.impl
+		subcomponents
+			Role1: data Template1_Platform.impl {
+				FACE::UUID => "_G6JuUK2MEe26NcS3vZp1iQ";
+			};
+			Role2: data Template2_Platform.impl {
+				FACE::UUID => "_J1OYUK2MEe26NcS3vZp1iQ";
+			};
+	end CompositeTemplate1_Platform.impl;
+end uuidPlatformOnly_data_model;

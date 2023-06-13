@@ -1,0 +1,57 @@
+--Generated from "uuidPlatformOnly.face"
+package uuidPlatformOnly_PCS
+public
+	with FACE;
+	with uuidPlatformOnly_data_model;
+	
+	thread group PortableComponent1
+		features
+			Input: in data port uuidPlatformOnly_data_model::CompositeTemplate1_Platform.impl {
+				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+				FACE::UUID => "_SNtGMK2MEe26NcS3vZp1iQ";
+			};
+			Output: out data port uuidPlatformOnly_data_model::CompositeTemplate1_Platform.impl {
+				Output_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+				FACE::UUID => "_VPajsK2MEe26NcS3vZp1iQ";
+			};
+		properties
+			FACE::Profile => general;
+			FACE::Segment => PCS;
+			FACE::UUID => "_N3sIMK2MEe26NcS3vZp1iQ";
+	end PortableComponent1;
+	
+	thread group implementation PortableComponent1.impl
+		subcomponents
+			thread0: thread {
+				Compute_Execution_Time => 0 sec .. 0 sec;
+				Period => 0 sec;
+				Priority => 0;
+			};
+	end PortableComponent1.impl;
+	
+	process PortableComponent1_process
+		features
+			Input: in data port uuidPlatformOnly_data_model::CompositeTemplate1_Platform.impl {
+				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+				FACE::UUID => "_SNtGMK2MEe26NcS3vZp1iQ";
+			};
+			Output: out data port uuidPlatformOnly_data_model::CompositeTemplate1_Platform.impl {
+				Output_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+				FACE::UUID => "_VPajsK2MEe26NcS3vZp1iQ";
+			};
+		flows
+			Input_sink: flow sink Input;
+			Output_source: flow source Output;
+	end PortableComponent1_process;
+	
+	process implementation PortableComponent1_process.impl
+		subcomponents
+			PortableComponent1: thread group PortableComponent1.impl;
+		connections
+			Input_connection: port Input -> PortableComponent1.Input;
+			Output_connection: port PortableComponent1.Output -> Output;
+		flows
+			Input_sink: flow sink Input -> Input_connection -> PortableComponent1;
+			Output_source: flow source PortableComponent1 -> Output_connection -> Output;
+	end PortableComponent1_process.impl;
+end uuidPlatformOnly_PCS;

@@ -1,0 +1,25 @@
+--Generated from "viewSource.face"
+package viewSource_integration_model
+public
+	with FACE;
+	with viewSource_data_model;
+	with viewSource_PSSS;
+	
+	system IntegrationModel1
+	end IntegrationModel1;
+	
+	system implementation IntegrationModel1.impl
+		subcomponents
+			UoPInstance1: process viewSource_PSSS::PlatformSpecificComponent1_process.impl;
+			ViewSource1: abstract ViewSource1;
+		connections
+			connection0: port ViewSource1.output -> UoPInstance1.conn1;
+	end IntegrationModel1.impl;
+	
+	abstract ViewSource1
+		features
+			output: out data port viewSource_data_model::Template1_Platform.impl;
+		properties
+			FACE::Segment => TSS;
+	end ViewSource1;
+end viewSource_integration_model;

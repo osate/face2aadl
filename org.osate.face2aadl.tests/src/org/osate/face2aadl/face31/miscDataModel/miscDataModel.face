@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<face:ArchitectureModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:conceptual="http://www.opengroup.us/datamodel/conceptual/1.0" xmlns:face="http://www.opengroup.us/face/3.1" xmlns:logical="http://www.opengroup.us/datamodel/logical/1.0" xmlns:platform="http://www.opengroup.us/datamodel/platform/1.0" xmlns:uop="http://www.opengroup.us/face/uop/3.1" name="ArchitectureModel1">
+  <dm name="DataModel1">
+    <cdm name="ConceptualDataModel1">
+      <element xsi:type="conceptual:Observable" name="UniqueIdentifier" description="Description1"/>
+      <element xsi:type="conceptual:Entity" name="Entity1">
+        <composition rolename="rolename1" type="//@dm.0/@cdm.0/@element.0"/>
+      </element>
+    </cdm>
+    <ldm name="LogicalDataModel1">
+      <element xsi:type="logical:CoordinateSystemAxis" name="CoordinateSystemAxis1" description="description1"/>
+      <element xsi:type="logical:Unit" name="Unit1" description="description1"/>
+      <element xsi:type="logical:Boolean" name="Boolean" description="description1"/>
+      <element xsi:type="logical:ValueTypeUnit" name="ValueTypeUnit1" unit="//@dm.0/@ldm.0/@element.1" valueType="//@dm.0/@ldm.0/@element.2"/>
+      <element xsi:type="logical:MeasurementSystemAxis" name="MeasurementSystemAxis1" description="description1" axis="//@dm.0/@ldm.0/@element.0" defaultValueTypeUnit="//@dm.0/@ldm.0/@element.3"/>
+      <element xsi:type="logical:CoordinateSystem" name="CoordinateSystem1" description="description1" axis="//@dm.0/@ldm.0/@element.0"/>
+      <element xsi:type="logical:MeasurementSystem" name="MeasurementSystem1" description="description1" measurementSystemAxis="//@dm.0/@ldm.0/@element.4" coordinateSystem="//@dm.0/@ldm.0/@element.5"/>
+      <element xsi:type="logical:MeasurementAxis" name="MeasurementAxis1" measurementSystemAxis="//@dm.0/@ldm.0/@element.4"/>
+      <element xsi:type="logical:Measurement" name="Measurement1" measurementAxis="//@dm.0/@ldm.0/@element.7" measurementSystem="//@dm.0/@ldm.0/@element.6" realizes="//@dm.0/@cdm.0/@element.0"/>
+      <element xsi:type="logical:Entity" name="Entity2" realizes="//@dm.0/@cdm.0/@element.1">
+        <composition rolename="rolename2" type="//@dm.0/@ldm.0/@element.8" realizes="//@dm.0/@cdm.0/@element.1/@composition.0"/>
+      </element>
+    </ldm>
+    <pdm name="PlatformDataModel1">
+      <element xsi:type="platform:Boolean" name="Boolean1" realizes="//@dm.0/@ldm.0/@element.8"/>
+      <element xsi:type="platform:Entity" name="Entity3" realizes="//@dm.0/@ldm.0/@element.9">
+        <composition rolename="rolename3" type="//@dm.0/@pdm.0/@element.0" realizes="//@dm.0/@ldm.0/@element.9/@composition.0"/>
+      </element>
+    </pdm>
+  </dm>
+  <um name="UoPModel1">
+    <element xsi:type="uop:Template" name="Template1" specification="&lt;"/>
+  </um>
+</face:ArchitectureModel>

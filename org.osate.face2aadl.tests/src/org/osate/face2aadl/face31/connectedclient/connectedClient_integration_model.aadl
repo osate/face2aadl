@@ -1,0 +1,34 @@
+--Generated from "connectedClient.face"
+package connectedClient_integration_model
+public
+	with connectedClient_data_model;
+	with connectedClient_PSSS;
+	with FACE;
+	
+	system IntegrationModel1
+	end IntegrationModel1;
+	
+	system implementation IntegrationModel1.impl
+		subcomponents
+			UoPInstance1: process connectedClient_PSSS::PlatformSpecificComponent1_process.impl;
+			ViewSource1: abstract ViewSource1;
+			ViewSink1: abstract ViewSink1;
+		connections
+			connection0: port ViewSource1.output -> UoPInstance1.conn1_response;
+			connection1: port UoPInstance1.conn1_request -> ViewSink1.input0;
+	end IntegrationModel1.impl;
+	
+	abstract ViewSource1
+		features
+			output: out event data port connectedClient_data_model::Template1_Platform.impl;
+		properties
+			FACE::Segment => TSS;
+	end ViewSource1;
+	
+	abstract ViewSink1
+		features
+			input0: in event data port connectedClient_data_model::Template1_Platform.impl;
+		properties
+			FACE::Segment => TSS;
+	end ViewSink1;
+end connectedClient_integration_model;

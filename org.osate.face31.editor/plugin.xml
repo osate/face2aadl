@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension
+         point="org.eclipse.core.runtime.applications"
+         id="Face31EditorAdvisorApplication">
+      <!-- @generated face31 -->
+      <application>
+         <run class="org.osate.face31.presentation.Face31EditorAdvisor$Application"/>
+      </application>
+   </extension>
+
+   <extension point="org.eclipse.ui.perspectives">
+      <!-- @generated face31 -->
+      <perspective
+            name="%_UI_Perspective_label"
+            class="org.osate.face31.presentation.Face31EditorAdvisor$Perspective"
+            id="org.osate.face31.presentation.Face31EditorAdvisorPerspective">
+      </perspective>
+   </extension>
+
+   <extension point="org.eclipse.ui.commands">
+      <!-- @generated face31 -->
+      <command
+            name="%_UI_Menu_OpenURI_label"
+            description="%_UI_Menu_OpenURI_description"
+            categoryId="org.eclipse.ui.category.file"
+            id="org.osate.face31.presentation.Face31EditorAdvisorOpenURICommand"/>
+      <command
+            name="%_UI_Menu_Open_label"
+            description="%_UI_Menu_Open_description"
+            categoryId="org.eclipse.ui.category.file"
+            id="org.osate.face31.presentation.Face31EditorAdvisorOpenCommand"/>
+   </extension>
+
+
+   <extension point="org.eclipse.ui.bindings">
+      <!-- @generated face31 -->
+      <key
+            commandId="org.osate.face31.presentation.Face31EditorAdvisorOpenURICommand"
+            sequence="M1+U"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+      <key
+            commandId="org.osate.face31.presentation.Face31EditorAdvisorOpenCommand"
+            sequence="M1+O"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+   </extension>
+
+   <extension point="org.eclipse.ui.actionSets">
+      <!-- @generated face31 -->
+      <actionSet
+            label="%_UI_Face31EditorAdvisor_ActionSet_label"
+            visible="true"
+            id="Face31EditorAdvisorActionSet">
+         <action
+               label="%_UI_Menu_OpenURI_label"
+               definitionId="org.osate.face31.presentation.Face31EditorAdvisorOpenURICommand"
+               class="org.osate.face31.presentation.Face31EditorAdvisor$OpenURIAction"
+               menubarPath="file/additions"
+               id="org.osate.face31.presentation.Face31EditorAdvisorOpenURIAction"/>
+         <action
+               label="%_UI_Menu_Open_label"
+               definitionId="org.osate.face31.presentation.Face31EditorAdvisorOpenCommand"
+               class="org.osate.face31.presentation.Face31EditorAdvisor$OpenAction"
+               menubarPath="file/additions"
+               id="org.osate.face31.presentation.Face31EditorAdvisorOpenAction"/>
+      </actionSet>
+   </extension>
+
+   <extension point="org.eclipse.ui.actionSets">
+      <!-- @generated face31 -->
+      <actionSet
+            label="%_UI_FaceModelWizard_ActionSet_label"
+            visible="true"
+            id="org.osate.face31.presentation.FaceActionBarContributorActionSet">
+         <action
+               label="%_UI_FaceModelWizard_label"
+               class="org.osate.face31.presentation.FaceActionBarContributor$NewAction"
+               menubarPath="file/new/additions"
+               id="org.osate.face31.presentation.FaceActionBarContributorNewAction"/>
+      </actionSet>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated face31 -->
+      <editor
+            id="org.osate.face31.presentation.FaceEditorID"
+            name="%_UI_FaceEditor_label"
+            icon="icons/full/obj16/FaceModelFile.gif"
+            extensions="face"
+            class="org.osate.face31.presentation.FaceEditor"
+            contributorClass="org.osate.face31.presentation.FaceActionBarContributor">
+      </editor>
+   </extension>
+
+   <extension point="org.eclipse.ui.actionSets">
+      <!-- @generated face31 -->
+      <actionSet
+            label="%_UI_UopModelWizard_ActionSet_label"
+            visible="true"
+            id="org.osate.face31.uop.presentation.UopActionBarContributorActionSet">
+         <action
+               label="%_UI_UopModelWizard_label"
+               class="org.osate.face31.uop.presentation.UopActionBarContributor$NewAction"
+               menubarPath="file/new/additions"
+               id="org.osate.face31.uop.presentation.UopActionBarContributorNewAction"/>
+      </actionSet>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated face31 -->
+      <editor
+            id="org.osate.face31.uop.presentation.UopEditorID"
+            name="%_UI_UopEditor_label"
+            icon="icons/full/obj16/UopModelFile.gif"
+            extensions="uop"
+            class="org.osate.face31.uop.presentation.UopEditor"
+            contributorClass="org.osate.face31.uop.presentation.UopActionBarContributor">
+      </editor>
+   </extension>
+
+   <extension point="org.eclipse.ui.actionSets">
+      <!-- @generated face31 -->
+      <actionSet
+            label="%_UI_IntegrationModelWizard_ActionSet_label"
+            visible="true"
+            id="org.osate.face31.integration.presentation.IntegrationActionBarContributorActionSet">
+         <action
+               label="%_UI_IntegrationModelWizard_label"
+               class="org.osate.face31.integration.presentation.IntegrationActionBarContributor$NewAction"
+               menubarPath="file/new/additions"
+               id="org.osate.face31.integration.presentation.IntegrationActionBarContributorNewAction"/>
+      </actionSet>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated face31 -->
+      <editor
+            id="org.osate.face31.integration.presentation.IntegrationEditorID"
+            name="%_UI_IntegrationEditor_label"
+            icon="icons/full/obj16/IntegrationModelFile.gif"
+            extensions="integration"
+            class="org.osate.face31.integration.presentation.IntegrationEditor"
+            contributorClass="org.osate.face31.integration.presentation.IntegrationActionBarContributor">
+      </editor>
+   </extension>
+
+   <extension point="org.eclipse.ui.actionSets">
+      <!-- @generated face31 -->
+      <actionSet
+            label="%_UI_TraceabilityModelWizard_ActionSet_label"
+            visible="true"
+            id="org.osate.face31.traceability.presentation.TraceabilityActionBarContributorActionSet">
+         <action
+               label="%_UI_TraceabilityModelWizard_label"
+               class="org.osate.face31.traceability.presentation.TraceabilityActionBarContributor$NewAction"
+               menubarPath="file/new/additions"
+               id="org.osate.face31.traceability.presentation.TraceabilityActionBarContributorNewAction"/>
+      </actionSet>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated face31 -->
+      <editor
+            id="org.osate.face31.traceability.presentation.TraceabilityEditorID"
+            name="%_UI_TraceabilityEditor_label"
+            icon="icons/full/obj16/TraceabilityModelFile.gif"
+            extensions="traceability"
+            class="org.osate.face31.traceability.presentation.TraceabilityEditor"
+            contributorClass="org.osate.face31.traceability.presentation.TraceabilityActionBarContributor">
+      </editor>
+   </extension>
+
+   <extension point="org.eclipse.ui.actionSets">
+      <!-- @generated face31 -->
+      <actionSet
+            label="%_UI_DatamodelModelWizard_ActionSet_label"
+            visible="true"
+            id="org.osate.datamodel10.presentation.DatamodelActionBarContributorActionSet">
+         <action
+               label="%_UI_DatamodelModelWizard_label"
+               class="org.osate.datamodel10.presentation.DatamodelActionBarContributor$NewAction"
+               menubarPath="file/new/additions"
+               id="org.osate.datamodel10.presentation.DatamodelActionBarContributorNewAction"/>
+      </actionSet>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated face31 -->
+      <editor
+            id="org.osate.datamodel10.presentation.DatamodelEditorID"
+            name="%_UI_DatamodelEditor_label"
+            icon="icons/full/obj16/DatamodelModelFile.gif"
+            extensions="datamodel"
+            class="org.osate.datamodel10.presentation.DatamodelEditor"
+            contributorClass="org.osate.datamodel10.presentation.DatamodelActionBarContributor">
+      </editor>
+   </extension>
+
+   <extension point="org.eclipse.ui.actionSets">
+      <!-- @generated face31 -->
+      <actionSet
+            label="%_UI_ConceptualModelWizard_ActionSet_label"
+            visible="true"
+            id="org.osate.datamodel10.conceptual.presentation.ConceptualActionBarContributorActionSet">
+         <action
+               label="%_UI_ConceptualModelWizard_label"
+               class="org.osate.datamodel10.conceptual.presentation.ConceptualActionBarContributor$NewAction"
+               menubarPath="file/new/additions"
+               id="org.osate.datamodel10.conceptual.presentation.ConceptualActionBarContributorNewAction"/>
+      </actionSet>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated face31 -->
+      <editor
+            id="org.osate.datamodel10.conceptual.presentation.ConceptualEditorID"
+            name="%_UI_ConceptualEditor_label"
+            icon="icons/full/obj16/ConceptualModelFile.gif"
+            extensions="conceptual"
+            class="org.osate.datamodel10.conceptual.presentation.ConceptualEditor"
+            contributorClass="org.osate.datamodel10.conceptual.presentation.ConceptualActionBarContributor">
+      </editor>
+   </extension>
+
+   <extension point="org.eclipse.ui.actionSets">
+      <!-- @generated face31 -->
+      <actionSet
+            label="%_UI_LogicalModelWizard_ActionSet_label"
+            visible="true"
+            id="org.osate.datamodel10.logical.presentation.LogicalActionBarContributorActionSet">
+         <action
+               label="%_UI_LogicalModelWizard_label"
+               class="org.osate.datamodel10.logical.presentation.LogicalActionBarContributor$NewAction"
+               menubarPath="file/new/additions"
+               id="org.osate.datamodel10.logical.presentation.LogicalActionBarContributorNewAction"/>
+      </actionSet>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated face31 -->
+      <editor
+            id="org.osate.datamodel10.logical.presentation.LogicalEditorID"
+            name="%_UI_LogicalEditor_label"
+            icon="icons/full/obj16/LogicalModelFile.gif"
+            extensions="logical"
+            class="org.osate.datamodel10.logical.presentation.LogicalEditor"
+            contributorClass="org.osate.datamodel10.logical.presentation.LogicalActionBarContributor">
+      </editor>
+   </extension>
+
+   <extension point="org.eclipse.ui.actionSets">
+      <!-- @generated face31 -->
+      <actionSet
+            label="%_UI_PlatformModelWizard_ActionSet_label"
+            visible="true"
+            id="org.osate.datamodel10.platform.presentation.PlatformActionBarContributorActionSet">
+         <action
+               label="%_UI_PlatformModelWizard_label"
+               class="org.osate.datamodel10.platform.presentation.PlatformActionBarContributor$NewAction"
+               menubarPath="file/new/additions"
+               id="org.osate.datamodel10.platform.presentation.PlatformActionBarContributorNewAction"/>
+      </actionSet>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated face31 -->
+      <editor
+            id="org.osate.datamodel10.platform.presentation.PlatformEditorID"
+            name="%_UI_PlatformEditor_label"
+            icon="icons/full/obj16/PlatformModelFile.gif"
+            extensions="platform"
+            class="org.osate.datamodel10.platform.presentation.PlatformEditor"
+            contributorClass="org.osate.datamodel10.platform.presentation.PlatformActionBarContributor">
+      </editor>
+   </extension>
+
+</plugin>

@@ -1,0 +1,49 @@
+--Generated from "conceptualView.face"
+package conceptualView_data_model
+public
+	with FACE;
+	
+	data Query1_Conceptual
+		properties
+			FACE::Realization_Tier => conceptual;
+	end Query1_Conceptual;
+	
+	data Query2_Conceptual
+		properties
+			FACE::Realization_Tier => conceptual;
+	end Query2_Conceptual;
+	
+	data CompositeQuery1_Conceptual
+		properties
+			FACE::Realization_Tier => conceptual;
+	end CompositeQuery1_Conceptual;
+	
+	data implementation CompositeQuery1_Conceptual.impl
+		subcomponents
+			QueryComposition1: data Query1_Conceptual;
+			QueryComposition2: data Query2_Conceptual;
+	end CompositeQuery1_Conceptual.impl;
+	
+	data CompositeQuery2_Conceptual
+		properties
+			FACE::Is_Union => true;
+			FACE::Realization_Tier => conceptual;
+	end CompositeQuery2_Conceptual;
+	
+	data implementation CompositeQuery2_Conceptual.impl
+		subcomponents
+			QueryComposition3: data Query1_Conceptual;
+			QueryComposition4: data Query2_Conceptual;
+	end CompositeQuery2_Conceptual.impl;
+	
+	data CompositeQuery3_Conceptual
+		properties
+			FACE::Realization_Tier => conceptual;
+	end CompositeQuery3_Conceptual;
+	
+	data implementation CompositeQuery3_Conceptual.impl
+		subcomponents
+			QueryComposition5: data CompositeQuery1_Conceptual.impl;
+			QueryComposition6: data CompositeQuery2_Conceptual.impl;
+	end CompositeQuery3_Conceptual.impl;
+end conceptualView_data_model;

@@ -1,0 +1,73 @@
+--Generated from "threads.face"
+package threads_PCS
+public
+	with FACE;
+	with threads_data_model;
+	
+	thread group PortableComponent1
+		features
+			conn1: in data port threads_data_model::Template1_Platform.impl {
+				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+			};
+		properties
+			FACE::Profile => general;
+			FACE::Segment => PCS;
+	end PortableComponent1;
+	
+	thread group implementation PortableComponent1.impl
+		subcomponents
+			thread0: thread {
+				Compute_Execution_Time => 0 sec .. 0 sec;
+				Period => 1000 sec;
+				Priority => 0;
+			};
+			thread1: thread {
+				Compute_Execution_Time => 0 sec .. 0 sec;
+				Period => 1 sec;
+				Priority => 0;
+			};
+			thread2: thread {
+				Compute_Execution_Time => 0 sec .. 0 sec;
+				Period => 0 sec;
+				Priority => 0;
+			};
+			thread3: thread {
+				Compute_Execution_Time => 0 sec .. 0 sec;
+				Period => 500 ms;
+				Priority => 0;
+			};
+			thread4: thread {
+				Compute_Execution_Time => 0 sec .. 0 sec;
+				Period => 62500 us;
+				Priority => 0;
+			};
+			thread5: thread {
+				Compute_Execution_Time => 0 sec .. 0 sec;
+				Period => 7812500 ns;
+				Priority => 0;
+			};
+			thread6: thread {
+				Compute_Execution_Time => 0 sec .. 0 sec;
+				Period => 976562500 ps;
+				Priority => 0;
+			};
+	end PortableComponent1.impl;
+	
+	process PortableComponent1_process
+		features
+			conn1: in data port threads_data_model::Template1_Platform.impl {
+				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+			};
+		flows
+			conn1_sink: flow sink conn1;
+	end PortableComponent1_process;
+	
+	process implementation PortableComponent1_process.impl
+		subcomponents
+			PortableComponent1: thread group PortableComponent1.impl;
+		connections
+			conn1_connection: port conn1 -> PortableComponent1.conn1;
+		flows
+			conn1_sink: flow sink conn1 -> conn1_connection -> PortableComponent1;
+	end PortableComponent1_process.impl;
+end threads_PCS;

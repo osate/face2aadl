@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<face:ArchitectureModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:conceptual="http://www.opengroup.us/datamodel/conceptual/1.0" xmlns:face="http://www.opengroup.us/face/3.1" name="ArchitectureModel1">
+  <dm name="DataModel1">
+    <cdm name="ConceptualDataModel1">
+      <element xsi:type="conceptual:Query" name="Query1" specification="specification"/>
+      <element xsi:type="conceptual:Query" name="Query2" specification="specification"/>
+      <element xsi:type="conceptual:CompositeQuery" name="CompositeQuery1">
+        <composition rolename="QueryComposition1" type="//@dm.0/@cdm.0/@element.0"/>
+        <composition rolename="QueryComposition2" type="//@dm.0/@cdm.0/@element.1"/>
+      </element>
+      <element xsi:type="conceptual:CompositeQuery" name="CompositeQuery2" isUnion="true">
+        <composition rolename="QueryComposition3" type="//@dm.0/@cdm.0/@element.0"/>
+        <composition rolename="QueryComposition4" type="//@dm.0/@cdm.0/@element.1"/>
+      </element>
+      <element xsi:type="conceptual:CompositeQuery" name="CompositeQuery3">
+        <composition rolename="QueryComposition5" type="//@dm.0/@cdm.0/@element.2"/>
+        <composition rolename="QueryComposition6" type="//@dm.0/@cdm.0/@element.3"/>
+      </element>
+    </cdm>
+  </dm>
+</face:ArchitectureModel>

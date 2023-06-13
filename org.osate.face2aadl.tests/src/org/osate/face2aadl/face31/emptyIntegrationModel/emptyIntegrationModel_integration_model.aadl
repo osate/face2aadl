@@ -1,0 +1,9 @@
+--Generated from "emptyIntegrationModel.face"
+package emptyIntegrationModel_integration_model
+public
+	system IntegrationModel1
+	end IntegrationModel1;
+	
+	system implementation IntegrationModel1.impl
+	end IntegrationModel1.impl;
+end emptyIntegrationModel_integration_model;

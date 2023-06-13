@@ -1,6 +1,6 @@
 FACE Data Model to AADL Translator
 
-Copyright 2018 Carnegie Mellon University. All Rights Reserved.
+Copyright 2023 Carnegie Mellon University.
 
 Eclipse Public License - v1.0
 
@@ -176,7 +176,7 @@ United States of America. No party to this Agreement will bring a legal action u
 one year after the cause of action arose. Each party waives its rights to a jury trial in any resulting
 litigation.
 
-This material is based upon work funded and supported by the Department of Defense under Contract No. 
+This material is based upon work funded and supported by the Department of Defense under Contract No.
 FA8702-15-D-0002 with Carnegie Mellon University for the operation of the Software Engineering Institute, a
 federally funded research and development center.
 
@@ -196,4 +196,4 @@ WITH RESPECT TO FREEDOM FROM PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.
 [DISTRIBUTION STATEMENT A] This material has been approved for public release and unlimited distribution.
 Please see Copyright notice for non-US Government use and distribution.
 
-DM18-0762
+DM23-0412

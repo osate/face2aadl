@@ -8,7 +8,7 @@
 	</parent>
 	<groupId>org.osate</groupId>
 	<artifactId>org.osate.face2aadl.tests</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>2.0.0-SNAPSHOT</version>
 	<packaging>eclipse-test-plugin</packaging>
 	<build>
 		<plugins>

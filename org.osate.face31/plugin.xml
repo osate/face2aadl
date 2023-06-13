@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated face31 -->
+      <package
+            uri="http://www.opengroup.us/face/3.1"
+            class="org.osate.face31.FacePackage"
+            genModel="model/face31.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated face31 -->
+      <package
+            uri="http://www.opengroup.us/face/uop/3.1"
+            class="org.osate.face31.uop.UopPackage"
+            genModel="model/face31.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated face31 -->
+      <package
+            uri="http://www.opengroup.us/face/integration/3.1"
+            class="org.osate.face31.integration.IntegrationPackage"
+            genModel="model/face31.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated face31 -->
+      <package
+            uri="http://www.opengroup.us/face/traceability/3.1"
+            class="org.osate.face31.traceability.TraceabilityPackage"
+            genModel="model/face31.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated face31 -->
+      <package
+            uri="http://www.opengroup.us/datamodel/1.0"
+            class="org.osate.datamodel10.DatamodelPackage"
+            genModel="model/face31.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated face31 -->
+      <package
+            uri="http://www.opengroup.us/datamodel/conceptual/1.0"
+            class="org.osate.datamodel10.conceptual.ConceptualPackage"
+            genModel="model/face31.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated face31 -->
+      <package
+            uri="http://www.opengroup.us/datamodel/logical/1.0"
+            class="org.osate.datamodel10.logical.LogicalPackage"
+            genModel="model/face31.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated face31 -->
+      <package
+            uri="http://www.opengroup.us/datamodel/platform/1.0"
+            class="org.osate.datamodel10.platform.PlatformPackage"
+            genModel="model/face31.genmodel"/>
+   </extension>
+
+</plugin>

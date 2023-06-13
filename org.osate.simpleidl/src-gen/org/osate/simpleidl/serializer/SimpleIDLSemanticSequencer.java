@@ -1,7 +1,7 @@
 /*******************************************************************************
  * FACE Data Model to AADL Translator
  * 
- * Copyright 2018 Carnegie Mellon University. All Rights Reserved.
+ * Copyright 2023 Carnegie Mellon University.
  * 
  * NO WARRANTY. THIS CARNEGIE MELLON UNIVERSITY AND SOFTWARE ENGINEERING INSTITUTE MATERIAL IS FURNISHED ON
  * AN "AS-IS" BASIS. CARNEGIE MELLON UNIVERSITY MAKES NO WARRANTIES OF ANY KIND, EITHER EXPRESSED OR IMPLIED,
@@ -15,7 +15,7 @@
  * [DISTRIBUTION STATEMENT A] This material has been approved for public release and unlimited distribution.
  * Please see Copyright notice for non-US Government use and distribution.
  * 
- * DM18-0762
+ * DM23-0412
  *******************************************************************************/
 package org.osate.simpleidl.serializer;
 
@@ -171,11 +171,13 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	}
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Case returns Case
 	 *
 	 * Constraint:
 	 *     (labels+=INT+ type=[NamedDefinition|ScopedName] name=ID)
+	 * </pre>
 	 */
 	protected void sequence_Case(ISerializationContext context, Case semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -183,11 +185,13 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Definition returns StructForward
 	 *
 	 * Constraint:
 	 *     struct=[Struct|ID]
+	 * </pre>
 	 */
 	protected void sequence_Definition(ISerializationContext context, StructForward semanticObject) {
 		if (errorAcceptor != null) {
@@ -201,11 +205,13 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Member returns Member
 	 *
 	 * Constraint:
 	 *     (type=[NamedDefinition|ScopedName] name=ID)
+	 * </pre>
 	 */
 	protected void sequence_Member(ISerializationContext context, Member semanticObject) {
 		if (errorAcceptor != null) {
@@ -222,12 +228,14 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Definition returns ArrayType
 	 *     NamedDefinition returns ArrayType
 	 *
 	 * Constraint:
 	 *     (type=[NamedDefinition|ScopedName] name=ID size=INT)
+	 * </pre>
 	 */
 	protected void sequence_NamedDefinition(ISerializationContext context, ArrayType semanticObject) {
 		if (errorAcceptor != null) {
@@ -247,12 +255,14 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Definition returns BooleanType
 	 *     NamedDefinition returns BooleanType
 	 *
 	 * Constraint:
 	 *     name=ID
+	 * </pre>
 	 */
 	protected void sequence_NamedDefinition(ISerializationContext context, BooleanType semanticObject) {
 		if (errorAcceptor != null) {
@@ -266,12 +276,14 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Definition returns BoundedSequence
 	 *     NamedDefinition returns BoundedSequence
 	 *
 	 * Constraint:
 	 *     (type=[NamedDefinition|ScopedName] size=INT name=ID)
+	 * </pre>
 	 */
 	protected void sequence_NamedDefinition(ISerializationContext context, BoundedSequence semanticObject) {
 		if (errorAcceptor != null) {
@@ -291,12 +303,14 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Definition returns BoundedString
 	 *     NamedDefinition returns BoundedString
 	 *
 	 * Constraint:
 	 *     (size=INT name=ID)
+	 * </pre>
 	 */
 	protected void sequence_NamedDefinition(ISerializationContext context, BoundedString semanticObject) {
 		if (errorAcceptor != null) {
@@ -313,12 +327,14 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Definition returns BoundedWideString
 	 *     NamedDefinition returns BoundedWideString
 	 *
 	 * Constraint:
 	 *     (size=INT name=ID)
+	 * </pre>
 	 */
 	protected void sequence_NamedDefinition(ISerializationContext context, BoundedWideString semanticObject) {
 		if (errorAcceptor != null) {
@@ -335,12 +351,14 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Definition returns CharType
 	 *     NamedDefinition returns CharType
 	 *
 	 * Constraint:
 	 *     name=ID
+	 * </pre>
 	 */
 	protected void sequence_NamedDefinition(ISerializationContext context, CharType semanticObject) {
 		if (errorAcceptor != null) {
@@ -354,12 +372,14 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Definition returns DoubleType
 	 *     NamedDefinition returns DoubleType
 	 *
 	 * Constraint:
 	 *     name=ID
+	 * </pre>
 	 */
 	protected void sequence_NamedDefinition(ISerializationContext context, DoubleType semanticObject) {
 		if (errorAcceptor != null) {
@@ -373,12 +393,14 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Definition returns Enum
 	 *     NamedDefinition returns Enum
 	 *
 	 * Constraint:
 	 *     (name=ID literals+=ID literals+=ID*)
+	 * </pre>
 	 */
 	protected void sequence_NamedDefinition(ISerializationContext context, org.osate.simpleidl.simpleIDL.Enum semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -386,12 +408,14 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Definition returns FixedPtType
 	 *     NamedDefinition returns FixedPtType
 	 *
 	 * Constraint:
 	 *     (totalDigits=INT fractionalDigits=INT name=ID)
+	 * </pre>
 	 */
 	protected void sequence_NamedDefinition(ISerializationContext context, FixedPtType semanticObject) {
 		if (errorAcceptor != null) {
@@ -411,12 +435,14 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Definition returns FloatType
 	 *     NamedDefinition returns FloatType
 	 *
 	 * Constraint:
 	 *     name=ID
+	 * </pre>
 	 */
 	protected void sequence_NamedDefinition(ISerializationContext context, FloatType semanticObject) {
 		if (errorAcceptor != null) {
@@ -430,12 +456,14 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Definition returns LongDoubleType
 	 *     NamedDefinition returns LongDoubleType
 	 *
 	 * Constraint:
 	 *     name=ID
+	 * </pre>
 	 */
 	protected void sequence_NamedDefinition(ISerializationContext context, LongDoubleType semanticObject) {
 		if (errorAcceptor != null) {
@@ -449,12 +477,14 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Definition returns Module
 	 *     NamedDefinition returns Module
 	 *
 	 * Constraint:
 	 *     (name=ID definitions+=Definition+)
+	 * </pre>
 	 */
 	protected void sequence_NamedDefinition(ISerializationContext context, org.osate.simpleidl.simpleIDL.Module semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -462,12 +492,14 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Definition returns OctetType
 	 *     NamedDefinition returns OctetType
 	 *
 	 * Constraint:
 	 *     name=ID
+	 * </pre>
 	 */
 	protected void sequence_NamedDefinition(ISerializationContext context, OctetType semanticObject) {
 		if (errorAcceptor != null) {
@@ -481,12 +513,14 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Definition returns ReferencedType
 	 *     NamedDefinition returns ReferencedType
 	 *
 	 * Constraint:
 	 *     (type=[NamedDefinition|ScopedName] name=ID)
+	 * </pre>
 	 */
 	protected void sequence_NamedDefinition(ISerializationContext context, ReferencedType semanticObject) {
 		if (errorAcceptor != null) {
@@ -503,12 +537,14 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Definition returns SignedLongInt
 	 *     NamedDefinition returns SignedLongInt
 	 *
 	 * Constraint:
 	 *     name=ID
+	 * </pre>
 	 */
 	protected void sequence_NamedDefinition(ISerializationContext context, SignedLongInt semanticObject) {
 		if (errorAcceptor != null) {
@@ -522,12 +558,14 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Definition returns SignedLongLongInt
 	 *     NamedDefinition returns SignedLongLongInt
 	 *
 	 * Constraint:
 	 *     name=ID
+	 * </pre>
 	 */
 	protected void sequence_NamedDefinition(ISerializationContext context, SignedLongLongInt semanticObject) {
 		if (errorAcceptor != null) {
@@ -541,12 +579,14 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Definition returns SignedShortInt
 	 *     NamedDefinition returns SignedShortInt
 	 *
 	 * Constraint:
 	 *     name=ID
+	 * </pre>
 	 */
 	protected void sequence_NamedDefinition(ISerializationContext context, SignedShortInt semanticObject) {
 		if (errorAcceptor != null) {
@@ -560,12 +600,14 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Definition returns Struct
 	 *     NamedDefinition returns Struct
 	 *
 	 * Constraint:
 	 *     (name=ID members+=Member+)
+	 * </pre>
 	 */
 	protected void sequence_NamedDefinition(ISerializationContext context, Struct semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -573,12 +615,14 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Definition returns UnboundedSequence
 	 *     NamedDefinition returns UnboundedSequence
 	 *
 	 * Constraint:
 	 *     (type=[NamedDefinition|ScopedName] name=ID)
+	 * </pre>
 	 */
 	protected void sequence_NamedDefinition(ISerializationContext context, UnboundedSequence semanticObject) {
 		if (errorAcceptor != null) {
@@ -595,12 +639,14 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Definition returns UnboundedString
 	 *     NamedDefinition returns UnboundedString
 	 *
 	 * Constraint:
 	 *     name=ID
+	 * </pre>
 	 */
 	protected void sequence_NamedDefinition(ISerializationContext context, UnboundedString semanticObject) {
 		if (errorAcceptor != null) {
@@ -614,12 +660,14 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Definition returns UnboundedWideString
 	 *     NamedDefinition returns UnboundedWideString
 	 *
 	 * Constraint:
 	 *     name=ID
+	 * </pre>
 	 */
 	protected void sequence_NamedDefinition(ISerializationContext context, UnboundedWideString semanticObject) {
 		if (errorAcceptor != null) {
@@ -633,12 +681,14 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Definition returns Union
 	 *     NamedDefinition returns Union
 	 *
 	 * Constraint:
 	 *     (name=ID cases+=Case+)
+	 * </pre>
 	 */
 	protected void sequence_NamedDefinition(ISerializationContext context, Union semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -646,12 +696,14 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Definition returns UnsignedLongInt
 	 *     NamedDefinition returns UnsignedLongInt
 	 *
 	 * Constraint:
 	 *     name=ID
+	 * </pre>
 	 */
 	protected void sequence_NamedDefinition(ISerializationContext context, UnsignedLongInt semanticObject) {
 		if (errorAcceptor != null) {
@@ -665,12 +717,14 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Definition returns UnsignedLongLongInt
 	 *     NamedDefinition returns UnsignedLongLongInt
 	 *
 	 * Constraint:
 	 *     name=ID
+	 * </pre>
 	 */
 	protected void sequence_NamedDefinition(ISerializationContext context, UnsignedLongLongInt semanticObject) {
 		if (errorAcceptor != null) {
@@ -684,12 +738,14 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Definition returns UnsignedShortInt
 	 *     NamedDefinition returns UnsignedShortInt
 	 *
 	 * Constraint:
 	 *     name=ID
+	 * </pre>
 	 */
 	protected void sequence_NamedDefinition(ISerializationContext context, UnsignedShortInt semanticObject) {
 		if (errorAcceptor != null) {
@@ -703,12 +759,14 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Definition returns WideCharType
 	 *     NamedDefinition returns WideCharType
 	 *
 	 * Constraint:
 	 *     name=ID
+	 * </pre>
 	 */
 	protected void sequence_NamedDefinition(ISerializationContext context, WideCharType semanticObject) {
 		if (errorAcceptor != null) {
@@ -722,11 +780,13 @@ public class SimpleIDLSemanticSequencer extends AbstractDelegatingSemanticSequen
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Specification returns Specification
 	 *
 	 * Constraint:
 	 *     definitions+=Definition+
+	 * </pre>
 	 */
 	protected void sequence_Specification(ISerializationContext context, Specification semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

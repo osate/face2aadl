@@ -1,0 +1,13 @@
+--Generated from "threads.face"
+package threads_data_model
+public
+	with FACE;
+	
+	data Template1_Platform
+		properties
+			FACE::Realization_Tier => platform;
+	end Template1_Platform;
+	
+	data implementation Template1_Platform.impl
+	end Template1_Platform.impl;
+end threads_data_model;

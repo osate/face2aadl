@@ -1,0 +1,95 @@
+--Generated from "uuid.face"
+package uuid_data_model
+public
+	with FACE;
+	
+	data Query1_Conceptual
+		properties
+			FACE::Realization_Tier => conceptual;
+			FACE::UUID => "_IT1TgK2LEe26NcS3vZp1iQ";
+	end Query1_Conceptual;
+	
+	data Query2_Conceptual
+		properties
+			FACE::Realization_Tier => conceptual;
+			FACE::UUID => "_LhlB4K2LEe26NcS3vZp1iQ";
+	end Query2_Conceptual;
+	
+	data CompositeQuery1_Conceptual
+		properties
+			FACE::Realization_Tier => conceptual;
+			FACE::UUID => "_OojZ4K2LEe26NcS3vZp1iQ";
+	end CompositeQuery1_Conceptual;
+	
+	data implementation CompositeQuery1_Conceptual.impl
+		subcomponents
+			Role1: data Query1_Conceptual {
+				FACE::UUID => "_QifXAK2LEe26NcS3vZp1iQ";
+			};
+			Role2: data Query2_Conceptual {
+				FACE::UUID => "_SxT_AK2LEe26NcS3vZp1iQ";
+			};
+	end CompositeQuery1_Conceptual.impl;
+	
+	data Query1_Logical extends Query1_Conceptual
+		properties
+			FACE::Realization_Tier => logical;
+			FACE::UUID => "_Z5GhEK2LEe26NcS3vZp1iQ";
+	end Query1_Logical;
+	
+	data Query2_Logical extends Query2_Conceptual
+		properties
+			FACE::Realization_Tier => logical;
+			FACE::UUID => "_ekGQkK2LEe26NcS3vZp1iQ";
+	end Query2_Logical;
+	
+	data CompositeQuery1_Logical extends CompositeQuery1_Conceptual
+		properties
+			FACE::Realization_Tier => logical;
+			FACE::UUID => "_kE0HIK2LEe26NcS3vZp1iQ";
+	end CompositeQuery1_Logical;
+	
+	data implementation CompositeQuery1_Logical.impl
+		subcomponents
+			Role1: data Query1_Logical {
+				FACE::UUID => "_mTXCUK2LEe26NcS3vZp1iQ";
+			};
+			Role2: data Query2_Logical {
+				FACE::UUID => "_pXjzIK2LEe26NcS3vZp1iQ";
+			};
+	end CompositeQuery1_Logical.impl;
+	
+	data Template1_Platform extends Query1_Logical
+		properties
+			FACE::Realization_Tier => platform;
+			FACE::UUID => "_7cbGwK2LEe26NcS3vZp1iQ";
+	end Template1_Platform;
+	
+	data implementation Template1_Platform.impl
+	end Template1_Platform.impl;
+	
+	data Template2_Platform extends Query2_Logical
+		properties
+			FACE::Realization_Tier => platform;
+			FACE::UUID => "_-rhgAK2LEe26NcS3vZp1iQ";
+	end Template2_Platform;
+	
+	data implementation Template2_Platform.impl
+	end Template2_Platform.impl;
+	
+	data CompositeTemplate1_Platform extends CompositeQuery1_Logical
+		properties
+			FACE::Realization_Tier => platform;
+			FACE::UUID => "_EN15EK2MEe26NcS3vZp1iQ";
+	end CompositeTemplate1_Platform;
+	
+	data implementation CompositeTemplate1_Platform.impl
+		subcomponents
+			Role1: data Template1_Platform.impl {
+				FACE::UUID => "_G6JuUK2MEe26NcS3vZp1iQ";
+			};
+			Role2: data Template2_Platform.impl {
+				FACE::UUID => "_J1OYUK2MEe26NcS3vZp1iQ";
+			};
+	end CompositeTemplate1_Platform.impl;
+end uuid_data_model;

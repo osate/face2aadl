@@ -17,6 +17,9 @@
 		<module>../org.osate.face30</module>
 		<module>../org.osate.face30.edit</module>
 		<module>../org.osate.face30.editor</module>
+		<module>../org.osate.face31</module>
+		<module>../org.osate.face31.edit</module>
+		<module>../org.osate.face31.editor</module>
 		<module>../org.osate.face2aadl</module>
 		<module>../org.osate.face2aadl.feature</module>
 		<module>../org.osate.face2aadl.repository</module>
@@ -25,6 +28,5 @@
 		<module>../org.osate.simpleidl</module>
 		<module>../org.osate.simpleidl.ide</module>
 		<module>../org.osate.simpleidl.ui</module>
-		<module>../org.jgrapht</module>
 	</modules>
 </project>

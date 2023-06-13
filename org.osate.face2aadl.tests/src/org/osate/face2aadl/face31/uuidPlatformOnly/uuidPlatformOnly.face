@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<face:ArchitectureModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:conceptual="http://www.opengroup.us/datamodel/conceptual/1.0" xmlns:face="http://www.opengroup.us/face/3.1" xmlns:integration="http://www.opengroup.us/face/integration/3.1" xmlns:logical="http://www.opengroup.us/datamodel/logical/1.0" xmlns:platform="http://www.opengroup.us/datamodel/platform/1.0" xmlns:uop="http://www.opengroup.us/face/uop/3.1" xmi:id="_A47oMK2LEe26NcS3vZp1iQ" name="ArchitectureModel1">
+  <dm xmi:id="_EuTXQK2LEe26NcS3vZp1iQ" name="DataModel1">
+    <cdm xmi:id="_GhHYsK2LEe26NcS3vZp1iQ" name="ConceptualDataModel1">
+      <element xsi:type="conceptual:Query" xmi:id="_IT1TgK2LEe26NcS3vZp1iQ" name="Query1" specification="specification"/>
+      <element xsi:type="conceptual:Query" xmi:id="_LhlB4K2LEe26NcS3vZp1iQ" name="Query2" specification="specification"/>
+      <element xsi:type="conceptual:CompositeQuery" xmi:id="_OojZ4K2LEe26NcS3vZp1iQ" name="CompositeQuery1">
+        <composition xmi:id="_QifXAK2LEe26NcS3vZp1iQ" rolename="Role1" type="_IT1TgK2LEe26NcS3vZp1iQ"/>
+        <composition xmi:id="_SxT_AK2LEe26NcS3vZp1iQ" rolename="Role2" type="_LhlB4K2LEe26NcS3vZp1iQ"/>
+      </element>
+    </cdm>
+    <ldm xmi:id="_WQO88K2LEe26NcS3vZp1iQ" name="LogicalDataModel1">
+      <element xsi:type="logical:Query" xmi:id="_Z5GhEK2LEe26NcS3vZp1iQ" name="Query1" realizes="_IT1TgK2LEe26NcS3vZp1iQ" specification="specification"/>
+      <element xsi:type="logical:Query" xmi:id="_ekGQkK2LEe26NcS3vZp1iQ" name="Query2" realizes="_LhlB4K2LEe26NcS3vZp1iQ" specification="specification"/>
+      <element xsi:type="logical:CompositeQuery" xmi:id="_kE0HIK2LEe26NcS3vZp1iQ" name="CompositeQuery1" realizes="_OojZ4K2LEe26NcS3vZp1iQ">
+        <composition xmi:id="_mTXCUK2LEe26NcS3vZp1iQ" realizes="_QifXAK2LEe26NcS3vZp1iQ" rolename="Role1" type="_Z5GhEK2LEe26NcS3vZp1iQ"/>
+        <composition xmi:id="_pXjzIK2LEe26NcS3vZp1iQ" realizes="_SxT_AK2LEe26NcS3vZp1iQ" rolename="Role2" type="_ekGQkK2LEe26NcS3vZp1iQ"/>
+      </element>
+    </ldm>
+    <pdm xmi:id="_t0HeAK2LEe26NcS3vZp1iQ" name="PlatformDataModel1">
+      <element xsi:type="platform:Query" xmi:id="_wH6soK2LEe26NcS3vZp1iQ" name="Query1" realizes="_Z5GhEK2LEe26NcS3vZp1iQ" specification="specification"/>
+      <element xsi:type="platform:Query" xmi:id="_0AVvsK2LEe26NcS3vZp1iQ" name="Query2" realizes="_ekGQkK2LEe26NcS3vZp1iQ" specification="specification"/>
+    </pdm>
+  </dm>
+  <um xmi:id="_4pE1YK2LEe26NcS3vZp1iQ" name="UoPModel1">
+    <element xsi:type="uop:Template" xmi:id="_7cbGwK2LEe26NcS3vZp1iQ" name="Template1" specification="specification" boundQuery="_wH6soK2LEe26NcS3vZp1iQ"/>
+    <element xsi:type="uop:Template" xmi:id="_-rhgAK2LEe26NcS3vZp1iQ" name="Template2" specification="specification" boundQuery="_0AVvsK2LEe26NcS3vZp1iQ"/>
+    <element xsi:type="uop:CompositeTemplate" xmi:id="_EN15EK2MEe26NcS3vZp1iQ" name="CompositeTemplate1" realizes="_kE0HIK2LEe26NcS3vZp1iQ">
+      <composition xmi:id="_G6JuUK2MEe26NcS3vZp1iQ" rolename="Role1" realizes="_mTXCUK2LEe26NcS3vZp1iQ" type="_7cbGwK2LEe26NcS3vZp1iQ"/>
+      <composition xmi:id="_J1OYUK2MEe26NcS3vZp1iQ" rolename="Role2" realizes="_pXjzIK2LEe26NcS3vZp1iQ" type="_-rhgAK2LEe26NcS3vZp1iQ"/>
+    </element>
+    <element xsi:type="uop:PortableComponent" xmi:id="_N3sIMK2MEe26NcS3vZp1iQ" name="PortableComponent1">
+      <thread xmi:id="_PZxmAK2MEe26NcS3vZp1iQ"/>
+      <memoryRequirements xmi:id="_QtX74K2MEe26NcS3vZp1iQ"/>
+      <connection xsi:type="uop:SingleInstanceMessageConnection" xmi:id="_SNtGMK2MEe26NcS3vZp1iQ" name="Input" messageType="_EN15EK2MEe26NcS3vZp1iQ"/>
+      <connection xsi:type="uop:SingleInstanceMessageConnection" xmi:id="_VPajsK2MEe26NcS3vZp1iQ" name="Output" messageType="_EN15EK2MEe26NcS3vZp1iQ" messageExchangeType="OutboundMessage"/>
+    </element>
+  </um>
+  <im xmi:id="_sDn7UK2MEe26NcS3vZp1iQ" name="IntegrationModel1">
+    <element xsi:type="integration:UoPInstance" xmi:id="_vog-YK2MEe26NcS3vZp1iQ" name="PortableComponentInstance" realizes="_N3sIMK2MEe26NcS3vZp1iQ">
+      <output xmi:id="_xyj0EK2MEe26NcS3vZp1iQ" connection="_VPajsK2MEe26NcS3vZp1iQ"/>
+      <input xmi:id="_zrmZUK2MEe26NcS3vZp1iQ" connection="_SNtGMK2MEe26NcS3vZp1iQ"/>
+    </element>
+    <element xsi:type="integration:IntegrationContext" xmi:id="_3i8eUK2MEe26NcS3vZp1iQ" name="IntegrationContext1">
+      <connection xmi:id="_Pu2osK2NEe26NcS3vZp1iQ" source="_A-ImYK2NEe26NcS3vZp1iQ" destination="_zrmZUK2MEe26NcS3vZp1iQ"/>
+      <connection xmi:id="_SNqNcK2NEe26NcS3vZp1iQ" source="_xyj0EK2MEe26NcS3vZp1iQ" destination="_Eu9zsK2NEe26NcS3vZp1iQ"/>
+      <node xsi:type="integration:ViewSource" xmi:id="__UKX4K2MEe26NcS3vZp1iQ" name="ViewSource1">
+        <outPort xmi:id="_A-ImYK2NEe26NcS3vZp1iQ" view="_EN15EK2MEe26NcS3vZp1iQ"/>
+      </node>
+      <node xsi:type="integration:ViewSink" xmi:id="_DMjlwK2NEe26NcS3vZp1iQ" name="ViewSink1">
+        <inPort xmi:id="_Eu9zsK2NEe26NcS3vZp1iQ" view="_EN15EK2MEe26NcS3vZp1iQ"/>
+      </node>
+    </element>
+    <element xsi:type="integration:TransportChannel" xmi:id="_48FbgK2MEe26NcS3vZp1iQ" name="Channel1"/>
+  </im>
+</face:ArchitectureModel>

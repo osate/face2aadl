@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<face:ArchitectureModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:face="http://www.opengroup.us/face/3.1" xmlns:platform="http://www.opengroup.us/datamodel/platform/1.0" xmlns:uop="http://www.opengroup.us/face/uop/3.1" name="ArchitectureModel1">
+  <dm name="DataModel1">
+    <pdm name="PlatformDataModel1">
+      <element xsi:type="platform:Query" name="data1" specification="specification"/>
+      <element xsi:type="platform:Query" name="data2" specification="specification"/>
+      <element xsi:type="platform:Query" name="data3" specification="specification"/>
+      <element xsi:type="platform:Query" name="data4" specification="specification"/>
+      <element xsi:type="platform:Query" name="data5" specification="specification"/>
+      <element xsi:type="platform:Query" name="data6" specification="specification"/>
+      <element xsi:type="platform:Query" name="data7" specification="specification"/>
+      <element xsi:type="platform:Query" name="data8" specification="specification"/>
+    </pdm>
+  </dm>
+  <um name="UoP1">
+    <element xsi:type="uop:Template" name="view1" specification="specification" boundQuery="//@dm.0/@pdm.0/@element.0"/>
+    <element xsi:type="uop:Template" name="view2" specification="specification" boundQuery="//@dm.0/@pdm.0/@element.1"/>
+    <element xsi:type="uop:Template" name="view3" specification="specification" boundQuery="//@dm.0/@pdm.0/@element.2"/>
+    <element xsi:type="uop:Template" name="view4" specification="specification" boundQuery="//@dm.0/@pdm.0/@element.3"/>
+    <element xsi:type="uop:Template" name="view5" specification="specification" boundQuery="//@dm.0/@pdm.0/@element.4"/>
+    <element xsi:type="uop:Template" name="view6" specification="specification" boundQuery="//@dm.0/@pdm.0/@element.5"/>
+    <element xsi:type="uop:Template" name="view7" specification="specification" boundQuery="//@dm.0/@pdm.0/@element.6"/>
+    <element xsi:type="uop:Template" name="view8" specification="specification" boundQuery="//@dm.0/@pdm.0/@element.7"/>
+    <element xsi:type="uop:PortableComponent" name="PortableComponent1">
+      <thread/>
+      <memoryRequirements/>
+      <connection xsi:type="uop:ClientServerConnection" name="conn1" period="1.0" requestType="//@um.0/@element.0" responseType="//@um.0/@element.1"/>
+      <connection xsi:type="uop:ClientServerConnection" name="conn2" period="1.0" requestType="//@um.0/@element.2" responseType="//@um.0/@element.3" role="Server"/>
+      <connection xsi:type="uop:QueuingConnection" name="conn3" period="1.0" messageType="//@um.0/@element.4" depth="1"/>
+      <connection xsi:type="uop:QueuingConnection" name="conn4" period="1.0" messageType="//@um.0/@element.5" messageExchangeType="OutboundMessage" depth="2"/>
+      <connection xsi:type="uop:SingleInstanceMessageConnection" name="conn5" period="1.0" messageType="//@um.0/@element.6"/>
+      <connection xsi:type="uop:SingleInstanceMessageConnection" name="conn6" period="1.0" messageType="//@um.0/@element.7" messageExchangeType="OutboundMessage"/>
+    </element>
+  </um>
+</face:ArchitectureModel>

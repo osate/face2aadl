@@ -1,0 +1,125 @@
+--Generated from "filteringNoFlows.face"
+package filteringNoFlows_data_model
+public
+	with FACE;
+	
+	data UsedQuery1_Conceptual
+		properties
+			FACE::Realization_Tier => conceptual;
+	end UsedQuery1_Conceptual;
+	
+	data UsedQuery2_Conceptual
+		properties
+			FACE::Realization_Tier => conceptual;
+	end UsedQuery2_Conceptual;
+	
+	data UsedQuery3_Conceptual
+		properties
+			FACE::Realization_Tier => conceptual;
+	end UsedQuery3_Conceptual;
+	
+	data UsedCompositeQuery1_Conceptual
+		properties
+			FACE::Realization_Tier => conceptual;
+	end UsedCompositeQuery1_Conceptual;
+	
+	data implementation UsedCompositeQuery1_Conceptual.impl
+		subcomponents
+			Role1: data UsedQuery1_Conceptual;
+			Role2: data UsedQuery2_Conceptual;
+	end UsedCompositeQuery1_Conceptual.impl;
+	
+	data UsedQuery1_Logical extends UsedQuery1_Conceptual
+		properties
+			FACE::Realization_Tier => logical;
+	end UsedQuery1_Logical;
+	
+	data UsedQuery2_Logical extends UsedQuery2_Conceptual
+		properties
+			FACE::Realization_Tier => logical;
+	end UsedQuery2_Logical;
+	
+	data UsedQuery3_Logical extends UsedQuery3_Conceptual
+		properties
+			FACE::Realization_Tier => logical;
+	end UsedQuery3_Logical;
+	
+	data UsedCompositeQuery1_Logical extends UsedCompositeQuery1_Conceptual
+		properties
+			FACE::Realization_Tier => logical;
+	end UsedCompositeQuery1_Logical;
+	
+	data implementation UsedCompositeQuery1_Logical.impl
+		subcomponents
+			Role1: data UsedQuery1_Logical;
+			Role2: data UsedQuery2_Logical;
+	end UsedCompositeQuery1_Logical.impl;
+	
+	data UsedTemplate1_Platform
+		properties
+			FACE::Realization_Tier => platform;
+	end UsedTemplate1_Platform;
+	
+	data implementation UsedTemplate1_Platform.impl
+	end UsedTemplate1_Platform.impl;
+	
+	data UsedTemplate2_Platform
+		properties
+			FACE::Realization_Tier => platform;
+	end UsedTemplate2_Platform;
+	
+	data implementation UsedTemplate2_Platform.impl
+	end UsedTemplate2_Platform.impl;
+	
+	data UsedTemplate3_Platform extends UsedQuery3_Logical
+		properties
+			FACE::Realization_Tier => platform;
+	end UsedTemplate3_Platform;
+	
+	data implementation UsedTemplate3_Platform.impl
+	end UsedTemplate3_Platform.impl;
+	
+	data UsedCompositeTemplate1_Platform extends UsedCompositeQuery1_Logical
+		properties
+			FACE::Realization_Tier => platform;
+	end UsedCompositeTemplate1_Platform;
+	
+	data implementation UsedCompositeTemplate1_Platform.impl
+		subcomponents
+			Role1: data UsedTemplate1_Platform.impl;
+			Role2: data UsedTemplate2_Platform.impl;
+	end UsedCompositeTemplate1_Platform.impl;
+	
+	data UsedCompositeTemplate2_Platform
+		properties
+			FACE::Realization_Tier => platform;
+	end UsedCompositeTemplate2_Platform;
+	
+	data implementation UsedCompositeTemplate2_Platform.impl
+		subcomponents
+			Role1: data UsedTemplate1_Platform.impl;
+			Role2: data UsedCompositeTemplate3_Platform.impl;
+	end UsedCompositeTemplate2_Platform.impl;
+	
+	data UsedCompositeTemplate3_Platform
+		properties
+			FACE::Realization_Tier => platform;
+	end UsedCompositeTemplate3_Platform;
+	
+	data implementation UsedCompositeTemplate3_Platform.impl
+		subcomponents
+			Role1: data UsedTemplate1_Platform.impl;
+			Role2: data UsedCompositeTemplate4_Platform.impl;
+	end UsedCompositeTemplate3_Platform.impl;
+	
+	data UsedCompositeTemplate4_Platform
+		properties
+			FACE::Realization_Tier => platform;
+	end UsedCompositeTemplate4_Platform;
+	
+	data implementation UsedCompositeTemplate4_Platform.impl
+		subcomponents
+			Role1: data UsedTemplate1_Platform.impl;
+			Role2: data UsedTemplate2_Platform.impl;
+	end UsedCompositeTemplate4_Platform.impl;
+end filteringNoFlows_data_model;

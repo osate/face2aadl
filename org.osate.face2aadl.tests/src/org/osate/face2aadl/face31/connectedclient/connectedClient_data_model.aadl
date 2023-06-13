@@ -1,0 +1,13 @@
+--Generated from "connectedClient.face"
+package connectedClient_data_model
+public
+	with FACE;
+	
+	data Template1_Platform
+		properties
+			FACE::Realization_Tier => platform;
+	end Template1_Platform;
+	
+	data implementation Template1_Platform.impl
+	end Template1_Platform.impl;
+end connectedClient_data_model;

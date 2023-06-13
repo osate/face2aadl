@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<face:ArchitectureModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:conceptual="http://www.opengroup.us/datamodel/conceptual/1.0" xmlns:face="http://www.opengroup.us/face/3.1" xmlns:integration="http://www.opengroup.us/face/integration/3.1" xmlns:logical="http://www.opengroup.us/datamodel/logical/1.0" xmlns:platform="http://www.opengroup.us/datamodel/platform/1.0" xmlns:uop="http://www.opengroup.us/face/uop/3.1" name="ArchitectureModel1">
+  <dm name="DataModel1">
+    <cdm name="CDM1">
+      <element xsi:type="conceptual:Query" name="UsedQuery1" specification="specification"/>
+      <element xsi:type="conceptual:Query" name="UsedQuery2" specification="specification"/>
+      <element xsi:type="conceptual:Query" name="UsedQuery3" specification="specification"/>
+      <element xsi:type="conceptual:CompositeQuery" name="UsedCompositeQuery1">
+        <composition rolename="Role1" type="//@dm.0/@cdm.0/@element.0"/>
+        <composition rolename="Role2" type="//@dm.0/@cdm.0/@element.1"/>
+      </element>
+      <element xsi:type="conceptual:Query" name="UnusedQuery1" specification="specification"/>
+      <element xsi:type="conceptual:Query" name="UnusedQuery2" specification="specification"/>
+      <element xsi:type="conceptual:CompositeQuery" name="UnusedCompositeQuery1">
+        <composition rolename="Role1" type="//@dm.0/@cdm.0/@element.4"/>
+        <composition rolename="Role2" type="//@dm.0/@cdm.0/@element.5"/>
+      </element>
+    </cdm>
+    <ldm name="LDM1">
+      <element xsi:type="logical:Query" name="UsedQuery1" realizes="//@dm.0/@cdm.0/@element.0" specification="specification"/>
+      <element xsi:type="logical:Query" name="UsedQuery2" realizes="//@dm.0/@cdm.0/@element.1" specification="specification"/>
+      <element xsi:type="logical:Query" name="UsedQuery3" realizes="//@dm.0/@cdm.0/@element.2" specification="specification"/>
+      <element xsi:type="logical:CompositeQuery" name="UsedCompositeQuery1" realizes="//@dm.0/@cdm.0/@element.3">
+        <composition realizes="//@dm.0/@cdm.0/@element.3/@composition.0" rolename="Role1" type="//@dm.0/@ldm.0/@element.0"/>
+        <composition realizes="//@dm.0/@cdm.0/@element.3/@composition.1" rolename="Role2" type="//@dm.0/@ldm.0/@element.1"/>
+      </element>
+      <element xsi:type="logical:Query" name="UnusedQuery1" specification="specification"/>
+      <element xsi:type="logical:Query" name="UnusedQuery2" specification="specification"/>
+      <element xsi:type="logical:CompositeQuery" name="UnusedCompositeQuery1">
+        <composition rolename="Role1" type="//@dm.0/@ldm.0/@element.4"/>
+        <composition rolename="Role2" type="//@dm.0/@ldm.0/@element.5"/>
+      </element>
+    </ldm>
+    <pdm name="PDM1">
+      <element xsi:type="platform:Query" name="UsedQuery1" specification="specification"/>
+      <element xsi:type="platform:Query" name="UsedQuery2" specification="specification"/>
+      <element xsi:type="platform:Query" name="UsedQuery3" realizes="//@dm.0/@ldm.0/@element.2" specification="specification"/>
+      <element xsi:type="platform:Query" name="UnusedQuery1" specification="specification"/>
+    </pdm>
+  </dm>
+  <um name="UoPModel1">
+    <element xsi:type="uop:Template" name="UsedTemplate1" specification="specification" boundQuery="//@dm.0/@pdm.0/@element.0"/>
+    <element xsi:type="uop:Template" name="UsedTemplate2" specification="specification" boundQuery="//@dm.0/@pdm.0/@element.1"/>
+    <element xsi:type="uop:Template" name="UsedTemplate3" specification="specification" boundQuery="//@dm.0/@pdm.0/@element.2"/>
+    <element xsi:type="uop:CompositeTemplate" name="UsedCompositeTemplate1" realizes="//@dm.0/@ldm.0/@element.3">
+      <composition rolename="Role1" realizes="//@dm.0/@ldm.0/@element.3/@composition.0" type="//@um.0/@element.0"/>
+      <composition rolename="Role2" realizes="//@dm.0/@ldm.0/@element.3/@composition.1" type="//@um.0/@element.1"/>
+    </element>
+    <element xsi:type="uop:CompositeTemplate" name="UsedCompositeTemplate2">
+      <composition rolename="Role1" type="//@um.0/@element.0"/>
+      <composition rolename="Role2" type="//@um.0/@element.5"/>
+    </element>
+    <element xsi:type="uop:CompositeTemplate" name="UsedCompositeTemplate3">
+      <composition rolename="Role1" type="//@um.0/@element.0"/>
+      <composition rolename="Role2" type="//@um.0/@element.6"/>
+    </element>
+    <element xsi:type="uop:CompositeTemplate" name="UsedCompositeTemplate4">
+      <composition rolename="Role1" type="//@um.0/@element.0"/>
+      <composition rolename="Role2" type="//@um.0/@element.1"/>
+    </element>
+    <element xsi:type="uop:Template" name="UnusedTemplate1" specification="specification" boundQuery="//@dm.0/@pdm.0/@element.3"/>
+    <element xsi:type="uop:Template" name="UnusedTemplate2" specification="specification" boundQuery="//@dm.0/@pdm.0/@element.3"/>
+    <element xsi:type="uop:CompositeTemplate" name="UnusedCompositeTemplate1">
+      <composition rolename="Role1" type="//@um.0/@element.7"/>
+      <composition rolename="Role2" type="//@um.0/@element.8"/>
+    </element>
+    <element xsi:type="uop:PortableComponent" name="UsedPCS1">
+      <thread/>
+      <memoryRequirements/>
+      <connection xsi:type="uop:ClientServerConnection" name="Port1_and_2" requestType="//@um.0/@element.0" responseType="//@um.0/@element.1"/>
+    </element>
+    <element xsi:type="uop:PlatformSpecificComponent" name="SelectedPSSS1">
+      <thread/>
+      <memoryRequirements/>
+      <connection xsi:type="uop:QueuingConnection" name="Port3" messageType="//@um.0/@element.2" depth="10"/>
+      <connection xsi:type="uop:SingleInstanceMessageConnection" name="CompositePort1" messageType="//@um.0/@element.3"/>
+      <connection xsi:type="uop:SingleInstanceMessageConnection" name="CompositePort2" messageType="//@um.0/@element.4"/>
+    </element>
+    <element xsi:type="uop:PortableComponent" name="UnusedPCS1">
+      <thread/>
+      <memoryRequirements/>
+      <connection xsi:type="uop:SingleInstanceMessageConnection" name="Port1" messageType="//@um.0/@element.7"/>
+    </element>
+    <element xsi:type="uop:PlatformSpecificComponent" name="UnusedPSSS1">
+      <thread/>
+      <memoryRequirements/>
+      <connection xsi:type="uop:SingleInstanceMessageConnection" name="Port1" messageType="//@um.0/@element.7"/>
+    </element>
+  </um>
+  <im name="SelectedIntegrationModel">
+    <im name="UnusedIntegrationModel1"/>
+    <element xsi:type="integration:UoPInstance" name="PCS1Instance" realizes="//@um.0/@element.10">
+      <output connection="//@um.0/@element.10/@connection.0"/>
+      <input connection="//@um.0/@element.10/@connection.0"/>
+    </element>
+    <element xsi:type="integration:IntegrationContext" name="Context1">
+      <connection source="//@im.0/@element.0/@output.0" destination="//@im.0/@element.1/@node.1/@inPort.0"/>
+      <connection source="//@im.0/@element.1/@node.0/@outPort" destination="//@im.0/@element.0/@input.0"/>
+      <node xsi:type="integration:ViewSource" name="Source1">
+        <outPort view="//@um.0/@element.1"/>
+      </node>
+      <node xsi:type="integration:ViewSink" name="Sink1">
+        <inPort view="//@um.0/@element.0"/>
+      </node>
+    </element>
+  </im>
+</face:ArchitectureModel>
