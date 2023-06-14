@@ -306,12 +306,6 @@ DM23-0412
          unpack="false"/>
 
    <plugin
-         id="org.jgrapht"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
          id="org.osate.face31"
          download-size="0"
          install-size="0"
