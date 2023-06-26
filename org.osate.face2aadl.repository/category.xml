@@ -3,5 +3,6 @@
    <feature id="org.osate.face2aadl.feature">
       <category name="osate.face2aadl"/>
    </feature>
+   <bundle id="org.jgrapht"/>
    <category-def name="osate.face2aadl" label="FACE Data Model to AADL Translator"/>
 </site>
