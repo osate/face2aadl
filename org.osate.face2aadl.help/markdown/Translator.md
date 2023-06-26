@@ -48,15 +48,18 @@ flow sinks and sources should be created for the UoPs, and if IDL files should b
 
 ### Data model levels
 
-By default, the translator will translate every translatable data model element in the FACE model. The list of
-translatable data model elements is described [here for FACE 3.0](#data-model-translation-for-face-30) and
-[here for FACE 3.1](#data-model-translation-for-face-31). If a FACE model contains many conceptual and logical data
-model elements which are not useful for analyzing the AADL model, they can be omitted from translation. The option
-**Platform only** will not translate any conceptual or logical elements.
+If the option **Conceptual, logical, and platform** is selected, then the translator will translate every translatable
+data model element in the FACE model. The list of translatable data model elements is described
+[here for FACE 3.0](#data-model-translation-for-face-30) and [here for FACE 3.1](#data-model-translation-for-face-31).
+If a FACE model contains many conceptual and logical data model elements which are not useful for analyzing the AADL
+model, they can be omitted from translation. The option **Platform only** will not translate any conceptual or logical
+elements.
 
-When this option is selected, platform data elements which realize a logical data element will be translated
-with a comment indicating that the extension of the logical element is not translated. Normally, such a
+When the **Platform only** option is selected, platform data elements which realize a logical data element will be
+translated with a comment indicating that the extension of the logical element is not translated. Normally, such a
 realization produces a data type extension in AADL.
+
+The **Platform only** option is selected by default.
 
 ### Element filtering
 

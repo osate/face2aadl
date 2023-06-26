@@ -234,7 +234,7 @@ class ConfigDialog extends TitleAreaDialog {
 	}
 	
 	def private void loadFromSettings() {
-		if (dialogSettings.getBoolean(PLATFORM_ONLY_SETTING)) {
+		if (dialogSettings.get(PLATFORM_ONLY_SETTING) === null || dialogSettings.getBoolean(PLATFORM_ONLY_SETTING)) {
 			platformOnlyButton.selection = true
 		} else {
 			allLevelsButton.selection = true
