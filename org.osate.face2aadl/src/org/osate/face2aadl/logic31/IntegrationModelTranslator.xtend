@@ -19,6 +19,8 @@
  */
 package org.osate.face2aadl.logic31
 
+import java.util.List
+import java.util.Map
 import java.util.Optional
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 import org.jgrapht.alg.connectivity.BiconnectivityInspector
@@ -64,11 +66,14 @@ package class IntegrationModelTranslator {
 	val String pcsPackageName
 	
 	def package Optional<String> translate(ArchitectureModel model) {
-		translate(model.im.flatMap[it.eAllOfType(IntegrationModel)])
+		translate(model.im.flatMap[it.eAllOfType(IntegrationModel)].toList)
 	}
 	
-	def package Optional<String> translate(Iterable<IntegrationModel> integrationModels) {
-		val classifiers = integrationModels.map[translateIntegrationModel(it)]
+	def package Optional<String> translate(List<IntegrationModel> integrationModels) {
+		val transportNodes = integrationModels.flatMap[it.element.filter(IntegrationContext).flatMap[it.node]].toList
+		val transportNodeNames = generateUniqueNames(transportNodes)
+		
+		val classifiers = integrationModels.map[translateIntegrationModel(it, transportNodes, transportNodeNames)]
 		val classifiersString = classifiers.join(System.lineSeparator)
 		
 		if (classifiersString.empty) {
@@ -103,7 +108,30 @@ package class IntegrationModelTranslator {
 		}
 	}
 	
-	def private String translateIntegrationModel(IntegrationModel model) {
+	/*
+	 * In FACE, TransportNodes do not need to have unique names. This is different from many other FACE elements which
+	 * do require unique names. The translator converts TransportNodes into abstract types and abstract subcomponents in
+	 * AADL. AADL does require unique names for classifiers and for subcomponents. This method ensures that each
+	 * TransportNode will have a unique name when translated into AADL.
+	 * 
+	 * TransportNode names that are already unique are left alone. Duplicate names are appended with
+	 * "_with_unique_name_" and an index.
+	 */
+	def private Map<TransportNode, String> generateUniqueNames(List<TransportNode> transportNodes) {
+		val transportNodeNames = newHashMap
+		transportNodes.groupBy[sanitizeID(it.name)].forEach[name, nodes |
+			if (nodes.size == 1) {
+				transportNodeNames.put(nodes.head, name)
+			} else {
+				nodes.forEach[node, index | transportNodeNames.put(node, '''«name»_with_unique_name_«index + 1»''')]
+			}
+		]
+		return transportNodeNames
+	}
+	
+	def private String translateIntegrationModel(IntegrationModel model, List<TransportNode> transportNodes,
+		Map<TransportNode, String> transportNodeNames
+	) {
 		val name = sanitizeID(model.name)
 		
 		val uopInstances = model.element.filter(UoPInstance)
@@ -112,8 +140,7 @@ package class IntegrationModelTranslator {
 		val transportChannels = model.element.filter(TransportChannel)
 		val virtualBuses = transportChannels.map[translateTransportChannel(it)]
 		
-		val transportNodes = model.element.filter(IntegrationContext).flatMap[it.node].toList
-		val nodeSubcomponents = transportNodes.map[translateTransportNodeSubcomponent(it)]
+		val nodeSubcomponents = transportNodes.map[translateTransportNodeSubcomponent(it, transportNodeNames)]
 		
 		val subcomponents = processes + virtualBuses + nodeSubcomponents
 		val subcomponentsString = subcomponents.join(System.lineSeparator)
@@ -170,13 +197,14 @@ package class IntegrationModelTranslator {
 					«FOR tsNodeConnection : tsNodeConnections.indexed»
 					«val index = tsNodeConnection.key»
 					«val connection = tsNodeConnection.value»
-					«translateTSNodeConnection(connection, index, connectionKinds.getOrDefault(connection, "feature"))»
+					«val connectionKind = connectionKinds.getOrDefault(connection, "feature")»
+					«translateTSNodeConnection(connection, index, connectionKind, transportNodeNames)»
 					«ENDFOR»
 				«ENDIF»
 			end «name».impl;
 			«FOR node : transportNodes»
 			
-			«translateTransportNode(node, featureKinds.getOrDefault(node, "feature"))»
+			«translateTransportNode(node, transportNodeNames, featureKinds.getOrDefault(node, "feature"))»
 			«ENDFOR»
 		'''
 	}
@@ -211,8 +239,10 @@ package class IntegrationModelTranslator {
 			}«ENDIF»;'''
 	}
 	
-	def private String translateTransportNode(TransportNode node, String featureKind) {
-		val name = sanitizeID(node.name)
+	def private String translateTransportNode(TransportNode node, Map<TransportNode, String> transportNodeNames,
+		String featureKind
+	) {
+		val name = transportNodeNames.get(node)
 		
 		'''
 			«translateDescription(node)»
@@ -251,8 +281,10 @@ package class IntegrationModelTranslator {
 			}«ENDIF»;'''
 	}
 	
-	def private String translateTransportNodeSubcomponent(TransportNode node) {
-		val name = sanitizeID(node.name)
+	def private String translateTransportNodeSubcomponent(TransportNode node,
+		Map<TransportNode, String> transportNodeNames
+	) {
+		val name = transportNodeNames.get(node)
 		
 		'''«name»: abstract «name»;'''
 	}
@@ -261,10 +293,12 @@ package class IntegrationModelTranslator {
 		translateMessageTypeReference(dataModelPackageName, messageType)
 	}
 	
-	def private String translateTSNodeConnection(TSNodeConnection connection, int index, String connectionKind) {
+	def private String translateTSNodeConnection(TSNodeConnection connection, int index, String connectionKind,
+		Map<TransportNode, String> transportNodeNames
+	) {
 		val uuid = translateUUID(connection)
-		val src = translatePortBaseReference(connection.source)
-		val dst = translatePortBaseReference(connection.destination)
+		val src = translatePortBaseReference(connection.source, transportNodeNames)
+		val dst = translatePortBaseReference(connection.destination, transportNodeNames)
 		
 		'''
 			connection«index»: «connectionKind» «src» -> «dst»«IF !uuid.empty» {
@@ -272,14 +306,16 @@ package class IntegrationModelTranslator {
 			}«ENDIF»;'''
 	}
 	
-	def private String translatePortBaseReference(TSNodePortBase portBase) {
+	def private String translatePortBaseReference(TSNodePortBase portBase,
+		Map<TransportNode, String> transportNodeNames
+	) {
 		switch portBase {
 			TSNodeInputPort: {
 				val node = portBase.getContainerOfType(TransportNode)
 				
-				sanitizeID(node.name) + ".input" + node.inPort.indexOf(portBase)
+				transportNodeNames.get(node) + ".input" + node.inPort.indexOf(portBase)
 			}
-			TSNodeOutputPort: sanitizeID(portBase.getContainerOfType(TransportNode).name) + ".output"
+			TSNodeOutputPort: transportNodeNames.get(portBase.getContainerOfType(TransportNode)) + ".output"
 			UoPEndPoint: {
 				val subcomponentName = sanitizeID(portBase.getContainerOfType(UoPInstance).name)
 				val uopConnection = portBase.connection
