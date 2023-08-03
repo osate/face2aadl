@@ -1,0 +1,39 @@
+--Generated from "duplicateNodeNames.face"
+package duplicateNodeNames_integration_model
+public
+	with duplicateNodeNames_data_model;
+	with duplicateNodeNames_PCS;
+	with FACE;
+	
+	system im
+	end im;
+	
+	system implementation im.impl
+		subcomponents
+			Altitude_Sensor: process duplicateNodeNames_PCS::Altitude_Sensor_process.impl;
+			Autopilot: process duplicateNodeNames_PCS::Autopilot_process.impl;
+			Channel: virtual bus;
+			duplicate_with_unique_name_1: abstract duplicate_with_unique_name_1;
+			duplicate_with_unique_name_2: abstract duplicate_with_unique_name_2;
+		connections
+			connection0: port Altitude_Sensor.Altitude_output -> duplicate_with_unique_name_1.input0;
+			connection1: port duplicate_with_unique_name_1.output -> duplicate_with_unique_name_2.input0;
+			connection2: port duplicate_with_unique_name_2.output -> Autopilot.Altitude_input;
+	end im.impl;
+	
+	abstract duplicate_with_unique_name_1
+		features
+			input0: in event data port duplicateNodeNames_data_model::Altitude_ft_Platform.impl;
+			output: out event data port duplicateNodeNames_data_model::Altitude_m_Platform.impl;
+		properties
+			FACE::Segment => TSS;
+	end duplicate_with_unique_name_1;
+	
+	abstract duplicate_with_unique_name_2
+		features
+			input0: in event data port duplicateNodeNames_data_model::Altitude_m_Platform.impl;
+			output: out event data port duplicateNodeNames_data_model::Altitude_m_Platform.impl;
+		properties
+			FACE::Segment => TSS;
+	end duplicate_with_unique_name_2;
+end duplicateNodeNames_integration_model;
