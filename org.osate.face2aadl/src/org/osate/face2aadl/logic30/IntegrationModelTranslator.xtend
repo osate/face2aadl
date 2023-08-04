@@ -73,7 +73,7 @@ package class IntegrationModelTranslator {
 		val transportNodes = integrationModels.flatMap[it.element.filter(IntegrationContext).flatMap[it.node]].toList
 		val transportNodeNames = generateUniqueNames(transportNodes)
 		
-		val classifiers = integrationModels.map[translateIntegrationModel(it, transportNodes, transportNodeNames)]
+		val classifiers = integrationModels.map[translateIntegrationModel(it, transportNodeNames)]
 		val classifiersString = classifiers.join(System.lineSeparator)
 		
 		if (classifiersString.empty) {
@@ -129,7 +129,7 @@ package class IntegrationModelTranslator {
 		return transportNodeNames
 	}
 	
-	def private String translateIntegrationModel(IntegrationModel model, List<TransportNode> transportNodes,
+	def private String translateIntegrationModel(IntegrationModel model,
 		Map<TransportNode, String> transportNodeNames
 	) {
 		val name = sanitizeID(model.name)
@@ -140,6 +140,7 @@ package class IntegrationModelTranslator {
 		val transportChannels = model.element.filter(TransportChannel)
 		val virtualBuses = transportChannels.map[translateTransportChannel(it)]
 		
+		val transportNodes = model.element.filter(IntegrationContext).flatMap[it.node].toList
 		val nodeSubcomponents = transportNodes.map[translateTransportNodeSubcomponent(it, transportNodeNames)]
 		
 		val subcomponents = processes + virtualBuses + nodeSubcomponents
