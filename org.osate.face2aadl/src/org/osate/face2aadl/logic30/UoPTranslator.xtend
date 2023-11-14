@@ -106,6 +106,7 @@ package class UoPTranslator {
 				properties
 					FACE::Profile => «profile»;
 					FACE::Segment => «segment»;
+					FACE::Design_Assurance_Level => «component.designAssuranceLevel»;
 					«translateUUID(component)»
 			end «name»;
 			

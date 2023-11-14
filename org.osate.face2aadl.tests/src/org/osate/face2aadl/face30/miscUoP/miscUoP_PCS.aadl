@@ -13,6 +13,7 @@ public
 		properties
 			FACE::Profile => security;
 			FACE::Segment => PCS;
+			FACE::Design_Assurance_Level => A;
 	end PortableComponent1;
 	
 	thread group implementation PortableComponent1.impl
@@ -51,6 +52,7 @@ public
 		properties
 			FACE::Profile => safety;
 			FACE::Segment => PCS;
+			FACE::Design_Assurance_Level => A;
 	end PortableComponent2;
 	
 	thread group implementation PortableComponent2.impl
@@ -88,6 +90,7 @@ public
 		properties
 			FACE::Profile => safety_extended;
 			FACE::Segment => PCS;
+			FACE::Design_Assurance_Level => A;
 	end PortableComponent3;
 	
 	thread group implementation PortableComponent3.impl

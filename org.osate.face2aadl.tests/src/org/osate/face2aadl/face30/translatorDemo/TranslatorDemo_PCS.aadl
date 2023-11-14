@@ -13,6 +13,7 @@ public
 		properties
 			FACE::Profile => general;
 			FACE::Segment => PCS;
+			FACE::Design_Assurance_Level => A;
 	end Altitude_Sensor;
 	
 	thread group implementation Altitude_Sensor.impl
@@ -52,6 +53,7 @@ public
 		properties
 			FACE::Profile => general;
 			FACE::Segment => PCS;
+			FACE::Design_Assurance_Level => A;
 	end Autopilot;
 	
 	thread group implementation Autopilot.impl

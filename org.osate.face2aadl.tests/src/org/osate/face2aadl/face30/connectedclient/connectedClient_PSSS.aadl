@@ -15,6 +15,7 @@ public
 		properties
 			FACE::Profile => general;
 			FACE::Segment => PSSS;
+			FACE::Design_Assurance_Level => A;
 	end PlatformSpecificComponent1;
 	
 	thread group implementation PlatformSpecificComponent1.impl

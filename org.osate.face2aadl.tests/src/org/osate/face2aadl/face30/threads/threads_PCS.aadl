@@ -12,6 +12,7 @@ public
 		properties
 			FACE::Profile => general;
 			FACE::Segment => PCS;
+			FACE::Design_Assurance_Level => A;
 	end PortableComponent1;
 	
 	thread group implementation PortableComponent1.impl

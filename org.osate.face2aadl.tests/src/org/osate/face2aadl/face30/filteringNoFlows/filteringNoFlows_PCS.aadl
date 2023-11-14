@@ -15,6 +15,7 @@ public
 		properties
 			FACE::Profile => general;
 			FACE::Segment => PCS;
+			FACE::Design_Assurance_Level => A;
 	end UsedPCS1;
 	
 	thread group implementation UsedPCS1.impl
