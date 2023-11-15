@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<face:ArchitectureModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:face="http://www.opengroup.us/face/3.1" xmlns:uop="http://www.opengroup.us/face/uop/3.1" name="ArchitectureModel1">
+  <um name="UoPModel1">
+    <element xsi:type="uop:Template" name="Template1" specification="&lt;"/>
+    <element xsi:type="uop:PortableComponent" name="PortableComponent1" faceProfile="Security">
+      <thread/>
+      <memoryRequirements/>
+      <connection xsi:type="uop:QueuingConnection" name="QueuingConnection1" messageType="//@um.0/@element.0" depth="1"/>
+    </element>
+    <element xsi:type="uop:PortableComponent" name="PortableComponent2" designAssuranceLevel="B" faceProfile="SafetyBase">
+      <thread/>
+      <memoryRequirements/>
+      <connection xsi:type="uop:SingleInstanceMessageConnection" name="SIMC1" messageType="//@um.0/@element.0"/>
+    </element>
+    <element xsi:type="uop:PortableComponent" name="PortableComponent3" designAssuranceLevel="C" faceProfile="SafetyExtended">
+      <thread/>
+      <memoryRequirements/>
+      <connection xsi:type="uop:SingleInstanceMessageConnection" name="SIMC2" messageType="//@um.0/@element.0"/>
+    </element>
+    <element xsi:type="uop:PortableComponent" name="PortableComponent4" designAssuranceLevel="D" faceProfile="SafetyBase">
+      <thread/>
+      <memoryRequirements/>
+      <connection xsi:type="uop:SingleInstanceMessageConnection" name="SIMC3" messageType="//@um.0/@element.0"/>
+    </element>
+    <element xsi:type="uop:PortableComponent" name="PortableComponent5" designAssuranceLevel="E" faceProfile="SafetyBase">
+      <thread/>
+      <memoryRequirements/>
+      <connection xsi:type="uop:SingleInstanceMessageConnection" name="SIMC4" messageType="//@um.0/@element.0"/>
+    </element>
+  </um>
+</face:ArchitectureModel>

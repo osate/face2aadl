@@ -350,6 +350,8 @@ The following describes how UoPs are translated.
 	* The property **FACE::Segment** is set a value based on the type of UoP. If the UoP is a
 	  **face.uop.PlatformSpecificComponent**, then the value is **PSSS**. If the UoP is a
 	  **face.uop.PortableComponent**, then the value is **PCS**.
+	* The **designAssuranceLevel** field is translated into the property **FACE::Design_Assurance_Level**. The possible
+	  values for this property are **A**, **B**, **C**, **D**, and **E**.
 	* If the FACE file was generated using UUIDs, then the property **FACE::UUID** is set to the ID of the
 	  **UnitOfPortability**.
 	* Each **connection** that is a **face.uop.ClientServerConnection** is translated into an event data port
@@ -454,6 +456,7 @@ The following is an example of a translated UoP model:
 	    properties
 	      FACE::Profile => general;
 	      FACE::Segment => PCS;
+		  FACE::Design_Assurance_Level => A;
 	  end Altitude_Sensor;
 	
 	  thread group implementation Altitude_Sensor.impl
@@ -493,6 +496,7 @@ The following is an example of a translated UoP model:
 	    properties
 	      FACE::Profile => general;
 	      FACE::Segment => PCS;
+		  FACE::Design_Assurance_Level => A;
 	  end Autopilot;
 	
 	  thread group implementation Autopilot.impl
@@ -878,6 +882,8 @@ The following describes how UoPs are translated.
 	* The property **FACE::Segment** is set a value based on the type of UoP. If the UoP is a
 	  **face.uop.PlatformSpecificComponent**, then the value is **PSSS**. If the UoP is a
 	  **face.uop.PortableComponent**, then the value is **PCS**.
+	* The **designAssuranceLevel** field is translated into the property **FACE::Design_Assurance_Level**. The possible
+	  values for this property are **A**, **B**, **C**, **D**, and **E**.
 	* If the FACE file was generated using UUIDs, then the property **FACE::UUID** is set to the ID of the
 	  **UnitOfPortability**.
 	* Each **connection** that is a **face.uop.ClientServerConnection** is translated into an event data port
@@ -980,6 +986,7 @@ The following describes how UoPs are translated.
 			properties
 				FACE::Profile => general;
 				FACE::Segment => PCS;
+				FACE::Design_Assurance_Level => A;
 		end Altitude_Sensor;
 		
 		thread group implementation Altitude_Sensor.impl
@@ -1019,6 +1026,7 @@ The following describes how UoPs are translated.
 			properties
 				FACE::Profile => general;
 				FACE::Segment => PCS;
+				FACE::Design_Assurance_Level => A;
 		end Autopilot;
 		
 		thread group implementation Autopilot.impl

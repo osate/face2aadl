@@ -19,6 +19,7 @@ public
 		properties
 			FACE::Profile => general;
 			FACE::Segment => PSSS;
+			FACE::Design_Assurance_Level => A;
 	end SelectedPSSS1;
 	
 	thread group implementation SelectedPSSS1.impl

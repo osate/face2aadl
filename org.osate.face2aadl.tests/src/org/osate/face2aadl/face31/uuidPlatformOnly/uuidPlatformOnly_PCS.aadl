@@ -17,6 +17,7 @@ public
 		properties
 			FACE::Profile => general;
 			FACE::Segment => PCS;
+			FACE::Design_Assurance_Level => A;
 			FACE::UUID => "_N3sIMK2MEe26NcS3vZp1iQ";
 	end PortableComponent1;
 	

@@ -18,4 +18,5 @@ property set FACE is
 	
 	Profile: enumeration (security, safety_extended, safety, general) applies to (all);
 	Segment: enumeration (PSSS, PCS, IOSS, OSS, TSS) applies to (all);
+	Design_Assurance_Level: enumeration (A, B, C, D, E) applies to (thread group);
 end FACE;

@@ -1,12 +1,12 @@
---Generated from "miscUoP.face"
-package miscUoP_PCS
+--Generated from "designAssuranceLevels.face"
+package designAssuranceLevels_PCS
 public
+	with designAssuranceLevels_data_model;
 	with FACE;
-	with miscUoP_data_model;
 	
 	thread group PortableComponent1
 		features
-			QueuingConnection1: in event data port miscUoP_data_model::Template1_Platform.impl {
+			QueuingConnection1: in event data port designAssuranceLevels_data_model::Template1_Platform.impl {
 				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
 				Queue_Size => 1;
 			};
@@ -27,7 +27,7 @@ public
 	
 	process PortableComponent1_process
 		features
-			QueuingConnection1: in event data port miscUoP_data_model::Template1_Platform.impl {
+			QueuingConnection1: in event data port designAssuranceLevels_data_model::Template1_Platform.impl {
 				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
 				Queue_Size => 1;
 			};
@@ -46,13 +46,13 @@ public
 	
 	thread group PortableComponent2
 		features
-			SIMC1: in data port miscUoP_data_model::Template1_Platform.impl {
+			SIMC1: in data port designAssuranceLevels_data_model::Template1_Platform.impl {
 				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
 			};
 		properties
 			FACE::Profile => safety;
 			FACE::Segment => PCS;
-			FACE::Design_Assurance_Level => A;
+			FACE::Design_Assurance_Level => B;
 	end PortableComponent2;
 	
 	thread group implementation PortableComponent2.impl
@@ -66,7 +66,7 @@ public
 	
 	process PortableComponent2_process
 		features
-			SIMC1: in data port miscUoP_data_model::Template1_Platform.impl {
+			SIMC1: in data port designAssuranceLevels_data_model::Template1_Platform.impl {
 				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
 			};
 		flows
@@ -84,13 +84,13 @@ public
 	
 	thread group PortableComponent3
 		features
-			SIMC2: in data port miscUoP_data_model::Template1_Platform.impl {
+			SIMC2: in data port designAssuranceLevels_data_model::Template1_Platform.impl {
 				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
 			};
 		properties
 			FACE::Profile => safety_extended;
 			FACE::Segment => PCS;
-			FACE::Design_Assurance_Level => A;
+			FACE::Design_Assurance_Level => C;
 	end PortableComponent3;
 	
 	thread group implementation PortableComponent3.impl
@@ -104,7 +104,7 @@ public
 	
 	process PortableComponent3_process
 		features
-			SIMC2: in data port miscUoP_data_model::Template1_Platform.impl {
+			SIMC2: in data port designAssuranceLevels_data_model::Template1_Platform.impl {
 				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
 			};
 		flows
@@ -119,4 +119,80 @@ public
 		flows
 			SIMC2_sink: flow sink SIMC2 -> SIMC2_connection -> PortableComponent3;
 	end PortableComponent3_process.impl;
-end miscUoP_PCS;
+	
+	thread group PortableComponent4
+		features
+			SIMC3: in data port designAssuranceLevels_data_model::Template1_Platform.impl {
+				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+			};
+		properties
+			FACE::Profile => safety;
+			FACE::Segment => PCS;
+			FACE::Design_Assurance_Level => D;
+	end PortableComponent4;
+	
+	thread group implementation PortableComponent4.impl
+		subcomponents
+			thread0: thread {
+				Compute_Execution_Time => 0 sec .. 0 sec;
+				Period => 0 sec;
+				Priority => 0;
+			};
+	end PortableComponent4.impl;
+	
+	process PortableComponent4_process
+		features
+			SIMC3: in data port designAssuranceLevels_data_model::Template1_Platform.impl {
+				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+			};
+		flows
+			SIMC3_sink: flow sink SIMC3;
+	end PortableComponent4_process;
+	
+	process implementation PortableComponent4_process.impl
+		subcomponents
+			PortableComponent4: thread group PortableComponent4.impl;
+		connections
+			SIMC3_connection: port SIMC3 -> PortableComponent4.SIMC3;
+		flows
+			SIMC3_sink: flow sink SIMC3 -> SIMC3_connection -> PortableComponent4;
+	end PortableComponent4_process.impl;
+	
+	thread group PortableComponent5
+		features
+			SIMC4: in data port designAssuranceLevels_data_model::Template1_Platform.impl {
+				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+			};
+		properties
+			FACE::Profile => safety;
+			FACE::Segment => PCS;
+			FACE::Design_Assurance_Level => E;
+	end PortableComponent5;
+	
+	thread group implementation PortableComponent5.impl
+		subcomponents
+			thread0: thread {
+				Compute_Execution_Time => 0 sec .. 0 sec;
+				Period => 0 sec;
+				Priority => 0;
+			};
+	end PortableComponent5.impl;
+	
+	process PortableComponent5_process
+		features
+			SIMC4: in data port designAssuranceLevels_data_model::Template1_Platform.impl {
+				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+			};
+		flows
+			SIMC4_sink: flow sink SIMC4;
+	end PortableComponent5_process;
+	
+	process implementation PortableComponent5_process.impl
+		subcomponents
+			PortableComponent5: thread group PortableComponent5.impl;
+		connections
+			SIMC4_connection: port SIMC4 -> PortableComponent5.SIMC4;
+		flows
+			SIMC4_sink: flow sink SIMC4 -> SIMC4_connection -> PortableComponent5;
+	end PortableComponent5_process.impl;
+end designAssuranceLevels_PCS;

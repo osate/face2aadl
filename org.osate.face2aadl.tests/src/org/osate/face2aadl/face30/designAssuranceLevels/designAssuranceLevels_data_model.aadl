@@ -1,0 +1,13 @@
+--Generated from "designAssuranceLevels.face"
+package designAssuranceLevels_data_model
+public
+	with FACE;
+	
+	data Template1_Platform
+		properties
+			FACE::Realization_Tier => platform;
+	end Template1_Platform;
+	
+	data implementation Template1_Platform.impl
+	end Template1_Platform.impl;
+end designAssuranceLevels_data_model;
