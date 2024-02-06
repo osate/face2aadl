@@ -1,114 +1,124 @@
 /**
  * FACE Data Model to AADL Translator
- * 
+ *
  * Copyright 2023 Carnegie Mellon University.
- * 
+ *
  * NO WARRANTY. THIS CARNEGIE MELLON UNIVERSITY AND SOFTWARE ENGINEERING INSTITUTE MATERIAL IS FURNISHED ON
  * AN "AS-IS" BASIS. CARNEGIE MELLON UNIVERSITY MAKES NO WARRANTIES OF ANY KIND, EITHER EXPRESSED OR IMPLIED,
  * AS TO ANY MATTER INCLUDING, BUT NOT LIMITED TO, WARRANTY OF FITNESS FOR PURPOSE OR MERCHANTABILITY,
  * EXCLUSIVITY, OR RESULTS OBTAINED FROM USE OF THE MATERIAL. CARNEGIE MELLON UNIVERSITY DOES NOT MAKE ANY
  * WARRANTY OF ANY KIND WITH RESPECT TO FREEDOM FROM PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.
- * 
+ *
  * Released under an Eclipse Public License - v1.0-style license, please see license.txt or contact
  * permission@sei.cmu.edu for full terms.
- * 
+ *
  * [DISTRIBUTION STATEMENT A] This material has been approved for public release and unlimited distribution.
  * Please see Copyright notice for non-US Government use and distribution.
- * 
+ *
  * DM23-0412
  */
-package org.osate.face2aadl.face30
+package org.osate.face2aadl.face30;
 
-import face.ArchitectureModel
-import face.FacePackage
-import face.integration.IntegrationModel
-import face.uop.UnitOfPortability
-import java.util.List
-import java.util.Optional
-import org.apache.commons.io.IOUtils
-import org.eclipse.emf.common.util.URI
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
-import org.junit.Before
-import org.junit.Test
-import org.osate.face2aadl.common.TranslatedPackage
-import org.osate.face2aadl.logic30.ArchitectureModelTranslator
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
-import static extension org.eclipse.xtext.EcoreUtil2.getAllContentsOfType
-import static extension org.junit.Assert.assertEquals
-import static extension org.junit.Assert.assertNotNull
-import static extension org.junit.Assert.assertNull
+import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
 
-abstract class AbstractTranslator30Test {
-	val String faceFileName
-	val boolean platformOnly
-	val List<String> uopNames
-	val List<String> integrationModelNames
-	val boolean createFlows
-	
-	ArchitectureModelTranslator translator
-	
-	new(String baseName, boolean platformOnly, boolean createFlows) {
-		this(baseName, platformOnly, null, null, createFlows)
+import org.apache.commons.io.IOUtils;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.eclipse.xtext.EcoreUtil2;
+import org.junit.Before;
+import org.junit.Test;
+import org.osate.face2aadl.common.TranslatedPackage;
+import org.osate.face2aadl.logic30.ArchitectureModelTranslator;
+
+import face.ArchitectureModel;
+import face.FacePackage;
+import face.integration.IntegrationModel;
+import face.uop.UnitOfPortability;
+
+public abstract class AbstractTranslator30Test {
+	private final String faceFileName;
+	private final boolean platformOnly;
+	private final List<String> uopNames;
+	private final List<String> integrationModelNames;
+	private final boolean createFlows;
+
+	private ArchitectureModelTranslator translator;
+
+	public AbstractTranslator30Test(String baseName, boolean platformOnly, boolean createFlows) {
+		this(baseName, platformOnly, null, null, createFlows);
 	}
-	
-	new(String baseName, boolean platformOnly, List<String> uopNames, List<String> integrationModelNames,
-		boolean createFlows
-	) {
-		faceFileName = baseName + ".face"
-		this.platformOnly = platformOnly
-		this.uopNames = uopNames
-		this.integrationModelNames = integrationModelNames
-		this.createFlows = createFlows
+
+	public AbstractTranslator30Test(String baseName, boolean platformOnly, List<String> uopNames,
+			List<String> integrationModelNames, boolean createFlows) {
+		faceFileName = baseName + ".face";
+		this.platformOnly = platformOnly;
+		this.uopNames = uopNames;
+		this.integrationModelNames = integrationModelNames;
+		this.createFlows = createFlows;
 	}
-	
+
 	@Before
-	def void loadModel() {
-		FacePackage.eINSTANCE.assertNotNull
-		val resourceSet = new ResourceSetImpl
-		resourceSet.resourceFactoryRegistry.extensionToFactoryMap.put("face", new XMIResourceFactoryImpl)
-		val resource = resourceSet.createResource(URI.createURI("synthetic:/" + faceFileName))
-		resource.load(class.getResourceAsStream(faceFileName), null)
-		val model = resource.contents.head as ArchitectureModel
-		translator = if (uopNames === null) {
-			ArchitectureModelTranslator.create(model, faceFileName, platformOnly, createFlows, Optional.empty)
+	public void loadModel() throws IOException {
+		assertNotNull(FacePackage.eINSTANCE);
+		var resourceSet = new ResourceSetImpl();
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("face", new XMIResourceFactoryImpl());
+		var resource = resourceSet.createResource(URI.createURI("synthetic:/" + faceFileName));
+		resource.load(getClass().getResourceAsStream(faceFileName), null);
+		var model = (ArchitectureModel) resource.getContents().get(0);
+		if (uopNames == null) {
+			translator = ArchitectureModelTranslator.create(model, faceFileName, platformOnly, createFlows,
+					Optional.empty());
 		} else {
-			val allUoPs = model.getAllContentsOfType(UnitOfPortability)
-			val allIntegrationModels = model.getAllContentsOfType(IntegrationModel)
-			val uops = uopNames.map[name | allUoPs.findFirst[it.name == name]]
-			val integrationModels = integrationModelNames.map[name | allIntegrationModels.findFirst[it.name == name]]
-			ArchitectureModelTranslator.create(model, uops, integrationModels, faceFileName, platformOnly, createFlows,
-				Optional.empty
-			)
+			var allUoPs = EcoreUtil2.getAllContentsOfType(model, UnitOfPortability.class);
+			var allIntegrationModels = EcoreUtil2.getAllContentsOfType(model, IntegrationModel.class);
+			var uops = uopNames.stream()
+					.map(name -> allUoPs.stream().filter(uop -> uop.getName().equals(name)).findFirst().get())
+					.toList();
+			var integrationModels = integrationModelNames.stream()
+					.map(name -> allIntegrationModels.stream()
+							.filter(integrationModel -> integrationModel.getName().equals(name))
+							.findFirst()
+							.get())
+					.toList();
+			translator = ArchitectureModelTranslator.create(model, uops, integrationModels, faceFileName, platformOnly,
+					createFlows, Optional.empty());
 		}
 	}
-	
+
 	@Test
-	def void testDataModel() {
-		testModel(translator.translateDataModel)
+	public void testDataModel() throws IOException {
+		testModel(translator.translateDataModel());
 	}
-	
+
 	@Test
-	def void testPSSS() {
-		testModel(translator.translatePSSS)
+	public void testPSSS() throws IOException {
+		testModel(translator.translatePSSS());
 	}
-	
+
 	@Test
-	def void testPCS() {
-		testModel(translator.translatePCS)
+	public void testPCS() throws IOException {
+		testModel(translator.translatePCS());
 	}
-	
+
 	@Test
-	def void testIntegrationModel() {
-		testModel(translator.translateIntegrationModel)
+	public void testIntegrationModel() throws IOException {
+		testModel(translator.translateIntegrationModel());
 	}
-	
-	def private void testModel(TranslatedPackage translated) {
-		val expected = class.getResourceAsStream(translated.name + ".aadl")
-		if (translated.contents.present) {
-			IOUtils.toString(expected).replace("\r", "").assertEquals(translated.contents.get.replace("\r", ""))
+
+	private void testModel(TranslatedPackage translated) throws IOException {
+		var expected = getClass().getResourceAsStream(translated.getName() + ".aadl");
+		if (translated.getContents().isPresent()) {
+			assertEquals(IOUtils.toString(expected).replace("\r", ""),
+					translated.getContents().get().replace("\r", ""));
 		} else {
-			expected.assertNull
+			assertNull(expected);
 		}
 	}
 }
