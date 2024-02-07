@@ -1,0 +1,43 @@
+--Generated from "mergingThreeIntegrationModels.face"
+package mergingThreeIntegrationModels_integration_model
+public
+	with FACE;
+	with mergingThreeIntegrationModels_data_model;
+	with mergingThreeIntegrationModels_PCS;
+	
+	--Merged from the following Integration Models:
+	--  im_with_sensor
+	--  im_with_nodes
+	--  im_with_autopilot
+	system MERGED_im_with_sensor_AND_im_with_nodes_AND_im_with_autopilot
+	end MERGED_im_with_sensor_AND_im_with_nodes_AND_im_with_autopilot;
+	
+	system implementation MERGED_im_with_sensor_AND_im_with_nodes_AND_im_with_autopilot.impl
+		subcomponents
+			Altitude_Sensor: process mergingThreeIntegrationModels_PCS::Altitude_Sensor_process.impl;
+			Autopilot: process mergingThreeIntegrationModels_PCS::Autopilot_process.impl;
+			Channel: virtual bus;
+			Converter_ft_to_m: abstract Converter_ft_to_m;
+			Transporter: abstract Transporter;
+		connections
+			connection0: port Altitude_Sensor.Altitude_output -> Converter_ft_to_m.input0;
+			connection1: port Converter_ft_to_m.output -> Transporter.input0;
+			connection2: port Transporter.output -> Autopilot.Altitude_input;
+	end MERGED_im_with_sensor_AND_im_with_nodes_AND_im_with_autopilot.impl;
+	
+	abstract Converter_ft_to_m
+		features
+			input0: in event data port mergingThreeIntegrationModels_data_model::Altitude_ft_Platform.impl;
+			output: out event data port mergingThreeIntegrationModels_data_model::Altitude_m_Platform.impl;
+		properties
+			FACE::Segment => TSS;
+	end Converter_ft_to_m;
+	
+	abstract Transporter
+		features
+			input0: in event data port mergingThreeIntegrationModels_data_model::Altitude_m_Platform.impl;
+			output: out event data port mergingThreeIntegrationModels_data_model::Altitude_m_Platform.impl;
+		properties
+			FACE::Segment => TSS;
+	end Transporter;
+end mergingThreeIntegrationModels_integration_model;
