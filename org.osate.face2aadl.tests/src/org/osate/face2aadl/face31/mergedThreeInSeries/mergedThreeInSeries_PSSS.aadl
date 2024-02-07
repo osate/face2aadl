@@ -1,0 +1,129 @@
+--Generated from "mergedThreeInSeries.face"
+package mergedThreeInSeries_PSSS
+public
+	with FACE;
+	with mergedThreeInSeries_data_model;
+	
+	thread group A
+		features
+			output: out data port mergedThreeInSeries_data_model::Template1_Platform.impl {
+				Output_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+			};
+		properties
+			FACE::Profile => general;
+			FACE::Segment => PSSS;
+			FACE::Design_Assurance_Level => A;
+	end A;
+	
+	thread group implementation A.impl
+		subcomponents
+			thread0: thread {
+				Compute_Execution_Time => 0 sec .. 0 sec;
+				Period => 0 sec;
+				Priority => 0;
+			};
+	end A.impl;
+	
+	process A_process
+		features
+			output: out data port mergedThreeInSeries_data_model::Template1_Platform.impl {
+				Output_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+			};
+		flows
+			output_source: flow source output;
+	end A_process;
+	
+	process implementation A_process.impl
+		subcomponents
+			A: thread group A.impl;
+		connections
+			output_connection: port A.output -> output;
+		flows
+			output_source: flow source A -> output_connection -> output;
+	end A_process.impl;
+	
+	thread group B
+		features
+			input: in data port mergedThreeInSeries_data_model::Template1_Platform.impl {
+				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+			};
+			output: out data port mergedThreeInSeries_data_model::Template1_Platform.impl {
+				Output_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+			};
+		properties
+			FACE::Profile => general;
+			FACE::Segment => PSSS;
+			FACE::Design_Assurance_Level => A;
+	end B;
+	
+	thread group implementation B.impl
+		subcomponents
+			thread0: thread {
+				Compute_Execution_Time => 0 sec .. 0 sec;
+				Period => 0 sec;
+				Priority => 0;
+			};
+	end B.impl;
+	
+	process B_process
+		features
+			input: in data port mergedThreeInSeries_data_model::Template1_Platform.impl {
+				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+			};
+			output: out data port mergedThreeInSeries_data_model::Template1_Platform.impl {
+				Output_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+			};
+		flows
+			input_sink: flow sink input;
+			output_source: flow source output;
+	end B_process;
+	
+	process implementation B_process.impl
+		subcomponents
+			B: thread group B.impl;
+		connections
+			input_connection: port input -> B.input;
+			output_connection: port B.output -> output;
+		flows
+			input_sink: flow sink input -> input_connection -> B;
+			output_source: flow source B -> output_connection -> output;
+	end B_process.impl;
+	
+	thread group C
+		features
+			input: in data port mergedThreeInSeries_data_model::Template1_Platform.impl {
+				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+			};
+		properties
+			FACE::Profile => general;
+			FACE::Segment => PSSS;
+			FACE::Design_Assurance_Level => A;
+	end C;
+	
+	thread group implementation C.impl
+		subcomponents
+			thread0: thread {
+				Compute_Execution_Time => 0 sec .. 0 sec;
+				Period => 0 sec;
+				Priority => 0;
+			};
+	end C.impl;
+	
+	process C_process
+		features
+			input: in data port mergedThreeInSeries_data_model::Template1_Platform.impl {
+				Input_Rate => [Value_Range => 0.0 .. 0.0; Rate_Unit => PerSecond;];
+			};
+		flows
+			input_sink: flow sink input;
+	end C_process;
+	
+	process implementation C_process.impl
+		subcomponents
+			C: thread group C.impl;
+		connections
+			input_connection: port input -> C.input;
+		flows
+			input_sink: flow sink input -> input_connection -> C;
+	end C_process.impl;
+end mergedThreeInSeries_PSSS;
