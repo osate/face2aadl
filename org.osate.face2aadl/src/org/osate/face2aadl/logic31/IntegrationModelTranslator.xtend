@@ -24,6 +24,7 @@ import java.util.Map
 import java.util.Optional
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 import org.jgrapht.alg.connectivity.BiconnectivityInspector
+import org.jgrapht.graph.DefaultEdge
 import org.jgrapht.graph.SimpleGraph
 import org.jgrapht.graph.builder.GraphBuilder
 import org.osate.face31.ArchitectureModel
@@ -70,10 +71,35 @@ package class IntegrationModelTranslator {
 	}
 	
 	def package Optional<String> translate(List<IntegrationModel> integrationModels) {
+		val graphBuilder = new GraphBuilder(new SimpleGraph(DefaultEdge))
+		integrationModels.flatMap[it.element.filter(IntegrationContext).flatMap[it.connection]]
+			.forEach[tsNodeConnection |
+				val sourceIntegrationModel = tsNodeConnection.source.getContainerOfType(IntegrationModel)
+				val destinationIntegrationModel = tsNodeConnection.destination.getContainerOfType(IntegrationModel)
+				if (sourceIntegrationModel != destinationIntegrationModel) {
+					graphBuilder.addEdge(sourceIntegrationModel, destinationIntegrationModel)
+				}
+			]
+		// Keeps track of each collection of merged IntegrationModels and whether they have been translated yet.
+		val mergedIntegrationModels = new BiconnectivityInspector(graphBuilder.buildAsUnmodifiable)
+			.connectedComponents
+			.map[subgraph | subgraph.vertexSet.sortBy[integrationModels.indexOf(it)]]
+			.toInvertedMap[false]
+		
 		val transportNodes = integrationModels.flatMap[it.element.filter(IntegrationContext).flatMap[it.node]].toList
 		val transportNodeNames = generateUniqueNames(transportNodes)
 		
-		val classifiers = integrationModels.map[translateIntegrationModel(it, transportNodeNames)]
+		val classifiers = integrationModels.map[model |
+			val merged = mergedIntegrationModels.keySet.findFirst[it.contains(model)]
+			if (merged === null) {
+				translateIntegrationModel(model, transportNodeNames)
+			} else if (!mergedIntegrationModels.get(merged)) {
+				mergedIntegrationModels.put(merged, true)
+				translateMergedIntegrationModels(merged, transportNodeNames)
+			} else {
+				null
+			}
+		].filterNull
 		val classifiersString = classifiers.join(System.lineSeparator)
 		
 		if (classifiersString.empty) {
@@ -186,6 +212,85 @@ package class IntegrationModelTranslator {
 				properties
 					«uuid»
 				«ENDIF»
+			end «name»;
+			
+			system implementation «name».impl
+				«IF !subcomponentsString.empty»
+				subcomponents
+					«subcomponentsString»
+				«ENDIF»
+				«IF !tsNodeConnections.empty»
+				connections
+					«FOR tsNodeConnection : tsNodeConnections.indexed»
+					«val index = tsNodeConnection.key»
+					«val connection = tsNodeConnection.value»
+					«val connectionKind = connectionKinds.getOrDefault(connection, "feature")»
+					«translateTSNodeConnection(connection, index, connectionKind, transportNodeNames)»
+					«ENDFOR»
+				«ENDIF»
+			end «name».impl;
+			«FOR node : transportNodes»
+			
+			«translateTransportNode(node, transportNodeNames, featureKinds.getOrDefault(node, "feature"))»
+			«ENDFOR»
+		'''
+	}
+	
+	def private String translateMergedIntegrationModels(List<IntegrationModel> models,
+		Map<TransportNode, String> transportNodeNames
+	) {
+		val name = "MERGED_" + models.join("_AND_", [sanitizeID(it.name)])
+		
+		val uopInstances = models.flatMap[it.element.filter(UoPInstance)]
+		val processes = uopInstances.map[translateUoPInstance(it)]
+		
+		val transportChannels = models.flatMap[it.element.filter(TransportChannel)]
+		val virtualBuses = transportChannels.map[translateTransportChannel(it)]
+		
+		val transportNodes = models.flatMap[it.element.filter(IntegrationContext)].flatMap[it.node].toList
+		val nodeSubcomponents = transportNodes.map[translateTransportNodeSubcomponent(it, transportNodeNames)]
+		
+		val subcomponents = processes + virtualBuses + nodeSubcomponents
+		val subcomponentsString = subcomponents.join(System.lineSeparator)
+		
+		val tsNodeConnections = models.flatMap[it.element.filter(IntegrationContext)].flatMap[it.connection].toList
+		
+		val featureKinds = <TransportNode, String>newHashMap
+		val connectionKinds = <TSNodeConnection, String>newHashMap
+		
+		// Vertex type is either TransportNode or UoPEndPoint
+		val graphBuilder = new GraphBuilder(new SimpleGraph(TSNodeConnection))
+		tsNodeConnections.forEach[tsNodeConnection |
+			val sourceVertex = switch source : tsNodeConnection.source {
+				TSNodePort: source.getContainerOfType(TransportNode)
+				UoPEndPoint: source
+			}
+			val destinationVertex = switch destination : tsNodeConnection.destination {
+				TSNodePort: destination.getContainerOfType(TransportNode)
+				UoPEndPoint: destination
+			}
+			graphBuilder.addEdge(sourceVertex, destinationVertex, tsNodeConnection)
+		]
+		for (subgraph : new BiconnectivityInspector(graphBuilder.buildAsUnmodifiable).connectedComponents) {
+			val portKindsSet = subgraph.vertexSet.filter(UoPEndPoint).map[vertex |
+				switch vertex.connection {
+					ClientServerConnection,
+					QueuingConnection: "event data port"
+					SingleInstanceMessageConnection: "data port"
+				}
+			].toSet
+			if (portKindsSet.size == 1) {
+				featureKinds.putAll(subgraph.vertexSet.filter(TransportNode).toInvertedMap[portKindsSet.head])
+				connectionKinds.putAll(subgraph.edgeSet.toInvertedMap["port"])
+			}
+		}
+		
+		'''
+			--Merged from the following Integration Models:
+			«FOR model : models»
+			--  «model.name»
+			«ENDFOR»
+			system «name»
 			end «name»;
 			
 			system implementation «name».impl
