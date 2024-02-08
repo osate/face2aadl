@@ -290,6 +290,13 @@ package class IntegrationModelTranslator {
 			«FOR model : models»
 			--  «model.name»
 			«ENDFOR»
+			«FOR model : models»
+			«IF !model.description.empty»
+			--
+			--Description of «model.name»:
+			«translateDescription(model)»
+			«ENDIF»
+			«ENDFOR»
 			system «name»
 			end «name»;
 			
