@@ -56,6 +56,5 @@
     <element xsi:type="integration:UoPInstance" name="C" realizes="//@um.0/@element.3">
       <input connection="//@um.0/@element.3/@connection.0"/>
     </element>
-    <element xsi:type="integration:IntegrationContext" name="third_context"/>
   </im>
 </face:ArchitectureModel>
