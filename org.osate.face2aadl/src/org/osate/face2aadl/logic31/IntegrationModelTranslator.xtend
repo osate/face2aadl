@@ -22,6 +22,7 @@ package org.osate.face2aadl.logic31
 import java.util.List
 import java.util.Map
 import java.util.Optional
+import org.eclipse.emf.ecore.xmi.XMLResource
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 import org.jgrapht.alg.connectivity.BiconnectivityInspector
 import org.jgrapht.graph.DefaultEdge
@@ -241,6 +242,15 @@ package class IntegrationModelTranslator {
 	) {
 		val name = "MERGED_" + models.join("_AND_", [sanitizeID(it.name)])
 		
+		val uuids = models.map[model |
+			val uuid = (model.eResource as XMLResource).getID(model)
+			if (uuid !== null) {
+				'''[Integration_Model => "«sanitizeID(model.name)»"; UUID => "«uuid»";]'''
+			} else {
+				null
+			}
+		].filterNull.join(",\n")
+		
 		val uopInstances = models.flatMap[it.element.filter(UoPInstance)]
 		val processes = uopInstances.map[translateUoPInstance(it)]
 		
@@ -298,6 +308,12 @@ package class IntegrationModelTranslator {
 			«ENDIF»
 			«ENDFOR»
 			system «name»
+				«IF !uuids.empty»
+				properties
+					FACE::Merged_UUIDs => (
+						«uuids»
+					);
+				«ENDIF»
 			end «name»;
 			
 			system implementation «name».impl

@@ -19,4 +19,11 @@ property set FACE is
 	Profile: enumeration (security, safety_extended, safety, general) applies to (all);
 	Segment: enumeration (PSSS, PCS, IOSS, OSS, TSS) applies to (all);
 	Design_Assurance_Level: enumeration (A, B, C, D, E) applies to (thread group);
+	
+	
+	-- Properties for integration models:
+	
+	-- When multiple integration models are merged into a single system, this property is used to store the UUIDs from
+	-- the individual integration models.
+	Merged_UUIDs: list of record (Integration_Model: aadlstring; UUID: aadlstring;) applies to (system);
 end FACE;

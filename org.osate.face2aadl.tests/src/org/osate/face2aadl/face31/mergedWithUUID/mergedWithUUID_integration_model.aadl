@@ -1,0 +1,77 @@
+--Generated from "mergedWithUUID.face"
+package mergedWithUUID_integration_model
+public
+	with FACE;
+	with mergedWithUUID_data_model;
+	with mergedWithUUID_PSSS;
+	
+	--Merged from the following Integration Models:
+	--  first
+	--  second
+	--  third
+	system MERGED_first_AND_second_AND_third
+		properties
+			FACE::Merged_UUIDs => (
+				[Integration_Model => "first"; UUID => "_tjZgCsbTEe6ro5K0Vp3qpw";],
+				[Integration_Model => "second"; UUID => "_tjbVMsbTEe6ro5K0Vp3qpw";],
+				[Integration_Model => "third"; UUID => "_tjbVPMbTEe6ro5K0Vp3qpw";]
+			);
+	end MERGED_first_AND_second_AND_third;
+	
+	system implementation MERGED_first_AND_second_AND_third.impl
+		subcomponents
+			A: process mergedWithUUID_PSSS::A_process.impl {
+				FACE::UUID => "_tjaHEMbTEe6ro5K0Vp3qpw";
+			};
+			B: process mergedWithUUID_PSSS::B_process.impl {
+				FACE::UUID => "_tjbVM8bTEe6ro5K0Vp3qpw";
+			};
+			C: process mergedWithUUID_PSSS::C_process.impl {
+				FACE::UUID => "_tjbVPcbTEe6ro5K0Vp3qpw";
+			};
+			Channel: virtual bus {
+				FACE::UUID => "_tjauIMbTEe6ro5K0Vp3qpw";
+			};
+			A_to_B_Transporter: abstract A_to_B_Transporter;
+			B_to_C_Transporter: abstract B_to_C_Transporter;
+		connections
+			connection0: port A.output -> A_to_B_Transporter.input0 {
+				FACE::UUID => "_tjauIsbTEe6ro5K0Vp3qpw";
+			};
+			connection1: port A_to_B_Transporter.output -> B.input {
+				FACE::UUID => "_tjauI8bTEe6ro5K0Vp3qpw";
+			};
+			connection2: port B.output -> B_to_C_Transporter.input0 {
+				FACE::UUID => "_tjbVN8bTEe6ro5K0Vp3qpw";
+			};
+			connection3: port B_to_C_Transporter.output -> C.input {
+				FACE::UUID => "_tjbVOMbTEe6ro5K0Vp3qpw";
+			};
+	end MERGED_first_AND_second_AND_third.impl;
+	
+	abstract A_to_B_Transporter
+		features
+			input0: in data port mergedWithUUID_data_model::Template1_Platform.impl {
+				FACE::UUID => "_tjbVMcbTEe6ro5K0Vp3qpw";
+			};
+			output: out data port mergedWithUUID_data_model::Template1_Platform.impl {
+				FACE::UUID => "_tjbVMMbTEe6ro5K0Vp3qpw";
+			};
+		properties
+			FACE::Segment => TSS;
+			FACE::UUID => "_tjauJMbTEe6ro5K0Vp3qpw";
+	end A_to_B_Transporter;
+	
+	abstract B_to_C_Transporter
+		features
+			input0: in data port mergedWithUUID_data_model::Template1_Platform.impl {
+				FACE::UUID => "_tjbVO8bTEe6ro5K0Vp3qpw";
+			};
+			output: out data port mergedWithUUID_data_model::Template1_Platform.impl {
+				FACE::UUID => "_tjbVOsbTEe6ro5K0Vp3qpw";
+			};
+		properties
+			FACE::Segment => TSS;
+			FACE::UUID => "_tjbVOcbTEe6ro5K0Vp3qpw";
+	end B_to_C_Transporter;
+end mergedWithUUID_integration_model;
