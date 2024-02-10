@@ -93,10 +93,10 @@ package class IntegrationModelTranslator {
 		val classifiers = integrationModels.map[model |
 			val merged = mergedIntegrationModels.keySet.findFirst[it.contains(model)]
 			if (merged === null) {
-				translateIntegrationModel(model, transportNodeNames)
+				translateIntegrationModels(#[model], transportNodeNames)
 			} else if (!mergedIntegrationModels.get(merged)) {
 				mergedIntegrationModels.put(merged, true)
-				translateMergedIntegrationModels(merged, transportNodeNames)
+				translateIntegrationModels(merged, transportNodeNames)
 			} else {
 				null
 			}
@@ -156,100 +156,57 @@ package class IntegrationModelTranslator {
 		return transportNodeNames
 	}
 	
-	def private String translateIntegrationModel(IntegrationModel model,
+	/*
+	 * This method handles the translation of a single IntegrationModel as well as merged IntegerationModels. When the
+	 * models parameter contains multiple IntegrationModels, then they are considered to be merged. Otherwise, the one
+	 * model is translated as a single IntegrationModel.
+	 */
+	def private String translateIntegrationModels(List<IntegrationModel> models,
 		Map<TransportNode, String> transportNodeNames
 	) {
-		val name = sanitizeID(model.name)
-		
-		val uopInstances = model.element.filter(UoPInstance)
-		val processes = uopInstances.map[translateUoPInstance(it)]
-		
-		val transportChannels = model.element.filter(TransportChannel)
-		val virtualBuses = transportChannels.map[translateTransportChannel(it)]
-		
-		val transportNodes = model.element.filter(IntegrationContext).flatMap[it.node].toList
-		val nodeSubcomponents = transportNodes.map[translateTransportNodeSubcomponent(it, transportNodeNames)]
-		
-		val subcomponents = processes + virtualBuses + nodeSubcomponents
-		val subcomponentsString = subcomponents.join(System.lineSeparator)
-		val uuid = translateUUID(model)
-		
-		val tsNodeConnections = model.element.filter(IntegrationContext).flatMap[it.connection].toList
-		
-		val featureKinds = <TransportNode, String>newHashMap
-		val connectionKinds = <TSNodeConnection, String>newHashMap
-		
-		// Vertex type is either TransportNode or UoPEndPoint
-		val graphBuilder = new GraphBuilder(new SimpleGraph(TSNodeConnection))
-		tsNodeConnections.forEach[tsNodeConnection |
-			val sourceVertex = switch source : tsNodeConnection.source {
-				TSNodePort: source.getContainerOfType(TransportNode)
-				UoPEndPoint: source
-			}
-			val destinationVertex = switch destination : tsNodeConnection.destination {
-				TSNodePort: destination.getContainerOfType(TransportNode)
-				UoPEndPoint: destination
-			}
-			graphBuilder.addEdge(sourceVertex, destinationVertex, tsNodeConnection)
-		]
-		for (subgraph : new BiconnectivityInspector(graphBuilder.buildAsUnmodifiable).connectedComponents) {
-			val portKindsSet = subgraph.vertexSet.filter(UoPEndPoint).map[vertex |
-				switch vertex.connection {
-					ClientServerConnection,
-					QueuingConnection: "event data port"
-					SingleInstanceMessageConnection: "data port"
-				}
-			].toSet
-			if (portKindsSet.size == 1) {
-				featureKinds.putAll(subgraph.vertexSet.filter(TransportNode).toInvertedMap[portKindsSet.head])
-				connectionKinds.putAll(subgraph.edgeSet.toInvertedMap["port"])
-			}
+		if (models.empty) {
+			throw new IllegalArgumentException("models cannot be empty.");
 		}
 		
-		'''
-			«translateDescription(model)»
-			system «name»
-				«IF !uuid.empty»
-				properties
-					«uuid»
+		val comments = if (models.size == 1) {
+			translateDescription(models.head)
+		} else {
+			'''
+				--Merged from the following Integration Models:
+				«FOR model : models»
+				--  «model.name»
+				«ENDFOR»
+				«FOR model : models»
+				«IF !model.description.empty»
+				--
+				--Description of «model.name»:
+				«translateDescription(model)»
 				«ENDIF»
-			end «name»;
-			
-			system implementation «name».impl
-				«IF !subcomponentsString.empty»
-				subcomponents
-					«subcomponentsString»
-				«ENDIF»
-				«IF !tsNodeConnections.empty»
-				connections
-					«FOR tsNodeConnection : tsNodeConnections.indexed»
-					«val index = tsNodeConnection.key»
-					«val connection = tsNodeConnection.value»
-					«val connectionKind = connectionKinds.getOrDefault(connection, "feature")»
-					«translateTSNodeConnection(connection, index, connectionKind, transportNodeNames)»
-					«ENDFOR»
-				«ENDIF»
-			end «name».impl;
-			«FOR node : transportNodes»
-			
-			«translateTransportNode(node, transportNodeNames, featureKinds.getOrDefault(node, "feature"))»
-			«ENDFOR»
-		'''
-	}
-	
-	def private String translateMergedIntegrationModels(List<IntegrationModel> models,
-		Map<TransportNode, String> transportNodeNames
-	) {
-		val name = "MERGED_" + models.join("_AND_", [sanitizeID(it.name)])
+				«ENDFOR»
+			'''
+		}
 		
-		val uuids = models.map[model |
-			val uuid = (model.eResource as XMLResource).getID(model)
-			if (uuid !== null) {
-				'''[Integration_Model => "«sanitizeID(model.name)»"; UUID => "«uuid»";]'''
-			} else {
-				null
-			}
-		].filterNull.join(",\n")
+		val name = if (models.size == 1) {
+			sanitizeID(models.head.name)
+		} else {
+			"MERGED_" + models.join("_AND_", [sanitizeID(it.name)])
+		}
+		
+		val uuidProperty = if (models.size == 1) {
+			translateUUID(models.head)
+		} else {
+			val records = models.map[model | model -> (model.eResource as XMLResource).getID(model)]
+				.filter[it.value !== null]
+				.map['''[Integration_Model => "«sanitizeID(it.key.name)»"; UUID => "«it.value»";]''']
+				.join(",\n")
+			'''
+				«IF !records.empty»
+				FACE::Merged_UUIDs => (
+					«records»
+				);
+				«ENDIF»
+			'''
+		}
 		
 		val uopInstances = models.flatMap[it.element.filter(UoPInstance)]
 		val processes = uopInstances.map[translateUoPInstance(it)]
@@ -296,23 +253,11 @@ package class IntegrationModelTranslator {
 		}
 		
 		'''
-			--Merged from the following Integration Models:
-			«FOR model : models»
-			--  «model.name»
-			«ENDFOR»
-			«FOR model : models»
-			«IF !model.description.empty»
-			--
-			--Description of «model.name»:
-			«translateDescription(model)»
-			«ENDIF»
-			«ENDFOR»
+			«comments»
 			system «name»
-				«IF !uuids.empty»
+				«IF !uuidProperty.empty»
 				properties
-					FACE::Merged_UUIDs => (
-						«uuids»
-					);
+					«uuidProperty»
 				«ENDIF»
 			end «name»;
 			
