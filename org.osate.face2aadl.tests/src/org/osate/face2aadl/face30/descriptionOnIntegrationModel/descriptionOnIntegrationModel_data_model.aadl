@@ -1,0 +1,41 @@
+--Generated from "descriptionOnIntegrationModel.face"
+package descriptionOnIntegrationModel_data_model
+public
+	with FACE;
+	
+	--Basic altitude type
+	data Altitude_Conceptual
+		properties
+			FACE::Realization_Tier => conceptual;
+	end Altitude_Conceptual;
+	
+	--Altitude in meters
+	data Altitude_m_Logical extends Altitude_Conceptual
+		properties
+			FACE::Realization_Tier => logical;
+	end Altitude_m_Logical;
+	
+	--Altitude in feet
+	data Altitude_ft_Logical extends Altitude_Conceptual
+		properties
+			FACE::Realization_Tier => logical;
+	end Altitude_ft_Logical;
+	
+	--Double precision floating point in meters
+	data Altitude_m_Platform extends Altitude_m_Logical
+		properties
+			FACE::Realization_Tier => platform;
+	end Altitude_m_Platform;
+	
+	data implementation Altitude_m_Platform.impl
+	end Altitude_m_Platform.impl;
+	
+	--Double precision floating point in feet
+	data Altitude_ft_Platform extends Altitude_ft_Logical
+		properties
+			FACE::Realization_Tier => platform;
+	end Altitude_ft_Platform;
+	
+	data implementation Altitude_ft_Platform.impl
+	end Altitude_ft_Platform.impl;
+end descriptionOnIntegrationModel_data_model;
