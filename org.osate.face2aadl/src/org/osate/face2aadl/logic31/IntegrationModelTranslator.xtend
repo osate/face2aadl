@@ -165,7 +165,7 @@ package class IntegrationModelTranslator {
 		Map<TransportNode, String> transportNodeNames
 	) {
 		if (models.empty) {
-			throw new IllegalArgumentException("models cannot be empty.");
+			throw new IllegalArgumentException("models cannot be empty.")
 		}
 		
 		val comments = if (models.size == 1) {

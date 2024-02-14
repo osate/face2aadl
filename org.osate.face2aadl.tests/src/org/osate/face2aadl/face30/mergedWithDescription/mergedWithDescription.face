@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<face:ArchitectureModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:face="http://www.opengroup.us/face/3.0" xmlns:integration="http://www.opengroup.us/face/integration/3.0" xmlns:platform="http://www.opengroup.us/face/datamodel/platform/3.0" xmlns:uop="http://www.opengroup.us/face/uop/3.0" name="am">
+  <dm name="dm">
+    <pdm name="pdm">
+      <element xsi:type="platform:Query" name="Query1" specification="specification"/>
+      <element xsi:type="platform:Template" name="Template1" specification="specification" boundQuery="//@dm.0/@pdm.0/@element.0"/>
+    </pdm>
+  </dm>
+  <um name="um">
+    <element xsi:type="uop:PlatformSpecificComponent" name="A">
+      <thread/>
+      <memoryRequirements/>
+      <connection xsi:type="uop:SingleInstanceMessageConnection" name="output" messageType="//@dm.0/@pdm.0/@element.1" messageExchangeType="OutboundMessage"/>
+    </element>
+    <element xsi:type="uop:PlatformSpecificComponent" name="B">
+      <thread/>
+      <memoryRequirements/>
+      <connection xsi:type="uop:SingleInstanceMessageConnection" name="input" messageType="//@dm.0/@pdm.0/@element.1"/>
+      <connection xsi:type="uop:SingleInstanceMessageConnection" name="output" messageType="//@dm.0/@pdm.0/@element.1" messageExchangeType="OutboundMessage"/>
+    </element>
+    <element xsi:type="uop:PlatformSpecificComponent" name="C">
+      <thread/>
+      <memoryRequirements/>
+      <connection xsi:type="uop:SingleInstanceMessageConnection" name="input" messageType="//@dm.0/@pdm.0/@element.1"/>
+    </element>
+  </um>
+  <im name="first" description="Description on first IntegrationModel.">
+    <element xsi:type="integration:UoPInstance" name="A" realizes="//@um.0/@element.0">
+      <output connection="//@um.0/@element.0/@connection.0"/>
+    </element>
+    <element xsi:type="integration:TransportChannel" name="Channel"/>
+    <element xsi:type="integration:IntegrationContext" name="first_context">
+      <connection source="//@im.0/@element.0/@output.0" destination="//@im.0/@element.2/@node.0/@inPort.0"/>
+      <connection source="//@im.0/@element.2/@node.0/@outPort" destination="//@im.1/@element.0/@input.0"/>
+      <node xsi:type="integration:ViewTransporter" name="A_to_B_Transporter" channel="//@im.0/@element.1">
+        <outPort view="//@dm.0/@pdm.0/@element.1"/>
+        <inPort view="//@dm.0/@pdm.0/@element.1"/>
+      </node>
+    </element>
+  </im>
+  <im name="second">
+    <element xsi:type="integration:UoPInstance" name="B" realizes="//@um.0/@element.1">
+      <output connection="//@um.0/@element.1/@connection.1"/>
+      <input connection="//@um.0/@element.1/@connection.0"/>
+    </element>
+    <element xsi:type="integration:IntegrationContext" name="second_context">
+      <connection source="//@im.1/@element.0/@output.0" destination="//@im.1/@element.1/@node.0/@inPort.0"/>
+      <connection source="//@im.1/@element.1/@node.0/@outPort" destination="//@im.2/@element.0/@input.0"/>
+      <node xsi:type="integration:ViewTransporter" name="B_to_C_Transporter" channel="//@im.0/@element.1">
+        <outPort view="//@dm.0/@pdm.0/@element.1"/>
+        <inPort view="//@dm.0/@pdm.0/@element.1"/>
+      </node>
+    </element>
+  </im>
+  <im name="third" description="Description on third IntegrationModel.">
+    <element xsi:type="integration:UoPInstance" name="C" realizes="//@um.0/@element.2">
+      <input connection="//@um.0/@element.2/@connection.0"/>
+    </element>
+  </im>
+</face:ArchitectureModel>
