@@ -1,0 +1,45 @@
+--Generated from "mergedThreeInSeries.face"
+package mergedThreeInSeries_integration_model
+public
+	with FACE;
+	with mergedThreeInSeries_data_model;
+	with mergedThreeInSeries_PSSS;
+	
+	--Merged from the following Integration Models:
+	--  first
+	--  second
+	--  third
+	system MERGED_first_AND_second_AND_third
+	end MERGED_first_AND_second_AND_third;
+	
+	system implementation MERGED_first_AND_second_AND_third.impl
+		subcomponents
+			A: process mergedThreeInSeries_PSSS::A_process.impl;
+			B: process mergedThreeInSeries_PSSS::B_process.impl;
+			C: process mergedThreeInSeries_PSSS::C_process.impl;
+			Channel: virtual bus;
+			A_to_B_Transporter: abstract A_to_B_Transporter;
+			B_to_C_Transporter: abstract B_to_C_Transporter;
+		connections
+			connection0: port A.output -> A_to_B_Transporter.input0;
+			connection1: port A_to_B_Transporter.output -> B.input;
+			connection2: port B.output -> B_to_C_Transporter.input0;
+			connection3: port B_to_C_Transporter.output -> C.input;
+	end MERGED_first_AND_second_AND_third.impl;
+	
+	abstract A_to_B_Transporter
+		features
+			input0: in data port mergedThreeInSeries_data_model::Template1_Platform.impl;
+			output: out data port mergedThreeInSeries_data_model::Template1_Platform.impl;
+		properties
+			FACE::Segment => TSS;
+	end A_to_B_Transporter;
+	
+	abstract B_to_C_Transporter
+		features
+			input0: in data port mergedThreeInSeries_data_model::Template1_Platform.impl;
+			output: out data port mergedThreeInSeries_data_model::Template1_Platform.impl;
+		properties
+			FACE::Segment => TSS;
+	end B_to_C_Transporter;
+end mergedThreeInSeries_integration_model;

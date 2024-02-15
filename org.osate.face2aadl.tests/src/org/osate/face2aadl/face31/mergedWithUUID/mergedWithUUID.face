@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<face:ArchitectureModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:face="http://www.opengroup.us/face/3.1" xmlns:integration="http://www.opengroup.us/face/integration/3.1" xmlns:platform="http://www.opengroup.us/datamodel/platform/1.0" xmlns:uop="http://www.opengroup.us/face/uop/3.1" xmi:id="_tjV1oMbTEe6ro5K0Vp3qpw" name="am">
+  <dm xmi:id="_tjWcsMbTEe6ro5K0Vp3qpw" name="dm">
+    <pdm xmi:id="_tjWcscbTEe6ro5K0Vp3qpw" name="pdm">
+      <element xsi:type="platform:Query" xmi:id="_tjXDwMbTEe6ro5K0Vp3qpw" name="Query1" specification="specification"/>
+    </pdm>
+  </dm>
+  <um xmi:id="_tjXq0MbTEe6ro5K0Vp3qpw" name="um">
+    <element xsi:type="uop:Template" xmi:id="_tjXq0cbTEe6ro5K0Vp3qpw" name="Template1" specification="specification" boundQuery="_tjXDwMbTEe6ro5K0Vp3qpw"/>
+    <element xsi:type="uop:PlatformSpecificComponent" xmi:id="_tjYR4MbTEe6ro5K0Vp3qpw" name="A">
+      <thread xmi:id="_tjYR4cbTEe6ro5K0Vp3qpw"/>
+      <memoryRequirements xmi:id="_tjY48MbTEe6ro5K0Vp3qpw"/>
+      <connection xsi:type="uop:SingleInstanceMessageConnection" xmi:id="_tjZgAMbTEe6ro5K0Vp3qpw" name="output" messageType="_tjXq0cbTEe6ro5K0Vp3qpw" messageExchangeType="OutboundMessage"/>
+    </element>
+    <element xsi:type="uop:PlatformSpecificComponent" xmi:id="_tjZgAcbTEe6ro5K0Vp3qpw" name="B">
+      <thread xmi:id="_tjZgAsbTEe6ro5K0Vp3qpw"/>
+      <memoryRequirements xmi:id="_tjZgA8bTEe6ro5K0Vp3qpw"/>
+      <connection xsi:type="uop:SingleInstanceMessageConnection" xmi:id="_tjZgBMbTEe6ro5K0Vp3qpw" name="input" messageType="_tjXq0cbTEe6ro5K0Vp3qpw"/>
+      <connection xsi:type="uop:SingleInstanceMessageConnection" xmi:id="_tjZgBcbTEe6ro5K0Vp3qpw" name="output" messageType="_tjXq0cbTEe6ro5K0Vp3qpw" messageExchangeType="OutboundMessage"/>
+    </element>
+    <element xsi:type="uop:PlatformSpecificComponent" xmi:id="_tjZgBsbTEe6ro5K0Vp3qpw" name="C">
+      <thread xmi:id="_tjZgB8bTEe6ro5K0Vp3qpw"/>
+      <memoryRequirements xmi:id="_tjZgCMbTEe6ro5K0Vp3qpw"/>
+      <connection xsi:type="uop:SingleInstanceMessageConnection" xmi:id="_tjZgCcbTEe6ro5K0Vp3qpw" name="input" messageType="_tjXq0cbTEe6ro5K0Vp3qpw"/>
+    </element>
+  </um>
+  <im xmi:id="_tjZgCsbTEe6ro5K0Vp3qpw" name="first">
+    <element xsi:type="integration:UoPInstance" xmi:id="_tjaHEMbTEe6ro5K0Vp3qpw" name="A" realizes="_tjYR4MbTEe6ro5K0Vp3qpw">
+      <output xmi:id="_tjaHEcbTEe6ro5K0Vp3qpw" connection="_tjZgAMbTEe6ro5K0Vp3qpw"/>
+    </element>
+    <element xsi:type="integration:TransportChannel" xmi:id="_tjauIMbTEe6ro5K0Vp3qpw" name="Channel"/>
+    <element xsi:type="integration:IntegrationContext" xmi:id="_tjauIcbTEe6ro5K0Vp3qpw" name="first_context">
+      <connection xmi:id="_tjauIsbTEe6ro5K0Vp3qpw" source="_tjaHEcbTEe6ro5K0Vp3qpw" destination="_tjbVMcbTEe6ro5K0Vp3qpw"/>
+      <connection xmi:id="_tjauI8bTEe6ro5K0Vp3qpw" source="_tjbVMMbTEe6ro5K0Vp3qpw" destination="_tjbVNcbTEe6ro5K0Vp3qpw"/>
+      <node xsi:type="integration:ViewTransporter" xmi:id="_tjauJMbTEe6ro5K0Vp3qpw" name="A_to_B_Transporter" channel="_tjauIMbTEe6ro5K0Vp3qpw">
+        <outPort xmi:id="_tjbVMMbTEe6ro5K0Vp3qpw" view="_tjXq0cbTEe6ro5K0Vp3qpw"/>
+        <inPort xmi:id="_tjbVMcbTEe6ro5K0Vp3qpw" view="_tjXq0cbTEe6ro5K0Vp3qpw"/>
+      </node>
+    </element>
+  </im>
+  <im xmi:id="_tjbVMsbTEe6ro5K0Vp3qpw" name="second">
+    <element xsi:type="integration:UoPInstance" xmi:id="_tjbVM8bTEe6ro5K0Vp3qpw" name="B" realizes="_tjZgAcbTEe6ro5K0Vp3qpw">
+      <output xmi:id="_tjbVNMbTEe6ro5K0Vp3qpw" connection="_tjZgBcbTEe6ro5K0Vp3qpw"/>
+      <input xmi:id="_tjbVNcbTEe6ro5K0Vp3qpw" connection="_tjZgBMbTEe6ro5K0Vp3qpw"/>
+    </element>
+    <element xsi:type="integration:IntegrationContext" xmi:id="_tjbVNsbTEe6ro5K0Vp3qpw" name="second_context">
+      <connection xmi:id="_tjbVN8bTEe6ro5K0Vp3qpw" source="_tjbVNMbTEe6ro5K0Vp3qpw" destination="_tjbVO8bTEe6ro5K0Vp3qpw"/>
+      <connection xmi:id="_tjbVOMbTEe6ro5K0Vp3qpw" source="_tjbVOsbTEe6ro5K0Vp3qpw" destination="_tjbVPsbTEe6ro5K0Vp3qpw"/>
+      <node xsi:type="integration:ViewTransporter" xmi:id="_tjbVOcbTEe6ro5K0Vp3qpw" name="B_to_C_Transporter" channel="_tjauIMbTEe6ro5K0Vp3qpw">
+        <outPort xmi:id="_tjbVOsbTEe6ro5K0Vp3qpw" view="_tjXq0cbTEe6ro5K0Vp3qpw"/>
+        <inPort xmi:id="_tjbVO8bTEe6ro5K0Vp3qpw" view="_tjXq0cbTEe6ro5K0Vp3qpw"/>
+      </node>
+    </element>
+  </im>
+  <im xmi:id="_tjbVPMbTEe6ro5K0Vp3qpw" name="third">
+    <element xsi:type="integration:UoPInstance" xmi:id="_tjbVPcbTEe6ro5K0Vp3qpw" name="C" realizes="_tjZgBsbTEe6ro5K0Vp3qpw">
+      <input xmi:id="_tjbVPsbTEe6ro5K0Vp3qpw" connection="_tjZgCcbTEe6ro5K0Vp3qpw"/>
+    </element>
+  </im>
+</face:ArchitectureModel>

@@ -1,0 +1,14 @@
+--Generated from "mergedWithUUID.face"
+package mergedWithUUID_data_model
+public
+	with FACE;
+	
+	data Template1_Platform
+		properties
+			FACE::Realization_Tier => platform;
+			FACE::UUID => "_8CKOUcqyEe6MQI_fHrCtMA";
+	end Template1_Platform;
+	
+	data implementation Template1_Platform.impl
+	end Template1_Platform.impl;
+end mergedWithUUID_data_model;

@@ -22,8 +22,10 @@ package org.osate.face2aadl.logic31
 import java.util.List
 import java.util.Map
 import java.util.Optional
+import org.eclipse.emf.ecore.xmi.XMLResource
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 import org.jgrapht.alg.connectivity.BiconnectivityInspector
+import org.jgrapht.graph.DefaultEdge
 import org.jgrapht.graph.SimpleGraph
 import org.jgrapht.graph.builder.GraphBuilder
 import org.osate.face31.ArchitectureModel
@@ -70,10 +72,35 @@ package class IntegrationModelTranslator {
 	}
 	
 	def package Optional<String> translate(List<IntegrationModel> integrationModels) {
+		val graphBuilder = new GraphBuilder(new SimpleGraph(DefaultEdge))
+		integrationModels.flatMap[it.element.filter(IntegrationContext).flatMap[it.connection]]
+			.forEach[tsNodeConnection |
+				val sourceIntegrationModel = tsNodeConnection.source.getContainerOfType(IntegrationModel)
+				val destinationIntegrationModel = tsNodeConnection.destination.getContainerOfType(IntegrationModel)
+				if (sourceIntegrationModel != destinationIntegrationModel) {
+					graphBuilder.addEdge(sourceIntegrationModel, destinationIntegrationModel)
+				}
+			]
+		// Keeps track of each collection of merged IntegrationModels and whether they have been translated yet.
+		val mergedIntegrationModels = new BiconnectivityInspector(graphBuilder.buildAsUnmodifiable)
+			.connectedComponents
+			.map[subgraph | subgraph.vertexSet.sortBy[integrationModels.indexOf(it)]]
+			.toInvertedMap[false]
+		
 		val transportNodes = integrationModels.flatMap[it.element.filter(IntegrationContext).flatMap[it.node]].toList
 		val transportNodeNames = generateUniqueNames(transportNodes)
 		
-		val classifiers = integrationModels.map[translateIntegrationModel(it, transportNodeNames)]
+		val classifiers = integrationModels.map[model |
+			val merged = mergedIntegrationModels.keySet.findFirst[it.contains(model)]
+			if (merged === null) {
+				translateIntegrationModels(#[model], transportNodeNames)
+			} else if (!mergedIntegrationModels.get(merged)) {
+				mergedIntegrationModels.put(merged, true)
+				translateIntegrationModels(merged, transportNodeNames)
+			} else {
+				null
+			}
+		].filterNull
 		val classifiersString = classifiers.join(System.lineSeparator)
 		
 		if (classifiersString.empty) {
@@ -129,25 +156,71 @@ package class IntegrationModelTranslator {
 		return transportNodeNames
 	}
 	
-	def private String translateIntegrationModel(IntegrationModel model,
+	/*
+	 * This method handles the translation of a single IntegrationModel as well as merged IntegerationModels. When the
+	 * models parameter contains multiple IntegrationModels, then they are considered to be merged. Otherwise, the one
+	 * model is translated as a single IntegrationModel.
+	 */
+	def private String translateIntegrationModels(List<IntegrationModel> models,
 		Map<TransportNode, String> transportNodeNames
 	) {
-		val name = sanitizeID(model.name)
+		if (models.empty) {
+			throw new IllegalArgumentException("models cannot be empty.")
+		}
 		
-		val uopInstances = model.element.filter(UoPInstance)
+		val comments = if (models.size == 1) {
+			translateDescription(models.head)
+		} else {
+			'''
+				--Merged from the following Integration Models:
+				«FOR model : models»
+				--  «model.name»
+				«ENDFOR»
+				«FOR model : models»
+				«IF !model.description.empty»
+				--
+				--Description of «model.name»:
+				«translateDescription(model)»
+				«ENDIF»
+				«ENDFOR»
+			'''
+		}
+		
+		val name = if (models.size == 1) {
+			sanitizeID(models.head.name)
+		} else {
+			"MERGED_" + models.join("_AND_", [sanitizeID(it.name)])
+		}
+		
+		val uuidProperty = if (models.size == 1) {
+			translateUUID(models.head)
+		} else {
+			val records = models.map[model | model -> (model.eResource as XMLResource).getID(model)]
+				.filter[it.value !== null]
+				.map['''[Integration_Model => "«sanitizeID(it.key.name)»"; UUID => "«it.value»";]''']
+				.join(",\n")
+			'''
+				«IF !records.empty»
+				FACE::Merged_UUIDs => (
+					«records»
+				);
+				«ENDIF»
+			'''
+		}
+		
+		val uopInstances = models.flatMap[it.element.filter(UoPInstance)]
 		val processes = uopInstances.map[translateUoPInstance(it)]
 		
-		val transportChannels = model.element.filter(TransportChannel)
+		val transportChannels = models.flatMap[it.element.filter(TransportChannel)]
 		val virtualBuses = transportChannels.map[translateTransportChannel(it)]
 		
-		val transportNodes = model.element.filter(IntegrationContext).flatMap[it.node].toList
+		val transportNodes = models.flatMap[it.element.filter(IntegrationContext)].flatMap[it.node].toList
 		val nodeSubcomponents = transportNodes.map[translateTransportNodeSubcomponent(it, transportNodeNames)]
 		
 		val subcomponents = processes + virtualBuses + nodeSubcomponents
 		val subcomponentsString = subcomponents.join(System.lineSeparator)
-		val uuid = translateUUID(model)
 		
-		val tsNodeConnections = model.element.filter(IntegrationContext).flatMap[it.connection].toList
+		val tsNodeConnections = models.flatMap[it.element.filter(IntegrationContext)].flatMap[it.connection].toList
 		
 		val featureKinds = <TransportNode, String>newHashMap
 		val connectionKinds = <TSNodeConnection, String>newHashMap
@@ -180,11 +253,11 @@ package class IntegrationModelTranslator {
 		}
 		
 		'''
-			«translateDescription(model)»
+			«comments»
 			system «name»
-				«IF !uuid.empty»
+				«IF !uuidProperty.empty»
 				properties
-					«uuid»
+					«uuidProperty»
 				«ENDIF»
 			end «name»;
 			
