@@ -109,7 +109,7 @@ the AADL file is a sanitized version of the FACE file name. The contents of each
 * ***\<FACE file name\>*_data_model.aadl**: Data model elements.
 * ***\<FACE file name\>*_PSSS.aadl**: UoPs that are platform specific components.
 * ***\<FACE file name\>*_PCS.aadl**: UoPs that are portable components.
-* ***\<FACE file name\>*_integration_model.aadl**: An AADL system representing the integration model.
+* ***\<FACE file name\>*_integration_model.aadl**: AADL systems representing the integration models.
 
 ### Data model translation for FACE 3.0
 
@@ -534,12 +534,30 @@ The following describes how integration models are translated.
 
 #### face.integration.IntegrationModel for FACE 3.0
 
-* Each **IntegrationModel** is translated into a system type.
+When the FACE Data Model to AADL Translator was originally developed, it was incorrectly assumed that each integration
+model is self-contained and that elements in an integration model do not refer to elements in other integration models.
+Based on this assumption, each integration model was translated into an AADL system. However, it was later discovered
+that it is possible for a **face.integration.TSNodeConnection** in one integration model to refer to a
+**face.integration.UoPEndPoint** in another integration model. In such cases, translating each integration model into an
+AADL system causes errors since a connection in one system will try to refer to a subcomponent in another system.
+
+To solve this problem, the translator first searches through all of the integration models and looks for cases in which
+a **TSNodeConnection** in one integration model refers to a **UoPEndPoint** in another integration model. When an
+integration model contains a reference to another integration model, then both integration models are placed into a
+merged unit. A merged unit is a collection of integration models that all share a direct or indirect reference to or
+from each other. A FACE file may contain zero, one, or many merged units. Each merged unit is translated into a single
+AADL system.
+
+Each integration model that does not contain a reference to another integration model is translated into an AADL system.
+The following describes how integration models that are not part of a merged unit are translated:
+
+* Each **IntegrationModel** that is not part of a merged unit is translated into a system type.
 	* The **name** field is translated into the name of the system type.
 	* The **description** field is translated into a comment on the system type.
 	* If the FACE file was generated using UUIDs, then the property **FACE::UUID** is set to the ID of the
 	  **IntegrationModel**.
-* Each **IntegrationModel** is translated into a system implementation which implements the system type.
+* Each **IntegrationModel** that is not part of a merged unit is translated into a system implementation which
+  implements the system type.
 	* The **name** field is used to create the name of the system implementation. The system implementation's
 	  name is ***\<name\>*.impl**.
 	* Each **face.integration.UoPInstance** of the **IntegrationModel** is translated into a process
@@ -568,12 +586,58 @@ The following describes how integration models are translated.
 			  connection.
 			* If the UoP endpoints for the paths are all translated as event data ports, then this connection will be a
 			  port connection.
-			* If the UoP endpoints for the paths are not all of the same kind, then this feature will be a feature
+			* If the UoP endpoints for the paths are not all of the same kind, then this connection will be a feature
 			  connection.
 		* The **source** field is translated into the source of the connection.
 		* The **destination** field is translated into the destination of the connection.
-		* IF the FACE file was generated using UUIDs, then the property **FACE::UUID** is set to the ID of
+		* If the FACE file was generated using UUIDs, then the property **FACE::UUID** is set to the ID of
 		  the **TSNodeConnection**.
+
+The following describes how merged units are translated:
+
+* Each merged unit is translated into a system type.
+	* The name of the system type is derived from the **name** fields of each **IntegrationModel** in the merged unit.
+	  The name of the system type starts with **MERGED_** and contains all of the names of each **IntegrationModel**
+	  separated by **_AND_**. The name of each **IntegrationModel** is also listed in a comment on the system type.
+	* The **description** field of each **IntegrationModel** is translated into a comment on the system type.
+	* If the FACE file was generated using UUIDs, then the property **FACE::Merged_UUIDs** is set and contains a list of
+	  records indicating the ID of each **IntegrationModel**.
+* Each merged unit is translated into a system implementation which implements the system type.
+	* The name of the system implementation is derived from the **name** fields of each **IntegrationModel** in the
+	  merged unit. The name of the system implementation starts with **MERGED_**, contains all of the names of each
+	  **IntegrationModel** separated by **_AND_**, and ends with **.impl**.
+	* Each **face.integration.UoPInstance** of each **IntegrationModel** in the merged unit is translated into a process
+	  subcomponent.
+		* The **name** field is translated into the name of the process subcomponent.
+		* The **description** field is translated into a comment on the process subcomponent.
+		* The **realizes** field is translated into the subcomponent's process classifier reference.
+		* If the FACE file was generated using UUIDs, then the property **FACE::UUID** is set to the ID of the
+		  **UoPInstance**.
+	* Each **face.integration.TransportChannel** of each **IntegrationModel** in the merged unit is translated into a
+	  virtual bus subcomponent.
+		* The **name** field is translated into the name of the virtual bus subcomponent.
+		* The **description** field is translated into a comment on the virtual bus subcomponent.
+		* If the FACE file was generated using UUIDs, then the property **FACE::UUID** is set to the ID of the
+		  **TransportChannel**.
+	* Each **face.integration.TransportNode** of each **face.integration.IntegrationContext** of each
+	  **IntegrationModel** in the merged unit is translated into an abstract subcomponent.
+		* The **name** field is translated into the name of the abstract subcomponent.
+		* The **name** field is translated into the subcomponent's abstract classifier reference.
+	* Each **face.integration.TSNodeConnection** of each **face.integration.IntegrationContext** of each
+	  **IntegrationModel** in the merged unit is translated into a connection.
+		* The name of the connection is generated from the index of the **TSNodeConnection** in the merged unit. The
+		  name is **connection\<index\>**.
+		* Every path between UoPs that includes the **TSNodeConnection** is analyzed to determine the connection kind.
+			* If the UoP endpoints for the parts are all translated as data ports, then this connection will be a port
+			  connection.
+			* If the UoP endpoints for the paths are all translated as event data ports, then this connection will be a
+			  port connection.
+			* If the UoP endpoints for the paths are not all of the same kind, then this connection will be a feature
+			  connection.
+		* The **source** field is translated into the source of the connection.
+		* The **destination** field is translated into the destination of the connection.
+		* If the FACE file was generated using UUIDs, then the property **FACE::UUID** is set to the ID of the
+		  **TSNodeConnection**.
 
 #### face.integration.TransportNode for FACE 3.0
 
@@ -666,7 +730,7 @@ the AADL file is a sanitized version of the FACE file name. The contents of each
 * ***\<FACE file name\>*_data_model.aadl**: Data model elements and UoP Message Types.
 * ***\<FACE file name\>*_PSSS.aadl**: UoPs that are platform specific components.
 * ***\<FACE file name\>*_PCS.aadl**: UoPs that are portable components.
-* ***\<FACE file name\>*_integration_model.aadl**: An AADL system representing the integration model.
+* ***\<FACE file name\>*_integration_model.aadl**: AADL systems representing the integration models.
 
 ### Data model translation for FACE 3.1
 
@@ -1064,12 +1128,30 @@ The following describes how integration models are translated.
 
 #### face.integration.IntegrationModel for FACE 3.1
 
-* Each **IntegrationModel** is translated into a system type.
+When the FACE Data Model to AADL Translator was originally developed, it was incorrectly assumed that each integration
+model is self-contained and that elements in an integration model do not refer to elements in other integration models.
+Based on this assumption, each integration model was translated into an AADL system. However, it was later discovered
+that it is possible for a **face.integration.TSNodeConnection** in one integration model to refer to a
+**face.integration.UoPEndPoint** in another integration model. In such cases, translating each integration model into an
+AADL system causes errors since a connection in one system will try to refer to a subcomponent in another system.
+
+To solve this problem, the translator first searches through all of the integration models and looks for cases in which
+a **TSNodeConnection** in one integration model refers to a **UoPEndPoint** in another integration model. When an
+integration model contains a reference to another integration model, then both integration models are placed into a
+merged unit. A merged unit is a collection of integration models that all share a direct or indirect reference to or
+from each other. A FACE file may contain zero, one, or many merged units. Each merged unit is translated into a single
+AADL system.
+
+Each integration model that does not contain a reference to another integration model is translated into an AADL system.
+The following describes how integration models that are not part of a merged unit are translated:
+
+* Each **IntegrationModel** that is not part of a merged unit is translated into a system type.
 	* The **name** field is translated into the name of the system type.
 	* The **description** field is translated into a comment on the system type.
 	* If the FACE file was generated using UUIDs, then the property **FACE::UUID** is set to the ID of the
 	  **IntegrationModel**.
-* Each **IntegrationModel** is translated into a system implementation which implements the system type.
+* Each **IntegrationModel** that is not part of a merged unit is translated into a system implementation which
+  implements the system type.
 	* The **name** field is used to create the name of the system implementation. The system implementation's
 	  name is ***\<name\>*.impl**.
 	* Each **face.integration.UoPInstance** of the **IntegrationModel** is translated into a process
@@ -1098,12 +1180,58 @@ The following describes how integration models are translated.
 			  connection.
 			* If the UoP endpoints for the paths are all translated as event data ports, then this connection will be a
 			  port connection.
-			* If the UoP endpoints for the paths are not all of the same kind, then this feature will be a feature
+			* If the UoP endpoints for the paths are not all of the same kind, then this connection will be a feature
 			  connection.
 		* The **source** field is translated into the source of the connection.
 		* The **destination** field is translated into the destination of the connection.
-		* IF the FACE file was generated using UUIDs, then the property **FACE::UUID** is set to the ID of
+		* If the FACE file was generated using UUIDs, then the property **FACE::UUID** is set to the ID of
 		  the **TSNodeConnection**.
+
+The following describes how merged units are translated:
+
+* Each merged unit is translated into a system type.
+	* The name of the system type is derived from the **name** fields of each **IntegrationModel** in the merged unit.
+	  The name of the system type starts with **MERGED_** and contains all of the names of each **IntegrationModel**
+	  separated by **_AND_**. The name of each **IntegrationModel** is also listed in a comment on the system type.
+	* The **description** field of each **IntegrationModel** is translated into a comment on the system type.
+	* If the FACE file was generated using UUIDs, then the property **FACE::Merged_UUIDs** is set and contains a list of
+	  records indicating the ID of each **IntegrationModel**.
+* Each merged unit is translated into a system implementation which implements the system type.
+	* The name of the system implementation is derived from the **name** fields of each **IntegrationModel** in the
+	  merged unit. The name of the system implementation starts with **MERGED_**, contains all of the names of each
+	  **IntegrationModel** separated by **_AND_**, and ends with **.impl**.
+	* Each **face.integration.UoPInstance** of each **IntegrationModel** in the merged unit is translated into a process
+	  subcomponent.
+		* The **name** field is translated into the name of the process subcomponent.
+		* The **description** field is translated into a comment on the process subcomponent.
+		* The **realizes** field is translated into the subcomponent's process classifier reference.
+		* If the FACE file was generated using UUIDs, then the property **FACE::UUID** is set to the ID of the
+		  **UoPInstance**.
+	* Each **face.integration.TransportChannel** of each **IntegrationModel** in the merged unit is translated into a
+	  virtual bus subcomponent.
+		* The **name** field is translated into the name of the virtual bus subcomponent.
+		* The **description** field is translated into a comment on the virtual bus subcomponent.
+		* If the FACE file was generated using UUIDs, then the property **FACE::UUID** is set to the ID of the
+		  **TransportChannel**.
+	* Each **face.integration.TransportNode** of each **face.integration.IntegrationContext** of each
+	  **IntegrationModel** in the merged unit is translated into an abstract subcomponent.
+		* The **name** field is translated into the name of the abstract subcomponent.
+		* The **name** field is translated into the subcomponent's abstract classifier reference.
+	* Each **face.integration.TSNodeConnection** of each **face.integration.IntegrationContext** of each
+	  **IntegrationModel** in the merged unit is translated into a connection.
+		* The name of the connection is generated from the index of the **TSNodeConnection** in the merged unit. The
+		  name is **connection\<index\>**.
+		* Every path between UoPs that includes the **TSNodeConnection** is analyzed to determine the connection kind.
+			* If the UoP endpoints for the parts are all translated as data ports, then this connection will be a port
+			  connection.
+			* If the UoP endpoints for the paths are all translated as event data ports, then this connection will be a
+			  port connection.
+			* If the UoP endpoints for the paths are not all of the same kind, then this connection will be a feature
+			  connection.
+		* The **source** field is translated into the source of the connection.
+		* The **destination** field is translated into the destination of the connection.
+		* If the FACE file was generated using UUIDs, then the property **FACE::UUID** is set to the ID of the
+		  **TSNodeConnection**.
 
 #### face.integration.TransportNode for FACE 3.1
 
