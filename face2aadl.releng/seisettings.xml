@@ -89,9 +89,9 @@ DM23-0412
     </mirror>
 
     <mirror>
-      <id>osate-build-jericho-http</id>
+      <id>osate-build-junilla-http</id>
       <mirrorOf>http://osate-build.sei.cmu.edu/</mirrorOf>
-      <url>http://jericho.sei.cmu.edu/</url>
+      <url>http://junilla.sei.cmu.edu/</url>
       <layout>p2</layout>
       <mirrorOfLayouts>p2</mirrorOfLayouts>
     </mirror>
