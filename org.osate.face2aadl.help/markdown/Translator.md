@@ -596,16 +596,15 @@ The following describes how integration models that are not part of a merged uni
 The following describes how merged units are translated:
 
 * Each merged unit is translated into a system type.
-	* The name of the system type is derived from the **name** fields of each **IntegrationModel** in the merged unit.
-	  The name of the system type starts with **MERGED_** and contains all of the names of each **IntegrationModel**
-	  separated by **_AND_**. The name of each **IntegrationModel** is also listed in a comment on the system type.
-	* The **description** field of each **IntegrationModel** is translated into a comment on the system type.
+	* A comment is placed on the system type indicating that the system is merged from multiple integration models. The
+	  comment lists the **name** fields of each **IntegrationModel**.
+	* The name of the system type is generated from the index of the merged unit in a list of all of the merged units.
+	  The name is **Merged_Integration_Models_\<index\>**.
 	* If the FACE file was generated using UUIDs, then the property **FACE::Merged_UUIDs** is set and contains a list of
 	  records indicating the ID of each **IntegrationModel**.
 * Each merged unit is translated into a system implementation which implements the system type.
-	* The name of the system implementation is derived from the **name** fields of each **IntegrationModel** in the
-	  merged unit. The name of the system implementation starts with **MERGED_**, contains all of the names of each
-	  **IntegrationModel** separated by **_AND_**, and ends with **.impl**.
+	* The name of the system implementation is generated from the index of the merged unit in a list of all of the
+	  merged units. The name is **Merged_Integration_Models_\<index\>.impl**.
 	* Each **face.integration.UoPInstance** of each **IntegrationModel** in the merged unit is translated into a process
 	  subcomponent.
 		* The **name** field is translated into the name of the process subcomponent.
@@ -1190,16 +1189,16 @@ The following describes how integration models that are not part of a merged uni
 The following describes how merged units are translated:
 
 * Each merged unit is translated into a system type.
-	* The name of the system type is derived from the **name** fields of each **IntegrationModel** in the merged unit.
-	  The name of the system type starts with **MERGED_** and contains all of the names of each **IntegrationModel**
-	  separated by **_AND_**. The name of each **IntegrationModel** is also listed in a comment on the system type.
+	A comment is placed on the system type indicating that the system is merged from multiple integration models. The
+	  comment lists the **name** fields of each **IntegrationModel**.
+	* The name of the system type is generated from the index of the merged unit in a list of all of the merged units.
+	  The name is **Merged_Integration_Models_\<index\>**.
 	* The **description** field of each **IntegrationModel** is translated into a comment on the system type.
 	* If the FACE file was generated using UUIDs, then the property **FACE::Merged_UUIDs** is set and contains a list of
 	  records indicating the ID of each **IntegrationModel**.
 * Each merged unit is translated into a system implementation which implements the system type.
-	* The name of the system implementation is derived from the **name** fields of each **IntegrationModel** in the
-	  merged unit. The name of the system implementation starts with **MERGED_**, contains all of the names of each
-	  **IntegrationModel** separated by **_AND_**, and ends with **.impl**.
+	* The name of the system implementation is generated from the index of the merged unit in a list of all of the
+	  merged units. The name is **Merged_Integration_Models_\<index\>.impl**.
 	* Each **face.integration.UoPInstance** of each **IntegrationModel** in the merged unit is translated into a process
 	  subcomponent.
 		* The **name** field is translated into the name of the process subcomponent.

@@ -9,10 +9,10 @@ public
 	--  first
 	--  second
 	--  third
-	system MERGED_first_AND_second_AND_third
-	end MERGED_first_AND_second_AND_third;
+	system Merged_Integration_Models_1
+	end Merged_Integration_Models_1;
 	
-	system implementation MERGED_first_AND_second_AND_third.impl
+	system implementation Merged_Integration_Models_1.impl
 		subcomponents
 			A: process mergedWithCycle_PSSS::A_process.impl;
 			D: process mergedWithCycle_PSSS::D_process.impl;
@@ -29,7 +29,7 @@ public
 			connection3: port B_to_C_Transporter.output -> C.input;
 			connection4: port C.output -> C_to_D_Transporter.input0;
 			connection5: port C_to_D_Transporter.output -> D.input;
-	end MERGED_first_AND_second_AND_third.impl;
+	end Merged_Integration_Models_1.impl;
 	
 	abstract A_to_B_Transporter
 		features

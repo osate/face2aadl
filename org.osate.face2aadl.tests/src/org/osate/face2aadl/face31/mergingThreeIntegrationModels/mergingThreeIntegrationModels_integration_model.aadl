@@ -9,10 +9,10 @@ public
 	--  im_with_sensor
 	--  im_with_nodes
 	--  im_with_autopilot
-	system MERGED_im_with_sensor_AND_im_with_nodes_AND_im_with_autopilot
-	end MERGED_im_with_sensor_AND_im_with_nodes_AND_im_with_autopilot;
+	system Merged_Integration_Models_1
+	end Merged_Integration_Models_1;
 	
-	system implementation MERGED_im_with_sensor_AND_im_with_nodes_AND_im_with_autopilot.impl
+	system implementation Merged_Integration_Models_1.impl
 		subcomponents
 			Altitude_Sensor: process mergingThreeIntegrationModels_PCS::Altitude_Sensor_process.impl;
 			Autopilot: process mergingThreeIntegrationModels_PCS::Autopilot_process.impl;
@@ -23,7 +23,7 @@ public
 			connection0: port Altitude_Sensor.Altitude_output -> Converter_ft_to_m.input0;
 			connection1: port Converter_ft_to_m.output -> Transporter.input0;
 			connection2: port Transporter.output -> Autopilot.Altitude_input;
-	end MERGED_im_with_sensor_AND_im_with_nodes_AND_im_with_autopilot.impl;
+	end Merged_Integration_Models_1.impl;
 	
 	abstract Converter_ft_to_m
 		features

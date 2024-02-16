@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<face:ArchitectureModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:face="http://www.opengroup.us/face/3.1" xmlns:integration="http://www.opengroup.us/face/integration/3.1" xmlns:platform="http://www.opengroup.us/datamodel/platform/1.0" xmlns:uop="http://www.opengroup.us/face/uop/3.1" name="am">
+  <dm name="dm">
+    <pdm name="pdm">
+      <element xsi:type="platform:Query" name="Query1" specification="specification"/>
+    </pdm>
+  </dm>
+  <um name="um">
+    <element xsi:type="uop:Template" name="Template1" specification="specification" boundQuery="//@dm.0/@pdm.0/@element.0"/>
+    <element xsi:type="uop:PlatformSpecificComponent" name="A">
+      <thread/>
+      <memoryRequirements/>
+      <connection xsi:type="uop:SingleInstanceMessageConnection" name="output" messageType="//@um.0/@element.0" messageExchangeType="OutboundMessage"/>
+    </element>
+    <element xsi:type="uop:PlatformSpecificComponent" name="B">
+      <thread/>
+      <memoryRequirements/>
+      <connection xsi:type="uop:SingleInstanceMessageConnection" name="input" messageType="//@um.0/@element.0"/>
+    </element>
+    <element xsi:type="uop:PlatformSpecificComponent" name="C">
+      <thread/>
+      <memoryRequirements/>
+      <connection xsi:type="uop:SingleInstanceMessageConnection" name="output" messageType="//@um.0/@element.0" messageExchangeType="OutboundMessage"/>
+    </element>
+    <element xsi:type="uop:PlatformSpecificComponent" name="D">
+      <thread/>
+      <memoryRequirements/>
+      <connection xsi:type="uop:SingleInstanceMessageConnection" name="input" messageType="//@um.0/@element.0"/>
+    </element>
+    <element xsi:type="uop:PlatformSpecificComponent" name="E">
+      <thread/>
+      <memoryRequirements/>
+      <connection xsi:type="uop:SingleInstanceMessageConnection" name="output" messageType="//@um.0/@element.0" messageExchangeType="OutboundMessage"/>
+    </element>
+    <element xsi:type="uop:PlatformSpecificComponent" name="F">
+      <thread/>
+      <memoryRequirements/>
+      <connection xsi:type="uop:SingleInstanceMessageConnection" name="input" messageType="//@um.0/@element.0"/>
+    </element>
+  </um>
+  <im name="im_with_A">
+    <element xsi:type="integration:TransportChannel" name="Channel"/>
+    <element xsi:type="integration:UoPInstance" name="A" realizes="//@um.0/@element.1">
+      <output connection="//@um.0/@element.1/@connection.0"/>
+    </element>
+    <element xsi:type="integration:IntegrationContext" name="context_A">
+      <connection source="//@im.0/@element.1/@output.0" destination="//@im.0/@element.2/@node.0/@inPort.0"/>
+      <connection source="//@im.0/@element.2/@node.0/@outPort" destination="//@im.1/@element.0/@input.0"/>
+      <node xsi:type="integration:ViewTransporter" name="A_to_B_Transporter" channel="//@im.0/@element.0">
+        <outPort view="//@um.0/@element.0"/>
+        <inPort view="//@um.0/@element.0"/>
+      </node>
+    </element>
+  </im>
+  <im name="im_with_B">
+    <element xsi:type="integration:UoPInstance" name="B" realizes="//@um.0/@element.2">
+      <input connection="//@um.0/@element.2/@connection.0"/>
+    </element>
+  </im>
+  <im name="im_with_C">
+    <element xsi:type="integration:UoPInstance" name="C" realizes="//@um.0/@element.3">
+      <output connection="//@um.0/@element.3/@connection.0"/>
+    </element>
+    <element xsi:type="integration:IntegrationContext" name="context_C">
+      <connection source="//@im.2/@element.0/@output.0" destination="//@im.2/@element.1/@node.0/@inPort.0"/>
+      <connection source="//@im.2/@element.1/@node.0/@outPort" destination="//@im.3/@element.0/@input.0"/>
+      <node xsi:type="integration:ViewTransporter" name="C_to_D_Transporter" channel="//@im.0/@element.0">
+        <outPort view="//@um.0/@element.0"/>
+        <inPort view="//@um.0/@element.0"/>
+      </node>
+    </element>
+  </im>
+  <im name="im_with_D">
+    <element xsi:type="integration:UoPInstance" name="D" realizes="//@um.0/@element.4">
+      <input connection="//@um.0/@element.4/@connection.0"/>
+    </element>
+  </im>
+  <im name="im_with_E">
+    <element xsi:type="integration:UoPInstance" name="E" realizes="//@um.0/@element.5">
+      <output connection="//@um.0/@element.5/@connection.0"/>
+    </element>
+    <element xsi:type="integration:IntegrationContext" name="context_E">
+      <connection source="//@im.4/@element.0/@output.0" destination="//@im.4/@element.1/@node.0/@inPort.0"/>
+      <connection source="//@im.4/@element.1/@node.0/@outPort" destination="//@im.5/@element.0/@input.0"/>
+      <node xsi:type="integration:ViewTransporter" name="E_to_F_Transporter" channel="//@im.0/@element.0">
+        <outPort view="//@um.0/@element.0"/>
+        <inPort view="//@um.0/@element.0"/>
+      </node>
+    </element>
+  </im>
+  <im name="im_with_F">
+    <element xsi:type="integration:UoPInstance" name="F" realizes="//@um.0/@element.6">
+      <input connection="//@um.0/@element.6/@connection.0"/>
+    </element>
+  </im>
+</face:ArchitectureModel>

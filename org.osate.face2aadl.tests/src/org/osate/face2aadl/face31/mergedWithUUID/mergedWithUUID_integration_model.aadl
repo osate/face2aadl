@@ -9,16 +9,16 @@ public
 	--  first
 	--  second
 	--  third
-	system MERGED_first_AND_second_AND_third
+	system Merged_Integration_Models_1
 		properties
 			FACE::Merged_UUIDs => (
 				[Integration_Model => "first"; UUID => "_tjZgCsbTEe6ro5K0Vp3qpw";],
 				[Integration_Model => "second"; UUID => "_tjbVMsbTEe6ro5K0Vp3qpw";],
 				[Integration_Model => "third"; UUID => "_tjbVPMbTEe6ro5K0Vp3qpw";]
 			);
-	end MERGED_first_AND_second_AND_third;
+	end Merged_Integration_Models_1;
 	
-	system implementation MERGED_first_AND_second_AND_third.impl
+	system implementation Merged_Integration_Models_1.impl
 		subcomponents
 			A: process mergedWithUUID_PSSS::A_process.impl {
 				FACE::UUID => "_tjaHEMbTEe6ro5K0Vp3qpw";
@@ -47,7 +47,7 @@ public
 			connection3: port B_to_C_Transporter.output -> C.input {
 				FACE::UUID => "_tjbVOMbTEe6ro5K0Vp3qpw";
 			};
-	end MERGED_first_AND_second_AND_third.impl;
+	end Merged_Integration_Models_1.impl;
 	
 	abstract A_to_B_Transporter
 		features

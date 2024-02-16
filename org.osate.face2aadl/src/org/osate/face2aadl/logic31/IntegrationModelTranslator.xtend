@@ -86,6 +86,7 @@ package class IntegrationModelTranslator {
 			.connectedComponents
 			.map[subgraph | subgraph.vertexSet.sortBy[integrationModels.indexOf(it)]]
 			.toInvertedMap[false]
+		val allMergedIntegrationModels = mergedIntegrationModels.keySet.toList
 		
 		val transportNodes = integrationModels.flatMap[it.element.filter(IntegrationContext).flatMap[it.node]].toList
 		val transportNodeNames = generateUniqueNames(transportNodes)
@@ -93,10 +94,10 @@ package class IntegrationModelTranslator {
 		val classifiers = integrationModels.map[model |
 			val merged = mergedIntegrationModels.keySet.findFirst[it.contains(model)]
 			if (merged === null) {
-				translateIntegrationModels(#[model], transportNodeNames)
+				translateIntegrationModels(#[model], transportNodeNames, allMergedIntegrationModels)
 			} else if (!mergedIntegrationModels.get(merged)) {
 				mergedIntegrationModels.put(merged, true)
-				translateIntegrationModels(merged, transportNodeNames)
+				translateIntegrationModels(merged, transportNodeNames, allMergedIntegrationModels)
 			} else {
 				null
 			}
@@ -162,7 +163,7 @@ package class IntegrationModelTranslator {
 	 * model is translated as a single IntegrationModel.
 	 */
 	def private String translateIntegrationModels(List<IntegrationModel> models,
-		Map<TransportNode, String> transportNodeNames
+		Map<TransportNode, String> transportNodeNames, List<List<IntegrationModel>> allMergedIntegrationModels
 	) {
 		if (models.empty) {
 			throw new IllegalArgumentException("models cannot be empty.")
@@ -189,7 +190,7 @@ package class IntegrationModelTranslator {
 		val name = if (models.size == 1) {
 			sanitizeID(models.head.name)
 		} else {
-			"MERGED_" + models.join("_AND_", [sanitizeID(it.name)])
+			"Merged_Integration_Models_" + (allMergedIntegrationModels.indexOf(models) + 1)
 		}
 		
 		val uuidProperty = if (models.size == 1) {

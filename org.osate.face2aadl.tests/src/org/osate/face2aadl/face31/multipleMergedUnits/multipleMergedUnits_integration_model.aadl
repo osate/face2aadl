@@ -1,0 +1,80 @@
+--Generated from "multipleMergedUnits.face"
+package multipleMergedUnits_integration_model
+public
+	with FACE;
+	with multipleMergedUnits_data_model;
+	with multipleMergedUnits_PSSS;
+	
+	--Merged from the following Integration Models:
+	--  im_with_A
+	--  im_with_B
+	system Merged_Integration_Models_1
+	end Merged_Integration_Models_1;
+	
+	system implementation Merged_Integration_Models_1.impl
+		subcomponents
+			A: process multipleMergedUnits_PSSS::A_process.impl;
+			B: process multipleMergedUnits_PSSS::B_process.impl;
+			Channel: virtual bus;
+			A_to_B_Transporter: abstract A_to_B_Transporter;
+		connections
+			connection0: port A.output -> A_to_B_Transporter.input0;
+			connection1: port A_to_B_Transporter.output -> B.input;
+	end Merged_Integration_Models_1.impl;
+	
+	abstract A_to_B_Transporter
+		features
+			input0: in data port multipleMergedUnits_data_model::Template1_Platform.impl;
+			output: out data port multipleMergedUnits_data_model::Template1_Platform.impl;
+		properties
+			FACE::Segment => TSS;
+	end A_to_B_Transporter;
+	
+	--Merged from the following Integration Models:
+	--  im_with_C
+	--  im_with_D
+	system Merged_Integration_Models_2
+	end Merged_Integration_Models_2;
+	
+	system implementation Merged_Integration_Models_2.impl
+		subcomponents
+			C: process multipleMergedUnits_PSSS::C_process.impl;
+			D: process multipleMergedUnits_PSSS::D_process.impl;
+			C_to_D_Transporter: abstract C_to_D_Transporter;
+		connections
+			connection0: port C.output -> C_to_D_Transporter.input0;
+			connection1: port C_to_D_Transporter.output -> D.input;
+	end Merged_Integration_Models_2.impl;
+	
+	abstract C_to_D_Transporter
+		features
+			input0: in data port multipleMergedUnits_data_model::Template1_Platform.impl;
+			output: out data port multipleMergedUnits_data_model::Template1_Platform.impl;
+		properties
+			FACE::Segment => TSS;
+	end C_to_D_Transporter;
+	
+	--Merged from the following Integration Models:
+	--  im_with_E
+	--  im_with_F
+	system Merged_Integration_Models_3
+	end Merged_Integration_Models_3;
+	
+	system implementation Merged_Integration_Models_3.impl
+		subcomponents
+			E: process multipleMergedUnits_PSSS::E_process.impl;
+			F: process multipleMergedUnits_PSSS::F_process.impl;
+			E_to_F_Transporter: abstract E_to_F_Transporter;
+		connections
+			connection0: port E.output -> E_to_F_Transporter.input0;
+			connection1: port E_to_F_Transporter.output -> F.input;
+	end Merged_Integration_Models_3.impl;
+	
+	abstract E_to_F_Transporter
+		features
+			input0: in data port multipleMergedUnits_data_model::Template1_Platform.impl;
+			output: out data port multipleMergedUnits_data_model::Template1_Platform.impl;
+		properties
+			FACE::Segment => TSS;
+	end E_to_F_Transporter;
+end multipleMergedUnits_integration_model;
