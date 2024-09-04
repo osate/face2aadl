@@ -15,7 +15,7 @@
   <setupTask
       xsi:type="setup:VariableTask"
       name="eclipse.target.platform"
-      defaultValue="2023-03"
+      defaultValue="2023-12"
       storageURI="scope://Workspace"/>
   <setupTask
       xsi:type="setup.p2:P2Task">
@@ -30,6 +30,11 @@
           name="*"/>
       <sourceLocator
           rootFolder="${git.clone.face2aadl.location}"/>
+      <repositoryList
+          name="2023-12">
+        <repository
+            url="http://download.eclipse.org/releases/2023-12"/>
+      </repositoryList>
       <repositoryList
           name="2023-03">
         <repository
